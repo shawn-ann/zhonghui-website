@@ -83,7 +83,6 @@
       position: relative; overflow: hidden;
       background-size: cover; background-position: center;
     }
-    .banner.bg-gradient { background: linear-gradient(135deg, #101d40 0%, #1A2958 50%, #2E4380 100%); }
     .banner::before {
       content: ""; position: absolute; inset: 0;
       background-image: radial-gradient(#ffffff22 1px, transparent 1px);
@@ -93,15 +92,6 @@
     .banner .cover h1 { font-size: 52px; font-weight: 700; letter-spacing: 4px; text-shadow: 0 2px 16px rgba(0,0,0,0.45); }
     .banner .cover .sub { font-size: 40px; font-weight: 500; margin-top: 12px; letter-spacing: 2px; }
     .banner .cover .intro { font-size: 18px; margin-top: 24px; opacity: .9; }
-
-    /* ===== 数据带块（可选列数） ===== */
-    .stats { background: var(--white); }
-    .stats-grid { display: grid; gap: 0; }
-    .stat { text-align: center; padding: 44px 20px; border-right: 1px solid var(--border); }
-    .stat:first-child { border-left: 1px solid var(--border); }
-    .stat .num { font-size: 42px; font-weight: 700; color: var(--deep-blue); }
-    .stat .num em { font-style: normal; color: var(--bright-blue); }
-    .stat .label { font-size: 15px; color: var(--gray-blue); margin-top: 6px; }
 
     /* ===== 卡片网格块（可选列数） ===== */
     .prog-grid { display: grid; gap: 28px; }
@@ -401,13 +391,6 @@
         ${c.intro ? `<div class="intro">${esc(c.intro)}</div>` : ""}
       </div>`;
       return shell(b, inner).replace("class=\"section", "class=\"banner section");
-    },
-    stats(b) {
-      const cols = b.options.columns || b.data.items.length;
-      const items = b.data.items.map(s => `<div class="stat">
-          <div class="num">${esc(s.num)}${s.unit ? `<em>${esc(s.unit)}</em>` : ""}</div>
-          <div class="label">${esc(s.label)}</div></div>`).join("");
-      return `<section class="stats"><div class="container stats-grid" style="grid-template-columns:repeat(${cols},1fr);">${items}</div></section>`;
     },
     "card-grid"(b) {
       const cols = b.options.columns || 4;
