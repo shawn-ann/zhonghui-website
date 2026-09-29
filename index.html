@@ -367,13 +367,11 @@
   // 把 b.options.bg 转成背景 style 字符串。"" | linear-gradient…/radial-gradient… → 渐变 | #hex/var()/rgb/hsl/颜色名 → 纯色 | 其余 → 图片
   function bgStyle(bg) {
     if (!bg) return "";
-    if (bg.indexOf("linear-gradient") === 0 || bg.indexOf("radial-gradient") === 0) {
-      return `style="background:${bg};"`;
-    }
-    if (/^(#|var\(|rgb|hsl|[a-z]+)/i.test(bg)) {
-      return `style="background:${bg};"`;
-    }
-    return `style="background-image:url('${esc(bg)}');background-size:cover;background-position:center;"`;
+    const v = String(bg).trim();
+    if (/^(linear-gradient|radial-gradient)/i.test(v)) return `style="background:${v};"`;
+    if (/^(#|var\(|rgb|hsl)/i.test(v)) return `style="background:${v};"`;
+    if (/\/|\.(png|jpe?g|gif|webp|svg)(\?|$)/i.test(v)) return `style="background-image:url('${esc(v)}');background-size:cover;background-position:center;"`;
+    return `style="background:${v};"`;
   }
 
   function shell(b, innerHtml) {
@@ -388,7 +386,8 @@
       const bgInner = typeof band === "string" ? band : (band.background || "");
       const h = typeof band === "object" && band.height ? band.height : 348;
       const darkCls = typeof band === "object" && band.dark ? " band-dark" : "";
-      inner = `<div class="band${darkCls}" ${bgStyle(bgInner)} style="height:${h}px;"></div>` + inner;
+      const bgDecl = bgStyle(bgInner).replace(/^style="|"$/g, "");
+      inner = `<div class="band${darkCls}" style="${bgDecl}height:${h}px;"></div>` + inner;
     }
     return `<section class="${cls.join(" ")}" ${style}>${inner}</section>`;
   }
