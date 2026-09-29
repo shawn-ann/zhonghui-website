@@ -434,10 +434,10 @@
         <div class="ph"><img src="${esc(p.img)}" alt="${esc(p.title)}"></div>
         <div class="proj-body"><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p></div>
       </div>`).join("");
-      const inner = `<div class="container proj-content">
+      const inner = `<div class="container"><div class="proj-content">
         <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
         <div class="proj-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
-      </div>`;
+      </div></div>`;
       return shell(b, inner);
     },
     "advantage-grid"(b) {
