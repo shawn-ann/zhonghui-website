@@ -417,11 +417,11 @@
           <p class="sub">${esc(p.desc)}</p>
           <a class="more" href="${esc(p.link)}">查看详情 →</a>
         </div>`).join("");
-      const cls = b.options.alt ? "section section-alt" : "section";
-      return `<section class="${cls}"><div class="container">
+      const inner = `<div class="container">
         <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
         <div class="prog-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
-      </div></section>`;
+      </div>`;
+      return shell(b, inner);
     },
     "story-list"(b) {
       const src = b.data.source;
@@ -439,11 +439,11 @@
           <div class="body"><h3>${esc(s.title)}</h3><p>${esc(s.intro)}</p><span class="read">阅读全文</span></div>
         </a>`;
       }).join("");
-      const cls = b.options.alt ? "section section-alt" : "section";
-      return `<section class="${cls}"><div class="container">
+      const inner = `<div class="container">
         <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
         <div class="story-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
-      </div></section>`;
+      </div>`;
+      return shell(b, inner);
     },
     "project-grid"(b) {
       const cols = b.options.columns || 3;
@@ -464,11 +464,11 @@
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.desc)}</p>
       </div>`).join("");
-      const cls = b.options.alt ? "section section-alt" : "section";
-      return `<section class="${cls}"><div class="container">
+      const inner = `<div class="container">
         <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
         <div class="adv-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
-      </div></section>`;
+      </div>`;
+      return shell(b, inner);
     },
     "memory-slider"(b) {
       const imgs = (b.data.images || []).map(src =>
