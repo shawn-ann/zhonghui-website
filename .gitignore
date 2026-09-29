@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# 超过 GitHub 100MB 限制的大文件（PPT 素材库）
+*.pptx
+
+# Playwright MCP 生成的临时截图/日志
+.playwright-mcp/
+memory-slider-*.png
+pink-*.png
+proj-band-*.png
+
+# 含报价明细的商务文档（不入库）
+网页截图/网站功能说明.md
+网页截图/网站设计方案.pdf

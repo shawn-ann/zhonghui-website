@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>资讯中心 — 中惠文化</title>
+  <style>
+    :root {
+      --deep-blue: #1A4B7A;
+      --bright-blue: #4A90E2;
+      --light-blue: #E5F0FA;
+      --pale-blue: #D0E7F8;
+      --gray-blue: #5A7A9A;
+      --dark-text: #44546A;
+      --white: #FFFFFF;
+      --border: #E1E9F2;
+      --orange: #EE822F;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+      color: var(--dark-text);
+      line-height: 1.6;
+      background: var(--white);
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== 顶部导航栏 ===== */
+    header {
+      background: linear-gradient(120deg, var(--deep-blue) 0%, #24598f 100%);
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 10px rgba(26,75,122,0.25);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+    .logo img { display: block; height: 44px; width: auto; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+    .nav-menu { display: flex; list-style: none; gap: 28px; align-items: center; }
+    .nav-menu > li { position: relative; }
+    .nav-menu > li > a {
+      font-size: 15px; color: #d7e6f5; font-weight: 500; padding: 6px 0;
+      display: flex; align-items: center; gap: 4px; transition: color .2s;
+    }
+    .nav-menu > li > a:hover { color: #fff; }
+    .nav-menu > li > a.active { color: #fff; }
+    .nav-menu > li > a.active::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+      height: 3px; border-radius: 2px; background: var(--bright-blue);
+    }
+    .nav-menu .caret { font-size: 10px; opacity: .8; }
+    .nav-menu .dropdown {
+      position: absolute; top: 100%; left: -12px; min-width: 172px;
+      background: var(--white); border-radius: 0 0 8px 8px;
+      box-shadow: 0 10px 24px rgba(26,75,122,0.18); overflow: hidden;
+      opacity: 0; visibility: hidden; transform: translateY(8px);
+      transition: opacity .2s, transform .2s, visibility .2s;
+      padding: 6px 0; z-index: 200;
+    }
+    .nav-menu > li:hover .dropdown,
+    .nav-menu > li:focus-within .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-menu .dropdown a {
+      display: block; padding: 11px 20px; font-size: 14px; color: var(--deep-blue);
+      transition: background .15s, color .15s; white-space: nowrap;
+    }
+    .nav-menu .dropdown a:hover { background: var(--light-blue); color: var(--bright-blue); }
+    .nav-lang { font-size: 14px; color: #9db6cf; display: flex; gap: 6px; }
+    .nav-lang .sep { color: #5a7a9a; }
+    .nav-lang a { color: #9db6cf; }
+    .nav-lang a:hover { color: #fff; }
+    .nav-lang a.active { color: #fff; font-weight: 600; }
+
+    /* ===== Banner ===== */
+    .banner {
+      height: 300px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; background-size: cover; background-position: center;
+    }
+    .banner.bg-gradient { background: linear-gradient(135deg, #0e3d63 0%, #1A4B7A 50%, #3372b8 100%); }
+    .banner::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(#ffffff22 1px, transparent 1px); background-size: 28px 28px; }
+    .banner-note { position: relative; z-index: 1; color: rgba(255,255,255,.7); font-size: 15px; letter-spacing: 2px; padding: 8px 20px; border: 1px dashed rgba(255,255,255,.4); border-radius: 6px; }
+
+    /* ===== 区块通用 ===== */
+    .section { padding: 56px 0; }
+    .section-title { text-align: center; margin-bottom: 36px; }
+    .section-title h2 { font-size: 30px; color: var(--deep-blue); font-weight: 700; }
+
+    /* ===== 资讯竖排列表（内容集合块 list 布局） ===== */
+    .news-list { display: flex; flex-direction: column; gap: 18px; }
+    .news-item {
+      display: grid; grid-template-columns: 300px 1fr; gap: 24px; align-items: center;
+      background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+      padding: 16px; transition: transform .25s, box-shadow .25s;
+    }
+    .news-item:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(26,75,122,0.12); }
+    .news-item .thumb {
+      height: 170px; border-radius: 8px; background-size: cover; background-position: center;
+    }
+    .news-item .body h3 { font-size: 19px; color: var(--deep-blue); line-height: 1.4; }
+    .news-item .body .summary { font-size: 14px; color: var(--gray-blue); margin: 10px 0 14px; }
+    .news-item .body .meta { font-size: 13px; color: var(--gray-blue); }
+
+    /* ===== 分页 ===== */
+    .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 40px; flex-wrap: wrap; }
+    .pagination button {
+      border: 1px solid var(--border); background: var(--white); color: var(--deep-blue);
+      min-width: 38px; height: 38px; padding: 0 10px; border-radius: 6px;
+      cursor: pointer; font-size: 14px; transition: all .2s;
+    }
+    .pagination button:hover { border-color: var(--bright-blue); color: var(--bright-blue); }
+    .pagination button.active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
+    .pagination button:disabled { opacity: .4; cursor: not-allowed; }
+    .page-info { text-align: center; color: var(--gray-blue); font-size: 13px; margin-top: 14px; }
+
+    /* ===== 页脚 ===== */
+    footer { background: var(--deep-blue); color: #cfdff0; }
+    .footer-grid { max-width: 1280px; margin: 0 auto; padding: 56px 24px 32px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
+    .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
+    .footer-brand .zh { font-size: 22px; font-weight: 700; color: #fff; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #9db6cf; margin-top: 4px; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #d7e6f5; }
+    .footer-info .label { color: #9db6cf; margin-right: 8px; }
+    .footer-copy { border-top: 1px solid rgba(255,255,255,.12); padding: 20px 24px; text-align: center; font-size: 13px; color: #9db6cf; }
+    .footer-qr { text-align: center; }
+    .footer-qr h4 { color: #fff; font-size: 16px; margin-bottom: 16px; }
+    .qr-box { display: flex; gap: 16px; justify-content: center; }
+    .qr-item .qr { width: 92px; height: 92px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--deep-blue); font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px; }
+    .qr-item p { font-size: 13px; color: #d7e6f5; }
+
+    @media (max-width: 700px) {
+      .news-item { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="site-header"></header>
+  <main id="page"></main>
+  <footer id="site-footer"></footer>
+
+  <script>
+  /* =========================================================
+     CMS 配置化内容模型 —— 资讯中心列表页
+     列表页由「内容集合块 content-collection」渲染：
+       source = news 集合；list 竖排；每行=大图+标题+部分文本+日期；每页10条。
+     ========================================================= */
+
+  // 资讯集合（模拟后端）
+  const collections = {
+    news: [
+      { title: "赴美做 Lifeguard，到底要过哪些关？", summary: "从岗前培训、考核到日常工作，带你了解救生员岗位的全流程。", date: "2025-09-05", cover: "linear-gradient(135deg,#4A90E2,#1A4B7A)", link: "news-detail.html?id=lifeguard" },
+      { title: "中惠出海！在里斯本谈下更多赴美实习好机会", summary: "应 WYSE 邀请，中惠创始人 Wendy 远赴葡萄牙参加 2025 WYSTC 大会。", date: "2025-09-01", cover: "linear-gradient(135deg,#3372b8,#24598f)", link: "news-detail.html?id=wystc" },
+      { title: "2025 年 SWT 项目 0 拒签战绩公布", summary: "全流程签证护航体系，助力学员全员顺利过签。", date: "2025-08-28", cover: "linear-gradient(135deg,#5A7A9A,#1A4B7A)", link: "news-detail.html?id=swt-zero-visa-rejection" },
+      { title: "申请攻略：项目适配测试三步走", summary: "根据身份、收获偏好与性格，三步找到最适合你的赴美项目。", date: "2025-08-20", cover: "linear-gradient(135deg,#30C0B4,#0e5b54)", link: "news-detail.html?id=apply-test-guide" },
+      { title: "面签攻略：着装规范与作答技巧", summary: "从容不迫的着装与真实自然的表达，是面签成功的关键。", date: "2025-08-15", cover: "linear-gradient(135deg,#EE822F,#C25E00)", link: "news-detail.html?id=visa-interview-tips" },
+      { title: "2026 中惠 SWT 救生员培训北京站圆满结束", summary: "线下集中培训帮助学员提前掌握岗位技能与安全规范。", date: "2026-06-10", cover: "linear-gradient(135deg,#75BD42,#3c6e1b)", link: "news-detail.html?id=lifeguard-training-beijing" },
+      { title: "ITP 专业实习岗位更新：会计 / 物流 / 酒店前台", summary: "纽约、亚特兰大、洛杉矶等多地岗位开放申请。", date: "2026-05-22", cover: "linear-gradient(135deg,#E54C5E,#8c1d2a)", link: "news-detail.html?id=itp-jobs-update" },
+      { title: "互惠生项目常见问题答疑", summary: "关于语言、住宿、零用钱与家庭匹配的高频问题汇总。", date: "2026-05-08", cover: "linear-gradient(135deg,#4A90E2,#0e3d63)", link: "news-detail.html?id=aupair-faq" },
+      { title: "营地辅导员：六种营地类型怎么选？", summary: "公益、单性别、女童子军、特殊需求、宗教、特色营地全解析。", date: "2026-04-19", cover: "linear-gradient(135deg,#F2BA02,#a37a00)", link: "news-detail.html?id=camp-types" },
+      { title: "行前培训清单：出发前你需要准备什么", summary: "证件、行李、入境流程与当地生活须知一文搞定。", date: "2026-04-02", cover: "linear-gradient(135deg,#44546A,#1A4B7A)", link: "news-detail.html?id=pre-departure-checklist" },
+      { title: "行业资讯：2026 美国 J1 项目政策趋势", summary: "美国国务院官员在 WYSTC 分享的最新政策与趋势。", date: "2026-03-15", cover: "linear-gradient(135deg,#3372b8,#0e3d63)", link: "news-detail.html?id=j1-policy-trends" },
+      { title: "学员分享：第一次独自出国的成长", summary: "从紧张到从容，海外经历带给青年人的改变。", date: "2026-03-01", cover: "linear-gradient(135deg,#30C0B4,#1A4B7A)", link: "news-detail.html?id=student-story" }
+      // 共 12 条，用于演示分页（每页 10 条 → 2 页）
+    ]
+  };
+
+  const pageConfig = {
+    title: "资讯中心",
+    nav: {
+      logo: "img/logo.png",
+      langCurrent: "中文", langOther: "EN",
+      items: [
+        { label: "首页", link: "index.html" },
+        { label: "关于我们", link: "about.html" },
+        { label: "项目介绍", link: "project-swt.html", children: [
+            { label: "SWT 赴美带薪实习", link: "project-swt.html" },
+            { label: "ITP 赴美专业实习", link: "#" },
+            { label: "ICCP 赴美营地辅导员", link: "#" },
+            { label: "Au Pair 赴美互惠生", link: "#" } ] },
+        { label: "案例分享", link: "cases.html" },
+        { label: "资讯中心", link: "news.html", active: true },
+        { label: "联系我们", link: "contact.html" }
+      ]
+    },
+    footer: {
+      logo: "img/footLogo.png",
+      info: [
+        { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
+        { label: "📞 电话：", text: "010-64159286" },
+        { label: "✉ 邮箱：", text: "info@zhonghui.com" },
+        { label: "🌐 中文官网：", text: "www.chinaaupairs.com" },
+        { label: "🌐 英文官网：", text: "www.aupaircn.com" }
+      ],
+      qrcodes: [
+        { title: "公众号", text: "公众号\n二维码" },
+        { title: "咨询微信", text: "咨询微信\n二维码" }
+      ],
+      copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
+    },
+    blocks: [
+      // ① Banner 大图块
+      { type: "banner", data: { bg: "gradient", note: "[ 页面大图 ]" }, options: {} },
+      // ② 内容集合块：资讯竖排列表（source=news, list, 每页10条）
+      { type: "content-collection",
+        data: {
+          title: "资讯中心",
+          source: "news",
+          layout: "list",     // grid | list
+          pageSize: 10
+        },
+        options: {} }
+    ]
+  };
+
+  // ---------------- 渲染器 ----------------
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+  const renderers = {
+    banner(b) {
+      const bg = b.data.bg;
+      const style = bg && bg !== "gradient" ? `style="background-image:url('${esc(bg)}')"` : "";
+      return `<section class="banner ${bg === "gradient" || !bg ? "bg-gradient" : ""}" ${style}>${b.data.note ? `<span class="banner-note">${esc(b.data.note)}</span>` : ""}</section>`;
+    },
+    "content-collection"(b) {
+      return `<section class="section"><div class="container">
+        <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
+        <div id="news-container"></div>
+      </div></section>`;
+    }
+  };
+
+  // ---------------- 内容集合块：数据 + 分页 + 渲染 ----------------
+  let state = { page: 1, pageSize: 10, all: [] };
+
+  function renderNewsPage() {
+    const cfg = pageConfig.blocks.find(x => x.type === "content-collection").data;
+    const all = collections[cfg.source] || [];
+    state.all = all;
+    state.pageSize = cfg.pageSize || 10;
+    const totalPages = Math.max(1, Math.ceil(all.length / state.pageSize));
+    if (state.page > totalPages) state.page = totalPages;
+    const start = (state.page - 1) * state.pageSize;
+    const pageItems = all.slice(start, start + state.pageSize);
+
+    const rows = pageItems.map(n => `
+      <a class="news-item" href="${esc(n.link || "#")}">
+        <div class="thumb" style="background:${esc(n.cover)};"></div>
+        <div class="body">
+          <h3>${esc(n.title)}</h3>
+          <p class="summary">${esc(n.summary)}</p>
+          <div class="meta">📅 ${esc(n.date)}</div>
+        </div>
+      </a>`).join("");
+
+    let pager = "";
+    if (totalPages > 1) {
+      let btns = `<button ${state.page === 1 ? "disabled" : ""} data-p="${state.page - 1}">‹</button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        btns += `<button class="${i === state.page ? "active" : ""}" data-p="${i}">${i}</button>`;
+      }
+      btns += `<button ${state.page === totalPages ? "disabled" : ""} data-p="${state.page + 1}">›</button>`;
+      pager = `<div class="pagination">${btns}</div>
+        <div class="page-info">共 ${all.length} 条 · ${totalPages} 页 · 第 ${state.page} / ${totalPages} 页（每页 ${state.pageSize} 条）</div>`;
+    }
+
+    document.getElementById("news-container").innerHTML = `
+      <div class="news-list">${rows}</div>
+      ${pager}`;
+    bindPager();
+  }
+
+  function bindPager() {
+    document.querySelectorAll('.pagination button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.disabled) return;
+        state.page = parseInt(btn.dataset.p, 10);
+        renderNewsPage();
+      });
+    });
+  }
+
+  // ---------------- 渲染页面 ----------------
+  function renderNav(nav) {
+    const menu = nav.items.map(m => {
+      const sub = m.children ? `<div class="dropdown">${m.children.map(c =>
+        `<a href="${esc(c.link)}">${esc(c.label)}</a>`).join("")}</div>` : "";
+      return `<li><a href="${esc(m.link)}" class="${m.active ? "active" : ""}">${esc(m.label)}${m.children ? ' <span class="caret">▾</span>' : ""}</a>${sub}</li>`;
+    }).join("");
+    document.getElementById("site-header").innerHTML = `
+      <div class="nav">
+        <a class="logo" href="index.html"><img src="${esc(nav.logo)}" alt="中惠文化"></a>
+        <ul class="nav-menu">${menu}</ul>
+        <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+      </div>`;
+  }
+
+  function renderBlocks(blocks) {
+    document.getElementById("page").innerHTML = blocks
+      .filter(b => renderers[b.type])
+      .map(b => renderers[b.type](b)).join("");
+  }
+
+  function renderFooter(f) {
+    const info = f.info.map(i => `<p><span class="label">${esc(i.label)}</span>${esc(i.text)}</p>`).join("");
+    const qr = f.qrcodes.map(q => `
+      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div><p>${esc(q.title)}</p></div>`).join("");
+    document.getElementById("site-footer").innerHTML = `
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
+        <div class="footer-info">${info}</div>
+        <div class="footer-qr"><h4>关注我们</h4><div class="qr-box">${qr}</div></div>
+      </div>
+      <div class="footer-copy">${esc(f.copyright)}</div>`;
+  }
+
+  renderNav(pageConfig.nav);
+  renderBlocks(pageConfig.blocks);
+  renderNewsPage();
+  renderFooter(pageConfig.footer);
+  </script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SWT 赴美带薪实习 — 中惠文化</title>
+  <style>
+    :root {
+      --deep-blue: #1A4B7A;
+      --bright-blue: #4A90E2;
+      --light-blue: #E5F0FA;
+      --pale-blue: #D0E7F8;
+      --gray-blue: #5A7A9A;
+      --dark-text: #44546A;
+      --white: #FFFFFF;
+      --border: #E1E9F2;
+      --orange: #EE822F;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+      color: var(--dark-text);
+      line-height: 1.6;
+      background: var(--white);
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== 顶部导航栏 ===== */
+    header {
+      background: linear-gradient(120deg, var(--deep-blue) 0%, #24598f 100%);
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 10px rgba(26,75,122,0.25);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo img { display: block; height: 44px; width: auto; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+    .nav-menu { display: flex; list-style: none; gap: 28px; align-items: center; }
+    .nav-menu > li { position: relative; }
+    .nav-menu > li > a {
+      font-size: 15px; color: #d7e6f5; font-weight: 500; padding: 6px 0;
+      display: flex; align-items: center; gap: 4px; transition: color .2s;
+    }
+    .nav-menu > li > a:hover { color: #fff; }
+    .nav-menu > li > a.active { color: #fff; }
+    .nav-menu > li > a.active::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+      height: 3px; border-radius: 2px; background: var(--bright-blue);
+    }
+    .nav-menu .caret { font-size: 10px; opacity: .8; }
+    .nav-menu .dropdown {
+      position: absolute; top: 100%; left: -12px; min-width: 172px;
+      background: var(--white); border-radius: 0 0 8px 8px;
+      box-shadow: 0 10px 24px rgba(26,75,122,0.18); overflow: hidden;
+      opacity: 0; visibility: hidden; transform: translateY(8px);
+      transition: opacity .2s, transform .2s, visibility .2s;
+      padding: 6px 0; z-index: 200;
+    }
+    .nav-menu > li:hover .dropdown,
+    .nav-menu > li:focus-within .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-menu .dropdown a {
+      display: block; padding: 11px 20px; font-size: 14px; color: var(--deep-blue);
+      transition: background .15s, color .15s; white-space: nowrap;
+    }
+    .nav-menu .dropdown a:hover { background: var(--light-blue); color: var(--bright-blue); }
+    .nav-lang { font-size: 14px; color: #9db6cf; display: flex; gap: 6px; }
+    .nav-lang .sep { color: #5a7a9a; }
+    .nav-lang a { color: #9db6cf; }
+    .nav-lang a:hover { color: #fff; }
+    .nav-lang a.active { color: #fff; font-weight: 600; }
+
+    /* ===== Banner ===== */
+    .banner {
+      height: 300px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; background-size: cover; background-position: center;
+    }
+    .banner.bg-gradient { background: linear-gradient(135deg, #0e3d63 0%, #1A4B7A 50%, #3372b8 100%); }
+    .banner::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(#ffffff22 1px, transparent 1px); background-size: 28px 28px; }
+    .banner-note { position: relative; z-index: 1; color: rgba(255,255,255,.7); font-size: 15px; letter-spacing: 2px; padding: 8px 20px; border: 1px dashed rgba(255,255,255,.4); border-radius: 6px; }
+
+    /* ===== 区块通用 ===== */
+    .section { padding: 64px 0; }
+    .section-alt { background: var(--light-blue); }
+    .section-title { text-align: center; margin-bottom: 36px; }
+    .section-title h2 { font-size: 30px; color: var(--deep-blue); font-weight: 700; }
+
+    /* ===== 概述块 ===== */
+    .overview-text { max-width: 900px; margin: 0 auto; font-size: 16px; color: var(--dark-text); text-align: center; }
+    .overview-kv { display: grid; gap: 24px; margin-top: 36px; }
+    .kv-item { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; }
+    .kv-item .k { font-size: 13px; color: var(--gray-blue); }
+    .kv-item .v { font-size: 22px; font-weight: 700; color: var(--deep-blue); margin-top: 6px; }
+
+    /* ===== 图标卡片网格块 ===== */
+    .feat-grid { display: grid; gap: 28px; }
+    .feat-card {
+      background: var(--white); border-radius: 12px; border: 1px solid var(--border);
+      padding: 30px; text-align: center; transition: transform .25s, box-shadow .25s;
+    }
+    .feat-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,75,122,0.14); }
+    .feat-card .icon { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 16px; background: var(--light-blue); color: var(--deep-blue); display: flex; align-items: center; justify-content: center; font-size: 26px; }
+    .feat-card h3 { font-size: 18px; color: var(--deep-blue); }
+    .feat-card p { font-size: 14px; color: var(--gray-blue); margin-top: 10px; }
+
+    /* ===== 通用双栏列表块 ===== */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .panel { background: var(--white); border-radius: 12px; border: 1px solid var(--border); padding: 30px 34px; }
+    .panel h3 { font-size: 19px; color: var(--deep-blue); margin-bottom: 16px; padding-left: 12px; border-left: 4px solid var(--bright-blue); }
+    .panel ul { list-style: none; }
+    .panel li { font-size: 14.5px; color: var(--dark-text); padding: 7px 0; position: relative; padding-left: 18px; }
+    .panel li::before { content: "·"; position: absolute; left: 0; color: var(--bright-blue); font-weight: 700; }
+    .adv-panel ul li::before { color: var(--orange); }
+
+    /* ===== 报名流程（两分栏） ===== */
+    .process { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: stretch; }
+    .process-stages { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 26px 30px; }
+    .process-stages h3 { font-size: 17px; color: var(--deep-blue); margin-bottom: 16px; padding-left: 12px; border-left: 4px solid var(--bright-blue); }
+    .stage { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--border); }
+    .stage:last-child { border-bottom: none; }
+    .stage .no { flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--light-blue); color: var(--deep-blue); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; margin-top: 2px; }
+    .stage .name { font-size: 15px; font-weight: 600; color: var(--deep-blue); display: block; }
+    .stage .desc { font-size: 12.5px; color: var(--gray-blue); display: block; margin-top: 2px; line-height: 1.5; }
+    .process-chain { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 26px 30px; }
+    .process-chain h3 { font-size: 17px; color: var(--deep-blue); margin-bottom: 16px; padding-left: 12px; border-left: 4px solid var(--bright-blue); }
+    .chain-item { display: flex; align-items: center; gap: 14px; padding: 8px 0; }
+    .chain-item .ic { flex: 0 0 36px; height: 36px; border-radius: 8px; background: var(--light-blue); color: var(--deep-blue); display: flex; align-items: center; justify-content: center; font-size: 17px; }
+    .chain-item .name { font-size: 15px; color: var(--deep-blue); font-weight: 600; }
+
+    /* ===== 岗位介绍（Tab） ===== */
+    .job-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+    .job-tabs button { border: 1px solid var(--bright-blue); background: var(--white); color: var(--bright-blue); padding: 8px 28px; border-radius: 24px; font-size: 14px; cursor: pointer; transition: all .2s; }
+    .job-tabs button.active, .job-tabs button:hover { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
+    .job-group { background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .job-hero { height: 260px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; letter-spacing: 1px; background-size: cover; background-position: center; }
+    .job-body { padding: 30px 34px; }
+    .job-body h3 { font-size: 18px; color: var(--deep-blue); margin-bottom: 14px; }
+    .job-chip { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .job-chip span { background: var(--light-blue); color: var(--deep-blue); font-weight: 600; padding: 8px 18px; border-radius: 20px; font-size: 14px; }
+    .job-desc { font-size: 15px; color: var(--dark-text); line-height: 1.9; }
+    .job-warn { margin-top: 22px; background: #fff6ec; border-left: 4px solid var(--orange); border-radius: 8px; padding: 16px 20px; font-size: 14px; color: #8a5a1f; line-height: 1.8; }
+    .job-warn strong { color: var(--orange); }
+
+    /* ===== 页脚 ===== */
+    footer { background: var(--deep-blue); color: #cfdff0; }
+    .footer-grid { max-width: 1180px; margin: 0 auto; padding: 56px 24px 32px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
+    .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
+    .footer-brand .zh { font-size: 22px; font-weight: 700; color: #fff; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #9db6cf; margin-top: 4px; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #d7e6f5; }
+    .footer-info .label { color: #9db6cf; margin-right: 8px; }
+    .footer-copy { border-top: 1px solid rgba(255,255,255,.12); padding: 20px 24px; text-align: center; font-size: 13px; color: #9db6cf; }
+    .footer-qr { text-align: center; }
+    .footer-qr h4 { color: #fff; font-size: 16px; margin-bottom: 16px; }
+    .qr-box { display: flex; gap: 16px; justify-content: center; }
+    .qr-item .qr { width: 92px; height: 92px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--deep-blue); font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px; }
+    .qr-item p { font-size: 13px; color: #d7e6f5; }
+
+    @media (max-width: 900px) {
+      .feat-grid, .overview-kv { grid-template-columns: repeat(2, 1fr); }
+      .two-col, .process, .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="site-header"></header>
+  <main id="page"></main>
+  <footer id="site-footer"></footer>
+
+  <script>
+  /* =========================================================
+     CMS 配置化内容模型 —— SWT 项目详情页演示
+     pageConfig 模拟后端返回值。可配置各块内容、数量、链接等。
+     ========================================================= */
+
+  // 岗位集合（图文内容，演示数据；也可来自后端 content-collection）
+  const collections = {
+    jobs: [
+      { name: "餐饮类", hero: "gradient", heroLabel: "[ 餐饮类 · 岗位大图 ]",
+        chips: ["Cashier","Food Runner","Server","Barista"],
+        chipsLabel: "岗位种类",
+        descLabel: "岗位特点",
+        desc: "餐厅岗位遍布全美各大城市与热门景区，是 SWT 项目中选择空间大、上手难度低的岗位类型。服务类岗位可获得小费补贴，实际收入随服务场景存在浮动；部分门店可协商额外排班。" },
+      { name: "游乐园/沙滩类", hero: "gradient", heroLabel: "[ 游乐园/沙滩类 · 岗位大图 ]",
+        chips: ["Lifeguard","Equipment Operator","Ride Operator","Guide"],
+        chipsLabel: "岗位种类",
+        descLabel: "岗位特点",
+        desc: "想象一下，你的\"办公室\"是碧海蓝天下的沙滩，或是欢声笑语不断的游乐园——这就是游乐园/沙滩类岗位的真实写照。",
+        warn: "Lifeguard（救生员）是 SWT 项目中少数需要提前考取相关资质证书的岗位，如果你已具备救生员认证或具备游泳能力，这将是你薪资和履历都双双加分的选择；即便没有证书，其他岗位同样能让你在阳光与海浪中，收获一段独一无二的夏日记忆。" },
+      { name: "酒店类", hero: "gradient", heroLabel: "[ 酒店类 · 岗位大图 ]",
+        chips: ["Front Desk","Housekeeping","F&B","Kitchen help"],
+        chipsLabel: "岗位种类",
+        descLabel: "岗位特点",
+        desc: "星级酒店的工作环境规范、体系成熟，是学习职业礼仪、锻炼涉外服务能力的优质渠道。前台接待、礼宾服务等岗位需要较强的英语沟通能力，能够有效锻炼英语口语与基础涉外职场素养；客房整理等岗位则更考验细致与耐心，即使英语基础一般，也能顺利胜任。厨房帮工则需要你用心烹饪出每道美食。酒店类岗位普遍排班稳定、加班机会充足，喜欢多攒收入的同学可主动与雇主协商增加。" }
+    ]
+  };
+
+  const pageConfig = {
+    title: "SWT 赴美带薪实习",
+    nav: {
+      logo: "img/logo.png",
+      langCurrent: "中文", langOther: "EN",
+      items: [
+        { label: "首页", link: "index.html" },
+        { label: "关于我们", link: "about.html" },
+        { label: "项目介绍", link: "project-swt.html", active: true, children: [
+            { label: "SWT 赴美带薪实习", link: "project-swt.html", active: true },
+            { label: "ITP 赴美专业实习", link: "#" },
+            { label: "ICCP 赴美营地辅导员", link: "#" },
+            { label: "Au Pair 赴美互惠生", link: "#" } ] },
+        { label: "案例分享", link: "cases.html" },
+        { label: "资讯中心", link: "news.html" },
+        { label: "联系我们", link: "contact.html" }
+      ]
+    },
+    footer: {
+      logo: "img/footLogo.png",
+      info: [
+        { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
+        { label: "📞 电话：", text: "010-64159286" },
+        { label: "✉ 邮箱：", text: "info@zhonghui.com" },
+        { label: "🌐 中文官网：", text: "www.chinaaupairs.com" },
+        { label: "🌐 英文官网：", text: "www.aupaircn.com" }
+      ],
+      qrcodes: [
+        { title: "公众号", text: "公众号\n二维码" },
+        { title: "咨询微信", text: "咨询微信\n二维码" }
+      ],
+      copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
+    },
+    blocks: [
+      // ① Banner 大图块
+      { type: "banner", data: { bg: "gradient", note: "[ 页面大图 ]" }, options: {} },
+
+      // ② 项目概述块：简介 + 关键信息（KV）
+      { type: "overview",
+        data: {
+          title: "项目概述",
+          text: "赴美带薪实习（Summer Work & Travel），基于美国政府 1948 年通过的信息及教育交流法案，为交流访问项目建立了基本框架。该项目已在欧洲、韩国、日本、新加坡等全球数百个国家和地区成功运行近 40 余年，每年都有十余万名大学生利用暑假持 J-1 签证赴美，进行为期 3-3.5 个月的短期实习。",
+          kv: [
+            { k: "签证类型", v: "J-1 签证" },
+            { k: "项目时长", v: "3–3.5 个月" },
+            { k: "覆盖范围", v: "全球数百国家" }
+          ],
+          kvCols: 3
+        },
+        options: {} },
+
+      // ③ 项目特点块：图标卡片（可配数量/列数）
+      { type: "features",
+        data: {
+          title: "项目特点",
+          cols: 3,
+          items: [
+            { icon: "🛡️", title: "美方权威机构全程监管", desc: "抵达后须通过 SEVIS 系统实时上报行程与规划，全程处于官方监管体系之下，安全透明、有据可查。" },
+            { icon: "🧡", title: "全程保险保障", desc: "项目周期内为每位学员配置境外保险，全方位守护赴美期间的人身安全与突发状况应对。" },
+            { icon: "🏢", title: "企业资质严格筛选", desc: "每家合作企业均经权威机构资信审核，匹配沟通透明规范，全程提供专业咨询解答。" }
+          ]
+        },
+        options: {} },
+
+      // ④ 适宜人群块：双栏列表
+      { type: "panel-list",
+        data: {
+          title: "适宜人群",
+          accent: "blue", id: "suitable",
+          panels: [
+            { heading: "基本资格", items: [
+                "18—28 周岁的全日制在校大学生、研究生",
+                "身体健康，无传染性疾病",
+                "学习成绩优良，在校表现良好",
+                "出具有效的在读证明、假期证明和无犯罪记录" ] },
+            { heading: "能力与素质", items: [
+                "具备良好的英文沟通能力",
+                "性格开朗乐观，处事大方得体，独立与适应能力强",
+                "工作积极努力，认真负责",
+                "勇于接受挑战，对国际文化交流充满兴趣" ] }
+          ]
+        },
+        options: {} },
+
+      // ⑤ 报名流程块：左侧阶段说明（竖排）+ 右侧完整链路（图标+步骤）
+      { type: "process",
+        data: {
+          title: "报名流程",
+          stagesTitle: "阶段说明", chainTitle: "完整流程",
+          stages: [
+            { name: "报名", desc: "学生了解项目后，安排口语测试，通过后进行材料准备" },
+            { name: "材料", desc: "学生在材料老师指导下完成材料准备工作" },
+            { name: "面试", desc: "准备所需资料并进行美方岗位面试，面试一般为线上进行" },
+            { name: "OFFER", desc: "如果面试成功即取得 offer 和 DS2019 表" },
+            { name: "签证", desc: "按照机构要求准备相应材料进行签证，通过后可购买赴美机票" },
+            { name: "培训", desc: "出发前进行行前培训，体验项目更充分" },
+            { name: "出发", desc: "按照 DS2019 表上约定时间赴美并开始工作，定期进行 SEVIS check in" }
+          ],
+          chain: [
+            { icon: "📞", name: "免费评估咨询" },
+            { icon: "🎙️", name: "进行口语测试" },
+            { icon: "📄", name: "提交申请材料" },
+            { icon: "🎓", name: "英语面试培训" },
+            { icon: "🔍", name: "岗位匹配" },
+            { icon: "💻", name: "雇主视频面试" },
+            { icon: "✍️", name: "签订 Offer" },
+            { icon: "📑", name: "DS-2019 表格办理" },
+            { icon: "🛂", name: "签证面签" },
+            { icon: "🧳", name: "行前培训" },
+            { icon: "🇺🇸", name: "赴美工作" }
+          ]
+        },
+        options: {} },
+
+      // ⑥ 项目优势与收益块：双栏列表
+      { type: "panel-list",
+        data: {
+          title: "项目优势与收益",
+          accent: "orange",
+          panels: [
+            { heading: "项目优势", items: [
+                "岗位类型丰富，餐饮、零售、酒店、游乐园等多领域可选",
+                "无需专业对口，语言门槛适中，适合首次赴美的学生",
+                "带薪实习 + 自由旅行双重体验，工作与探索兼得",
+                "周期适中、成本友好，初次赴美体验海外生活的优选" ] },
+            { heading: "你将得到", items: [
+                "赚取工作收入，实现\"打工换旅行\"",
+                "亲身体验真实美国日常生活，沉浸式海外生活",
+                "在独立解决问题中，锻炼自理能力与心理成熟度",
+                "利用 30 天自由行深度游历美国，开阔视野" ] }
+          ]
+        },
+        options: {} },
+
+      // ⑦ 岗位介绍块：Tab + 岗位大图 + 岗位种类 + 特点（+可选特别提醒）
+      { type: "jobs",
+        data: { title: "岗位介绍", source: "jobs" },
+        options: {} }
+    ]
+  };
+
+  // ---------------- 渲染器 ----------------
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+  const renderers = {
+    banner(b) {
+      const bg = b.data.bg;
+      const style = bg && bg !== "gradient" ? `style="background-image:url('${esc(bg)}')"` : "";
+      return `<section class="banner ${bg === "gradient" || !bg ? "bg-gradient" : ""}" ${style}>${b.data.note ? `<span class="banner-note">${esc(b.data.note)}</span>` : ""}</section>`;
+    },
+    overview(b) {
+      const d = b.data;
+      const kv = (d.kv || []).map(k => `<div class="kv-item"><div class="k">${esc(k.k)}</div><div class="v">${esc(k.v)}</div></div>`).join("");
+      return `<section class="section"><div class="container">
+        <div class="section-title"><h2>${esc(d.title)}</h2></div>
+        <p class="overview-text">${esc(d.text)}</p>
+        ${kv ? `<div class="overview-kv" style="grid-template-columns:repeat(${d.kvCols || kv.length},1fr);">${kv}</div>` : ""}
+      </div></section>`;
+    },
+    features(b) {
+      const d = b.data;
+      const cols = d.cols || 3;
+      const cards = (d.items || []).map(f => `<div class="feat-card">
+        <div class="icon">${esc(f.icon)}</div><h3>${esc(f.title)}</h3><p>${esc(f.desc)}</p>
+      </div>`).join("");
+      return `<section class="section section-alt"><div class="container">
+        <div class="section-title"><h2>${esc(d.title)}</h2></div>
+        <div class="feat-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
+      </div></section>`;
+    },
+    "panel-list"(b) {
+      const d = b.data;
+      const cls = d.accent === "orange" ? "panel adv-panel" : "panel";
+      const cols = (d.panels || []).map(p => `
+        <div class="${cls}"><h3>${esc(p.heading)}</h3><ul>${(p.items||[]).map(i=>`<li>${esc(i)}</li>`).join("")}</ul></div>`).join("");
+      return `<section class="section" id="${d.id || ""}"><div class="container">
+        <div class="section-title"><h2>${esc(d.title)}</h2></div>
+        <div class="two-col">${cols}</div>
+      </div></section>`;
+    },
+    process(b) {
+      const d = b.data;
+      const stages = (d.stages || []).map((s, i) => {
+        const last = i === (d.stages.length - 1);
+        return `<div class="stage"><span class="no" ${last ? `style="background:var(--deep-blue);color:#fff;"` : ""}>${i+1}</span><div><span class="name">${esc(s.name)}</span><span class="desc">${esc(s.desc)}</span></div></div>`;
+      }).join("");
+      const chain = (d.chain || []).map(c => `<div class="chain-item"><span class="ic">${esc(c.icon)}</span><span class="name">${esc(c.name)}</span></div>`).join("");
+      return `<section class="section section-alt"><div class="container">
+        <div class="section-title"><h2>${esc(d.title)}</h2></div>
+        <div class="process">
+          <div class="process-stages"><h3>${esc(d.stagesTitle)}</h3>${stages}</div>
+          <div class="process-chain"><h3>${esc(d.chainTitle)}</h3>${chain}</div>
+        </div>
+      </div></section>`;
+    },
+    jobs(b) {
+      const d = b.data;
+      const list = collections[d.source] || [];
+      const tabs = list.map((j, i) =>
+        `<button data-tab="${i}" class="${i === 0 ? "active" : ""}">${esc(j.name)}</button>`).join("");
+      const groups = list.map((j, i) => {
+        const heroStyle = j.hero !== "gradient"
+          ? `style="background:url('${esc(j.hero)}') center/cover no-repeat;"`
+          : `style="background:linear-gradient(135deg,#4A90E2,#1A4B7A);"`;
+        return `<div class="job-group" data-panel="${i}" ${i !== 0 ? `style="display:none;"` : ""}>
+          <div class="job-hero" ${heroStyle}>${esc(j.heroLabel || "")}</div>
+          <div class="job-body">
+            <h3>${esc(j.chipsLabel || "岗位种类")}</h3>
+            <div class="job-chip">${(j.chips||[]).map(c=>`<span>${esc(c)}</span>`).join("")}</div>
+            <h3>${esc(j.descLabel || "岗位特点")}</h3>
+            <p class="job-desc">${esc(j.desc || "")}</p>
+            ${j.warn ? `<div class="job-warn"><strong>特别提醒：</strong>${esc(j.warn)}</div>` : ""}
+          </div>
+        </div>`;
+      }).join("");
+      return `<section class="section section-alt"><div class="container">
+        <div class="section-title"><h2>${esc(d.title)}</h2></div>
+        <div class="job-tabs">${tabs}</div>
+        ${groups}
+      </div></section>`;
+    }
+  };
+
+  // ---------------- 渲染页面 ----------------
+  function renderNav(nav) {
+    const menu = nav.items.map(m => {
+      const sub = m.children ? `<div class="dropdown">${m.children.map(c =>
+        `<a href="${esc(c.link)}" class="${c.active ? "active" : ""}">${esc(c.label)}</a>`).join("")}</div>` : "";
+      return `<li><a href="${esc(m.link)}" class="${m.active ? "active" : ""}">${esc(m.label)}${m.children ? ' <span class="caret">▾</span>' : ""}</a>${sub}</li>`;
+    }).join("");
+    document.getElementById("site-header").innerHTML = `
+      <div class="container nav">
+        <a class="logo" href="index.html"><img src="${esc(nav.logo)}" alt="中惠文化"></a>
+        <ul class="nav-menu">${menu}</ul>
+        <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+      </div>`;
+  }
+
+  function renderBlocks(blocks) {
+    document.getElementById("page").innerHTML = blocks
+      .filter(b => renderers[b.type])
+      .map(b => renderers[b.type](b)).join("");
+    bindJobs();
+  }
+
+  function renderFooter(f) {
+    const info = f.info.map(i => `<p><span class="label">${esc(i.label)}</span>${esc(i.text)}</p>`).join("");
+    const qr = f.qrcodes.map(q => `
+      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div><p>${esc(q.title)}</p></div>`).join("");
+    document.getElementById("site-footer").innerHTML = `
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
+        <div class="footer-info">${info}</div>
+        <div class="footer-qr"><h4>关注我们</h4><div class="qr-box">${qr}</div></div>
+      </div>
+      <div class="footer-copy">${esc(f.copyright)}</div>`;
+  }
+
+  // 岗位 Tab 切换
+  function bindJobs() {
+    const btns = document.querySelectorAll('.job-tabs button');
+    if (!btns.length) return;
+    btns.forEach(btn => btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.job-group').forEach(g => g.style.display = 'none');
+      document.querySelector(`.job-group[data-panel="${btn.dataset.tab}"]`).style.display = 'block';
+    }));
+  }
+
+  renderNav(pageConfig.nav);
+  renderBlocks(pageConfig.blocks);
+  renderFooter(pageConfig.footer);
+  </script>
+</body>
+</html>

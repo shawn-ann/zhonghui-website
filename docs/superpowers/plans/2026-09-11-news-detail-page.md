@@ -1,0 +1,624 @@
+# 新闻详情页（news-detail.html）实现计划
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** 新建 `news-detail.html` 使资讯中心 12 条记录全部可点开阅读（2 篇真实内容 + 10 篇示例正文），并更新 `news.html` 列表链接。
+
+**Architecture:** 镜像 `case-detail.html` 的"共享详情模板"模式：单文件静态页，内联 CSS + JS，URL `?id=` 参数取文章，nav → banner → detail → footer 由页内脚本渲染。detail 渲染器在现有节点类型（p/h2/h3/blockquote/figure/ul）基础上新增 `table` 与 `ol`；上一篇/下一篇从集合顺序动态计算。
+
+**Tech Stack:** 纯 HTML/CSS/原生 JS，无构建工具、无测试框架、非 git 仓库（无提交步骤）。
+
+**Spec:** `docs/superpowers/specs/2026-09-11-news-detail-page-design.md`
+
+---
+
+## 文件清单
+
+| 操作 | 文件 | 职责 |
+|------|------|------|
+| Create | `news-detail.html` | 新闻详情页（结构与样式复制自 case-detail.html，含新增 table/ol 节点） |
+| Modify | `news.html` | 12 条列表项 link 改为 `news-detail.html?id=<slug>` |
+
+---
+
+### Task 1: 创建 news-detail.html
+
+**Files:**
+- Create: `news-detail.html`
+
+- [ ] **Step 1: 写入完整文件**
+
+创建 `news-detail.html`，内容如下（结构与 `case-detail.html` 一致；差异点：① `<title>` 为资讯详情；② 导航"资讯中心" active；③ 新增 `.article-body ol` 与 `.table-wrap`/`.article-table` 样式；④ `collections.news` 为 12 篇文章；⑤ detail 渲染器新增 table/ol 节点；⑥ 上一篇/下一篇动态计算；⑦ 动态设置 `document.title`）：
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>资讯详情 — 中惠文化</title>
+  <style>
+    :root {
+      --deep-blue: #1A4B7A;
+      --bright-blue: #4A90E2;
+      --light-blue: #E5F0FA;
+      --pale-blue: #D0E7F8;
+      --gray-blue: #5A7A9A;
+      --dark-text: #44546A;
+      --white: #FFFFFF;
+      --border: #E1E9F2;
+      --orange: #EE822F;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+      color: var(--dark-text);
+      line-height: 1.6;
+      background: var(--white);
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== 顶部导航栏 ===== */
+    header {
+      background: linear-gradient(120deg, var(--deep-blue) 0%, #24598f 100%);
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 10px rgba(26,75,122,0.25);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+    .logo img { display: block; height: 44px; width: auto; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+    .nav-menu { display: flex; list-style: none; gap: 28px; align-items: center; }
+    .nav-menu > li { position: relative; }
+    .nav-menu > li > a {
+      font-size: 15px; color: #d7e6f5; font-weight: 500; padding: 6px 0;
+      display: flex; align-items: center; gap: 4px; transition: color .2s;
+    }
+    .nav-menu > li > a:hover { color: #fff; }
+    .nav-menu > li > a.active { color: #fff; }
+    .nav-menu > li > a.active::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+      height: 3px; border-radius: 2px; background: var(--bright-blue);
+    }
+    .nav-menu .caret { font-size: 10px; opacity: .8; }
+    .nav-menu .dropdown {
+      position: absolute; top: 100%; left: -12px; min-width: 172px;
+      background: var(--white); border-radius: 0 0 8px 8px;
+      box-shadow: 0 10px 24px rgba(26,75,122,0.18); overflow: hidden;
+      opacity: 0; visibility: hidden; transform: translateY(8px);
+      transition: opacity .2s, transform .2s, visibility .2s;
+      padding: 6px 0; z-index: 200;
+    }
+    .nav-menu > li:hover .dropdown,
+    .nav-menu > li:focus-within .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-menu .dropdown a {
+      display: block; padding: 11px 20px; font-size: 14px; color: var(--deep-blue);
+      transition: background .15s, color .15s; white-space: nowrap;
+    }
+    .nav-menu .dropdown a:hover { background: var(--light-blue); color: var(--bright-blue); }
+    .nav-lang { font-size: 14px; color: #9db6cf; display: flex; gap: 6px; }
+    .nav-lang .sep { color: #5a7a9a; }
+    .nav-lang a { color: #9db6cf; }
+    .nav-lang a:hover { color: #fff; }
+    .nav-lang a.active { color: #fff; font-weight: 600; }
+
+    /* ===== Banner ===== */
+    .banner {
+      height: 240px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; background-size: cover; background-position: center;
+    }
+    .banner.bg-gradient { background: linear-gradient(135deg, #0e3d63 0%, #1A4B7A 50%, #3372b8 100%); }
+    .banner::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(#ffffff22 1px, transparent 1px); background-size: 28px 28px; }
+    .banner-note { position: relative; z-index: 1; color: rgba(255,255,255,.7); font-size: 15px; letter-spacing: 2px; padding: 8px 20px; border: 1px dashed rgba(255,255,255,.4); border-radius: 6px; }
+
+    /* ===== 文章 ===== */
+    .article { padding: 48px 0 64px; }
+    .article-title { font-size: 30px; color: var(--deep-blue); font-weight: 700; line-height: 1.4; }
+    .article-meta { color: var(--gray-blue); font-size: 14px; margin-top: 12px; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
+    .article-cover { height: 340px; border-radius: 12px; margin: 28px 0; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.85); font-size: 15px; }
+    .article-body { font-size: 16px; line-height: 2; color: var(--dark-text); }
+    .article-body h2 { font-size: 21px; color: var(--deep-blue); margin: 32px 0 14px; }
+    .article-body h3 { font-size: 18px; color: var(--deep-blue); margin: 24px 0 10px; }
+    .article-body p { margin-bottom: 16px; }
+    .article-body ul { margin: 0 0 16px 22px; }
+    .article-body li { margin-bottom: 8px; }
+    .article-body ol { margin: 0 0 16px 22px; }
+    .article-body blockquote {
+      border-left: 4px solid var(--bright-blue); background: var(--light-blue);
+      padding: 14px 20px; border-radius: 6px; margin: 20px 0; color: var(--deep-blue);
+    }
+    .article-body .figure {
+      height: 260px; border-radius: 10px; margin: 22px 0;
+      display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.8); font-size: 14px;
+    }
+    .table-wrap { overflow-x: auto; margin: 20px 0; }
+    .article-table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--white); }
+    .article-table th { background: var(--light-blue); color: var(--deep-blue); text-align: left; font-weight: 600; }
+    .article-table th, .article-table td { border: 1px solid var(--border); padding: 10px 12px; }
+    .article-table tbody tr:nth-child(even) td { background: #f7fafd; }
+
+    /* 上一篇 / 下一篇 */
+    .article-nav { display: flex; justify-content: space-between; gap: 20px; margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .article-nav a { font-size: 14px; color: var(--bright-blue); max-width: 46%; }
+    .article-nav a span { display: block; color: var(--gray-blue); font-size: 12px; margin-bottom: 4px; }
+    .article-nav a.next { text-align: right; margin-left: auto; }
+
+    /* ===== 页脚 ===== */
+    footer { background: var(--deep-blue); color: #cfdff0; }
+    .footer-grid { max-width: 1280px; margin: 0 auto; padding: 56px 24px 32px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
+    .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
+    .footer-brand .zh { font-size: 22px; font-weight: 700; color: #fff; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #9db6cf; margin-top: 4px; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #d7e6f5; }
+    .footer-info .label { color: #9db6cf; margin-right: 8px; }
+    .footer-copy { border-top: 1px solid rgba(255,255,255,.12); padding: 20px 24px; text-align: center; font-size: 13px; color: #9db6cf; }
+    .footer-qr { text-align: center; }
+    .footer-qr h4 { color: #fff; font-size: 16px; margin-bottom: 16px; }
+    .qr-box { display: flex; gap: 16px; justify-content: center; }
+    .qr-item .qr { width: 92px; height: 92px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--deep-blue); font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px; }
+    .qr-item p { font-size: 13px; color: #d7e6f5; }
+
+    @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <header id="site-header"></header>
+  <main id="page"></main>
+  <footer id="site-footer"></footer>
+
+  <script>
+  /* =========================================================
+     CMS 配置化内容模型 —— 资讯详情页
+     共享详情模板：渲染单个集合项（标题 / 日期 / 头图 / 富文本正文）。
+     ========================================================= */
+
+  // 资讯集合（模拟后端）；详情页取其中一项
+  const collections = {
+    news: [
+      { id: "lifeguard", title: "赴美做 Lifeguard，到底要过哪些关？", date: "2025-09-05", cover: "linear-gradient(135deg,#4A90E2,#1A4B7A)",
+        body: [
+          { type: "p", text: "救生员（Lifeguard）是 SWT 项目中人气最高的岗位之一。想要站上救生台，需要闯过哪些关卡？从岗前培训、资格考核到日常工作，一文带你了解全流程。" },
+          { type: "h2", text: "一、为什么选择 Lifeguard" },
+          { type: "ul", items: [
+            "🏊 日常工作场景多集中于水上乐园、酒店泳池及各类度假村，工作环境轻松惬意",
+            "💰 岗位时薪待遇可观，收入稳定",
+            "🗽 日常高频使用英语交流，能够稳步提升语言能力",
+            "❤ 这份工作需要极强的责任心，坚守岗位守护他人安全，时常收获满满的成就感" ] },
+          { type: "h2", text: "二、岗前考核与培训" },
+          { type: "p", text: "正式上岗前，同学们需要完成 Lifeguard 岗前培训及相关考核。2025 年，中惠提供两种培训方式：" },
+          { type: "ol", items: [
+            "赴美后参加当地培训",
+            "北京线下集中培训" ] },
+          { type: "p", text: "无论您最终作何选择，我们都将全程跟进，协助统筹培训安排、资格考核与后续赴美手续，细致铺就各项流程，为您顺利上岗筑牢充分准备。" },
+          { type: "h2", text: "三、Lifeguard 日常工作" },
+          { type: "ul", items: [
+            "泳池巡视，保障游客安全",
+            "观察泳池情况，及时处理突发状况",
+            "与来自世界各地的同事协作，共同完成工作",
+            "为游客提供帮助，维护泳池秩序" ] },
+          { type: "h2", text: "四、Work & Travel" },
+          { type: "p", text: "工作之余，同学们也有充足的时间体验美国文化生活。可以和朋友一起逛城市、品尝美食、观看烟花、打卡景点，或是在假期开启一场说走就走的旅行。来自不同国家和地区的伙伴，也让这段经历充满了文化交流与难忘的回忆。" },
+          { type: "p", text: "Work & Travel 的意义，不只是完成一份工作，更是在这个夏天，收获成长、友谊和属于自己的海外故事。" },
+          { type: "blockquote", text: "这个夏天，值得奔赴。每一位站上救生台的 Lifeguard，都经历了认真准备；每一段赴美经历，也都将成为未来成长中宝贵的回忆。" },
+          { type: "p", text: "如果你也想体验一个充实而难忘的夏天，欢迎联系我们，一起开启属于你的 Summer Work & Travel USA 之旅。" }
+        ] },
+      { id: "wystc", title: "中惠出海！在里斯本谈下更多赴美实习好机会", date: "2025-09-01", cover: "linear-gradient(135deg,#3372b8,#24598f)",
+        body: [
+          { type: "h2", text: "一、大会背景" },
+          { type: "p", text: "中惠出海，在里斯本为大家谈下更多赴美实习好机会！" },
+          { type: "p", text: "应世界青年学生与教育旅游联合会（WYSE）邀请，中惠创始人 Wendy 远赴葡萄牙里斯本，参加 2025 年世界青年和学生旅行大会（WYSTC）。" },
+          { type: "p", text: "WYSTC 是世界青年与文化交流行业的盛会，几乎所有由美国国务院授权的文化交流基金会均为其活跃成员。每年，美国国务院负责 Aupair、SWT、Camp Counselor、Intern & Trainee 等项目的官员亲自到场，分享最新政策与趋势。" },
+          { type: "h2", text: "二、中惠在 WYSTC" },
+          { type: "p", text: "在会议期间，Wendy 与来自美国及全球的合作方深入交流，达成了多项新的合作成果，并带回了前沿的政策资讯。这不仅帮助中惠进一步拓展了项目资源，也为同学们争取到了更优质的服务、丰富的选择。" },
+          { type: "h2", text: "三、合作亮点" },
+          { type: "table",
+            headers: [ "合作方", "说明" ],
+            rows: [
+              [ "Life Travel", "全新赴美带薪实习合作方，岗位类型多样，选择更灵活" ],
+              [ "AAG (Alliance Abroad Group)", "美国本土实力强劲的交流机构，长期与美国知名企业和酒店集团合作，实习岗位质量高" ],
+              [ "Aspire", "新加入合作伙伴，注重岗位的实用性与成长性，帮助同学们在美国积累真实的文化交流经验" ],
+              [ "AupairCare", "全球知名互惠生机构，项目成熟稳定；中惠为 AupairCare 协会中国大陆地区唯一直接授权合作方（一级合作）" ],
+              [ "CETUSA", "美国国务院指定的文化交流组织，长期提供赴美实习等多元项目" ] ] }
+        ] },
+      { id: "swt-zero-visa-rejection", title: "2025 年 SWT 项目 0 拒签战绩公布", date: "2025-08-28", cover: "linear-gradient(135deg,#5A7A9A,#1A4B7A)",
+        body: [
+          { type: "p", text: "2025 年申请季正式收官，中惠文化 SWT 赴美带薪实习项目学员全员顺利过签，继续保持 0 拒签纪录。这份成绩的背后，是一套成熟的全程签证护航体系，也是每一位学员认真准备的结果。" },
+          { type: "h2", text: "全流程签证护航体系" },
+          { type: "p", text: "从材料准备到面签完成，中惠为每位学员提供全流程陪伴式服务：" },
+          { type: "ul", items: [
+            "材料双重审核：DS-160 表格、邀请函、资产证明等关键材料均经两轮核对，确保信息真实准确",
+            "一对一模拟面签：资深顾问还原真实面签场景，针对学员个人情况定制高频问题清单",
+            "签证政策动态跟踪：实时关注使领馆预约与政策变化，第一时间调整申请节奏",
+            "行前心理疏导：帮助学员以平稳自信的心态走进签证大厅" ] },
+          { type: "h2", text: "0 拒签背后的努力" },
+          { type: "p", text: "签证没有捷径，唯有充分准备。每一份材料的反复打磨、每一次模拟问答的细致复盘，都是学员们顺利过签的底气。中惠也将继续以专业与细致，守护每一位学员的赴美之路。" },
+          { type: "blockquote", text: "越努力越幸运——逆袭者没有魔法，只有日复一日的认真准备。" }
+        ] },
+      { id: "apply-test-guide", title: "申请攻略：项目适配测试三步走", date: "2025-08-20", cover: "linear-gradient(135deg,#30C0B4,#0e5b54)",
+        body: [
+          { type: "p", text: "SWT、ITP、ICCP、Au Pair……面对多个赴美项目，很多同学的第一反应是“不知道选哪个”。其实，只需三个步骤，就能找到最适合自己的项目。" },
+          { type: "h2", text: "第一步：确认身份类型" },
+          { type: "p", text: "在校大学生、应届毕业生、在职青年可申请的项目各不相同。SWT 面向在读大学生，ITP 适合应届毕业生与在职青年，ICCP 与 Au Pair 则对年龄与经验有不同要求。先确认自己的身份是否符合项目的基本申请条件，是做出选择的前提。" },
+          { type: "h2", text: "第二步：明确收获偏好" },
+          { type: "p", text: "想要高性价比的短期体验，还是长时间的深度工作经历？更看重语言能力的提升，还是跨文化生活的沉浸？不同的项目在这些维度上的表现差异很大，明确自己最看重的收获，能大幅缩小选择范围。" },
+          { type: "h2", text: "第三步：性格匹配" },
+          { type: "p", text: "喜欢与人打交道、乐于陪伴孩子的同学可能适合 Au Pair；热爱户外、责任心强的同学不妨考虑营地辅导员；希望积累专业经验的同学则可以将 ITP 作为首选。完成三步之后，欢迎联系中惠顾问进行一对一咨询，让专业建议为你的选择保驾护航。" }
+        ] },
+      { id: "visa-interview-tips", title: "面签攻略：着装规范与作答技巧", date: "2025-08-15", cover: "linear-gradient(135deg,#EE822F,#C25E00)",
+        body: [
+          { type: "p", text: "面签是赴美前的最后一关，也是许多同学最紧张的一环。其实，签证官想确认的只有两件事：你的目的是否真实，你的回答是否自然。掌握好着装与作答两个维度，就能从容应对。" },
+          { type: "h2", text: "着装规范" },
+          { type: "ul", items: [
+            "整洁得体即可，无需正装，符合学生身份的休闲正装是最佳选择",
+            "颜色以素净为主，避免过于夸张的图案与配饰",
+            "提前整理好发型与面容，给签证官留下清爽、精神的印象" ] },
+          { type: "h2", text: "作答技巧" },
+          { type: "ul", items: [
+            "听清问题再回答，语速平稳，不必刻意使用复杂句式",
+            "回答与申请材料保持一致，项目名称、时间、地点等关键信息不要口误",
+            "如实作答，不背诵模板，签证官更看重真实自然的表达",
+            "遇到没听懂的问题，礼貌地请签证官重复，不要慌乱猜测" ] },
+          { type: "blockquote", text: "从容不迫的着装与真实自然的表达，是面签成功的关键。" }
+        ] },
+      { id: "lifeguard-training-beijing", title: "2026 中惠 SWT 救生员培训北京站圆满结束", date: "2026-06-10", cover: "linear-gradient(135deg,#75BD42,#3c6e1b)",
+        body: [
+          { type: "p", text: "近日，2026 中惠 SWT 救生员培训北京站圆满结束。来自各地的高校学员齐聚北京，完成为期数天的线下集中培训，为即将到来的赴美救生员岗位打下扎实基础。" },
+          { type: "h2", text: "培训内容回顾" },
+          { type: "p", text: "本次培训围绕救生员岗位的核心能力展开，内容包括：" },
+          { type: "ul", items: [
+            "水域救生技能：入水、接近、拖带、上岸等标准救援流程实操训练",
+            "心肺复苏（CPR）与急救：模拟真实场景，掌握应急处理规范",
+            "泳池安全管理：巡视路线、风险预判与突发状况处置",
+            "英语岗位术语强化：高频工作场景英语听说训练" ] },
+          { type: "p", text: "培训期间，学员们不仅掌握了岗位技能，也在朝夕相处中建立了深厚友谊。许多学员表示，线下集中培训让他们对赴美工作有了更具体的认知，也更加期待这个夏天的成长与挑战。" },
+          { type: "p", text: "预祝所有学员顺利过签，在美国的救生台上度过一个安全、充实、难忘的夏天。" }
+        ] },
+      { id: "itp-jobs-update", title: "ITP 专业实习岗位更新：会计 / 物流 / 酒店前台", date: "2026-05-22", cover: "linear-gradient(135deg,#E54C5E,#8c1d2a)",
+        body: [
+          { type: "p", text: "中惠 ITP 赴美专业实习项目新一期岗位更新来啦！本次开放申请的岗位覆盖会计、物流、酒店前台等热门方向，工作地点分布在纽约、亚特兰大、洛杉矶等城市，欢迎符合条件的同学踊跃申请。" },
+          { type: "h2", text: "本期精选岗位" },
+          { type: "table",
+            headers: [ "岗位方向", "工作地点", "岗位说明" ],
+            rows: [
+              [ "会计", "纽约", "参与日常账务处理与财务报表编制，熟悉美国会计准则" ],
+              [ "物流", "亚特兰大", "协助仓储运营与供应链协调，了解美国物流体系" ],
+              [ "酒店前台", "洛杉矶", "负责宾客接待与入住服务，锻炼双语沟通与服务能力" ] ] },
+          { type: "h2", text: "申请条件" },
+          { type: "p", text: "ITP 项目面向应届毕业生及有相关工作经验的在职青年，要求具备与岗位匹配的专业背景，以及能够胜任全英文工作环境的语言能力。" },
+          { type: "p", text: "岗位数量有限，匹配先到先得。对以上岗位感兴趣的同学，请尽快联系中惠顾问获取详细岗位说明与申请材料清单。" }
+        ] },
+      { id: "aupair-faq", title: "互惠生项目常见问题答疑", date: "2026-05-08", cover: "linear-gradient(135deg,#4A90E2,#0e3d63)",
+        body: [
+          { type: "p", text: "Au Pair 互惠生项目是许多同学赴美交流的热门选择，也是咨询量最大的项目之一。我们整理了大家最关心的几个高频问题，一次讲清。" },
+          { type: "h2", text: "语言要求高吗？" },
+          { type: "p", text: "互惠生项目要求申请者具备基本的英语沟通能力，能够与接待家庭进行日常交流。没有硬性的分数门槛，但口语越流利，匹配到心仪家庭的机会越大。" },
+          { type: "h2", text: "住宿怎么安排？" },
+          { type: "p", text: "互惠生入住接待家庭，拥有独立房间，食宿由家庭承担。你只需要像家人一样融入家庭生活，每周完成一定时长的育儿陪伴工作。" },
+          { type: "h2", text: "零用钱有多少？" },
+          { type: "p", text: "接待家庭每周按项目标准发放零用钱，足以覆盖日常个人开销。此外，项目还提供一定额度的教育补贴，可用于社区大学等课程学习。" },
+          { type: "h2", text: "如何匹配家庭？" },
+          { type: "p", text: "中惠顾问会根据你的性格、技能与偏好，协助你完善个人资料，并在合作机构的家庭库中进行双向匹配。匹配过程中你拥有充分的知情权与选择权，双方确认后才会正式成行。" }
+        ] },
+      { id: "camp-types", title: "营地辅导员：六种营地类型怎么选？", date: "2026-04-19", cover: "linear-gradient(135deg,#F2BA02,#a37a00)",
+        body: [
+          { type: "p", text: "营地辅导员（Camp Counselor）是美国夏天最有活力的项目之一。但你知道吗？美国的营地远不止一种类型，选对营地，直接决定了你这个夏天的体验。以下是六种最常见的营地类型。" },
+          { type: "h2", text: "公益营地" },
+          { type: "p", text: "由社区组织或公益团体运营，收费较低，营员背景多元。工作氛围温暖包容，适合第一次参加项目的同学。" },
+          { type: "h2", text: "单性别营地" },
+          { type: "p", text: "只招收男孩或女孩的营地，活动设计与管理风格各有特色，传统美式营地文化保留得较为完整。" },
+          { type: "h2", text: "女童子军营地" },
+          { type: "p", text: "隶属于美国女童子军体系，注重领导力与户外技能培养，团队氛围积极向上。" },
+          { type: "h2", text: "特殊需求营地" },
+          { type: "p", text: "服务于身心障碍儿童的营地，需要辅导员付出更多耐心与关怀，也是成就感与使命感最强的选择之一。" },
+          { type: "h2", text: "宗教营地" },
+          { type: "p", text: "带有宗教背景的营地，日常会包含相关活动，但同样欢迎不同背景的国际辅导员加入。" },
+          { type: "h2", text: "特色营地" },
+          { type: "p", text: "马术、表演艺术、STEM、水上运动……特色营地围绕某一主题深耕，如果你有相关特长，这里就是你大放异彩的舞台。" },
+          { type: "p", text: "不确定自己适合哪类营地？欢迎联系中惠顾问，我们会结合你的特长与偏好给出建议。" }
+        ] },
+      { id: "pre-departure-checklist", title: "行前培训清单：出发前你需要准备什么", date: "2026-04-02", cover: "linear-gradient(135deg,#44546A,#1A4B7A)",
+        body: [
+          { type: "p", text: "拿到签证只是第一步，出发前的准备同样重要。我们为你准备了一份行前培训清单，照着逐项打勾，安心开启赴美之旅。" },
+          { type: "h2", text: "证件材料" },
+          { type: "ul", items: [
+            "护照（有效期需覆盖项目结束后 6 个月以上）",
+            "DS-2019 表、签证页复印件与 SEVIS 费收据",
+            "邀请函、保险单与紧急联系人信息卡",
+            "证件照若干与护照信息页备份（纸质 + 电子版）" ] },
+          { type: "h2", text: "行李打包" },
+          { type: "ul", items: [
+            "衣物以舒适耐穿为主，带一件外套应对早晚温差",
+            "常用药品需附英文说明，处方药保持原包装",
+            "转换插头、充电宝（登机随身携带）与个人洗漱用品",
+            "行李限额以航空公司规定为准，超重费用高昂，宁少勿多" ] },
+          { type: "h2", text: "入境流程" },
+          { type: "p", text: "下机后跟随 Customs 指引排队入境，如实回答海关关于行程目的的提问，出示护照与 DS-2019 表。取行李后如需转机，留意后续航段航站楼变更，预留充足时间。" },
+          { type: "h2", text: "生活须知" },
+          { type: "p", text: "抵美后第一时间向雇主与中惠顾问报平安；办理本地电话卡与银行卡；熟悉住所与通勤路线；保管好工资单等个人记录。遇到任何问题，中惠的海外支持团队随时在线。" }
+        ] },
+      { id: "j1-policy-trends", title: "行业资讯：2026 美国 J1 项目政策趋势", date: "2026-03-15", cover: "linear-gradient(135deg,#3372b8,#0e3d63)",
+        body: [
+          { type: "p", text: "在最近一届 WYSTC 世界青年和学生旅行大会上，美国国务院负责文化交流项目的官员分享了 J1 项目的最新政策与趋势。我们摘录了与同学们最相关的几个要点。" },
+          { type: "h2", text: "政策走向" },
+          { type: "ul", items: [
+            "交流访问项目延续鼓励态度，J1 签证整体环境保持稳定",
+            "对 sponsor（担保机构）的审核与合规要求持续加强，项目质量更有保障",
+            "英语能力与岗位真实性核查更加严格，材料准备需更加严谨",
+            "部分岗位类型的区域分布有所调整，热门城市竞争加剧" ] },
+          { type: "h2", text: "对申请人的影响" },
+          { type: "p", text: "整体来看，政策环境对认真准备的同学是利好：合规审核趋严意味着项目体验更有保障，而提前规划、如实准备材料的申请人几乎不受影响。对于英语基础较薄弱的同学，建议尽早开始口语训练，以应对更加规范的核查流程。" },
+          { type: "blockquote", text: "政策的稳定与规范，正是文化交流项目长期价值的体现。" }
+        ] },
+      { id: "student-story", title: "学员分享：第一次独自出国的成长", date: "2026-03-01", cover: "linear-gradient(135deg,#30C0B4,#1A4B7A)",
+        body: [
+          { type: "p", text: "“出发那天，我在机场给妈妈打了个电话，说完再见才发现，这是我第一次真正意义上独自远行。”学员小林这样回忆她的赴美之旅。" },
+          { type: "p", text: "从落地时的忐忑，到第一次独立处理租房、办卡、通勤这些琐碎小事；从开口说英语前的深呼吸，到和各国同事谈笑风生——变化在不知不觉中发生。" },
+          { type: "blockquote", text: "“最难忘的不是自由女神或大峡谷，而是某天下班后，我发现自己可以不慌不忙地搞定一切。原来成长就是这些瞬间叠在一起。”" },
+          { type: "p", text: "项目结束后，小林把这段经历写进了简历，也带回了更开阔的视野和更笃定的自己。海外经历带来的改变，往往在工作之外、在回国之后，才慢慢显现出全部的分量。" },
+          { type: "p", text: "下一个故事的主角，会是你吗？" }
+        ] }
+    ]
+  };
+
+  // 从 URL 参数取文章 id；无 id 或无效 id 回退到第一篇
+  const params = new URLSearchParams(location.search);
+  const newsId = params.get("id");
+  const newsList = collections.news;
+  const idx = Math.max(0, newsList.findIndex(n => n.id === newsId));
+  const article = newsList[idx];
+  const prevArticle = idx > 0 ? newsList[idx - 1] : null;
+  const nextArticle = idx < newsList.length - 1 ? newsList[idx + 1] : null;
+  document.title = article.title + " — 中惠文化";
+
+  const pageConfig = {
+    title: article.title,
+    nav: {
+      logo: "img/logo.png",
+      langCurrent: "中文", langOther: "EN",
+      items: [
+        { label: "首页", link: "index.html" },
+        { label: "关于我们", link: "about.html", children: [
+            { label: "公司介绍", link: "about.html#company" },
+            { label: "中惠团队", link: "about.html#team" },
+            { label: "核心优势", link: "about.html#advantage" } ] },
+        { label: "项目介绍", link: "project-swt.html", children: [
+            { label: "SWT 赴美带薪实习", link: "project-swt.html" },
+            { label: "ITP 赴美专业实习", link: "#" },
+            { label: "ICCP 赴美营地辅导员", link: "#" },
+            { label: "Au Pair 赴美互惠生", link: "#" } ] },
+        { label: "案例分享", link: "cases.html" },
+        { label: "资讯中心", link: "news.html", active: true },
+        { label: "联系我们", link: "#" }
+      ]
+    },
+    footer: {
+      logo: "img/footLogo.png",
+      info: [
+        { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
+        { label: "📞 电话：", text: "010-64159286" },
+        { label: "✉ 邮箱：", text: "info@zhonghui.com" },
+        { label: "🌐 中文官网：", text: "www.chinaaupairs.com" },
+        { label: "🌐 英文官网：", text: "www.aupaircn.com" }
+      ],
+      qrcodes: [
+        { title: "公众号", text: "公众号\n二维码" },
+        { title: "咨询微信", text: "咨询微信\n二维码" }
+      ],
+      copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
+    },
+    blocks: [
+      // Banner 大图块
+      { type: "banner", data: { bg: "gradient", note: "[ 页面大图 ]" }, options: {} },
+      // 详情块：渲染单篇文章（标题/日期/头图/富文本正文/上下篇动态计算）
+      { type: "detail",
+        data: {
+          title: article.title, date: article.date,
+          cover: article.cover, coverLabel: "[ 文章头图 ]",
+          body: article.body,
+          prev: prevArticle ? { title: prevArticle.title, link: "news-detail.html?id=" + prevArticle.id } : null,
+          next: nextArticle ? { title: nextArticle.title, link: "news-detail.html?id=" + nextArticle.id } : null
+        },
+        options: {} }
+    ]
+  };
+
+  // ---------------- 渲染器 ----------------
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+  const renderers = {
+    banner(b) {
+      const bg = b.data.bg;
+      const style = bg && bg !== "gradient" ? `style="background-image:url('${esc(bg)}')"` : "";
+      return `<section class="banner ${bg === "gradient" || !bg ? "bg-gradient" : ""}" ${style}>${b.data.note ? `<span class="banner-note">${esc(b.data.note)}</span>` : ""}</section>`;
+    },
+    detail(b) {
+      const d = b.data;
+      const body = (d.body || []).map(node => {
+        if (node.type === "h2") return `<h2>${esc(node.text)}</h2>`;
+        if (node.type === "h3") return `<h3>${esc(node.text)}</h3>`;
+        if (node.type === "blockquote") return `<blockquote>${esc(node.text)}</blockquote>`;
+        if (node.type === "figure") return `<div class="figure">${esc(node.text)}</div>`;
+        if (node.type === "ul") return `<ul>${(node.items||[]).map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`;
+        if (node.type === "ol") return `<ol>${(node.items||[]).map(i=>`<li>${esc(i)}</li>`).join("")}</ol>`;
+        if (node.type === "table") {
+          const thead = `<thead><tr>${(node.headers||[]).map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead>`;
+          const tbody = `<tbody>${(node.rows||[]).map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody>`;
+          return `<div class="table-wrap"><table class="article-table">${thead}${tbody}</table></div>`;
+        }
+        return `<p>${esc(node.text)}</p>`;
+      }).join("");
+      const nav = (d.prev || d.next) ? `<div class="article-nav">
+          ${d.prev ? `<a href="${esc(d.prev.link)}"><span>上一篇</span>${esc(d.prev.title)}</a>` : ""}
+          ${d.next ? `<a class="next" href="${esc(d.next.link)}"><span>下一篇</span>${esc(d.next.title)}</a>` : ""}
+        </div>` : "";
+      return `<article class="article"><div class="container">
+        <h1 class="article-title">${esc(d.title)}</h1>
+        <div class="article-meta">📅 ${esc(d.date)}</div>
+        <div class="article-cover" style="background:${esc(d.cover)};">${esc(d.coverLabel || "")}</div>
+        <div class="article-body">${body}</div>
+        ${nav}
+      </div></article>`;
+    }
+  };
+
+  // ---------------- 渲染页面 ----------------
+  function renderNav(nav) {
+    const menu = nav.items.map(m => {
+      const sub = m.children ? `<div class="dropdown">${m.children.map(c =>
+        `<a href="${esc(c.link)}">${esc(c.label)}</a>`).join("")}</div>` : "";
+      return `<li><a href="${esc(m.link)}" class="${m.active ? "active" : ""}">${esc(m.label)}${m.children ? ' <span class="caret">▾</span>' : ""}</a>${sub}</li>`;
+    }).join("");
+    document.getElementById("site-header").innerHTML = `
+      <div class="nav">
+        <a class="logo" href="index.html"><img src="${esc(nav.logo)}" alt="中惠文化"></a>
+        <ul class="nav-menu">${menu}</ul>
+        <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+      </div>`;
+  }
+
+  function renderBlocks(blocks) {
+    document.getElementById("page").innerHTML = blocks
+      .filter(b => renderers[b.type])
+      .map(b => renderers[b.type](b)).join("");
+  }
+
+  function renderFooter(f) {
+    const info = f.info.map(i => `<p><span class="label">${esc(i.label)}</span>${esc(i.text)}</p>`).join("");
+    const qr = f.qrcodes.map(q => `
+      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div><p>${esc(q.title)}</p></div>`).join("");
+    document.getElementById("site-footer").innerHTML = `
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
+        <div class="footer-info">${info}</div>
+        <div class="footer-qr"><h4>关注我们</h4><div class="qr-box">${qr}</div></div>
+      </div>
+      <div class="footer-copy">${esc(f.copyright)}</div>`;
+  }
+
+  renderNav(pageConfig.nav);
+  renderBlocks(pageConfig.blocks);
+  renderFooter(pageConfig.footer);
+  </script>
+</body>
+</html>
+```
+
+注意：`.article-cover` 的背景由 `style="background:${esc(d.cover)};"` 行内注入（与 case-detail.html 一致），故 CSS 中不写死背景色。
+
+- [ ] **Step 2: 启动本地服务器验证基础渲染**
+
+Run（项目根目录）:
+```bash
+python3 -m http.server 8000
+```
+浏览器访问 `http://localhost:8000/news-detail.html?id=wystc`
+
+Expected:
+- 导航栏"资讯中心"高亮（蓝色下划线）
+- 文章标题《中惠出海！在里斯本谈下更多赴美实习好机会》、日期 2025-09-01
+- "合作亮点"小节渲染为表格：表头浅蓝底、深蓝字、5 行数据
+- 上一篇：《赴美做 Lifeguard，到底要过哪些关？》；下一篇：《2025 年 SWT 项目 0 拒签战绩公布》
+- 浏览器标签页标题为文章标题
+
+- [ ] **Step 3: 验证 id 回退与 ol 节点**
+
+浏览器依次访问：
+- `http://localhost:8000/news-detail.html` → Expected: 显示第一篇（Lifeguard），含"两种培训方式"有序列表 1、2
+- `http://localhost:8000/news-detail.html?id=invalid` → Expected: 同上，无 JS 报错（控制台干净）
+- `http://localhost:8000/news-detail.html?id=student-story` → Expected: 最后一篇，仅显示"上一篇"无"下一篇"
+
+---
+
+### Task 2: 更新 news.html 列表链接
+
+**Files:**
+- Modify: `news.html`（`collections.news` 数组，第 152-163 行）
+
+- [ ] **Step 1: 修改前 2 条 link（当前值为 `news-detail.html`）**
+
+Edit 1 — oldString:
+```
+{ title: "赴美做 Lifeguard，到底要过哪些关？", summary: "从岗前培训、考核到日常工作，带你了解救生员岗位的全流程。", date: "2025-09-05", cover: "linear-gradient(135deg,#4A90E2,#1A4B7A)", link: "news-detail.html" },
+```
+newString:
+```
+{ title: "赴美做 Lifeguard，到底要过哪些关？", summary: "从岗前培训、考核到日常工作，带你了解救生员岗位的全流程。", date: "2025-09-05", cover: "linear-gradient(135deg,#4A90E2,#1A4B7A)", link: "news-detail.html?id=lifeguard" },
+```
+
+Edit 2 — oldString:
+```
+{ title: "中惠出海！在里斯本谈下更多赴美实习好机会", summary: "应 WYSE 邀请，中惠创始人 Wendy 远赴葡萄牙参加 2025 WYSTC 大会。", date: "2025-09-01", cover: "linear-gradient(135deg,#3372b8,#24598f)", link: "news-detail.html" },
+```
+newString:
+```
+{ title: "中惠出海！在里斯本谈下更多赴美实习好机会", summary: "应 WYSE 邀请，中惠创始人 Wendy 远赴葡萄牙参加 2025 WYSTC 大会。", date: "2025-09-01", cover: "linear-gradient(135deg,#3372b8,#24598f)", link: "news-detail.html?id=wystc" },
+```
+
+- [ ] **Step 2: 修改其余 10 条 link（当前值为 `#`）**
+
+每条整行替换，仅改 `link` 值：
+
+| 行 oldString（以 title 开头唯一识别） | link 新值 |
+|---|---|
+| `{ title: "2025 年 SWT 项目 0 拒签战绩公布", …` | `news-detail.html?id=swt-zero-visa-rejection` |
+| `{ title: "申请攻略：项目适配测试三步走", …` | `news-detail.html?id=apply-test-guide` |
+| `{ title: "面签攻略：着装规范与作答技巧", …` | `news-detail.html?id=visa-interview-tips` |
+| `{ title: "2026 中惠 SWT 救生员培训北京站圆满结束", …` | `news-detail.html?id=lifeguard-training-beijing` |
+| `{ title: "ITP 专业实习岗位更新：会计 / 物流 / 酒店前台", …` | `news-detail.html?id=itp-jobs-update` |
+| `{ title: "互惠生项目常见问题答疑", …` | `news-detail.html?id=aupair-faq` |
+| `{ title: "营地辅导员：六种营地类型怎么选？", …` | `news-detail.html?id=camp-types` |
+| `{ title: "行前培训清单：出发前你需要准备什么", …` | `news-detail.html?id=pre-departure-checklist` |
+| `{ title: "行业资讯：2026 美国 J1 项目政策趋势", …` | `news-detail.html?id=j1-policy-trends` |
+| `{ title: "学员分享：第一次独自出国的成长", …` | `news-detail.html?id=student-story` |
+
+示例（其余同模式）— oldString:
+```
+{ title: "2025 年 SWT 项目 0 拒签战绩公布", summary: "全流程签证护航体系，助力学员全员顺利过签。", date: "2025-08-28", cover: "linear-gradient(135deg,#5A7A9A,#1A4B7A)", link: "#" },
+```
+newString:
+```
+{ title: "2025 年 SWT 项目 0 拒签战绩公布", summary: "全流程签证护航体系，助力学员全员顺利过签。", date: "2025-08-28", cover: "linear-gradient(135deg,#5A7A9A,#1A4B7A)", link: "news-detail.html?id=swt-zero-visa-rejection" },
+```
+
+- [ ] **Step 3: 验证链接跳转**
+
+Run（项目根目录，若 Task 1 的服务器仍在运行则跳过启动）:
+```bash
+python3 -m http.server 8000
+```
+浏览器访问 `http://localhost:8000/news.html`
+
+Expected: 12 条新闻卡片全部可点击且进入对应详情页（第 1 页 10 条 + 第 2 页 2 条；翻页后 2 条同样可点开），无 `#` 死链接。
+
+---
+
+### Task 3: 完整验证（对照 spec 第 9 节）
+
+**Files:** 无新增修改（只读验证）
+
+- [ ] **Step 1: 执行 spec 验证清单**
+
+在 `http://localhost:8000` 下逐项确认：
+
+1. `news-detail.html?id=lifeguard` — 正文完整、含 ul/ol/blockquote、上一篇无、下一篇为 wystc ✓
+2. `news-detail.html?id=wystc` — 表格正确渲染（5 行）、上一篇为 lifeguard、下一篇为第 3 篇 ✓
+3. `news-detail.html`（无 id）— 回退第一篇 ✓
+4. `news-detail.html?id=invalid` — 回退第一篇 ✓
+5. `news.html` 列表 12 条链接逐一点击 — 均进入对应详情 ✓
+6. 浏览器开发者工具切换窄屏（≤ 700px）— WYSTC 表格可横向滚动、页面布局正常 ✓
+7. 所有页面控制台无 JS 报错 ✓
+
+- [ ] **Step 2: 停止本地服务器**
+
+Run: `Ctrl+C`（终止 python3 -m http.server）
+Expected: 服务器停止
+
+---
+
+## Self-Review 记录
+
+- **Spec 覆盖：** 12 篇文章 ✓（Task 1 数据）、table/ol 节点 ✓（Task 1 渲染器）、动态上下篇 ✓、id 回退 ✓、news.html 12 条链接 ✓（Task 2）、移动端表格 overflow-x ✓（Task 1 `.table-wrap`）、验证清单 ✓（Task 3 对照 spec 第 9 节）
+- **占位符扫描：** 无 TBD/TODO；所有代码完整给出
+- **类型一致性：** id slug 在 Task 1 数据与 Task 2 链接中完全一致（lifeguard/wystc/swt-zero-visa-rejection/apply-test-guide/visa-interview-tips/lifeguard-training-beijing/itp-jobs-update/aupair-faq/camp-types/pre-departure-checklist/j1-policy-trends/student-story）
+- **Git 说明：** 工作目录非 git 仓库，无提交步骤

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于我们 — 中惠文化</title>
+  <style>
+    :root {
+      --deep-blue: #1A4B7A;
+      --bright-blue: #4A90E2;
+      --light-blue: #E5F0FA;
+      --pale-blue: #D0E7F8;
+      --gray-blue: #5A7A9A;
+      --dark-text: #44546A;
+      --white: #FFFFFF;
+      --border: #E1E9F2;
+      --orange: #EE822F;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+      color: var(--dark-text);
+      line-height: 1.6;
+      background: var(--white);
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== 顶部导航栏（含下拉子菜单） ===== */
+    header {
+      background: linear-gradient(120deg, var(--deep-blue) 0%, #24598f 100%);
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 10px rgba(26,75,122,0.25);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; position: relative; }
+    .logo img { display: block; height: 44px; width: auto; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+    .nav-menu { display: flex; list-style: none; gap: 30px; align-items: center; }
+    .nav-menu > li { position: relative; }
+    .nav-menu > li > a {
+      font-size: 15px; color: #d7e6f5; font-weight: 500; padding: 6px 0;
+      display: flex; align-items: center; gap: 4px; transition: color .2s;
+    }
+    .nav-menu > li > a:hover { color: #fff; }
+    .nav-menu > li > a.active { color: #fff; }
+    .nav-menu > li > a.active::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+      height: 3px; border-radius: 2px; background: var(--bright-blue);
+    }
+    .nav-menu .caret { font-size: 10px; opacity: .8; }
+    .nav-menu .dropdown {
+      position: absolute; top: 100%; left: -12px; min-width: 168px;
+      background: var(--white); border-radius: 0 0 8px 8px;
+      box-shadow: 0 10px 24px rgba(26,75,122,0.18); overflow: hidden;
+      opacity: 0; visibility: hidden; transform: translateY(8px);
+      transition: opacity .2s, transform .2s, visibility .2s;
+      padding: 6px 0; z-index: 200;
+    }
+    .nav-menu > li:hover .dropdown,
+    .nav-menu > li:focus-within .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-menu .dropdown a {
+      display: block; padding: 11px 20px; font-size: 14px; color: var(--deep-blue);
+      transition: background .15s, color .15s; white-space: nowrap;
+    }
+    .nav-menu .dropdown a:hover { background: var(--light-blue); color: var(--bright-blue); }
+    .nav-lang { font-size: 14px; color: #9db6cf; display: flex; gap: 6px; }
+    .nav-lang .sep { color: #5a7a9a; }
+    .nav-lang a { color: #9db6cf; }
+    .nav-lang a:hover { color: #fff; }
+    .nav-lang a.active { color: #fff; font-weight: 600; }
+
+    /* ===== 页面Banner（固定长图，纯图无文字） ===== */
+    .banner {
+      height: 300px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; background-size: cover; background-position: center;
+    }
+    .banner.bg-gradient { background: linear-gradient(135deg, #0e3d63 0%, #1A4B7A 50%, #3372b8 100%); }
+    .banner::before {
+      content: ""; position: absolute; inset: 0;
+      background-image: radial-gradient(#ffffff22 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .banner-note {
+      position: relative; z-index: 1; color: rgba(255,255,255,.7);
+      font-size: 15px; letter-spacing: 2px; padding: 8px 20px;
+      border: 1px dashed rgba(255,255,255,.4); border-radius: 6px;
+    }
+
+    /* ===== 区块通用 ===== */
+    .section { padding: 72px 0; }
+    .section-alt { background: var(--light-blue); }
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title h2 { font-size: 30px; color: var(--deep-blue); font-weight: 700; }
+
+    /* ===== 通用分栏块 ===== */
+    .columns-row { display: flex; gap: 40px; align-items: flex-start; }
+    .column-image {
+      border-radius: 12px; height: 340px; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 16px; background-size: cover; background-position: center;
+    }
+    .column-text h3 { font-size: 24px; color: var(--deep-blue); margin-bottom: 16px; }
+    .column-text p { font-size: 15px; color: var(--dark-text); margin-bottom: 14px; }
+    .column-text .sub-block h4 { font-size: 17px; color: var(--bright-blue); margin: 20px 0 8px; }
+
+    /* ===== 中惠理念（富文本） ===== */
+    .philosophy { text-align: center; max-width: 760px; margin: 0 auto; }
+    .philosophy p { font-size: 16px; color: var(--dark-text); }
+    .philosophy .highlight { font-size: 16px; color: var(--deep-blue); font-weight: 600; margin-top: 20px; }
+
+    /* ===== 中惠团队 ===== */
+    .founder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .founder-card {
+      background: var(--white); border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border); text-align: center;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .founder-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,75,122,0.14); }
+    .founder-photo {
+      height: 220px; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 14px; background-size: cover; background-position: center;
+    }
+    .founder-card h3 { font-size: 19px; color: var(--deep-blue); margin-top: 20px; }
+    .founder-card .role { font-size: 13px; color: var(--orange); font-weight: 600; margin: 4px 0 12px; }
+    .founder-card p { font-size: 13.5px; color: var(--gray-blue); padding: 0 22px 24px; }
+
+    .team-box {
+      background: var(--white); border-radius: 12px; border: 1px solid var(--border);
+      padding: 36px 44px; margin-top: 40px;
+    }
+    .team-box h3 { font-size: 20px; color: var(--deep-blue); margin-bottom: 18px; }
+    .team-box ul { list-style: none; }
+    .team-box li {
+      font-size: 15px; color: var(--dark-text); padding: 8px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+    .team-box li:last-child { border-bottom: none; }
+
+    /* ===== 核心优势 ===== */
+    .adv-grid { display: grid; grid-template-columns: 1fr; gap: 22px; }
+    .adv-card {
+      background: var(--white); border-radius: 12px; border: 1px solid var(--border);
+      padding: 28px 30px; display: grid; grid-template-columns: 64px 1fr; gap: 20px;
+      align-items: start; transition: transform .25s, box-shadow .25s;
+    }
+    .adv-card:nth-child(even) { grid-template-columns: 1fr 64px; }
+    .adv-card:nth-child(even) .adv-num { order: 2; justify-self: end; }
+    .adv-card:nth-child(even) .adv-body { order: 1; }
+    .adv-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(26,75,122,0.12); }
+    .adv-num {
+      width: 60px; height: 60px; border-radius: 50%; margin: 0 auto;
+      background: var(--light-blue); color: var(--deep-blue);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 700;
+    }
+    .adv-body h3 { font-size: 19px; color: var(--deep-blue); margin-bottom: 8px; }
+    .adv-body p { font-size: 14.5px; color: var(--gray-blue); }
+
+    /* ===== 页脚（三分构图） ===== */
+    footer { background: var(--deep-blue); color: #cfdff0; }
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto; padding: 56px 24px 32px;
+      display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px;
+    }
+    .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
+    .footer-brand .zh { font-size: 22px; font-weight: 700; color: #fff; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #9db6cf; margin-top: 4px; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #d7e6f5; }
+    .footer-info .label { color: #9db6cf; margin-right: 8px; }
+    .footer-copy { border-top: 1px solid rgba(255,255,255,.12); padding: 20px 24px; text-align: center; font-size: 13px; color: #9db6cf; }
+    .footer-qr { text-align: center; }
+    .footer-qr h4 { color: #fff; font-size: 16px; margin-bottom: 16px; }
+    .qr-box { display: flex; gap: 16px; justify-content: center; }
+    .qr-item .qr {
+      width: 92px; height: 92px; background: #fff; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; color: var(--deep-blue);
+      font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px;
+    }
+    .qr-item p { font-size: 13px; color: #d7e6f5; }
+
+    @media (max-width: 900px) {
+      .columns-row, .founder-grid, .footer-grid { grid-template-columns: 1fr; }
+      .columns-row { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="site-header"></header>
+  <main id="page"></main>
+  <footer id="site-footer"></footer>
+
+  <script>
+  /* =========================================================
+     CMS 配置化内容模型 —— 关于我们页演示
+     pageConfig 模拟后端返回值。真实后端就绪后，仅需替换数据源。
+     可配置：块数量/顺序、内容、数量（创始人、优势）、样式等。
+     ========================================================= */
+
+  const pageConfig = {
+    title: "关于我们",
+    nav: {
+      logo: "img/logo.png",
+      langCurrent: "中文", langOther: "EN",
+      items: [
+        { label: "首页", link: "index.html" },
+        { label: "关于我们", link: "about.html", active: true },
+        { label: "项目介绍", link: "project-swt.html", children: [
+            { label: "SWT 赴美带薪实习", link: "project-swt.html" },
+            { label: "ITP 赴美专业实习", link: "#" },
+            { label: "ICCP 赴美营地辅导员", link: "#" },
+            { label: "Au Pair 赴美互惠生", link: "#" } ] },
+        { label: "案例分享", link: "cases.html" },
+        { label: "资讯中心", link: "news.html" },
+        { label: "联系我们", link: "contact.html" }
+      ]
+    },
+    footer: {
+      logo: "img/footLogo.png",
+      info: [
+        { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
+        { label: "📞 电话：", text: "010-64159286" },
+        { label: "✉ 邮箱：", text: "info@zhonghui.com" },
+        { label: "🌐 中文官网：", text: "www.chinaaupairs.com" },
+        { label: "🌐 英文官网：", text: "www.aupaircn.com" }
+      ],
+      qrcodes: [
+        { title: "公众号", text: "公众号\n二维码" },
+        { title: "咨询微信", text: "咨询微信\n二维码" }
+      ],
+      copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
+    },
+    blocks: [
+      // ① Banner 大图块（页面顶部固定长图，纯图无文字；可配背景）
+      { type: "banner", data: { bg: "gradient", note: "[ 页面大图 ]" }, options: {} },
+
+      // ② 公司介绍：通用「分栏」块（2栏，宽度配比 0.9:1.4）
+      { type: "columns", id: "company",
+        data: {
+          title: "公司介绍",
+          columns: [
+            { width: 0.9, type: "image", src: "gradient", label: "[ 公司照片 ]" },
+            { width: 1.4, type: "text",
+              heading: "北京中惠大洋文化交流有限公司",
+              paragraphs: [
+                "前身为\"中惠互惠生申请中心\"，成立于2002年，也是中国早期加入\"国际互惠生协会（IAPA）\"重要成员之一。多年来一直致力于推广赴欧美互惠生项目，为中国年轻人融入世界提供一个更广阔的平台；因从业时间久，国际合作方多，服务规范而赢得了国外合作机构、国内外互惠生以及家庭的好评。"
+              ],
+              subBlocks: [
+                { heading: "行业地位与规模", text: "深耕互惠生行业二十余年，业务覆盖欧美多国，搭建了完整标准化服务体系。" },
+                { heading: "核心业务", text: "专注为中国青年提供互惠生、SWT带薪实习、ITP专业实习、ICCP营地辅导员等J1类国际文化交流项目服务，累计输送数千名学员走向欧美，一站式匹配不同申请人需求。" }
+              ] }
+          ]
+        },
+        options: {} },
+
+      // ③ 中惠理念块（富文本简洁）
+      { type: "philosophy",
+        data: {
+          title: "中惠理念",
+          text: "在中惠，我们始终相信，文化交流没有唯一的标准答案。每位同学的兴趣和目标不同：有人适合通过带薪实习提升职场能力，有人希望在营地生活中锻炼综合能力，还有人想通过互惠生深度体验美国家庭生活。不同项目面向不同需求，我们的使命是帮每一位同学找到最适合自己的交流方式。",
+          highlight: "专业，不是局限，而是选择适合的路。"
+        },
+        options: {} },
+
+      // ④ 中惠团队块：创始人卡片（可配数量）+ 师资列表
+      { type: "team", id: "team",
+        data: {
+          foundersTitle: "创始团队",
+          founders: [
+            { name: "Lucy 刘老师", role: "创始人之一", photo: "gradient", photoLabel: "[ 人物照片 ]",
+              desc: "中惠的创始人之一，是中国第一批互惠生项目的从业者。在她的努力推动下，越来越多的大学开始认可互惠生项目。" },
+            { name: "Linda 吕老师", role: "创始人之一", photo: "gradient", photoLabel: "[ 人物照片 ]",
+              desc: "国内专业的互惠咨询师之一。从2002年把德国互惠项目引进中国，用二十几年的经验帮助上千名学生成功出国。" },
+            { name: "Wendy 武老师", role: "创始人之一", photo: "gradient", photoLabel: "[ 人物照片 ]",
+              desc: "中惠的创始人之一，负责国际合作。在她的努力下，中惠与海内外四十多家文化交流机构保持长期稳定合作。" }
+          ],
+          foundersCols: 3,
+          teamTitle: "专业师资团队",
+          teamItems: [
+            "深耕互惠生项目十年以上，专注项目推广与美国签证培训的资深讲师",
+            "具备招聘培训从业经历，擅长面试辅导，能够针对性拆解面试难题的面试老师",
+            "负责英语测评与申请材料指导，严谨协助学员打造优质申请资料的材料老师",
+            "拥有美国留学经历、多年汉语教学经验，精通少儿语言教学方法的讲师",
+            "亲身参与过德国互惠、主攻赴德互惠项目，为学员提供全套专业指导的老师"
+          ]
+        },
+        options: {} },
+
+      // ⑤ 核心优势块：优势卡片（可增删数量）
+      { type: "advantages", id: "advantage",
+        data: {
+          title: "核心优势 · 为什么选择中惠",
+          items: [
+            { title: "资质权威，多年深耕沉淀", desc: "成立于2002年，是中国早期加入国际互惠生协会（IAPA）的机构之一，长期开展互惠生、SWT、ITP、ICCP四大核心项目，累计为数千名中国青年搭建国际桥梁。" },
+            { title: "对接美国官方授权机构，海量正规岗位资源", desc: "与美国多家官方机构及欧洲40余家合作伙伴长期战略合作，岗位覆盖酒店、餐饮、商科、IT、工程等多个方向，申请人可按专业与意向灵活挑选。" },
+            { title: "项目齐全，一站式满足多元需求", desc: "一站式办理四大类J1国际文化交流项目，为不同背景、不同诉求的申请人提供匹配选择，真正做到\"一站式\"服务。" },
+            { title: "依托成熟资源网络，匹配流程标准化", desc: "凭借成熟的匹配体系与资源网络，多年保持稳定的岗位匹配与签证过签成果，整体匹配周期符合行业常规标准。" },
+            { title: "全程护航，一对一贴心陪伴", desc: "从咨询、评估、材料、匹配、面试、签证到行前培训与赴美后跟进，专属顾问全程一对一跟进。" },
+            { title: "真实案例见证", desc: "每年都有来自全国各地的学员通过中惠远赴海外，在真实家庭或国际化企业中积累经验，提升英语、收获深刻跨越文化交流阅历。" }
+          ]
+        },
+        options: {} }
+    ]
+  };
+
+  // ---------------- 渲染器 ----------------
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+  const renderers = {
+    banner(b) {
+      const bg = b.data.bg;
+      const style = bg && bg !== "gradient" ? `style="background-image:url('${esc(bg)}')"` : "";
+      const note = b.data.note ? `<span class="banner-note">${esc(b.data.note)}</span>` : "";
+      return `<section class="banner ${bg === "gradient" || !bg ? "bg-gradient" : ""}" ${style}>${note}</section>`;
+    },
+    company(/* 已由通用 columns 替代 */) {},
+    // 通用「分栏」块：可配置列数、每列宽度配比、每列内容类型
+    columns(b) {
+      const d = b.data;
+      const cols = (d.columns || []).map(c => {
+        const width = c.width != null ? `${c.width} 1 0` : "1 1 0";
+        let inner = "";
+        if (c.type === "image") {
+          const bg = c.src !== "gradient"
+            ? `style="background:url('${esc(c.src)}') center/cover no-repeat;"`
+            : `style="background:linear-gradient(135deg,var(--bright-blue),var(--deep-blue));"`;
+          inner = `<div class="column-image" ${bg}>${esc(c.label || "")}</div>`;
+        } else {
+          inner = `<div class="column-text">`;
+          if (c.heading) inner += `<h3>${esc(c.heading)}</h3>`;
+          inner += (c.paragraphs || []).map(p => `<p>${esc(p)}</p>`).join("");
+          inner += (c.subBlocks || []).map(s =>
+            `<div class="sub-block"><h4>${esc(s.heading)}</h4><p>${esc(s.text)}</p></div>`).join("");
+          inner += `</div>`;
+        }
+        return `<div class="column" style="flex:${width};">${inner}</div>`;
+      }).join("");
+      const head = d.title ? `<div class="section-title"><h2>${esc(d.title)}</h2></div>` : "";
+      return `<section class="section" id="${d.id || ""}"><div class="container">
+        ${head}
+        <div class="columns-row">${cols}</div>
+      </div></section>`;
+    },
+    philosophy(b) {
+      const d = b.data;
+      return `<section class="section section-alt"><div class="container">
+        <div class="section-title"><h2>${esc(d.title)}</h2></div>
+        <div class="philosophy"><p>${esc(d.text)}</p>${d.highlight ? `<p class="highlight">${esc(d.highlight)}</p>` : ""}</div>
+      </div></section>`;
+    },
+    team(b) {
+      const d = b.data;
+      const cols = d.foundersCols || 3;
+      const cards = (d.founders || []).map(f => {
+        const photoStyle = f.photo !== "gradient"
+          ? `style="background:url('${esc(f.photo)}') center/cover no-repeat;"`
+          : `style="background:linear-gradient(135deg,#4A90E2,#1A4B7A);"`;
+        return `<div class="founder-card">
+          <div class="founder-photo" ${photoStyle}>${esc(f.photoLabel || "")}</div>
+          <h3>${esc(f.name)}</h3><div class="role">${esc(f.role)}</div><p>${esc(f.desc)}</p>
+        </div>`;
+      }).join("");
+      const teamList = (d.teamItems || []).map(i => `<li>${esc(i)}</li>`).join("");
+      return `<section class="section" id="${b.id || "team"}"><div class="container">
+        <div class="section-title"><h2>${esc(d.foundersTitle)}</h2></div>
+        <div class="founder-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
+        ${d.teamTitle ? `<div class="team-box"><h3>${esc(d.teamTitle)}</h3><ul>${teamList}</ul></div>` : ""}
+      </div></section>`;
+    },
+    advantages(b) {
+      const d = b.data;
+      const cards = (d.items || []).map((a, i) => {
+        const no = String(i + 1).padStart(2, "0");
+        return `<div class="adv-card"><div class="adv-num">${no}</div>
+          <div class="adv-body"><h3>${esc(a.title)}</h3><p>${esc(a.desc)}</p></div></div>`;
+      }).join("");
+      return `<section class="section section-alt" id="${b.id || "advantage"}"><div class="container">
+        <div class="section-title"><h2>${esc(d.title)}</h2></div>
+        <div class="adv-grid">${cards}</div>
+      </div></section>`;
+    }
+  };
+
+  // ---------------- 渲染页面 ----------------
+  function renderNav(nav) {
+    const menu = nav.items.map(m => {
+      const sub = m.children ? `<div class="dropdown">${m.children.map(c =>
+        `<a href="${esc(c.link)}">${esc(c.label)}</a>`).join("")}</div>` : "";
+      return `<li><a href="${esc(m.link)}" class="${m.active ? "active" : ""}">${esc(m.label)}${m.children ? ' <span class="caret">▾</span>' : ""}</a>${sub}</li>`;
+    }).join("");
+    document.getElementById("site-header").innerHTML = `
+      <div class="container nav">
+        <a class="logo" href="index.html"><img src="${esc(nav.logo)}" alt="中惠文化"></a>
+        <ul class="nav-menu">${menu}</ul>
+        <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+      </div>`;
+  }
+
+  function renderBlocks(blocks) {
+    document.getElementById("page").innerHTML = blocks
+      .filter(b => renderers[b.type])
+      .map(b => renderers[b.type](b)).join("");
+  }
+
+  function renderFooter(f) {
+    const info = f.info.map(i => `<p><span class="label">${esc(i.label)}</span>${esc(i.text)}</p>`).join("");
+    const qr = f.qrcodes.map(q => `
+      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div><p>${esc(q.title)}</p></div>`).join("");
+    document.getElementById("site-footer").innerHTML = `
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
+        <div class="footer-info">${info}</div>
+        <div class="footer-qr"><h4>关注我们</h4><div class="qr-box">${qr}</div></div>
+      </div>
+      <div class="footer-copy">${esc(f.copyright)}</div>`;
+  }
+
+  renderNav(pageConfig.nav);
+  renderBlocks(pageConfig.blocks);
+  renderFooter(pageConfig.footer);
+  </script>
+</body>
+</html>

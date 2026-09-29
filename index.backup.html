@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中惠文化 — 你的国际文化交流可靠伙伴</title>
+  <style>
+    :root {
+      --deep-blue: #1A4B7A;      /* PPT 主色 */
+      --bright-blue: #4A90E2;    /* PPT 亮蓝 */
+      --light-blue: #E5F0FA;     /* PPT 浅蓝背景 */
+      --pale-blue: #D0E7F8;      /* PPT 浅蓝 */
+      --gray-blue: #5A7A9A;      /* PPT 灰蓝文字 */
+      --dark-text: #44546A;
+      --white: #FFFFFF;
+      --border: #E1E9F2;
+      --orange: #EE822F;         /* 辅助强调色 */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+      color: var(--dark-text);
+      line-height: 1.6;
+      background: var(--white);
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== 顶部导航栏 ===== */
+    header {
+      background: linear-gradient(120deg, var(--deep-blue) 0%, #24598f 100%);
+      border-bottom: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(26,75,122,0.25);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo img { filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
+    .logo-mark {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--deep-blue), var(--bright-blue));
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 18px;
+    }
+    .logo-name { font-size: 20px; font-weight: 700; color: var(--deep-blue); }
+    .logo-name small { display: block; font-size: 11px; font-weight: 400; color: var(--gray-blue); letter-spacing: 1px; }
+    .nav-menu { display: flex; list-style: none; gap: 32px; align-items: center; }
+    .nav-menu a { font-size: 15px; color: #d7e6f5; font-weight: 500; position: relative; padding: 6px 0; transition: color .2s; }
+    .nav-menu a:hover { color: #ffffff; }
+    .nav-menu a.active { color: #ffffff; }
+    .nav-menu a.active::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
+      height: 3px; border-radius: 2px; background: var(--bright-blue);
+    }
+    .nav-lang { font-size: 14px; color: #9db6cf; display: flex; gap: 6px; }
+    .nav-lang .sep { color: #5a7a9a; }
+    .nav-lang a { color: #9db6cf; }
+    .nav-lang a:hover { color: #fff; }
+    .nav-lang a.active { color: #ffffff; font-weight: 600; }
+
+    /* ===== ① 页面Banner（固定长图） ===== */
+    .banner {
+      background: linear-gradient(135deg, #0e3d63 0%, #1A4B7A 50%, #3372b8 100%);
+      height: 420px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .banner::before {
+      content: ""; position: absolute; inset: 0;
+      background-image: radial-gradient(#ffffff22 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .banner .cover { position: relative; z-index: 1; text-align: center; color: #fff; }
+    .banner .cover h1 { font-size: 52px; font-weight: 700; letter-spacing: 4px; }
+    .banner .cover .sub { font-size: 40px; font-weight: 500; margin-top: 12px; letter-spacing: 2px; }
+    .banner .cover .intro { font-size: 18px; margin-top: 24px; opacity: .9; }
+
+    /* ===== ② 核心数据带（4列） ===== */
+    .stats { background: var(--white); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .stat { text-align: center; padding: 44px 20px; border-right: 1px solid var(--border); }
+    .stat:last-child { border-right: none; }
+    .stat .num { font-size: 42px; font-weight: 700; color: var(--deep-blue); }
+    .stat .num em { font-style: normal; color: var(--bright-blue); }
+    .stat .label { font-size: 15px; color: var(--gray-blue); margin-top: 6px; }
+
+    /* ===== ③ 四大项目速览（4列卡片） ===== */
+    .section { padding: 72px 0; }
+    .section-alt { background: var(--light-blue); }
+    .section-title { text-align: center; margin-bottom: 44px; }
+    .section-title h2 { font-size: 32px; color: var(--deep-blue); font-weight: 700; }
+    .section-title .en { font-size: 14px; color: var(--gray-blue); letter-spacing: 3px; text-transform: uppercase; margin-top: 6px; }
+    .section-title .en::before, .section-title .en::after { content: "—"; color: var(--bright-blue); margin: 0 10px; }
+    .prog-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+    .prog-card {
+      background: var(--white); border-radius: 12px; padding: 32px 24px;
+      text-align: center; border: 1px solid var(--border);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .prog-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,75,122,0.14); }
+    .prog-card .icon {
+      width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 20px;
+      background: var(--light-blue); color: var(--deep-blue);
+      display: flex; align-items: center; justify-content: center; font-size: 28px;
+    }
+    .prog-card h3 { font-size: 19px; color: var(--deep-blue); line-height: 1.3; }
+    .prog-card .sub { font-size: 13px; color: var(--gray-blue); margin: 10px auto 18px; min-height: 60px; }
+    .prog-card .more {
+      display: inline-block; color: var(--bright-blue); font-weight: 600; font-size: 14px;
+      border-bottom: 2px solid transparent; transition: border-color .2s;
+    }
+    .prog-card .more:hover { border-color: var(--bright-blue); }
+
+    /* ===== ④ 学员故事精选（左右分栏） ===== */
+    .story-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .story-card {
+      background: var(--white); border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border); transition: transform .25s, box-shadow .25s; cursor: pointer;
+    }
+    .story-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,75,122,0.14); }
+    .story-card .thumb { height: 220px; background-size: cover; background-position: center; position: relative; }
+    .story-card .tag {
+      position: absolute; top: 14px; left: 14px; background: var(--orange);
+      color: #fff; font-size: 12px; padding: 3px 12px; border-radius: 20px;
+    }
+    .story-card .body { padding: 24px; }
+    .story-card h3 { font-size: 19px; color: var(--deep-blue); }
+    .story-card p { font-size: 14px; color: var(--gray-blue); margin: 12px 0 16px; }
+    .story-card .read { color: var(--bright-blue); font-weight: 600; font-size: 14px; }
+    .story-card .read::after { content: " →"; }
+
+    /* ===== 页脚（三分构图） ===== */
+    footer { background: var(--deep-blue); color: #cfdff0; margin-top: 0; }
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto; padding: 56px 24px 32px;
+      display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px;
+    }
+    .footer-brand .logo-mark { margin-bottom: 14px; }
+    .footer-brand .zh { font-size: 22px; font-weight: 700; color: #fff; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #9db6cf; margin-top: 4px; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #d7e6f5; }
+    .footer-info .label { color: #9db6cf; margin-right: 8px; }
+    .footer-copy { border-top: 1px solid rgba(255,255,255,.12); padding: 20px 24px; text-align: center; font-size: 13px; color: #9db6cf; }
+    .footer-qr { text-align: center; }
+    .footer-qr h4 { color: #fff; font-size: 16px; margin-bottom: 16px; }
+    .qr-box { display: flex; gap: 16px; justify-content: center; }
+    .qr-item .qr {
+      width: 92px; height: 92px; background: #fff; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; color: var(--deep-blue);
+      font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px;
+    }
+    .qr-item p { font-size: 13px; color: #d7e6f5; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== 顶部导航栏 ===== -->
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#">
+        <img src="img/logo.png" alt="中惠文化" style="height:44px; width:auto; display:block;">
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#" class="active">首页</a></li>
+        <li><a href="#">关于我们</a></li>
+        <li><a href="#">项目介绍</a></li>
+        <li><a href="#">案例分享</a></li>
+        <li><a href="#">资讯中心</a></li>
+        <li><a href="#">联系我们</a></li>
+      </ul>
+      <div class="nav-lang">
+        <a href="#" class="active">中文</a>
+        <span class="sep">|</span>
+        <a href="#">EN</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== ① 页面Banner（固定长图，非轮播） ===== -->
+  <section class="banner">
+    <div class="cover">
+      <h1>走出国门</h1>
+      <div class="sub">你才知道世界之大</div>
+      <div class="intro">欢迎来到中惠文化 —— 你的国际文化交流可靠伙伴</div>
+    </div>
+  </section>
+
+  <!-- ===== ② 核心数据带（4列） ===== -->
+  <section class="stats">
+    <div class="container stats-grid">
+      <div class="stat">
+        <div class="num">2000<em>+</em></div>
+        <div class="label">已合作伙伴</div>
+      </div>
+      <div class="stat">
+        <div class="num">40<em>+</em></div>
+        <div class="label">合作单位</div>
+      </div>
+      <div class="stat">
+        <div class="num">2<em>个</em></div>
+        <div class="label">分公司</div>
+      </div>
+      <div class="stat">
+        <div class="num">2002<em>年</em></div>
+        <div class="label">成立至今</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ③ 四大项目速览（4列卡片） ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>四大项目一览</h2>
+        <div class="en">Programs</div>
+      </div>
+      <div class="prog-grid">
+        <div class="prog-card">
+          <div class="icon">🚀</div>
+          <h3>赴美带薪实习</h3>
+          <p class="sub">以工作换旅行，用闲暇看世界，适合在职大学生的暑假首选。</p>
+          <a class="more" href="#">查看详情 →</a>
+        </div>
+        <div class="prog-card">
+          <div class="icon">💼</div>
+          <h3>赴美专业实习</h3>
+          <p class="sub">对口专业实战，为企业履历镀金，面向应届与青年专业人士。</p>
+          <a class="more" href="#">查看详情 →</a>
+        </div>
+        <div class="prog-card">
+          <div class="icon">⛺</div>
+          <h3>赴美营地辅导员</h3>
+          <p class="sub">发挥特长与领导力，在美式营地完成一场自我成长的修行。</p>
+          <a class="more" href="#">查看详情 →</a>
+        </div>
+        <div class="prog-card">
+          <div class="icon">🏠</div>
+          <h3>互惠生</h3>
+          <p class="sub">深度融入美国家庭，免费学语言，体验地道的文化交流。</p>
+          <a class="more" href="#">查看详情 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ④ 学员故事精选（左右分栏） ===== -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-title">
+        <h2>学员故事</h2>
+        <div class="en">Student Stories</div>
+      </div>
+      <div class="story-grid">
+        <div class="story-card">
+          <div class="thumb" style="background: linear-gradient(135deg,#4A90E2,#1A4B7A);">
+            <span class="tag">SWT</span>
+          </div>
+          <div class="body">
+            <h3>小曹同学的赴美之旅</h3>
+            <p>从材料筹备、签证办理到异国的日常，全程尽享细致周全的一站式专属服务。</p>
+            <a class="read" href="#">阅读全文</a>
+          </div>
+        </div>
+        <div class="story-card">
+          <div class="thumb" style="background: linear-gradient(135deg,#5A7A9A,#1A4B7A);">
+            <span class="tag">SWT</span>
+          </div>
+          <div class="body">
+            <h3>小丁同学的逆袭故事</h3>
+            <p>英语不占优势的他，靠每天的坚持与反复模拟，最终一签过签、如愿赴美。</p>
+            <a class="read" href="#">阅读全文</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 页脚（三分构图） ===== -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="img/footLogo.png" alt="中惠文化" style="height:110px; width:auto; display:block; margin-bottom:14px;">
+      </div>
+      <div class="footer-info">
+        <p><span class="label">📍 地址：</span>北京东城区绿景馨园东区12号楼</p>
+        <p><span class="label">📞 电话：</span>010-64159286</p>
+        <p><span class="label">✉ 邮箱：</span>info@zhonghui.com</p>
+        <p><span class="label">🌐 中文官网：</span>www.chinaaupairs.com</p>
+        <p><span class="label">🌐 英文官网：</span>www.aupaircn.com</p>
+      </div>
+      <div class="footer-qr">
+        <h4>关注我们</h4>
+        <div class="qr-box">
+          <div class="qr-item">
+            <div class="qr">公众号<br>二维码</div>
+            <p>公众号</p>
+          </div>
+          <div class="qr-item">
+            <div class="qr">咨询微信<br>二维码</div>
+            <p>咨询微信</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copy">Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号</div>
+  </footer>
+
+</body>
+</html>

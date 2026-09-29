@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中惠文化 — 你的国际文化交流可靠伙伴</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+  <style>
+    :root {
+      --deep-blue: #1A2958;      /* 藏青主色（Alliance Abroad） */
+      --bright-blue: #FAB816;    /* 金黄强调色 */
+      --light-blue: #F4F6FB;     /* 冷色浅底 */
+      --pale-blue: #F5EBD0;      /* 米金 */
+      --gray-blue: #54595F;      /* 深灰文字 */
+      --dark-text: #1A2958;
+      --white: #FFFFFF;
+      --border: #E5E7EB;
+      --orange: #FAB816;         /* 辅助强调色 */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+      color: var(--dark-text);
+      line-height: 1.6;
+      background: var(--white);
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== 顶部导航栏 ===== */
+    header {
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 0 5px rgba(22,22,22,0.14);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .nav-right { display: flex; align-items: center; gap: 32px; }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo img { display: block; height: 44px; width: auto; background: var(--deep-blue); border-radius: 6px; padding: 5px 12px; }
+    .nav-menu { display: flex; list-style: none; gap: 24px; align-items: center; }
+    .nav-menu a { font-size: 15px; color: var(--deep-blue); font-weight: 500; position: relative; padding: 6px 0; transition: color .2s; }
+    .nav-menu a:hover { color: var(--bright-blue); }
+    .nav-menu a.active { color: var(--bright-blue); }
+    .nav-menu li { position: relative; }
+    .nav-menu li.active > a::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
+      height: 3px; border-radius: 2px; background: var(--bright-blue);
+    }
+    .nav-menu .caret { font-size: 10px; opacity: .8; }
+    .nav-menu .dropdown {
+      position: absolute; top: 100%; left: -12px; min-width: 168px;
+      background: var(--white); border-radius: 0 0 8px 8px;
+      box-shadow: 0 10px 24px rgba(26,41,88,0.18); overflow: hidden;
+      opacity: 0; visibility: hidden; transform: translateY(8px);
+      transition: opacity .2s, transform .2s, visibility .2s;
+      padding: 6px 0; z-index: 200;
+    }
+    .nav-menu li:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-menu .dropdown a {
+      display: block; padding: 11px 20px; font-size: 14px; color: var(--deep-blue);
+      transition: background .15s, color .15s; white-space: nowrap;
+    }
+    .nav-menu .dropdown a:hover { background: var(--deep-blue); color: #ffffff; }
+    .nav-lang { font-size: 14px; color: var(--gray-blue); display: flex; gap: 6px; }
+    .nav-lang .sep { color: var(--gray-blue); }
+    .nav-lang a { color: var(--gray-blue); }
+    .nav-lang a:hover { color: var(--bright-blue); }
+    .nav-lang a.active { color: var(--deep-blue); font-weight: 600; }
+
+    /* ===== 区块通用 ===== */
+    .section { padding: 72px 0; }
+    .section-alt { background: var(--light-blue); }
+    .section-title { text-align: center; margin-bottom: 44px; }
+    .section-title h2 { font-size: 32px; color: var(--deep-blue); font-weight: 700; }
+
+    /* ===== Banner 块 ===== */
+    .banner {
+      height: 420px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      background-size: cover; background-position: center;
+    }
+    .banner.bg-gradient { background: linear-gradient(135deg, #101d40 0%, #1A2958 50%, #2E4380 100%); }
+    .banner::before {
+      content: ""; position: absolute; inset: 0;
+      background-image: radial-gradient(#ffffff22 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .banner .cover { position: relative; z-index: 1; text-align: center; color: #fff; padding: 0 24px; }
+    .banner .cover h1 { font-size: 52px; font-weight: 700; letter-spacing: 4px; text-shadow: 0 2px 16px rgba(0,0,0,0.45); }
+    .banner .cover .sub { font-size: 40px; font-weight: 500; margin-top: 12px; letter-spacing: 2px; }
+    .banner .cover .intro { font-size: 18px; margin-top: 24px; opacity: .9; }
+
+    /* ===== 数据带块（可选列数） ===== */
+    .stats { background: var(--white); }
+    .stats-grid { display: grid; gap: 0; }
+    .stat { text-align: center; padding: 44px 20px; border-right: 1px solid var(--border); }
+    .stat:first-child { border-left: 1px solid var(--border); }
+    .stat .num { font-size: 42px; font-weight: 700; color: var(--deep-blue); }
+    .stat .num em { font-style: normal; color: var(--bright-blue); }
+    .stat .label { font-size: 15px; color: var(--gray-blue); margin-top: 6px; }
+
+    /* ===== 卡片网格块（可选列数） ===== */
+    .prog-grid { display: grid; gap: 28px; }
+    .prog-card {
+      background: var(--white); border-radius: 12px; padding: 32px 24px;
+      text-align: center; border: 1px solid var(--border);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .prog-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,41,88,0.14); }
+    .prog-card .icon {
+      width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 20px;
+      background: var(--light-blue); color: var(--deep-blue);
+      display: flex; align-items: center; justify-content: center; font-size: 28px;
+    }
+    .prog-card h3 { font-size: 19px; color: var(--deep-blue); line-height: 1.3; }
+    .prog-card .sub { font-size: 13px; color: var(--gray-blue); margin: 10px auto 18px; }
+    .prog-card .more {
+      display: inline-block; color: var(--bright-blue); font-weight: 600; font-size: 14px;
+      border-bottom: 2px solid transparent; transition: border-color .2s;
+    }
+    .prog-card .more:hover { border-color: var(--bright-blue); }
+
+    /* ===== 故事列表块（从集合自动取前 N 条，左右分栏） ===== */
+    .story-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .story-card {
+      background: var(--white); border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border); transition: transform .25s, box-shadow .25s; cursor: pointer;
+    }
+    .story-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,41,88,0.14); }
+    .story-card .thumb { height: 300px; background-size: cover; background-repeat: no-repeat; background-position: center; position: relative; }
+    .story-card .tag {
+      position: absolute; top: 14px; left: 14px; background: var(--orange);
+      color: #fff; font-size: 12px; padding: 3px 12px; border-radius: 20px;
+    }
+    .story-card .body { padding: 24px; }
+    .story-card h3 { font-size: 19px; color: var(--deep-blue); }
+    .story-card p { font-size: 14px; color: var(--gray-blue); margin: 12px 0 16px; }
+    .story-card .read { color: var(--bright-blue); font-weight: 600; font-size: 14px; }
+    .story-card .read::after { content: " →"; }
+
+    /* ===== 项目一览矩阵块（3×3 卡片） ===== */
+    .proj-grid { display: grid; gap: 28px; }
+    .proj-card {
+      position: relative; border-radius: 12px; overflow: hidden;
+      background: var(--white); border: 1px solid var(--border);
+      box-shadow: 0 6px 18px rgba(26,41,88,0.08);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .proj-card:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(26,41,88,0.16); }
+    .proj-card .ph { aspect-ratio: 4 / 3; overflow: hidden; }
+    .proj-card .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .proj-body { padding: 20px 24px 24px; }
+    .proj-body h3 { font-size: 20px; color: var(--deep-blue); font-weight: 600; }
+    .proj-body p { font-size: 14px; color: var(--gray-blue); margin-top: 8px; }
+    .proj-wrap { position: relative; background: var(--white); overflow: hidden; }
+    .proj-band {
+      position: absolute; left: 0; right: 0; top: 0; height: 348px; z-index: 1;
+      background: linear-gradient(123deg, #FF0000 0%, #F35D5D 50.52%, #FF007A 100%);
+    }
+    .proj-content { position: relative; z-index: 2; padding: 56px 0 72px; }
+
+    /* ===== 优势图标网格块（图标+标题+描述） ===== */
+    .adv-grid { display: grid; gap: 28px; }
+    .adv-card {
+      text-align: center; padding: 32px 20px;
+      background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .adv-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,41,88,0.14); }
+    .adv-card .icon {
+      width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 20px;
+      background: var(--light-blue); color: var(--deep-blue);
+      display: flex; align-items: center; justify-content: center; font-size: 28px;
+    }
+    .adv-card h3 { font-size: 19px; color: var(--deep-blue); font-weight: 600; }
+    .adv-card p { font-size: 14px; color: var(--gray-blue); margin-top: 10px; }
+
+    /* ===== 中惠印记：Swiper 3D 封面流（参照 chinaaupairs.com） ===== */
+    .memory-slider { position: relative; background: url('img/yinji-bg.jpg') center / cover no-repeat; overflow: hidden; }
+    .memory-slider .container { position: relative; z-index: 1; }
+    .memory-slider .section-title h2 { color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.55); }
+    .memory-slider .swiper { padding: 24px 0 44px; position: relative; }
+    .memory-slider .slide-inner { position: relative; transition: transform .45s ease; }
+    .memory-slider .swiper-slide img {
+      width: 100%; height: 380px; object-fit: cover; border-radius: 14px; display: block;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35); position: relative; z-index: 1;
+    }
+    .memory-slider .swiper-slide-prev .slide-inner::after,
+    .memory-slider .swiper-slide-next .slide-inner::after {
+      content: ""; position: absolute; inset: 0; z-index: 2;
+      background: rgba(15,25,50,0.42); border-radius: 14px; pointer-events: none;
+    }
+    .memory-slider .swiper-slide-active { z-index: 5; }
+    .memory-slider .swiper-slide-active .slide-inner { transform: scale(1.15); }
+    .memory-slider .swiper-slide-prev .slide-inner { transform: translateX(34px) scale(0.85); }
+    .memory-slider .swiper-slide-next .slide-inner { transform: translateX(-34px) scale(0.85); }
+    .memory-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 70px; height: 70px; border-radius: 50%;
+      background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 10; transition: background .2s; border: none;
+    }
+    .memory-arrow:hover { background: #000000; }
+    .memory-arrow svg { width: 22px; height: 22px; display: block; }
+    .memory-arrow.prev { left: 16px; }
+    .memory-arrow.next { right: 16px; }
+
+    /* ===== 页脚 ===== */
+    footer { background: linear-gradient(124deg, #1A2958 0%, #0055A4 50%, #4F2683 100%); color: #cfdff0; }
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto; padding: 56px 24px 32px;
+      display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px;
+    }
+    .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
+    .footer-brand .zh { font-size: 22px; font-weight: 700; color: #fff; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #9db6cf; margin-top: 4px; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #d7e6f5; }
+    .footer-info .label { color: #9db6cf; margin-right: 8px; }
+    .footer-copy { border-top: 1px solid rgba(255,255,255,.12); padding: 20px 24px; text-align: center; font-size: 13px; color: #9db6cf; }
+    .footer-qr { text-align: center; }
+    .footer-qr h4 { color: #fff; font-size: 16px; margin-bottom: 16px; }
+    .qr-box { display: flex; gap: 16px; justify-content: center; }
+    .qr-item .qr {
+      width: 92px; height: 92px; background: #fff; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; color: var(--deep-blue);
+      font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px;
+    }
+    .qr-item p { font-size: 13px; color: #d7e6f5; }
+    .foot-contact {
+      display: block; margin-top: 18px; text-align: left;
+      color: #cfdff0; font-size: 14px; text-decoration: none;
+    }
+    .foot-contact:hover { color: #ffffff; }
+
+    @media (max-width: 900px) {
+      .story-grid, .footer-grid, .proj-grid, .adv-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="site-header"></header>
+  <main id="page"></main>
+  <footer id="site-footer"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script>
+  /* =========================================================
+     CMS 配置化内容模型 —— 首页演示
+     pageConfig 模拟后端返回值。真实后端就绪后，仅需替换此数据源，
+     前端 UI 无需改动。
+     可配置：块数量/顺序、内容值、数量、链接、列数等。
+     ========================================================= */
+
+  // 内容集合（图文内容仓库），模拟后端集合数据。
+  // 案例/资讯列表页由「内容集合块」从本集合读取。
+  const collections = {
+    stories: [
+      { title: "小曹同学的赴美之旅", tag: "SWT", link: "case-detail.html?id=xiaocao",
+        intro: "从材料筹备、签证办理到异国的日常，全程尽享细致周全的一站式专属服务。",
+        cover: "img/prog-uk-study.jpg" },
+      { title: "小丁同学的逆袭故事", tag: "SWT", link: "case-detail.html?id=xiaoding",
+        intro: "英语不占优势的他，靠每天的坚持与反复模拟，最终一签过签、如愿赴美。",
+        cover: "img/prog-iccp.jpg" },
+      { title: "德州营地体验感悟", tag: "ICCP", link: "#",
+        intro: "从安静的手工体验到特色马术训练，再到热闹的集体节庆，收获满满。",
+        cover: "linear-gradient(135deg,#2E4380,#101d40)" }
+      // 可继续增加故事…
+    ]
+  };
+
+  // 页面配置：一块有序块列表，后端可自由增删改。
+  const pageConfig = {
+    title: "首页",
+    nav: {
+      logo: "img/logo.png",
+      langCurrent: "中文", langOther: "EN",
+      items: [
+        { label: "首页", link: "index.html", active: true },
+        { label: "关于中惠", link: "about.html" },
+        { label: "互惠生", link: "#" },
+        { label: "赴美J1交流项目", link: "project-swt.html", children: [
+            { label: "SWT 赴美带薪实习", link: "project-swt.html" },
+            { label: "ITP 赴美专业实习", link: "#" },
+            { label: "ICCP 赴美营地辅导员", link: "#" } ] },
+        { label: "海外留学", link: "#" },
+        { label: "案例分享", link: "cases.html" },
+        { label: "联系我们", link: "contact.html" }
+      ]
+    },
+    footer: {
+      logo: "img/footLogo.png",
+      info: [
+        { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
+        { label: "📞 电话：", text: "010-64159286" },
+        { label: "✉ 邮箱：", text: "info@zhonghui.com" },
+        { label: "🌐 中文官网：", text: "www.chinaaupairs.com" },
+        { label: "🌐 英文官网：", text: "www.aupaircn.com" }
+      ],
+      qrcodes: [
+        { title: "公众号",     text: "公众号\n二维码" },
+        { title: "咨询微信",   text: "咨询微信\n二维码" },
+        { title: "视频号",     text: "视频号\n二维码" }
+      ],
+      copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
+    },
+    blocks: [
+      // ① Banner 块：可配背景（图或渐变色）与文案
+      { type: "banner",
+        data: { bg: "img/brand.png", headline: "工作、学习、生活三位一体" },
+        options: {} },
+
+      // ② 项目一览矩阵块：3×3 卡片，图片 + 标题 + 描述
+      { type: "project-grid",
+        data: { title: "项目一览",
+          items: [
+            { img: "img/prog-au-pair-usa.jpg", title: "美国 AuPair", desc: "深入美国家庭，边体验边学习" },
+            { img: "img/prog-au-pair-eu.jpg",  title: "欧洲 AuPair", desc: "融入欧洲家庭，拓展国际视野" },
+            { img: "img/prog-swt.jpg",         title: "赴美 SWT",   desc: "暑假赴美带薪实习，用工作换旅行" },
+            { img: "img/prog-itp.jpg",         title: "赴美 ITP",   desc: "对口专业实习，为履历镀金" },
+            { img: "img/prog-iccp.jpg",        title: "赴美 ICCP",  desc: "在美式营地当辅导员，收获成长" },
+            { img: "img/prog-laihua.jpg",      title: "来华",        desc: "文化交流与来华项目" },
+            { img: "img/prog-uk-study.jpg",    title: "英国留学",    desc: "英伦名校，开启留学之旅" },
+            { img: "img/prog-iccp.jpg",        title: "澳洲留学",    desc: "南半球留学体验" },
+            { img: "img/prog-us-study.jpg",    title: "美国留学",    desc: "美国名校留学申请" } ] },
+        options: { columns: 3, alt: false } },
+
+      // ③ 中惠优势：2×4 图标网格
+      { type: "advantage-grid",
+        data: { title: "中惠优势",
+          items: [
+            { icon: "✓", title: "资质齐全", desc: "官方认可，合规运营" },
+            { icon: "🌏", title: "深耕国际交流", desc: "专注领域多年积累" },
+            { icon: "🛎", title: "一站式服务", desc: "材料/签证/行前全程跟进" },
+            { icon: "🌐", title: "全球服务网络", desc: "海外资源与本地支持" },
+            { icon: "🛂", title: "高签证通过率", desc: "专业签证辅导" },
+            { icon: "🛡", title: "安全保障", desc: "全程护航，放心出行" },
+            { icon: "👥", title: "专业顾问团队", desc: "资深顾问一对一" },
+            { icon: "⭐", title: "口碑见证", desc: "学员真实好评" } ] },
+        options: { columns: 4, alt: true } },
+
+      // ④ 中惠印记：Swiper 封面流轮播
+      { type: "memory-slider",
+        data: { title: "中惠印记",
+          images: [
+            "img/memory-1.png", "img/memory-2.jpg", "img/memory-3.jpg",
+            "img/memory-4.jpg", "img/memory-5.jpg", "img/memory-6.jpg",
+            "img/memory-7.jpg", "img/memory-8.png", "img/memory-9.jpg",
+            "img/memory-10.jpg" ] },
+        options: {} },
+
+      // ⑤ 故事列表块：自动加载 stories 集合前 limit 条
+      { type: "story-list",
+        data: { title: "学生分享", source: "stories", limit: 2 },
+        options: { cols: 2, alt: true } }
+    ]
+  };
+
+  // ---------------- 渲染器 ----------------
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+  const renderers = {
+    banner(b) {
+      const c = b.data;
+      const style = c.bg && c.bg !== "gradient" ? `style="background-image:url('${c.bg}')"` : "";
+      const cls = c.bg === "gradient" || !c.bg ? "banner bg-gradient" : "banner";
+      return `<section class="${cls}" ${style}><div class="cover">
+        ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
+        ${c.sub ? `<div class="sub">${esc(c.sub)}</div>` : ""}
+        ${c.intro ? `<div class="intro">${esc(c.intro)}</div>` : ""}
+      </div></section>`;
+    },
+    stats(b) {
+      const cols = b.options.columns || b.data.items.length;
+      const items = b.data.items.map(s => `<div class="stat">
+          <div class="num">${esc(s.num)}${s.unit ? `<em>${esc(s.unit)}</em>` : ""}</div>
+          <div class="label">${esc(s.label)}</div></div>`).join("");
+      return `<section class="stats"><div class="container stats-grid" style="grid-template-columns:repeat(${cols},1fr);">${items}</div></section>`;
+    },
+    "card-grid"(b) {
+      const cols = b.options.columns || 4;
+      const cards = b.data.items.map(p => `<div class="prog-card">
+          <div class="icon">${esc(p.icon)}</div>
+          <h3>${esc(p.title)}</h3>
+          <p class="sub">${esc(p.desc)}</p>
+          <a class="more" href="${esc(p.link)}">查看详情 →</a>
+        </div>`).join("");
+      const cls = b.options.alt ? "section section-alt" : "section";
+      return `<section class="${cls}"><div class="container">
+        <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
+        <div class="prog-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
+      </div></section>`;
+    },
+    "story-list"(b) {
+      const src = b.data.source;
+      const list = (collections[src] || []).slice(0, b.data.limit);
+      if (!list.length) return "";
+      const cols = b.options.cols || 2;
+      const cards = list.map(s => {
+        const bg = s.cover && s.cover.indexOf("linear-gradient") === -1
+          ? `background-image:url('${esc(s.cover)}');`
+          : `background:${s.cover};`;
+        return `<a class="story-card" href="${esc(s.link)}">
+          <div class="thumb" style="${bg}">
+            ${s.tag ? `<span class="tag">${esc(s.tag)}</span>` : ""}
+          </div>
+          <div class="body"><h3>${esc(s.title)}</h3><p>${esc(s.intro)}</p><span class="read">阅读全文</span></div>
+        </a>`;
+      }).join("");
+      const cls = b.options.alt ? "section section-alt" : "section";
+      return `<section class="${cls}"><div class="container">
+        <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
+        <div class="story-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
+      </div></section>`;
+    },
+    "project-grid"(b) {
+      const cols = b.options.columns || 3;
+      const cards = b.data.items.map(p => `<div class="proj-card">
+        <div class="ph"><img src="${esc(p.img)}" alt="${esc(p.title)}"></div>
+        <div class="proj-body"><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p></div>
+      </div>`).join("");
+      return `<div class="proj-wrap">
+        <div class="proj-band"></div>
+        <div class="container proj-content">
+          <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
+          <div class="proj-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
+        </div>
+      </div>`;
+    },
+    "advantage-grid"(b) {
+      const cols = b.options.columns || 4;
+      const cards = b.data.items.map(p => `<div class="adv-card">
+        <div class="icon">${esc(p.icon)}</div>
+        <h3>${esc(p.title)}</h3>
+        <p>${esc(p.desc)}</p>
+      </div>`).join("");
+      const cls = b.options.alt ? "section section-alt" : "section";
+      return `<section class="${cls}"><div class="container">
+        <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
+        <div class="adv-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
+      </div></section>`;
+    },
+    "memory-slider"(b) {
+      const imgs = (b.data.images || []).map(src =>
+        `<div class="swiper-slide"><a href="#"><div class="slide-inner"><img src="${esc(src)}" alt="${esc(b.data.title)}"></div></a></div>`).join("");
+      return `<section class="memory-slider section"><div class="container">
+        <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
+        <div class="swiper memory-swiper">
+          <div class="swiper-wrapper">${imgs}</div>
+          <span class="memory-arrow prev"><svg viewBox="0 0 27 44"><path d="M0,22L22,0l4.2,4.2L8.4,22l17.8,17.8L22,44L0,22z" fill="#fff"></path></svg></span>
+          <span class="memory-arrow next"><svg viewBox="0 0 27 44"><path d="M0,22L22,0l4.2,4.2L8.4,22l17.8,17.8L22,44L0,22z" transform="rotate(180 13.5 22)" fill="#fff"></path></svg></span>
+        </div>
+      </div></section>`;
+    }
+  };
+
+  // ---------------- 渲染页面 ----------------
+  function renderNav(nav) {
+    const menu = nav.items.map(m => {
+      const sub = m.children ? `<div class="dropdown">${m.children.map(c =>
+        `<a href="${esc(c.link)}">${esc(c.label)}</a>`).join("")}</div>` : "";
+      return `<li${m.children ? ' class="has-sub"' : ""}>
+        <a href="${esc(m.link)}" class="${m.active ? "active" : ""}">${esc(m.label)}${m.children ? ' <span class="caret">▾</span>' : ""}</a>
+        ${sub}</li>`;
+    }).join("");
+    document.getElementById("site-header").innerHTML = `
+      <div class="container nav">
+        <a class="logo" href="index.html"><img src="${esc(nav.logo)}" alt="中惠文化"></a>
+        <div class="nav-right">
+          <ul class="nav-menu">${menu}</ul>
+          <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+        </div>
+      </div>`;
+  }
+
+  function renderBlocks(blocks) {
+    document.getElementById("page").innerHTML = blocks
+      .filter(b => renderers[b.type])
+      .map(b => renderers[b.type](b)).join("");
+  }
+
+  function renderFooter(f) {
+    const info = f.info.map(i => `<p><span class="label">${esc(i.label)}</span>${esc(i.text)}</p>`).join("");
+    const qr = f.qrcodes.map(q => `
+      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div></div>`).join("");
+    document.getElementById("site-footer").innerHTML = `
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
+        <div class="footer-info">${info}</div>
+        <div class="footer-qr"><div class="qr-box">${qr}</div><a class="foot-contact" href="contact.html">联系我们</a></div>
+      </div>
+      <div class="footer-copy">${esc(f.copyright)}</div>`;
+  }
+
+  renderNav(pageConfig.nav);
+  renderBlocks(pageConfig.blocks);
+  renderFooter(pageConfig.footer);
+
+  // 中惠印记：Swiper 3D 封面流
+  if (window.Swiper) {
+    new Swiper('.memory-swiper', {
+      slidesPerView: 2,
+      centeredSlides: true,
+      loop: true,
+      grabCursor: true,
+      watchOverflow: false,
+      navigation: { nextEl: '.memory-swiper .next', prevEl: '.memory-swiper .prev' },
+      breakpoints: {
+        320: { slidesPerView: 1 },
+        900: { slidesPerView: 2 }
+      }
+    });
+  }
+  </script>
+</body>
+</html>
