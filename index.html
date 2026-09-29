@@ -181,9 +181,8 @@
     .adv-card p { font-size: 14px; color: var(--gray-blue); margin-top: 10px; }
 
     /* ===== 中惠印记：Swiper 3D 封面流（参照 chinaaupairs.com） ===== */
-    .memory-slider { position: relative; background: url('img/yinji-bg.jpg') center / cover no-repeat; overflow: hidden; }
+    .memory-slider { position: relative; overflow: hidden; background-color: #1A2958; }
     .memory-slider .container { position: relative; z-index: 1; }
-    .memory-slider .section-title h2 { color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.55); }
     .memory-slider .swiper { padding: 24px 0 44px; position: relative; }
     .memory-slider .slide-inner { position: relative; transition: transform .45s ease; }
     .memory-slider .swiper-slide img {
@@ -352,7 +351,7 @@
             "img/memory-4.jpg", "img/memory-5.jpg", "img/memory-6.jpg",
             "img/memory-7.jpg", "img/memory-8.png", "img/memory-9.jpg",
             "img/memory-10.jpg" ] },
-        options: {} },
+        options: { bg: "img/yinji-bg.jpg" } },
 
       // ⑤ 故事列表块：自动加载 stories 集合前 limit 条
       { type: "story-list",
@@ -474,14 +473,15 @@
     "memory-slider"(b) {
       const imgs = (b.data.images || []).map(src =>
         `<div class="swiper-slide"><a href="#"><div class="slide-inner"><img src="${esc(src)}" alt="${esc(b.data.title)}"></div></a></div>`).join("");
-      return `<section class="memory-slider section"><div class="container">
-        <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
+      const inner = `<div class="container">
+        <div class="section-title title-on-image"><h2>${esc(b.data.title)}</h2></div>
         <div class="swiper memory-swiper">
           <div class="swiper-wrapper">${imgs}</div>
           <span class="memory-arrow prev"><svg viewBox="0 0 27 44"><path d="M0,22L22,0l4.2,4.2L8.4,22l17.8,17.8L22,44L0,22z" fill="#fff"></path></svg></span>
           <span class="memory-arrow next"><svg viewBox="0 0 27 44"><path d="M0,22L22,0l4.2,4.2L8.4,22l17.8,17.8L22,44L0,22z" transform="rotate(180 13.5 22)" fill="#fff"></path></svg></span>
         </div>
-      </div></section>`;
+      </div>`;
+      return shell(b, inner).replace("class=\"section", "class=\"memory-slider section");
     }
   };
 
