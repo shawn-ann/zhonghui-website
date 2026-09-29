@@ -363,6 +363,36 @@
   // ---------------- 渲染器 ----------------
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 
+  // ---------------- 统一区块外壳：支持背景（图/纯色/渐变）与前置背景带 ----------------
+  // 把 b.options.bg 转成背景 style 字符串。"" | linear-gradient…/radial-gradient… → 渐变 | #hex/var()/rgb/hsl/颜色名 → 纯色 | 其余 → 图片
+  function bgStyle(bg) {
+    if (!bg) return "";
+    if (bg.indexOf("linear-gradient") === 0 || bg.indexOf("radial-gradient") === 0) {
+      return `style="background:${bg};"`;
+    }
+    if (/^(#|var\(|rgb|hsl|[a-z]+)/i.test(bg)) {
+      return `style="background:${bg};"`;
+    }
+    return `style="background-image:url('${esc(bg)}');background-size:cover;background-position:center;"`;
+  }
+
+  function shell(b, innerHtml) {
+    const bg = b.options.bg || "";
+    const style = bgStyle(bg);
+    const cls = ["section"];
+    if (!style && b.options.band) cls.push("section-with-band");
+    if (!style && !b.options.band && b.options.alt) cls.push("section-alt");
+    let inner = innerHtml;
+    if (b.options.band) {
+      const band = b.options.band;
+      const bgInner = typeof band === "string" ? band : (band.background || "");
+      const h = typeof band === "object" && band.height ? band.height : 348;
+      const darkCls = typeof band === "object" && band.dark ? " band-dark" : "";
+      inner = `<div class="band${darkCls}" ${bgStyle(bgInner)} style="height:${h}px;"></div>` + inner;
+    }
+    return `<section class="${cls.join(" ")}" ${style}>${inner}</section>`;
+  }
+
   const renderers = {
     banner(b) {
       const c = b.data;
