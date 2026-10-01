@@ -301,10 +301,10 @@
       copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
     },
     blocks: [
-      // ① Banner 块：可配背景（图或渐变色）与文案
+      // ① Banner 块：options.layout 选预制布局变体（split / centered）
       { type: "banner",
         data: { headline: "工作、学习、生活三位一体", sub: "专注国际文化交流" },
-        options: { image: "img/banner-hero.jpg", pattern: "img/pattern-box-5.svg" } },
+        options: { layout: "split", image: "img/banner-hero.jpg", pattern: "img/pattern-box-5.svg" } },
 
       // ② 项目一览矩阵块：3×3 卡片，图片 + 标题 + 描述
       { type: "project-grid",
@@ -387,6 +387,14 @@
   const renderers = {
     banner(b) {
       const c = b.data;
+      const layout = b.options.layout;
+      if (layout === "centered") {
+        const inner = `<div class="cover">
+          ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
+          ${c.sub ? `<div class="sub">${esc(c.sub)}</div>` : ""}
+        </div>`;
+        return shell(b, inner).replace("class=\"section", "class=\"banner banner--centered section");
+      }
       const img = b.options.image || "";
       const pattern = b.options.pattern || "";
       const inner = `<div class="container banner-grid">
@@ -399,7 +407,7 @@
           <img class="banner-photo" src="${esc(img)}" alt="${esc(c.headline || '中惠文化')}">
         </div>` : ""}
       </div>`;
-      return shell(b, inner).replace("class=\"section", "class=\"banner section");
+      return shell(b, inner).replace("class=\"section", "class=\"banner banner--split section");
     },
     "card-grid"(b) {
       const cols = b.options.columns || 4;
