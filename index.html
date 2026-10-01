@@ -81,9 +81,9 @@
     .banner-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 48px; min-height: 520px; }
     .banner-text h1 { font-size: 48px; font-weight: 700; color: var(--deep-blue); line-height: 1.3; margin-bottom: 20px; }
     .banner-text .sub { font-size: 24px; font-weight: 500; color: var(--gray-blue); }
-    .banner-media { position: relative; }
-    .banner-patch { position: absolute; inset: auto 0 -26px auto; width: 84%; height: 100%; background: #FF007A; }
-    .banner-media img { position: relative; display: block; width: 78%; height: auto; margin-left: auto; }
+    .banner-media { position: relative; height: 520px; }
+    .banner-pattern { position: absolute; top: 0; right: 0; width: 60%; height: auto; display: block; }
+    .banner-photo { position: absolute; left: 0; bottom: 0; width: 78%; height: auto; display: block; }
 
     /* ===== 卡片网格块（可选列数） ===== */
     .prog-grid { display: grid; gap: 28px; }
@@ -221,7 +221,7 @@
     @media (max-width: 900px) {
       .story-grid, .footer-grid, .proj-grid, .adv-grid, .banner-grid { grid-template-columns: 1fr; }
       .banner-grid { min-height: 0; }
-      .banner-patch { display: none; }
+      .banner-pattern { display: none; }
     }
   </style>
 </head>
@@ -296,7 +296,7 @@
       // ① Banner 块：可配背景（图或渐变色）与文案
       { type: "banner",
         data: { headline: "工作、学习、生活三位一体", sub: "专注国际文化交流" },
-        options: { image: "img/banner-hero.jpg" } },
+        options: { image: "img/banner-hero.jpg", pattern: "img/pattern-box-5.svg" } },
 
       // ② 项目一览矩阵块：3×3 卡片，图片 + 标题 + 描述
       { type: "project-grid",
@@ -380,14 +380,15 @@
     banner(b) {
       const c = b.data;
       const img = b.options.image || "";
+      const pattern = b.options.pattern || "";
       const inner = `<div class="container banner-grid">
         <div class="banner-text">
           ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
           ${c.sub ? `<p class="sub">${esc(c.sub)}</p>` : ""}
         </div>
         ${img ? `<div class="banner-media">
-          <div class="banner-patch"></div>
-          <img src="${esc(img)}" alt="${esc(c.headline || '中惠文化')}">
+          ${pattern ? `<img class="banner-pattern" src="${esc(pattern)}" alt="">` : ""}
+          <img class="banner-photo" src="${esc(img)}" alt="${esc(c.headline || '中惠文化')}">
         </div>` : ""}
       </div>`;
       return shell(b, inner).replace("class=\"section", "class=\"banner section");
