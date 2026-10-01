@@ -291,3 +291,77 @@ Expected：
 git add index.html
 git commit -m "feat(index): shrink banner media, add offset rose patch behind photo"
 ```
+---
+
+### Task 4: 右栏改为「SVG 装饰块右上 + 主图左下」对角错开（迭代）
+
+> 背景：Task 3 的方向（玫红包左下、照片右上）与预期相反，需反转：**背景装饰块偏右上，主图偏左下**。同时背景块从纯色改为 **`<img>` 引入 `img/pattern-box-5.svg`**（参考站同款，571×550，玫红 `#F35D5D` 底+图案）。主图较大、装饰块略小。
+
+**Files:**
+- Modify: `index.html`（`renderers.banner` 的 `.banner-media` 结构 + `.banner*` CSS + `@media`）
+- 新增入库：`img/pattern-box-5.svg`（已下载至工作区）
+
+- [ ] **Step 1: 下载并确认 SVG 已就位**
+
+确认 `img/pattern-box-5.svg` 存在（已下载，571×550）。若未在 img/ 下则用 `curl -sL -o img/pattern-box-5.svg "https://allianceabroad.com/wp-content/uploads/2023/08/Pattern-Box-5.svg"`。
+
+- [ ] **Step 2: 更新 banner 配置——加 `options.pattern`**
+
+`pageConfig.blocks[0]`（约行 303-305）改为：
+```js
+      { type: "banner",
+        data: { headline: "工作、学习、生活三位一体", sub: "专注国际文化交流" },
+        options: { image: "img/banner-hero.jpg", pattern: "img/pattern-box-5.svg" } },
+```
+
+- [ ] **Step 3: 改渲染器——背景 SVG 块 + 主图命名区分**
+
+`renderers.banner` 的 `.banner-media` 内改为：
+```js
+        ${img ? `<div class="banner-media">
+          ${pattern ? `<img class="banner-pattern" src="${esc(pattern)}" alt="">` : ""}
+          <img class="banner-photo" src="${esc(img)}" alt="${esc(c.headline || '中惠文化')}">
+        </div>` : ""}
+```
+对应的 `const` 声明加 `const pattern = b.options.pattern || "";`。
+
+- [ ] **Step 4: CSS——装饰块右上、主图左下**
+
+当前 banner media CSS（约行 84-86）改为：
+```css
+    .banner-media { position: relative; height: 520px; }
+    .banner-pattern { position: absolute; top: 0; right: 0; width: 60%; height: auto; display: block; }
+    .banner-photo { position: absolute; left: 0; bottom: 0; width: 78%; height: auto; display: block; }
+```
+> 设计意图：`.banner-media` 相对定位 + 固定高 520px（与 grid min-height 对齐，作为两图定位的公共坐标系）。`.banner-pattern` 锚右上（top:0;right:0），宽 60%（略小）；`.banner-photo` 锚左下（left:0;bottom:0），宽 78%（较大）。对角错开。若 SVG 在 60% 高下高度超 520，调整宽度或加 `max-height`。
+
+`@media (max-width:900px)` 里把 `.banner-patch` 规则改为 `/ 或新增 / `.banner-pattern { display: none; }`（隐藏装饰块）。当前该 media 块内是 `.banner-patch { display:none; }`，需同步为 `.banner-pattern`（class 已改名）。
+
+- [ ] **Step 5: 验证**
+
+Playwright 打开 `http://127.0.0.1:8321/index.html`，视口 1200×900，执行：
+```js
+() => {
+  const media = document.querySelector('.banner-media');
+  const mr = media.getBoundingClientRect();
+  const pat = document.querySelector('.banner-pattern');
+  const pr = pat.getBoundingClientRect();
+  const ph = document.querySelector('.banner-photo');
+  const hr = ph.getBoundingClientRect();
+  return {
+    media: {w: Math.round(mr.width), h: Math.round(mr.height)},
+    pattern: {src: pat.getAttribute('src'), left: Math.round(pr.left-mr.left), top: Math.round(pr.top-mr.top), w: Math.round(pr.width), h: Math.round(pr.height)},
+    photo: {left: Math.round(hr.left-mr.left), bottom: Math.round(mr.bottom-hr.bottom), w: Math.round(hr.width), h: Math.round(hr.height)}
+  };
+}
+```
+Expected：`pattern` 在右上（left 较大、top≈0、width 较 photo 小）、src = `img/pattern-box-5.svg`；`photo` 在左下（left≈0、bottom≈0、width 78% 较大）。两者对角错开（pattern 左上高、photo 右下低）。
+再缩视口 700×900，确认 `.banner-pattern` computed `display` = `none`，`.banner-grid` 单列。
+控制台 0 报错；`node --check` → SYNTAX_OK；截全页图 `banner-split-v3.png`（不入库）。
+
+- [ ] **Step 6: Commit（连同 SVG）**
+
+```bash
+git add index.html img/pattern-box-5.svg
+git commit -m "feat(index): banner decor pattern top-right (SVG), main photo bottom-left diagonal offset"
+```
