@@ -301,8 +301,8 @@
     blocks: [
       // ① Banner 块：可配背景（图或渐变色）与文案
       { type: "banner",
-        data: { headline: "工作、学习、生活三位一体" },
-        options: { bg: "img/brand.png" } },
+        data: { headline: "工作、学习、生活三位一体", sub: "专注国际文化交流" },
+        options: { image: "img/banner-hero.jpg" } },
 
       // ② 项目一览矩阵块：3×3 卡片，图片 + 标题 + 描述
       { type: "project-grid",
@@ -385,10 +385,13 @@
   const renderers = {
     banner(b) {
       const c = b.data;
-      let inner = `<div class="cover">
-        ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
-        ${c.sub ? `<div class="sub">${esc(c.sub)}</div>` : ""}
-        ${c.intro ? `<div class="intro">${esc(c.intro)}</div>` : ""}
+      const img = b.options.image || "";
+      let inner = `<div class="container banner-grid">
+        <div class="banner-text">
+          ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
+          ${c.sub ? `<p class="sub">${esc(c.sub)}</p>` : ""}
+        </div>
+        ${img ? `<div class="banner-media"><img src="${esc(img)}" alt="${esc(c.headline || '中惠文化')}"></div>` : ""}
       </div>`;
       return shell(b, inner).replace("class=\"section", "class=\"banner section");
     },
