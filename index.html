@@ -160,12 +160,13 @@
     }
     .adv-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,41,88,0.14); }
     .adv-card .icon {
-      width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 20px;
-      background: var(--light-blue); color: var(--deep-blue);
-      display: flex; align-items: center; justify-content: center; font-size: 28px;
+      width: 104px; height: 104px; border-radius: 50%; margin: 0 auto 20px;
+      background: #fff; border: 2px solid #2E6BC4;
+      display: flex; align-items: center; justify-content: center;
     }
+    .adv-card .icon img { width: 60px; height: 60px; display: block; }
     .adv-card h3 { font-size: 19px; color: var(--deep-blue); font-weight: 600; }
-    .adv-card p { font-size: 14px; color: var(--gray-blue); margin-top: 10px; }
+    .adv-card p { font-size: 14px; color: var(--gray-blue); margin-top: 10px; line-height: 1.8; }
 
     /* ===== 中惠印记：Swiper 3D 封面流（参照 chinaaupairs.com） ===== */
     .memory-slider { position: relative; overflow: hidden; background-color: #1A2958; }
@@ -325,14 +326,14 @@
       { type: "advantage-grid",
         data: { title: "中惠优势",
           items: [
-            { icon: "✓", title: "资质齐全", desc: "官方认可，合规运营" },
-            { icon: "🌏", title: "深耕国际交流", desc: "专注领域多年积累" },
-            { icon: "🛎", title: "一站式服务", desc: "材料/签证/行前全程跟进" },
-            { icon: "🌐", title: "全球服务网络", desc: "海外资源与本地支持" },
-            { icon: "🛂", title: "高签证通过率", desc: "专业签证辅导" },
-            { icon: "🛡", title: "安全保障", desc: "全程护航，放心出行" },
-            { icon: "👥", title: "专业顾问团队", desc: "资深顾问一对一" },
-            { icon: "⭐", title: "口碑见证", desc: "学员真实好评" } ] },
+            { icon: "img/adv-1.svg", title: "资质齐全", desc: "官方认可资质\n合规规范运营\n全流程受监管" },
+            { icon: "img/adv-2.svg", title: "深耕国际交流", desc: "多年专注国际交流\n项目经验丰富\n资源持续积累" },
+            { icon: "img/adv-3.svg", title: "一站式服务", desc: "材料准备代办\n签证全程辅导\n行前贴心跟进" },
+            { icon: "img/adv-4.svg", title: "全球服务网络", desc: "覆盖多个国家\n海外资源丰富\n落地本地支持" },
+            { icon: "img/adv-5.svg", title: "高签证通过率", desc: "资深签证辅导\n材料精准把关\n通过率领先" },
+            { icon: "img/adv-6.svg", title: "安全保障", desc: "全程护航无忧\n海外紧急联络\n权益保障完善" },
+            { icon: "img/adv-7.svg", title: "专业顾问团队", desc: "资深顾问一对一\n熟悉项目全流程\n耐心细致负责" },
+            { icon: "img/adv-8.svg", title: "口碑见证", desc: "学员真实好评\n往届案例可查\n家长放心之选" } ] },
         options: { columns: 4, alt: true } },
 
       // ④ 中惠印记：Swiper 封面流轮播
@@ -460,9 +461,9 @@
     "advantage-grid"(b) {
       const cols = b.options.columns || 4;
       const cards = b.data.items.map(p => `<div class="adv-card">
-        <div class="icon">${esc(p.icon)}</div>
+        <div class="icon"><img src="${esc(p.icon)}" alt=""></div>
         <h3>${esc(p.title)}</h3>
-        <p>${esc(p.desc)}</p>
+        <p>${esc(p.desc).replace(/\n/g, "<br>")}</p>
       </div>`).join("");
       const inner = `<div class="container">
         <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
