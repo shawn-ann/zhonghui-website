@@ -77,21 +77,11 @@
     .section-title h2 { font-size: 32px; color: var(--deep-blue); font-weight: 700; }
 
     /* ===== Banner 块 ===== */
-    .banner {
-      height: 420px;
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-      background-size: cover; background-position: center;
-    }
-    .banner::before {
-      content: ""; position: absolute; inset: 0;
-      background-image: radial-gradient(#ffffff22 1px, transparent 1px);
-      background-size: 28px 28px;
-    }
-    .banner .cover { position: relative; z-index: 1; text-align: center; color: #fff; padding: 0 24px; }
-    .banner .cover h1 { font-size: 52px; font-weight: 700; letter-spacing: 4px; text-shadow: 0 2px 16px rgba(0,0,0,0.45); }
-    .banner .cover .sub { font-size: 40px; font-weight: 500; margin-top: 12px; letter-spacing: 2px; }
-    .banner .cover .intro { font-size: 18px; margin-top: 24px; opacity: .9; }
+    .banner { position: relative; overflow: hidden; background: var(--white); padding: 0; }
+    .banner-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 48px; min-height: 520px; }
+    .banner-text h1 { font-size: 48px; font-weight: 700; color: var(--deep-blue); line-height: 1.3; margin-bottom: 20px; }
+    .banner-text .sub { font-size: 24px; font-weight: 500; color: var(--gray-blue); }
+    .banner-media img { display: block; width: 100%; height: auto; }
 
     /* ===== 卡片网格块（可选列数） ===== */
     .prog-grid { display: grid; gap: 28px; }
@@ -227,7 +217,8 @@
     .foot-contact:hover { color: #ffffff; }
 
     @media (max-width: 900px) {
-      .story-grid, .footer-grid, .proj-grid, .adv-grid { grid-template-columns: 1fr; }
+      .story-grid, .footer-grid, .proj-grid, .adv-grid, .banner-grid { grid-template-columns: 1fr; }
+      .banner-grid { min-height: 0; }
     }
   </style>
 </head>
@@ -386,7 +377,7 @@
     banner(b) {
       const c = b.data;
       const img = b.options.image || "";
-      let inner = `<div class="container banner-grid">
+      const inner = `<div class="container banner-grid">
         <div class="banner-text">
           ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
           ${c.sub ? `<p class="sub">${esc(c.sub)}</p>` : ""}
