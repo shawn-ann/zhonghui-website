@@ -78,13 +78,17 @@
 
     /* ===== Banner 块 ===== */
     .banner { position: relative; overflow: hidden; background: var(--white); padding: 0; }
-    .banner-grid { display: flex; flex-direction: row; align-items: stretch; gap: 20px; padding: 60px 0 120px; }
-    .banner-text { display: flex; flex-direction: column; justify-content: center; gap: 20px; flex: 1.25; padding-top: 20px; }
-    .banner-text h1 { font-size: 48px; font-weight: 700; color: var(--deep-blue); line-height: 1.3; margin-bottom: 0; }
-    .banner-text .sub { font-size: 24px; font-weight: 500; color: var(--gray-blue); }
-    .banner-media { position: relative; flex: 1; min-height: 340px; }
-    .banner-pattern { position: absolute; top: -45px; right: -10px; bottom: 17px; left: -10px; width: 80%; height: auto; display: block; z-index: 0; margin-left: auto; }
-    .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; border-radius: 0; }
+    .banner--split .banner-grid { display: flex; flex-direction: row; align-items: stretch; gap: 20px; padding: 60px 0 120px; }
+    .banner--split .banner-text { display: flex; flex-direction: column; justify-content: center; gap: 20px; flex: 1.25; padding-top: 20px; }
+    .banner--split .banner-text h1 { font-size: 48px; font-weight: 700; color: var(--deep-blue); line-height: 1.3; margin-bottom: 0; }
+    .banner--split .banner-text .sub { font-size: 24px; font-weight: 500; color: var(--gray-blue); }
+    .banner--split .banner-media { position: relative; flex: 1; min-height: 340px; }
+    .banner--split .banner-pattern { position: absolute; top: -45px; right: -10px; bottom: 17px; left: -10px; width: 80%; height: auto; display: block; z-index: 0; margin-left: auto; }
+    .banner--split .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; border-radius: 0; }
+    .banner--centered { min-height: 420px; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; }
+    .banner--centered .cover { position: relative; z-index: 1; text-align: center; color: #fff; padding: 0 24px; }
+    .banner--centered .cover h1 { font-size: 52px; font-weight: 700; letter-spacing: 4px; text-shadow: 0 2px 16px rgba(0,0,0,0.45); }
+    .banner--centered .cover .sub { font-size: 40px; font-weight: 500; margin-top: 12px; letter-spacing: 2px; }
 
     /* ===== 卡片网格块（可选列数） ===== */
     .prog-grid { display: grid; gap: 28px; }
@@ -221,11 +225,11 @@
 
     @media (max-width: 900px) {
       .story-grid, .footer-grid, .proj-grid, .adv-grid { grid-template-columns: 1fr; }
-      .banner-grid { flex-direction: column; padding: 40px 0 60px; }
-      .banner-text { justify-content: flex-start; padding-top: 0; }
-      .banner-media { min-height: 0; position: relative; }
-      .banner-photo { position: static; width: 100%; margin-top: 24px; }
-      .banner-pattern { display: none; }
+      .banner--split .banner-grid { flex-direction: column; padding: 40px 0 60px; }
+      .banner--split .banner-text { justify-content: flex-start; padding-top: 0; }
+      .banner--split .banner-media { min-height: 0; position: relative; }
+      .banner--split .banner-photo { position: static; width: 100%; margin-top: 24px; }
+      .banner--split .banner-pattern { display: none; }
     }
   </style>
 </head>
