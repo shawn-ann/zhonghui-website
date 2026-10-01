@@ -81,7 +81,9 @@
     .banner-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 48px; min-height: 520px; }
     .banner-text h1 { font-size: 48px; font-weight: 700; color: var(--deep-blue); line-height: 1.3; margin-bottom: 20px; }
     .banner-text .sub { font-size: 24px; font-weight: 500; color: var(--gray-blue); }
-    .banner-media img { display: block; width: 100%; height: auto; }
+    .banner-media { position: relative; }
+    .banner-patch { position: absolute; inset: auto 0 -26px auto; width: 84%; height: 100%; background: #FF007A; }
+    .banner-media img { position: relative; display: block; width: 78%; height: auto; margin-left: auto; }
 
     /* ===== 卡片网格块（可选列数） ===== */
     .prog-grid { display: grid; gap: 28px; }
@@ -219,6 +221,7 @@
     @media (max-width: 900px) {
       .story-grid, .footer-grid, .proj-grid, .adv-grid, .banner-grid { grid-template-columns: 1fr; }
       .banner-grid { min-height: 0; }
+      .banner-patch { display: none; }
     }
   </style>
 </head>
@@ -382,7 +385,10 @@
           ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
           ${c.sub ? `<p class="sub">${esc(c.sub)}</p>` : ""}
         </div>
-        ${img ? `<div class="banner-media"><img src="${esc(img)}" alt="${esc(c.headline || '中惠文化')}"></div>` : ""}
+        ${img ? `<div class="banner-media">
+          <div class="banner-patch"></div>
+          <img src="${esc(img)}" alt="${esc(c.headline || '中惠文化')}">
+        </div>` : ""}
       </div>`;
       return shell(b, inner).replace("class=\"section", "class=\"banner section");
     },
