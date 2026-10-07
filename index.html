@@ -16,6 +16,7 @@
       --white: #FFFFFF;
       --border: #E5E7EB;
       --orange: #FAB816;         /* 辅助强调色 */
+      --accent: #2E6BC4;         /* 图标/强调色（可随主题切换） */
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -161,10 +162,10 @@
     .adv-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,41,88,0.14); }
     .adv-card .icon {
       width: 104px; height: 104px; border-radius: 50%; margin: 0 auto 20px;
-      background: #fff; border: 2px solid #2E6BC4;
+      background: #fff; border: 2px solid currentColor; color: var(--accent);
       display: flex; align-items: center; justify-content: center;
     }
-    .adv-card .icon img { width: 60px; height: 60px; display: block; }
+    .adv-card .icon svg { width: 60px; height: 60px; display: block; }
     .adv-card h3 { font-size: 19px; color: var(--deep-blue); font-weight: 600; }
     .adv-card p { font-size: 14px; color: var(--gray-blue); margin-top: 10px; line-height: 1.8; }
 
@@ -326,14 +327,14 @@
       { type: "advantage-grid",
         data: { title: "中惠优势",
           items: [
-            { icon: "img/adv-1.svg", title: "资质齐全", desc: "官方认可资质\n合规规范运营\n全流程受监管" },
-            { icon: "img/adv-2.svg", title: "深耕国际交流", desc: "多年专注国际交流\n项目经验丰富\n资源持续积累" },
-            { icon: "img/adv-3.svg", title: "一站式服务", desc: "材料准备代办\n签证全程辅导\n行前贴心跟进" },
-            { icon: "img/adv-4.svg", title: "全球服务网络", desc: "覆盖多个国家\n海外资源丰富\n落地本地支持" },
-            { icon: "img/adv-5.svg", title: "高签证通过率", desc: "资深签证辅导\n材料精准把关\n通过率领先" },
-            { icon: "img/adv-6.svg", title: "安全保障", desc: "全程护航无忧\n海外紧急联络\n权益保障完善" },
-            { icon: "img/adv-7.svg", title: "专业顾问团队", desc: "资深顾问一对一\n熟悉项目全流程\n耐心细致负责" },
-            { icon: "img/adv-8.svg", title: "口碑见证", desc: "学员真实好评\n往届案例可查\n家长放心之选" } ] },
+            { icon: "badge", title: "资质齐全", desc: "官方认可资质\n合规规范运营\n全流程受监管" },
+            { icon: "globe", title: "深耕国际交流", desc: "多年专注国际交流\n项目经验丰富\n资源持续积累" },
+            { icon: "service", title: "一站式服务", desc: "材料准备代办\n签证全程辅导\n行前贴心跟进" },
+            { icon: "network", title: "全球服务网络", desc: "覆盖多个国家\n海外资源丰富\n落地本地支持" },
+            { icon: "visa", title: "高签证通过率", desc: "资深签证辅导\n材料精准把关\n通过率领先" },
+            { icon: "safety", title: "安全保障", desc: "全程护航无忧\n海外紧急联络\n权益保障完善" },
+            { icon: "team", title: "专业顾问团队", desc: "资深顾问一对一\n熟悉项目全流程\n耐心细致负责" },
+            { icon: "reputation", title: "口碑见证", desc: "学员真实好评\n往届案例可查\n家长放心之选" } ] },
         options: { columns: 4, alt: true } },
 
       // ④ 中惠印记：Swiper 封面流轮播
@@ -384,6 +385,18 @@
     }
     return `<section class="${cls.join(" ")}" ${style}>${inner}</section>`;
   }
+
+  // 优势图标（内联 SVG，stroke=currentColor，颜色由 CSS 的 --accent 控制）
+  const advIcons = {
+    badge:      '<circle cx="12" cy="9" r="5.5"/><path d="M8.6 13.8 7 22l5-2.8 5 2.8-1.6-8.2"/>',
+    globe:      '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/>',
+    service:    '<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="m9 12 2 2 4-4"/>',
+    network:    '<circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M12 7.2 6.4 16M12 7.2 17.6 16M7.2 18h9.6"/>',
+    visa:       '<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="9.5" r="2.4"/><path d="m9 12.5 2 2 4-4"/>',
+    safety:     '<path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3z"/><path d="m9 12 2 2 4-4"/>',
+    team:       '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.6a3 3 0 0 1 0 5.8M21 20c0-2.4-1.4-4.5-3.4-5.4"/>',
+    reputation: '<path d="m12 3 2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8L6.6 19.6l1-6L3.3 9.4l6-.9L12 3z"/>'
+  };
 
   const renderers = {
     banner(b) {
@@ -461,7 +474,7 @@
     "advantage-grid"(b) {
       const cols = b.options.columns || 4;
       const cards = b.data.items.map(p => `<div class="adv-card">
-        <div class="icon"><img src="${esc(p.icon)}" alt=""></div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${advIcons[p.icon] || ""}</svg></div>
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.desc).replace(/\n/g, "<br>")}</p>
       </div>`).join("");
