@@ -6,15 +6,15 @@
   <title>案例分享 — 中惠文化</title>
   <style>
     :root {
-      --deep-blue: #1A4B7A;
-      --bright-blue: #4A90E2;
-      --light-blue: #E5F0FA;
-      --pale-blue: #D0E7F8;
-      --gray-blue: #5A7A9A;
-      --dark-text: #44546A;
+      --deep-blue: #8A0E4B;      /* 标题主色：深玫 */
+      --bright-blue: #C2185B;    /* 链接/文字强调：深玫 */
+      --light-blue: #FFF1F6;     /* 浅玫瑰底 */
+      --gray-blue: #7C6B73;      /* 次要文字：暖玫灰 */
+      --dark-text: #5A4A52;      /* 正文：暖玫灰 */
       --white: #FFFFFF;
-      --border: #E1E9F2;
-      --orange: #EE822F;
+      --border: #F0E3EA;
+      --orange: #E60039;         /* 辅助强调色：品牌玫红 */
+      --accent: #E60039;         /* 图标/主强调：品牌玫红 */
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,29 +29,29 @@
 
     /* ===== 顶部导航栏 ===== */
     header {
-      background: linear-gradient(120deg, var(--deep-blue) 0%, #24598f 100%);
+      background: var(--white);
       position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 10px rgba(26,75,122,0.25);
+      box-shadow: 0 0 5px rgba(22,22,22,0.14);
     }
-    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-    .logo img { display: block; height: 44px; width: auto; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
-    .nav-menu { display: flex; list-style: none; gap: 28px; align-items: center; }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 88px; }
+    .logo img { display: block; height: 88px; width: auto; }
+    .nav-right { display: flex; align-items: center; gap: 32px; }
+    .nav-menu { display: flex; list-style: none; gap: 24px; align-items: center; }
     .nav-menu > li { position: relative; }
     .nav-menu > li > a {
-      font-size: 15px; color: #d7e6f5; font-weight: 500; padding: 6px 0;
-      display: flex; align-items: center; gap: 4px; transition: color .2s;
+      font-size: 16px; color: #E60039; font-weight: 600; padding: 6px 0;
+      display: flex; align-items: center; gap: 4px;
     }
-    .nav-menu > li > a:hover { color: #fff; }
-    .nav-menu > li > a.active { color: #fff; }
+    .nav-menu > li > a.active { color: #E60039; }
     .nav-menu > li > a.active::after {
-      content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
-      height: 3px; border-radius: 2px; background: var(--bright-blue);
+      content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
+      height: 3px; border-radius: 2px; background: #E60039;
     }
     .nav-menu .caret { font-size: 10px; opacity: .8; }
     .nav-menu .dropdown {
       position: absolute; top: 100%; left: -12px; min-width: 172px;
       background: var(--white); border-radius: 0 0 8px 8px;
-      box-shadow: 0 10px 24px rgba(26,75,122,0.18); overflow: hidden;
+      box-shadow: 0 10px 24px rgba(138,14,75,0.18); overflow: hidden;
       opacity: 0; visibility: hidden; transform: translateY(8px);
       transition: opacity .2s, transform .2s, visibility .2s;
       padding: 6px 0; z-index: 200;
@@ -59,24 +59,24 @@
     .nav-menu > li:hover .dropdown,
     .nav-menu > li:focus-within .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
     .nav-menu .dropdown a {
-      display: block; padding: 11px 20px; font-size: 14px; color: var(--deep-blue);
+      display: block; padding: 11px 20px; font-size: 14px; color: #E60039;
       transition: background .15s, color .15s; white-space: nowrap;
     }
-    .nav-menu .dropdown a:hover { background: var(--light-blue); color: var(--bright-blue); }
-    .nav-lang { font-size: 14px; color: #9db6cf; display: flex; gap: 6px; }
-    .nav-lang .sep { color: #5a7a9a; }
-    .nav-lang a { color: #9db6cf; }
-    .nav-lang a:hover { color: #fff; }
-    .nav-lang a.active { color: #fff; font-weight: 600; }
+    .nav-menu .dropdown a:hover { background: #E60039; color: #fff; }
+    .nav-lang { font-size: 14px; color: var(--gray-blue); display: flex; gap: 6px; }
+    .nav-lang .sep { color: var(--gray-blue); }
+    .nav-lang a { color: var(--gray-blue); }
+    .nav-lang a.active { color: #E60039; font-weight: 600; }
 
-    /* ===== Banner ===== */
-    .banner {
-      height: 300px; display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden; background-size: cover; background-position: center;
-    }
-    .banner.bg-gradient { background: linear-gradient(135deg, #0e3d63 0%, #1A4B7A 50%, #3372b8 100%); }
-    .banner::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(#ffffff22 1px, transparent 1px); background-size: 28px 28px; }
-    .banner-note { position: relative; z-index: 1; color: rgba(255,255,255,.7); font-size: 15px; letter-spacing: 2px; padding: 8px 20px; border: 1px dashed rgba(255,255,255,.4); border-radius: 6px; }
+    /* ===== Banner（左文右图，与首页一致） ===== */
+    .banner { position: relative; overflow: hidden; background: var(--white); padding: 0; }
+    .banner-grid { display: flex; flex-direction: row; align-items: stretch; gap: 20px; padding: 60px 0 120px; }
+    .banner-text { display: flex; flex-direction: column; justify-content: center; gap: 20px; flex: 1.25; padding-top: 20px; }
+    .banner-text h1 { font-size: 48px; font-weight: 700; color: var(--deep-blue); line-height: 1.3; margin-bottom: 0; }
+    .banner-text .sub { font-size: 24px; font-weight: 500; color: var(--gray-blue); }
+    .banner-media { position: relative; flex: 1; min-height: 340px; }
+    .banner-pattern { position: absolute; top: -45px; right: 10px; width: 80%; height: auto; display: block; z-index: 0; }
+    .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; }
 
     /* ===== 区块通用 ===== */
     .section { padding: 56px 0; }
@@ -91,11 +91,11 @@
       background-size: cover; background-position: center;
       transition: transform .25s, box-shadow .25s;
     }
-    .case-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(26,75,122,0.18); }
+    .case-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(138,14,75,0.20); }
     .case-card .title {
       position: absolute; left: 0; right: 0; bottom: 0;
       padding: 10px 12px; font-size: 13px; font-weight: 600; color: #fff;
-      background: rgba(26,75,122,0.55);   /* 半透明遮罩 */
+      background: rgba(138,14,75,0.55);   /* 半透明玫红遮罩 */
       backdrop-filter: blur(2px);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
@@ -113,22 +113,31 @@
     .page-info { text-align: center; color: var(--gray-blue); font-size: 13px; margin-top: 14px; }
 
     /* ===== 页脚 ===== */
-    footer { background: var(--deep-blue); color: #cfdff0; }
-    .footer-grid { max-width: 1280px; margin: 0 auto; padding: 56px 24px 32px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
+    footer { background: linear-gradient(124deg, #6E0B3E 0%, #A11254 50%, #C2185B 100%); color: #ffd7e6; }
+    .footer-grid { max-width: 1280px; margin: 0 auto; padding: 130px 24px 116px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
     .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
     .footer-brand .zh { font-size: 22px; font-weight: 700; color: #fff; }
-    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #9db6cf; margin-top: 4px; }
-    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #d7e6f5; }
-    .footer-info .label { color: #9db6cf; margin-right: 8px; }
-    .footer-copy { border-top: 1px solid rgba(255,255,255,.12); padding: 20px 24px; text-align: center; font-size: 13px; color: #9db6cf; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #f0a9c6; margin-top: 4px; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #ffd7e6; }
+    .footer-info .label { color: #f0a9c6; margin-right: 8px; }
+    .footer-copy { border-top: 1px solid rgba(255,255,255,.18); padding: 20px 24px; text-align: center; font-size: 13px; color: #f0a9c6; }
     .footer-qr { text-align: center; }
     .footer-qr h4 { color: #fff; font-size: 16px; margin-bottom: 16px; }
     .qr-box { display: flex; gap: 16px; justify-content: center; }
     .qr-item .qr { width: 92px; height: 92px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--deep-blue); font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px; }
-    .qr-item p { font-size: 13px; color: #d7e6f5; }
+    .qr-item p { font-size: 13px; color: #ffd7e6; }
+    .foot-contact { display: block; margin-top: 18px; text-align: left; color: #ffd7e6; font-size: 14px; text-decoration: none; }
+    .foot-contact:hover { color: #ffffff; }
 
     @media (max-width: 1000px) {
       .case-grid { grid-template-columns: repeat(4, 1fr) !important; }
+    }
+    @media (max-width: 900px) {
+      .banner-grid { flex-direction: column; padding: 40px 0 60px; }
+      .banner-text { justify-content: flex-start; padding-top: 0; }
+      .banner-media { min-height: 0; }
+      .banner-photo { position: static; width: 100%; margin-top: 24px; }
+      .banner-pattern { display: none; }
     }
     @media (max-width: 600px) {
       .case-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -152,32 +161,32 @@
   // 案例集合（图文内容，模拟后端）
   const collections = {
     cases: [
-      { title: "小曹同学的赴美之旅", cover: "linear-gradient(135deg,#4A90E2,#1A4B7A)", link: "case-detail.html?id=xiaocao" },
-      { title: "小丁同学的逆袭故事", cover: "linear-gradient(135deg,#5A7A9A,#1A4B7A)", link: "case-detail.html?id=xiaoding" },
-      { title: "SWT 2025 年 0 拒签记录", cover: "linear-gradient(135deg,#3372b8,#24598f)", link: "#" },
-      { title: "德州营地体验感悟", cover: "linear-gradient(135deg,#24598f,#0e3d63)", link: "#" },
-      { title: "我的第一次赴美带薪实习", cover: "linear-gradient(135deg,#4A90E2,#0e3d63)", link: "#" },
-      { title: "ITP 会计岗位面试心得", cover: "linear-gradient(135deg,#EE822F,#C25E00)", link: "#" },
-      { title: "营地里的马术时光", cover: "linear-gradient(135deg,#30C0B4,#0e5b54)", link: "#" },
-      { title: "互惠生的美国家庭生活", cover: "linear-gradient(135deg,#E54C5E,#8c1d2a)", link: "#" },
-      { title: "在四季酒店实习的每一天", cover: "linear-gradient(135deg,#44546A,#171f2b)", link: "#" },
-      { title: "海边救生员的夏天", cover: "linear-gradient(135deg,#4A90E2,#1A4B7A)", link: "#" },
-      { title: "里斯本 WYSTC 大会见闻", cover: "linear-gradient(135deg,#75BD42,#3c6e1b)", link: "#" },
-      { title: "从英语小白到一签过签", cover: "linear-gradient(135deg,#5A7A9A,#24598f)", link: "#" },
-      { title: "游乐园设备操作员手记", cover: "linear-gradient(135deg,#F2BA02,#a37a00)", link: "#" },
-      { title: "旧金山自由行 30 天", cover: "linear-gradient(135deg,#3372b8,#0e3d63)", link: "#" },
-      { title: "学员 Offer 展示合集", cover: "linear-gradient(135deg,#1A4B7A,#0e3d63)", link: "#" },
-      { title: "我的美国室友们", cover: "linear-gradient(135deg,#E54C5E,#1A4B7A)", link: "#" },
-      { title: "夏令营辅导员的日常", cover: "linear-gradient(135deg,#30C0B4,#1A4B7A)", link: "#" },
-      { title: "面试培训复盘笔记", cover: "linear-gradient(135deg,#EE822F,#1A4B7A)", link: "#" },
-      { title: "第一次见雇主的那一刻", cover: "linear-gradient(135deg,#75BD42,#1A4B7A)", link: "#" },
-      { title: "厨房帮工的有趣经历", cover: "linear-gradient(135deg,#5A7A9A,#0e3d63)", link: "#" },
-      { title: "拉斯维加斯打工周记", cover: "linear-gradient(135deg,#F2BA02,#C25E00)", link: "#" },
-      { title: "我的寄宿家庭爸爸妈妈", cover: "linear-gradient(135deg,#E54C5E,#8c1d2a)", link: "#" },
-      { title: "华盛顿特区环球记", cover: "linear-gradient(135deg,#3372b8,#1A4B7A)", link: "#" },
-      { title: "SWT 全流程签证指南分享", cover: "linear-gradient(135deg,#44546A,#1A4B7A)", link: "#" },
-      { title: "2026 救生员北京站培训", cover: "linear-gradient(135deg,#4A90E2,#24598f)", link: "#" },
-      { title: "第一次超员上夜班", cover: "linear-gradient(135deg,#5A7A9A,#171f2b)", link: "#" }
+      { title: "小曹同学的赴美之旅", cover: "linear-gradient(135deg,#E85B9B,#8A0E4B)", link: "case-detail.html?id=xiaocao" },
+      { title: "小丁同学的逆袭故事", cover: "linear-gradient(135deg,#C2185B,#8A0E4B)", link: "case-detail.html?id=xiaoding" },
+      { title: "SWT 2025 年 0 拒签记录", cover: "linear-gradient(135deg,#E60039,#A11254)", link: "#" },
+      { title: "德州营地体验感悟", cover: "linear-gradient(135deg,#A11254,#6E0B3E)", link: "#" },
+      { title: "我的第一次赴美带薪实习", cover: "linear-gradient(135deg,#E85B9B,#6E0B3E)", link: "#" },
+      { title: "ITP 会计岗位面试心得", cover: "linear-gradient(135deg,#FF5FA2,#C2185B)", link: "#" },
+      { title: "营地里的马术时光", cover: "linear-gradient(135deg,#E85B9B,#6E0B3E)", link: "#" },
+      { title: "互惠生的美国家庭生活", cover: "linear-gradient(135deg,#E60039,#8A0E4B)", link: "#" },
+      { title: "在四季酒店实习的每一天", cover: "linear-gradient(135deg,#A11254,#3A0A22)", link: "#" },
+      { title: "海边救生员的夏天", cover: "linear-gradient(135deg,#E85B9B,#8A0E4B)", link: "#" },
+      { title: "里斯本 WYSTC 大会见闻", cover: "linear-gradient(135deg,#E85B9B,#8A0E4B)", link: "#" },
+      { title: "从英语小白到一签过签", cover: "linear-gradient(135deg,#C2185B,#A11254)", link: "#" },
+      { title: "游乐园设备操作员手记", cover: "linear-gradient(135deg,#FF5FA2,#C2185B)", link: "#" },
+      { title: "旧金山自由行 30 天", cover: "linear-gradient(135deg,#E60039,#6E0B3E)", link: "#" },
+      { title: "学员 Offer 展示合集", cover: "linear-gradient(135deg,#8A0E4B,#6E0B3E)", link: "#" },
+      { title: "我的美国室友们", cover: "linear-gradient(135deg,#E60039,#8A0E4B)", link: "#" },
+      { title: "夏令营辅导员的日常", cover: "linear-gradient(135deg,#E85B9B,#8A0E4B)", link: "#" },
+      { title: "面试培训复盘笔记", cover: "linear-gradient(135deg,#FF5FA2,#8A0E4B)", link: "#" },
+      { title: "第一次见雇主的那一刻", cover: "linear-gradient(135deg,#E85B9B,#8A0E4B)", link: "#" },
+      { title: "厨房帮工的有趣经历", cover: "linear-gradient(135deg,#C2185B,#6E0B3E)", link: "#" },
+      { title: "拉斯维加斯打工周记", cover: "linear-gradient(135deg,#FF5FA2,#C2185B)", link: "#" },
+      { title: "我的寄宿家庭爸爸妈妈", cover: "linear-gradient(135deg,#E60039,#8A0E4B)", link: "#" },
+      { title: "华盛顿特区环球记", cover: "linear-gradient(135deg,#E60039,#8A0E4B)", link: "#" },
+      { title: "SWT 全流程签证指南分享", cover: "linear-gradient(135deg,#A11254,#8A0E4B)", link: "#" },
+      { title: "2026 救生员北京站培训", cover: "linear-gradient(135deg,#E85B9B,#A11254)", link: "#" },
+      { title: "第一次超员上夜班", cover: "linear-gradient(135deg,#C2185B,#3A0A22)", link: "#" }
       // 共 26 条，用于演示分页（每页 24 条 → 2 页）
     ]
   };
@@ -185,18 +194,18 @@
   const pageConfig = {
     title: "案例分享",
     nav: {
-      logo: "img/logo.png",
+      logo: "img/pink_logo_with_text_1.jpg",
       langCurrent: "中文", langOther: "EN",
       items: [
         { label: "首页", link: "index.html" },
-        { label: "关于我们", link: "about.html" },
-        { label: "项目介绍", link: "project-swt.html", children: [
+        { label: "关于中惠", link: "about.html" },
+        { label: "互惠生", link: "#" },
+        { label: "赴美J1交流项目", link: "project-swt.html", children: [
             { label: "SWT 赴美带薪实习", link: "project-swt.html" },
             { label: "ITP 赴美专业实习", link: "#" },
-            { label: "ICCP 赴美营地辅导员", link: "#" },
-            { label: "Au Pair 赴美互惠生", link: "#" } ] },
+            { label: "ICCP 赴美营地辅导员", link: "#" } ] },
+        { label: "海外留学", link: "#" },
         { label: "案例分享", link: "cases.html", active: true },
-        { label: "资讯中心", link: "news.html" },
         { label: "联系我们", link: "contact.html" }
       ]
     },
@@ -211,13 +220,16 @@
       ],
       qrcodes: [
         { title: "公众号", text: "公众号\n二维码" },
-        { title: "咨询微信", text: "咨询微信\n二维码" }
+        { title: "咨询微信", text: "咨询微信\n二维码" },
+        { title: "视频号", text: "视频号\n二维码" }
       ],
       copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
     },
     blocks: [
-      // ① Banner 大图块
-      { type: "banner", data: { bg: "gradient", note: "[ 页面大图 ]" }, options: {} },
+      // ① Banner（左文右图，与首页一致）
+      { type: "banner",
+        data: { headline: "每一段旅程，都值得被记录", sub: "来自全国学员的真实案例与经验分享" },
+        options: { image: "img/about-hero.jpg", pattern: "img/pattern-box-5.svg" } },
       // ② 内容集合块：案例宫格（source=cases, grid, 3排8列=每页24条）
       { type: "content-collection",
         data: {
@@ -236,9 +248,18 @@
 
   const renderers = {
     banner(b) {
-      const bg = b.data.bg;
-      const style = bg && bg !== "gradient" ? `style="background-image:url('${esc(bg)}')"` : "";
-      return `<section class="banner ${bg === "gradient" || !bg ? "bg-gradient" : ""}" ${style}>${b.data.note ? `<span class="banner-note">${esc(b.data.note)}</span>` : ""}</section>`;
+      const c = b.data, img = b.options.image || "", pattern = b.options.pattern || "";
+      const inner = `<div class="container banner-grid">
+        <div class="banner-text">
+          ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
+          ${c.sub ? `<p class="sub">${esc(c.sub)}</p>` : ""}
+        </div>
+        ${img ? `<div class="banner-media">
+          ${pattern ? `<img class="banner-pattern" src="${esc(pattern)}" alt="">` : ""}
+          <img class="banner-photo" src="${esc(img)}" alt="${esc(c.headline || "中惠文化")}">
+        </div>` : ""}
+      </div>`;
+      return `<section class="banner">${inner}</section>`;
     },
     "content-collection"(b) {
       return `<section class="section"><div class="container">
@@ -304,8 +325,10 @@
     document.getElementById("site-header").innerHTML = `
       <div class="container nav">
         <a class="logo" href="index.html"><img src="${esc(nav.logo)}" alt="中惠文化"></a>
-        <ul class="nav-menu">${menu}</ul>
-        <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+        <div class="nav-right">
+          <ul class="nav-menu">${menu}</ul>
+          <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+        </div>
       </div>`;
   }
 
@@ -318,12 +341,12 @@
   function renderFooter(f) {
     const info = f.info.map(i => `<p><span class="label">${esc(i.label)}</span>${esc(i.text)}</p>`).join("");
     const qr = f.qrcodes.map(q => `
-      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div><p>${esc(q.title)}</p></div>`).join("");
+      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div></div>`).join("");
     document.getElementById("site-footer").innerHTML = `
       <div class="footer-grid">
         <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
         <div class="footer-info">${info}</div>
-        <div class="footer-qr"><h4>关注我们</h4><div class="qr-box">${qr}</div></div>
+        <div class="footer-qr"><div class="qr-box">${qr}</div><a class="foot-contact" href="contact.html">联系我们</a></div>
       </div>
       <div class="footer-copy">${esc(f.copyright)}</div>`;
   }
