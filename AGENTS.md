@@ -45,6 +45,13 @@ python3 -m http.server 8321 --bind 127.0.0.1
 - 完整色板、区块背景、对比度、字体规范见 **`docs/design-system.md`**；改配色时**同步更新该文档**。
 - 变量名（如 `--deep-blue`）沿用历史命名，值已是玫色系；不要因名字误解其用途。
 
+## 布局标准（定版）
+
+- **基准宽度 1200px**：全站各页的 `.container` 与 `.footer-grid` 一律 `max-width: 1200px`（`padding: 0 24px`），保证左右边距一致。
+- **同一页面内** `.container` 与 `.footer-grid` 宽度必须相同。
+- **文章详情页**（case-detail / news-detail）：外层容器 1200px 使菜单/页脚对齐，正文用内层窄容器（约 820px）约束阅读宽度。
+- 截至 2026-10-08：`index` / `about` / `cases` 已符合；`news` / `contact` / `project-swt` / `case-detail` / `news-detail` 待同步。详见 `docs/design-system.md` 第 7 节。
+
 ## Git / 推送
 
 - 分支：特性开发在 `feat/*` 分支（如 `feat/unified-section-background`）。
