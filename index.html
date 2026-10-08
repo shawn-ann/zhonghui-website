@@ -42,13 +42,12 @@
     .logo { display: flex; align-items: center; gap: 10px; }
     .logo img { display: block; height: 88px; width: auto; }
     .nav-menu { display: flex; list-style: none; gap: 24px; align-items: center; }
-    .nav-menu a { font-size: 16px; color: #FF007A; font-weight: 600; position: relative; padding: 6px 0; transition: color .2s; }
-    .nav-menu a:hover { color: #C2185B; }
-    .nav-menu a.active { color: #C2185B; }
+    .nav-menu a { font-size: 16px; color: #E60039; font-weight: 600; position: relative; padding: 6px 0; }
+    .nav-menu a.active { color: #E60039; }
     .nav-menu li { position: relative; }
     .nav-menu li.active > a::after {
       content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
-      height: 3px; border-radius: 2px; background: #FF007A;
+      height: 3px; border-radius: 2px; background: #E60039;
     }
     .nav-menu .caret { font-size: 10px; opacity: .8; }
     .nav-menu .dropdown {
@@ -61,15 +60,14 @@
     }
     .nav-menu li:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
     .nav-menu .dropdown a {
-      display: block; padding: 11px 20px; font-size: 14px; color: #C2185B;
+      display: block; padding: 11px 20px; font-size: 14px; color: #E60039;
       transition: background .15s, color .15s; white-space: nowrap;
     }
-    .nav-menu .dropdown a:hover { background: #FF007A; color: #ffffff; }
+    .nav-menu .dropdown a:hover { background: #E60039; color: #ffffff; }
     .nav-lang { font-size: 14px; color: var(--gray-blue); display: flex; gap: 6px; }
     .nav-lang .sep { color: var(--gray-blue); }
     .nav-lang a { color: var(--gray-blue); }
-    .nav-lang a:hover { color: #FF007A; }
-    .nav-lang a.active { color: #C2185B; font-weight: 600; }
+    .nav-lang a.active { color: #E60039; font-weight: 600; }
 
     /* ===== 区块通用 ===== */
     .section { padding: 72px 0; }
