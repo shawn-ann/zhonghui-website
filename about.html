@@ -85,6 +85,8 @@
     .section-alt { background: var(--light-blue); }
     .section-title { text-align: center; margin-bottom: 40px; }
     .section-title h2 { font-size: 30px; color: var(--deep-blue); font-weight: 700; }
+    .title-on-image h2 { color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
+    .on-image .column-text { background: rgba(255,255,255,0.95); padding: 28px 30px; border-radius: 12px; }
 
     /* ===== 通用分栏块 ===== */
     .columns-row { display: flex; gap: 40px; align-items: flex-start; }
@@ -257,7 +259,7 @@
               ] }
           ]
         },
-        options: {} },
+        options: { bg: "img/yinji-bg.jpg" } },
 
       // ③ 中惠理念块（富文本简洁）
       { type: "philosophy",
@@ -290,7 +292,7 @@
             "亲身参与过德国互惠、主攻赴德互惠项目，为学员提供全套专业指导的老师"
           ]
         },
-        options: {} },
+        options: { bg: "img/yinji-bg.jpg" } },
 
       // ⑤ 核心优势块：优势卡片（可增删数量）
       { type: "advantages", id: "advantage",
@@ -349,8 +351,10 @@
         }
         return `<div class="column" style="flex:${width};">${inner}</div>`;
       }).join("");
-      const head = d.title ? `<div class="section-title"><h2>${esc(d.title)}</h2></div>` : "";
-      return `<section class="section" id="${d.id || ""}"><div class="container">
+      const bg = b.options.bg;
+      const secStyle = bg ? `style="background-image:url('${esc(bg)}');background-size:cover;background-position:center;"` : "";
+      const head = d.title ? `<div class="section-title${bg ? " title-on-image" : ""}"><h2>${esc(d.title)}</h2></div>` : "";
+      return `<section class="section${bg ? " on-image" : ""}" id="${d.id || ""}" ${secStyle}><div class="container">
         ${head}
         <div class="columns-row">${cols}</div>
       </div></section>`;
@@ -375,8 +379,10 @@
         </div>`;
       }).join("");
       const teamList = (d.teamItems || []).map(i => `<li>${esc(i)}</li>`).join("");
-      return `<section class="section" id="${b.id || "team"}"><div class="container">
-        <div class="section-title"><h2>${esc(d.foundersTitle)}</h2></div>
+      const bg = b.options.bg;
+      const secStyle = bg ? `style="background-image:url('${esc(bg)}');background-size:cover;background-position:center;"` : "";
+      return `<section class="section${bg ? " on-image" : ""}" id="${b.id || "team"}" ${secStyle}><div class="container">
+        <div class="section-title${bg ? " title-on-image" : ""}"><h2>${esc(d.foundersTitle)}</h2></div>
         <div class="founder-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
         ${d.teamTitle ? `<div class="team-box"><h3>${esc(d.teamTitle)}</h3><ul>${teamList}</ul></div>` : ""}
       </div></section>`;
