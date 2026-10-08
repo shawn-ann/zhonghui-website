@@ -104,14 +104,14 @@
     /* ===== 分页 ===== */
     .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 40px; flex-wrap: wrap; }
     .pagination button {
-      border: 1px solid var(--border); background: var(--white); color: var(--deep-blue);
+      border: 1px solid #E60039; background: #fff; color: #E60039;
       min-width: 38px; height: 38px; padding: 0 10px; border-radius: 6px;
-      cursor: pointer; font-size: 14px; transition: all .2s;
+      cursor: pointer; font-size: 14px; font-weight: 600; transition: background .2s, color .2s;
     }
-    .pagination button:hover { border-color: var(--bright-blue); color: var(--bright-blue); }
-    .pagination button.active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
-    .pagination button:disabled { opacity: .4; cursor: not-allowed; }
-    .page-info { text-align: center; color: var(--gray-blue); font-size: 13px; margin-top: 14px; }
+    .pagination button:hover { background: #FFF1F6; }
+    .pagination button.active { background: #E60039; color: #fff; border-color: #E60039; }
+    .pagination button:disabled { opacity: .45; cursor: not-allowed; }
+    .page-info { text-align: center; color: #fff; font-size: 13px; margin-top: 14px; text-shadow: 0 1px 6px rgba(0,0,0,0.35); }
 
     /* ===== 页脚 ===== */
     footer { background: linear-gradient(124deg, #6E0B3E 0%, #A11254 50%, #C2185B 100%); color: #ffd7e6; }
