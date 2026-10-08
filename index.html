@@ -7,16 +7,16 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
   <style>
     :root {
-      --deep-blue: #1A2958;      /* 藏青主色（Alliance Abroad） */
-      --bright-blue: #FAB816;    /* 金黄强调色 */
-      --light-blue: #F4F6FB;     /* 冷色浅底 */
+      --deep-blue: #8A0E4B;      /* 标题主色：深玫（A 方案·玫红主调） */
+      --bright-blue: #FF007A;    /* 强调色：品牌玫红 */
+      --light-blue: #FFF1F6;     /* 浅玫瑰底 */
       --pale-blue: #F5EBD0;      /* 米金 */
-      --gray-blue: #54595F;      /* 深灰文字 */
-      --dark-text: #1A2958;
+      --gray-blue: #6B6570;      /* 次要灰文字 */
+      --dark-text: #5A5560;      /* 正文 */
       --white: #FFFFFF;
-      --border: #E5E7EB;
-      --orange: #FAB816;         /* 辅助强调色 */
-      --accent: #2E6BC4;         /* 图标/强调色（可随主题切换） */
+      --border: #F0E3EA;
+      --orange: #FF007A;         /* 辅助强调色 */
+      --accent: #FF007A;         /* 图标/强调色 */
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,13 +42,13 @@
     .logo { display: flex; align-items: center; gap: 10px; }
     .logo img { display: block; height: 44px; width: auto; background: #2E6BC4; border-radius: 6px; padding: 5px 12px; }
     .nav-menu { display: flex; list-style: none; gap: 24px; align-items: center; }
-    .nav-menu a { font-size: 15px; color: var(--deep-blue); font-weight: 500; position: relative; padding: 6px 0; transition: color .2s; }
-    .nav-menu a:hover { color: var(--bright-blue); }
-    .nav-menu a.active { color: var(--bright-blue); }
+    .nav-menu a { font-size: 15px; color: #FF007A; font-weight: 500; position: relative; padding: 6px 0; transition: color .2s; }
+    .nav-menu a:hover { color: #C2185B; }
+    .nav-menu a.active { color: #C2185B; }
     .nav-menu li { position: relative; }
     .nav-menu li.active > a::after {
       content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
-      height: 3px; border-radius: 2px; background: var(--bright-blue);
+      height: 3px; border-radius: 2px; background: #FF007A;
     }
     .nav-menu .caret { font-size: 10px; opacity: .8; }
     .nav-menu .dropdown {
@@ -61,15 +61,15 @@
     }
     .nav-menu li:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
     .nav-menu .dropdown a {
-      display: block; padding: 11px 20px; font-size: 14px; color: var(--deep-blue);
+      display: block; padding: 11px 20px; font-size: 14px; color: #C2185B;
       transition: background .15s, color .15s; white-space: nowrap;
     }
-    .nav-menu .dropdown a:hover { background: var(--deep-blue); color: #ffffff; }
+    .nav-menu .dropdown a:hover { background: #FF007A; color: #ffffff; }
     .nav-lang { font-size: 14px; color: var(--gray-blue); display: flex; gap: 6px; }
     .nav-lang .sep { color: var(--gray-blue); }
     .nav-lang a { color: var(--gray-blue); }
-    .nav-lang a:hover { color: var(--bright-blue); }
-    .nav-lang a.active { color: var(--deep-blue); font-weight: 600; }
+    .nav-lang a:hover { color: #FF007A; }
+    .nav-lang a.active { color: #C2185B; font-weight: 600; }
 
     /* ===== 区块通用 ===== */
     .section { padding: 72px 0; }
@@ -144,12 +144,6 @@
     .proj-body { padding: 20px 24px 24px; }
     .proj-body h3 { font-size: 20px; color: var(--deep-blue); font-weight: 600; }
     .proj-body p { font-size: 14px; color: var(--gray-blue); margin-top: 8px; }
-    .proj-content { position: relative; z-index: 2; padding: 56px 0 72px; }
-    .band { position: absolute; left: 0; right: 0; top: 0; z-index: 1; background: linear-gradient(123deg, #FF0000 0%, #F35D5D 50.52%, #FF007A 100%); }
-    .band-dark { border-radius: 0; }
-    .section-with-band { position: relative; overflow: hidden; padding: 0; }
-    .section-with-band .container, .section-with-band .section-title { position: relative; z-index: 2; }
-    .section-with-band .section-title h2 { color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.55); }
     .title-on-image h2 { color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.55); }
 
     /* ===== 优势图标网格块（图标+标题+描述） ===== */
@@ -170,7 +164,7 @@
     .adv-card p { font-size: 14px; color: var(--gray-blue); margin-top: 10px; line-height: 1.8; }
 
     /* ===== 中惠印记：Swiper 3D 封面流（参照 chinaaupairs.com） ===== */
-    .memory-slider { position: relative; overflow: hidden; background-color: #1A2958; }
+    .memory-slider { position: relative; overflow: hidden; background-color: #3A0A22; }
     .memory-slider .container { position: relative; z-index: 1; }
     .memory-slider .swiper { padding: 24px 0 44px; position: relative; }
     .memory-slider .slide-inner { position: relative; transition: transform .45s ease; }
@@ -199,17 +193,17 @@
     .memory-arrow.next { right: 16px; }
 
     /* ===== 页脚 ===== */
-    footer { background: linear-gradient(124deg, #24408F 0%, #2E6BC4 50%, #5B8FE0 100%); color: #cfdff0; }
+    footer { background: linear-gradient(124deg, #6E0B3E 0%, #A11254 50%, #C2185B 100%); color: #ffd7e6; }
     .footer-grid {
       max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px;
       display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px;
     }
     .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
     .footer-brand .zh { font-size: 22px; font-weight: 700; color: #fff; }
-    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #9db6cf; margin-top: 4px; }
-    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #d7e6f5; }
-    .footer-info .label { color: #9db6cf; margin-right: 8px; }
-    .footer-copy { border-top: 1px solid rgba(255,255,255,.12); padding: 20px 24px; text-align: center; font-size: 13px; color: #9db6cf; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #f0a9c6; margin-top: 4px; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #ffd7e6; }
+    .footer-info .label { color: #f0a9c6; margin-right: 8px; }
+    .footer-copy { border-top: 1px solid rgba(255,255,255,.18); padding: 20px 24px; text-align: center; font-size: 13px; color: #f0a9c6; }
     .footer-qr { text-align: center; }
     .footer-qr h4 { color: #fff; font-size: 16px; margin-bottom: 16px; }
     .qr-box { display: flex; gap: 16px; justify-content: center; }
@@ -218,10 +212,10 @@
       display: flex; align-items: center; justify-content: center; color: var(--deep-blue);
       font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px;
     }
-    .qr-item p { font-size: 13px; color: #d7e6f5; }
+    .qr-item p { font-size: 13px; color: #ffd7e6; }
     .foot-contact {
       display: block; margin-top: 18px; text-align: left;
-      color: #cfdff0; font-size: 14px; text-decoration: none;
+      color: #ffd7e6; font-size: 14px; text-decoration: none;
     }
     .foot-contact:hover { color: #ffffff; }
 
@@ -321,7 +315,7 @@
             { img: "img/prog-uk-study.jpg",    title: "英国留学",    desc: "英伦名校，开启留学之旅" },
             { img: "img/prog-iccp.jpg",        title: "澳洲留学",    desc: "南半球留学体验" },
             { img: "img/prog-us-study.jpg",    title: "美国留学",    desc: "美国名校留学申请" } ] },
-        options: { columns: 3, alt: false, band: { background: "linear-gradient(123deg, #FF0000 0%, #F35D5D 50.52%, #FF007A 100%)", height: 348, dark: true } } },
+        options: { columns: 3, alt: false, bg: "img/yinji-bg.jpg" } },
 
       // ③ 中惠优势：2×4 图标网格
       { type: "advantage-grid",
@@ -372,18 +366,8 @@
     const bg = b.options.bg || "";
     const style = bgStyle(bg);
     const cls = ["section"];
-    if (!style && b.options.band) cls.push("section-with-band");
-    if (!style && !b.options.band && b.options.alt) cls.push("section-alt");
-    let inner = innerHtml;
-    if (b.options.band) {
-      const band = b.options.band;
-      const bgInner = typeof band === "string" ? band : (band.background || "");
-      const h = typeof band === "object" && band.height ? band.height : 348;
-      const darkCls = typeof band === "object" && band.dark ? " band-dark" : "";
-      const bgDecl = bgStyle(bgInner).replace(/^style="|"$/g, "");
-      inner = `<div class="band${darkCls}" style="${bgDecl}height:${h}px;"></div>` + inner;
-    }
-    return `<section class="${cls.join(" ")}" ${style}>${inner}</section>`;
+    if (!style && b.options.alt) cls.push("section-alt");
+    return `<section class="${cls.join(" ")}" ${style}>${innerHtml}</section>`;
   }
 
   // 优势图标（内联 SVG，stroke=currentColor，颜色由 CSS 的 --accent 控制）
@@ -465,10 +449,10 @@
         <div class="ph"><img src="${esc(p.img)}" alt="${esc(p.title)}"></div>
         <div class="proj-body"><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p></div>
       </div>`).join("");
-      const inner = `<div class="container"><div class="proj-content">
-        <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
+      const inner = `<div class="container">
+        <div class="section-title title-on-image"><h2>${esc(b.data.title)}</h2></div>
         <div class="proj-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
-      </div></div>`;
+      </div>`;
       return shell(b, inner);
     },
     "advantage-grid"(b) {
