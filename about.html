@@ -70,21 +70,15 @@
     .nav-lang a.active { color: #E60039; font-weight: 600; }
 
     /* ===== 页面Banner（固定长图，纯图无文字） ===== */
-    .banner {
-      height: 300px; display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden; background-size: cover; background-position: center;
-    }
-    .banner.bg-gradient { background: linear-gradient(135deg, #3A0A22 0%, #8A0E4B 50%, #C2185B 100%); }
-    .banner::before {
-      content: ""; position: absolute; inset: 0;
-      background-image: radial-gradient(#ffffff22 1px, transparent 1px);
-      background-size: 28px 28px;
-    }
-    .banner-note {
-      position: relative; z-index: 1; color: rgba(255,255,255,.7);
-      font-size: 15px; letter-spacing: 2px; padding: 8px 20px;
-      border: 1px dashed rgba(255,255,255,.4); border-radius: 6px;
-    }
+    /* ===== 页面Banner（左文右图，与首页一致） ===== */
+    .banner { position: relative; overflow: hidden; background: var(--white); padding: 0; }
+    .banner-grid { display: flex; flex-direction: row; align-items: stretch; gap: 20px; padding: 60px 0 120px; }
+    .banner-text { display: flex; flex-direction: column; justify-content: center; gap: 20px; flex: 1.25; padding-top: 20px; }
+    .banner-text h1 { font-size: 48px; font-weight: 700; color: var(--deep-blue); line-height: 1.3; margin-bottom: 0; }
+    .banner-text .sub { font-size: 24px; font-weight: 500; color: var(--gray-blue); }
+    .banner-media { position: relative; flex: 1; min-height: 340px; }
+    .banner-pattern { position: absolute; top: -45px; right: 10px; width: 80%; height: auto; display: block; z-index: 0; }
+    .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; }
 
     /* ===== 区块通用 ===== */
     .section { padding: 72px 0; }
@@ -185,6 +179,11 @@
     @media (max-width: 900px) {
       .columns-row, .founder-grid, .footer-grid { grid-template-columns: 1fr; }
       .columns-row { flex-direction: column; align-items: stretch; }
+      .banner-grid { flex-direction: column; padding: 40px 0 60px; }
+      .banner-text { justify-content: flex-start; padding-top: 0; }
+      .banner-media { min-height: 0; }
+      .banner-photo { position: static; width: 100%; margin-top: 24px; }
+      .banner-pattern { display: none; }
     }
   </style>
 </head>
@@ -236,8 +235,10 @@
       copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
     },
     blocks: [
-      // ① Banner 大图块（页面顶部固定长图，纯图无文字；可配背景）
-      { type: "banner", data: { bg: "gradient", note: "[ 页面大图 ]" }, options: {} },
+      // ① Banner（左文右图，与首页一致）
+      { type: "banner",
+        data: { headline: "深耕国际文化交流二十余年", sub: "以专业与用心，陪伴每一位青年走向世界" },
+        options: { image: "img/about-hero.jpg", pattern: "img/pattern-box-5.svg" } },
 
       // ② 公司介绍：通用「分栏」块（2栏，宽度配比 0.9:1.4）
       { type: "columns", id: "company",
@@ -272,11 +273,11 @@
         data: {
           foundersTitle: "创始团队",
           founders: [
-            { name: "Lucy 刘老师", role: "创始人之一", photo: "gradient", photoLabel: "[ 人物照片 ]",
+            { name: "Lucy 刘老师", role: "创始人之一", photo: "img/founder.jpg",
               desc: "中惠的创始人之一，是中国第一批互惠生项目的从业者。在她的努力推动下，越来越多的大学开始认可互惠生项目。" },
-            { name: "Linda 吕老师", role: "创始人之一", photo: "gradient", photoLabel: "[ 人物照片 ]",
+            { name: "Linda 吕老师", role: "创始人之一", photo: "img/founder.jpg",
               desc: "国内专业的互惠咨询师之一。从2002年把德国互惠项目引进中国，用二十几年的经验帮助上千名学生成功出国。" },
-            { name: "Wendy 武老师", role: "创始人之一", photo: "gradient", photoLabel: "[ 人物照片 ]",
+            { name: "Wendy 武老师", role: "创始人之一", photo: "img/founder.jpg",
               desc: "中惠的创始人之一，负责国际合作。在她的努力下，中惠与海内外四十多家文化交流机构保持长期稳定合作。" }
           ],
           foundersCols: 3,
@@ -313,10 +314,18 @@
 
   const renderers = {
     banner(b) {
-      const bg = b.data.bg;
-      const style = bg && bg !== "gradient" ? `style="background-image:url('${esc(bg)}')"` : "";
-      const note = b.data.note ? `<span class="banner-note">${esc(b.data.note)}</span>` : "";
-      return `<section class="banner ${bg === "gradient" || !bg ? "bg-gradient" : ""}" ${style}>${note}</section>`;
+      const c = b.data, img = b.options.image || "", pattern = b.options.pattern || "";
+      const inner = `<div class="container banner-grid">
+        <div class="banner-text">
+          ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
+          ${c.sub ? `<p class="sub">${esc(c.sub)}</p>` : ""}
+        </div>
+        ${img ? `<div class="banner-media">
+          ${pattern ? `<img class="banner-pattern" src="${esc(pattern)}" alt="">` : ""}
+          <img class="banner-photo" src="${esc(img)}" alt="${esc(c.headline || "中惠文化")}">
+        </div>` : ""}
+      </div>`;
+      return `<section class="banner">${inner}</section>`;
     },
     company(/* 已由通用 columns 替代 */) {},
     // 通用「分栏」块：可配置列数、每列宽度配比、每列内容类型
