@@ -36,6 +36,7 @@
     }
     .nav { display: flex; align-items: center; justify-content: space-between; height: 88px; position: relative; }
     .logo img { display: block; height: 88px; width: auto; }
+    .nav-right { display: flex; align-items: center; gap: 32px; }
     .nav-menu { display: flex; list-style: none; gap: 24px; align-items: center; }
     .nav-menu > li { position: relative; }
     .nav-menu > li > a {
@@ -157,7 +158,7 @@
     /* ===== 页脚（三分构图） ===== */
     footer { background: linear-gradient(124deg, #6E0B3E 0%, #A11254 50%, #C2185B 100%); color: #ffd7e6; }
     .footer-grid {
-      max-width: 1200px; margin: 0 auto; padding: 56px 24px 32px;
+      max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px;
       display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px;
     }
     .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
@@ -175,6 +176,11 @@
       font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px;
     }
     .qr-item p { font-size: 13px; color: #ffd7e6; }
+    .foot-contact {
+      display: block; margin-top: 18px; text-align: left;
+      color: #ffd7e6; font-size: 14px; text-decoration: none;
+    }
+    .foot-contact:hover { color: #ffffff; }
 
     @media (max-width: 900px) {
       .columns-row, .founder-grid, .footer-grid { grid-template-columns: 1fr; }
@@ -203,13 +209,13 @@
       items: [
         { label: "首页", link: "index.html" },
         { label: "关于中惠", link: "about.html", active: true },
-        { label: "项目介绍", link: "project-swt.html", children: [
+        { label: "互惠生", link: "#" },
+        { label: "赴美J1交流项目", link: "project-swt.html", children: [
             { label: "SWT 赴美带薪实习", link: "project-swt.html" },
             { label: "ITP 赴美专业实习", link: "#" },
-            { label: "ICCP 赴美营地辅导员", link: "#" },
-            { label: "Au Pair 赴美互惠生", link: "#" } ] },
+            { label: "ICCP 赴美营地辅导员", link: "#" } ] },
+        { label: "海外留学", link: "#" },
         { label: "案例分享", link: "cases.html" },
-        { label: "资讯中心", link: "news.html" },
         { label: "联系我们", link: "contact.html" }
       ]
     },
@@ -223,8 +229,9 @@
         { label: "🌐 英文官网：", text: "www.aupaircn.com" }
       ],
       qrcodes: [
-        { title: "公众号", text: "公众号\n二维码" },
-        { title: "咨询微信", text: "咨询微信\n二维码" }
+        { title: "公众号",     text: "公众号\n二维码" },
+        { title: "咨询微信",   text: "咨询微信\n二维码" },
+        { title: "视频号",     text: "视频号\n二维码" }
       ],
       copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
     },
@@ -389,8 +396,10 @@
     document.getElementById("site-header").innerHTML = `
       <div class="container nav">
         <a class="logo" href="index.html"><img src="${esc(nav.logo)}" alt="中惠文化"></a>
-        <ul class="nav-menu">${menu}</ul>
-        <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+        <div class="nav-right">
+          <ul class="nav-menu">${menu}</ul>
+          <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+        </div>
       </div>`;
   }
 
@@ -403,12 +412,12 @@
   function renderFooter(f) {
     const info = f.info.map(i => `<p><span class="label">${esc(i.label)}</span>${esc(i.text)}</p>`).join("");
     const qr = f.qrcodes.map(q => `
-      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div><p>${esc(q.title)}</p></div>`).join("");
+      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div></div>`).join("");
     document.getElementById("site-footer").innerHTML = `
       <div class="footer-grid">
         <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
         <div class="footer-info">${info}</div>
-        <div class="footer-qr"><h4>关注我们</h4><div class="qr-box">${qr}</div></div>
+        <div class="footer-qr"><div class="qr-box">${qr}</div><a class="foot-contact" href="contact.html">联系我们</a></div>
       </div>
       <div class="footer-copy">${esc(f.copyright)}</div>`;
   }
