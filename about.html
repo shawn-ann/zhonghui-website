@@ -102,6 +102,7 @@
     .philosophy { text-align: center; max-width: 760px; margin: 0 auto; }
     .philosophy p { font-size: 16px; color: var(--dark-text); }
     .philosophy .highlight { font-size: 16px; color: var(--deep-blue); font-weight: 600; margin-top: 20px; }
+    .philosophy-section { min-height: 460px; display: flex; flex-direction: column; justify-content: center; }
 
     /* ===== 中惠团队 ===== */
     .founder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
@@ -361,7 +362,7 @@
     },
     philosophy(b) {
       const d = b.data;
-      return `<section class="section section-alt"><div class="container">
+      return `<section class="section section-alt philosophy-section"><div class="container">
         <div class="section-title"><h2>${esc(d.title)}</h2></div>
         <div class="philosophy"><p>${esc(d.text)}</p>${d.highlight ? `<p class="highlight">${esc(d.highlight)}</p>` : ""}</div>
       </div></section>`;
