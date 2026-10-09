@@ -98,7 +98,6 @@
     .dest-photo { height: 180px; background-size: cover; background-position: center; }
     .dest-body { padding: 18px 20px; }
     .dest-body h3 { font-size: 18px; color: var(--deep-blue); font-weight: 600; }
-    .dest-body .more { display: inline-block; margin-top: 8px; color: var(--bright-blue); font-weight: 600; font-size: 14px; }
 
     /* ===== 页脚 ===== */
     footer { background: linear-gradient(124deg, #6E0B3E 0%, #A11254 50%, #C2185B 100%); color: #ffd7e6; }
@@ -241,7 +240,7 @@
       const cols = b.options.columns || 3;
       const cards = (d.items || []).map(it => `<a class="dest-card" href="${esc(it.link || "#")}">
         <div class="dest-photo" style="background-image:url('${esc(it.img)}');"></div>
-        <div class="dest-body"><h3>${esc(it.title)}</h3><span class="more">了解更多 →</span></div>
+        <div class="dest-body"><h3>${esc(it.title)}</h3></div>
       </a>`).join("");
       const cls = b.options.alt ? "section section-alt" : "section";
       return `<section class="${cls}"><div class="container">
