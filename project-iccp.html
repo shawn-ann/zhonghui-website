@@ -78,9 +78,10 @@
     .banner-pattern { position: absolute; top: -45px; right: 10px; width: 80%; height: auto; display: block; z-index: 0; }
     .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; }
 
-    /* ===== 正文文章（纯文本，白底） ===== */
+    /* ===== 正文文章（纯文本，浅玫瑰底 + 白卡包裹） ===== */
     .section { padding: 72px 0; }
-    .article { max-width: 860px; margin: 0 auto; }
+    .section-alt { background: var(--light-blue); }
+    .article { max-width: 860px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 40px 48px; box-shadow: 0 10px 30px rgba(138,14,75,0.06); }
     .article-title { font-size: 30px; color: var(--deep-blue); font-weight: 700; text-align: center; margin-bottom: 30px; }
     .article h3 { font-size: 20px; color: var(--deep-blue); font-weight: 700; margin: 32px 0 12px; padding-left: 12px; border-left: 4px solid var(--accent); }
     .article h4 { font-size: 16px; color: var(--accent); font-weight: 700; margin: 20px 0 8px; }
@@ -272,7 +273,7 @@
         return "";
       };
       const content = (d.blocks || []).map(renderBlock).join("");
-      return `<section class="section"><div class="container article">
+      return `<section class="section section-alt"><div class="container article">
         ${d.title ? `<h2 class="article-title">${esc(d.title)}</h2>` : ""}
         ${content}
       </div></section>`;
