@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新西兰留学 — 中惠文化</title>
+  <style>
+    :root {
+      --deep-blue: #8A0E4B;
+      --bright-blue: #C2185B;
+      --light-blue: #FFF1F6;
+      --gray-blue: #7C6B73;
+      --dark-text: #5A4A52;
+      --white: #FFFFFF;
+      --border: #F0E3EA;
+      --orange: #E60039;
+      --accent: #E60039;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+      color: var(--dark-text);
+      line-height: 1.6;
+      background: var(--white);
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== 顶部导航栏 ===== */
+    header {
+      background: var(--white);
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 0 5px rgba(22,22,22,0.14);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 88px; }
+    .logo img { display: block; height: 88px; width: auto; }
+    .nav-right { display: flex; align-items: center; gap: 32px; }
+    .nav-menu { display: flex; list-style: none; gap: 24px; align-items: center; }
+    .nav-menu > li { position: relative; }
+    .nav-menu > li > a {
+      font-size: 16px; color: #E60039; font-weight: 600; padding: 6px 0;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .nav-menu > li > a.active { color: #E60039; }
+    .nav-menu > li > a.active::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
+      height: 3px; border-radius: 2px; background: #E60039;
+    }
+    .nav-menu .caret { font-size: 10px; opacity: .8; }
+    .nav-menu .dropdown {
+      position: absolute; top: 100%; left: -12px; min-width: 190px;
+      background: var(--white); border-radius: 0 0 8px 8px;
+      box-shadow: 0 10px 24px rgba(138,14,75,0.18); overflow: hidden;
+      opacity: 0; visibility: hidden; transform: translateY(8px);
+      transition: opacity .2s, transform .2s, visibility .2s;
+      padding: 6px 0; z-index: 200;
+    }
+    .nav-menu > li:hover .dropdown,
+    .nav-menu > li:focus-within .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-menu .dropdown a {
+      display: block; padding: 11px 20px; font-size: 14px; color: #E60039;
+      transition: background .15s, color .15s; white-space: nowrap;
+    }
+    .nav-menu .dropdown a:hover { background: #E60039; color: #fff; }
+    .nav-lang { font-size: 14px; color: var(--gray-blue); display: flex; gap: 6px; }
+    .nav-lang .sep { color: var(--gray-blue); }
+    .nav-lang a { color: var(--gray-blue); }
+    .nav-lang a.active { color: #E60039; font-weight: 600; }
+
+    /* ===== Banner（左文右图，与首页一致） ===== */
+    .banner { position: relative; overflow: hidden; background: var(--white); padding: 0; }
+    .banner-grid { display: flex; flex-direction: row; align-items: stretch; gap: 20px; padding: 60px 0 120px; }
+    .banner-text { display: flex; flex-direction: column; justify-content: center; gap: 20px; flex: 1.25; padding-top: 20px; }
+    .banner-text h1 { font-size: 48px; font-weight: 700; color: var(--deep-blue); line-height: 1.3; margin-bottom: 0; }
+    .banner-text .sub { font-size: 24px; font-weight: 500; color: var(--gray-blue); }
+    .banner-media { position: relative; flex: 1; min-height: 340px; }
+    .banner-pattern { position: absolute; top: -45px; right: 10px; width: 80%; height: auto; display: block; z-index: 0; }
+    .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; }
+
+    /* ===== 正文文章（浅玫瑰底 + 白卡） ===== */
+    .section { padding: 72px 0; }
+    .section-alt { background: var(--light-blue); }
+    .article { max-width: 900px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 40px 48px; box-shadow: 0 10px 30px rgba(138,14,75,0.06); }
+    .article h3 { font-size: 20px; color: var(--deep-blue); font-weight: 700; margin: 30px 0 12px; padding-left: 12px; border-left: 4px solid var(--accent); }
+    .article p { font-size: 15px; color: var(--dark-text); line-height: 1.9; margin-bottom: 10px; }
+    .article .img-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0; }
+    .article .img-row img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; display: block; }
+
+    /* ===== 页脚 ===== */
+    footer { background: linear-gradient(124deg, #6E0B3E 0%, #A11254 50%, #C2185B 100%); color: #ffd7e6; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
+    .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #f0a9c6; margin-top: 4px; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #ffd7e6; }
+    .footer-info .label { color: #f0a9c6; margin-right: 8px; }
+    .footer-copy { border-top: 1px solid rgba(255,255,255,.18); padding: 20px 24px; text-align: center; font-size: 13px; color: #f0a9c6; }
+    .footer-qr { text-align: center; }
+    .qr-box { display: flex; gap: 16px; justify-content: center; }
+    .qr-item .qr { width: 92px; height: 92px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--deep-blue); font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px; }
+    .foot-contact { display: block; margin-top: 18px; text-align: left; color: #ffd7e6; font-size: 14px; text-decoration: none; }
+    .foot-contact:hover { color: #ffffff; }
+
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .article { padding: 26px 22px; }
+      .article .img-row { grid-template-columns: 1fr 1fr; }
+      .banner-grid { flex-direction: column; padding: 40px 0 60px; }
+      .banner-text { justify-content: flex-start; padding-top: 0; }
+      .banner-media { min-height: 0; }
+      .banner-photo { position: static; width: 100%; margin-top: 24px; }
+      .banner-pattern { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="site-header"></header>
+  <main id="page"></main>
+  <footer id="site-footer"></footer>
+
+  <script>
+  /* =========================================================
+     CMS 配置化内容模型 —— 新西兰留学页
+     ========================================================= */
+
+  const pageConfig = {
+    title: "新西兰留学",
+    nav: {
+      logo: "img/pink_logo_with_text_1.jpg",
+      langCurrent: "中文", langOther: "EN",
+      items: [
+        { label: "首页", link: "index.html" },
+        { label: "关于中惠", link: "about.html" },
+        { label: "互惠生", link: "aupair-usa.html" },
+        { label: "赴美J1交流项目", link: "project-iccp.html", children: [
+            { label: "SWT 赴美带薪实习", link: "project-iccp.html" },
+            { label: "ITP 赴美专业实习", link: "project-iccp.html" },
+            { label: "ICCP 赴美营地辅导员", link: "project-iccp.html" } ] },
+        { label: "海外留学", link: "study-abroad.html", active: true, children: [
+            { label: "新西兰留学", link: "new-zealand.html" } ] },
+        { label: "案例分享", link: "cases.html" },
+        { label: "联系我们", link: "contact.html" }
+      ]
+    },
+    footer: {
+      logo: "img/footLogo.png",
+      info: [
+        { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
+        { label: "📞 电话：", text: "010-64159286" },
+        { label: "✉ 邮箱：", text: "info@zhonghui.com" },
+        { label: "🌐 中文官网：", text: "www.chinaaupairs.com" },
+        { label: "🌐 英文官网：", text: "www.aupaircn.com" }
+      ],
+      qrcodes: [
+        { title: "公众号",     text: "公众号\n二维码" },
+        { title: "咨询微信",   text: "咨询微信\n二维码" },
+        { title: "视频号",     text: "视频号\n二维码" }
+      ],
+      copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
+    },
+    blocks: [
+      // ① Banner（左文右图）
+      { type: "banner",
+        data: { headline: "新西兰留学", sub: "南太平洋优质教育 · 安全宜居" },
+        options: { image: "img/about-hero.jpg", pattern: "img/pattern-box-5.svg" } },
+
+      // ② 正文文章（浅玫瑰底 + 白卡）
+      { type: "article",
+        data: { title: "新西兰留学",
+          blocks: [
+            { p: "新西兰地处南太平洋，气候宜人、环境清新、森林资源丰富、旅游胜地遍布、风景优美、地表景观富变化，生活水平也相当高，排名联合国人类发展指数第 3 位。新西兰作为世界发达国家和世界公认的五大英语国家之一，其教育水平和教学质量一直位于世界前列。调查显示：新西兰的教育指数排名第一，并且多项指数都名列前茅，是全球教育体制最好的国家之一。此外，新西兰不但留学费用合理、移民政策好，还可作为世界顶尖名校的跳板。因此，新西兰已经日益成为广受国际学生关注的热点留学国家之一。" },
+            { imgs: [ "img/nz-1.jpg", "img/nz-2.jpg", "img/nz-3.jpg" ] },
+
+            { h: "一、教学质量高，教育体制完善",
+              p: "新西兰和英国的教育制度一脉相承，教学作风严谨，注重学生综合能力的培养，教育质量达到国际一流水平。学校以公立为主，设施完备，质量卓越。新西兰八所公立大学中，有 7 所在最新的 QS 世界大学排行榜上位列 500 强；奥克兰大学、奥塔哥大学、坎特伯雷大学、维多利亚大学、梅西大学、怀卡托大学、奥克兰理工大学、林肯大学也各具特色，拥有诸多强势专业，在全世界广受赞誉。" },
+            { h: "二、社会治安好，家长的放心选择",
+              p: "如今，越来越多的中国学生选择去国外留学，随之而来的是留学生在国外的安全问题。新西兰是全球公认的世界最安全的国家之一，特别是对于选择出国读中学、甚至小学，新西兰安全的社会体系以及灵活的陪读制度，都是低龄留学生家长最放心的选择。" },
+            { h: "三、移民政策宽松，留学就业移民一步到位",
+              p: "新西兰是高福利的移民国家，移民政策宽松，持有新西兰签证可以合法在新西兰和澳大利亚工作。根据新西兰政府的最新政策，在新西兰留学的学生毕业后可以享受两次为期一年的工作签证（即开放式工作签证）的机会。而新西兰的移民政策对于申请人所学专业并没有严格的限制，任何专业的毕业生只要在毕业后找到工作，都有机会获得移民批准。这对于希望通过海外留学同时获得移民绿卡的申请人非常地有吸引力。" },
+            { imgs: [ "img/nz-4.jpg", "img/nz-5.jpg", "img/nz-6.png" ] },
+
+            { h: "四、留学费用低廉，性价比极高",
+              p: "在五大英语系留学国家中，新西兰的留学花费是这几个国家中最低的。每年在新西兰读大学的花费大约为人民币 15–18 万；而对于到新西兰读博士的学生，有机会申请奖学金，即使无法获得奖学金，其学费也跟当地学生一样，仅为几千纽币。新西兰政府还允许国际学生每周打工 20 个小时，不仅可以补贴生活费，也可以接触当地文化、锻炼英文。相对于主流英语留学国家动辄 20–30 万每年的花费，学生在完成学业后还可获得工作机会及移民资格的多重收获，可谓是性价比和回报率都极高的选择。" },
+            { h: "五、无语言要求，资金担保形式灵活，签证成功率高",
+              p: "新西兰留学不强制要求标准化英文考试成绩，留学生可以选择到新西兰先读英文再读专业课，因此，没有英文成绩无论是入学申请还是办理签证都不会受到影响。即使是最好的奥克兰大学，也不会因为申请人的英文成绩不够而影响录取，这对于希望尽快出国、又想进好大学的学生来说，是极为灵活的选择。" },
+            { p: "此外，办理新西兰签证的时候除了家庭存款，也可以通过留学专有账户的形式来满足移民局的要求，形式灵活、更易获签。新西兰办理签证周期短、无需面签，通过新西兰移民局推荐的特许中介 NZSA 提交的签证申请通常 10 天就会获签。这些优势都保障了希望到新西兰读书的申请人可以顺利成行，无需为面签或拒签过于担忧和紧张。" }
+          ] },
+        options: {} }
+    ]
+  };
+
+  // ---------------- 渲染器 ----------------
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+  const renderers = {
+    banner(b) {
+      const c = b.data, img = b.options.image || "", pattern = b.options.pattern || "";
+      const inner = `<div class="container banner-grid">
+        <div class="banner-text">
+          ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
+          ${c.sub ? `<p class="sub">${esc(c.sub)}</p>` : ""}
+        </div>
+        ${img ? `<div class="banner-media">
+          ${pattern ? `<img class="banner-pattern" src="${esc(pattern)}" alt="">` : ""}
+          <img class="banner-photo" src="${esc(img)}" alt="${esc(c.headline || "中惠文化")}">
+        </div>` : ""}
+      </div>`;
+      return `<section class="banner">${inner}</section>`;
+    },
+    article(b) {
+      const d = b.data;
+      const renderBlock = (blk) => {
+        let out = "";
+        if (blk.h) out += `<h3>${esc(blk.h)}</h3>`;
+        if (blk.p) out += `<p>${esc(blk.p)}</p>`;
+        if (blk.imgs) out += `<div class="img-row">${blk.imgs.map(src => `<img src="${esc(src)}" alt="">`).join("")}</div>`;
+        return out;
+      };
+      const content = (d.blocks || []).map(renderBlock).join("");
+      return `<section class="section section-alt"><div class="container article">
+        ${d.title ? `<h2 class="article-title">${esc(d.title)}</h2>` : ""}
+        ${content}
+      </div></section>`;
+    }
+  };
+
+  // ---------------- 渲染页面 ----------------
+  function renderNav(nav) {
+    const menu = nav.items.map(m => {
+      const sub = m.children ? `<div class="dropdown">${m.children.map(c =>
+        `<a href="${esc(c.link)}">${esc(c.label)}</a>`).join("")}</div>` : "";
+      return `<li><a href="${esc(m.link)}" class="${m.active ? "active" : ""}">${esc(m.label)}${m.children ? ' <span class="caret">▾</span>' : ""}</a>${sub}</li>`;
+    }).join("");
+    document.getElementById("site-header").innerHTML = `
+      <div class="container nav">
+        <a class="logo" href="index.html"><img src="${esc(nav.logo)}" alt="中惠文化"></a>
+        <div class="nav-right">
+          <ul class="nav-menu">${menu}</ul>
+          <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+        </div>
+      </div>`;
+  }
+
+  function renderBlocks(blocks) {
+    document.getElementById("page").innerHTML = blocks
+      .filter(b => renderers[b.type])
+      .map(b => renderers[b.type](b)).join("");
+  }
+
+  function renderFooter(f) {
+    const info = f.info.map(i => `<p><span class="label">${esc(i.label)}</span>${esc(i.text)}</p>`).join("");
+    const qr = f.qrcodes.map(q => `
+      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div></div>`).join("");
+    document.getElementById("site-footer").innerHTML = `
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
+        <div class="footer-info">${info}</div>
+        <div class="footer-qr"><div class="qr-box">${qr}</div><a class="foot-contact" href="contact.html">联系我们</a></div>
+      </div>
+      <div class="footer-copy">${esc(f.copyright)}</div>`;
+  }
+
+  renderNav(pageConfig.nav);
+  renderBlocks(pageConfig.blocks);
+  renderFooter(pageConfig.footer);
+  </script>
+</body>
+</html>
