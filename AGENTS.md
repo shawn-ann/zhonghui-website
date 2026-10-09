@@ -52,6 +52,13 @@ python3 -m http.server 8321 --bind 127.0.0.1
 - **文章详情页**（case-detail / news-detail）：外层容器 1200px 使菜单/页脚对齐，正文用内层窄容器（约 820px）约束阅读宽度。
 - 截至 2026-10-08：`index` / `about` / `cases` 已符合；`news` / `contact` / `project-swt` / `case-detail` / `news-detail` 待同步。详见 `docs/design-system.md` 第 7 节。
 
+## 区块背景交替规则（定版）
+
+- **Banner 之下的区块背景交替**：第 1 块用**背景图** `img/yinji-bg.jpg`，第 2 块用**浅粉底** `#FFF1F6`（`.section-alt`），第 3 块背景图……依次交替，直到页脚。
+- **页脚不参与**（固定玫红渐变）。
+- 背景图区块：标题白字（`.title-on-image`），文字内容用白卡/白面板承托。
+- 详见 `docs/design-system.md` 第 3.1 节。
+
 ## Git / 推送
 
 - 分支：特性开发在 `feat/*` 分支（如 `feat/unified-section-background`）。
