@@ -106,7 +106,6 @@
     .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #f0a9c6; margin-top: 4px; }
     .footer-info p { font-size: 14px; margin-bottom: 12px; color: #ffd7e6; }
     .footer-info .label { color: #f0a9c6; margin-right: 8px; }
-    .footer-copy { border-top: 1px solid rgba(255,255,255,.18); padding: 20px 24px; text-align: center; font-size: 13px; color: #f0a9c6; }
     .footer-qr { text-align: center; }
     .qr-box { display: flex; gap: 16px; justify-content: center; }
     .qr-item .qr { width: 92px; height: 92px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--deep-blue); font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px; }
@@ -283,8 +282,7 @@
         <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
         <div class="footer-info">${info}</div>
         <div class="footer-qr"><div class="qr-box">${qr}</div><a class="foot-contact" href="contact.html">联系我们</a></div>
-      </div>
-      <div class="footer-copy">${esc(f.copyright)}</div>`;
+      </div>`;
   }
 
   renderNav(pageConfig.nav);
