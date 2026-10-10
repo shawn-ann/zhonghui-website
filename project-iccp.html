@@ -78,27 +78,23 @@
     .banner-pattern { position: absolute; top: -45px; right: 10px; width: 80%; height: auto; display: block; z-index: 0; }
     .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; }
 
-    /* ===== 正文：分节（中英标题 + 列表 + 问答 + 步骤） ===== */
-    .section { padding: 72px 0; }
-    .section-alt { background: var(--light-blue); }
-    .article { max-width: 900px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 44px 52px; box-shadow: 0 10px 30px rgba(138,14,75,0.06); }
-    .article-title { font-size: 30px; color: var(--deep-blue); font-weight: 700; text-align: center; margin-bottom: 6px; }
-    .article-en { text-align: center; font-size: 13px; letter-spacing: 3px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 24px; }
+    /* ===== 正文：分节（中标题 + 列表 + 问答 + 步骤），白底 ===== */
+    .section { padding: 72px 0; background: #fff; }
+    .article { max-width: 900px; margin: 0 auto; }
+    .article-title { font-size: 30px; color: var(--deep-blue); font-weight: 700; text-align: center; margin-bottom: 32px; }
     .cn-en { text-align: center; margin: 44px 0 20px; }
     .cn-en h3 { font-size: 24px; color: var(--deep-blue); font-weight: 700; }
-    .cn-en .en { font-size: 12px; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-top: 6px; }
     .sec-p { font-size: 15px; color: var(--dark-text); line-height: 1.9; margin-bottom: 10px; }
     .sec-list { list-style: none; margin: 0 0 8px; }
     .sec-list li { position: relative; padding-left: 22px; margin-bottom: 9px; font-size: 15px; color: var(--dark-text); line-height: 1.8; }
     .sec-list li::before { content: ""; position: absolute; left: 2px; top: 10px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
-    .qa { background: #FFF7FA; border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; }
+    .qa { background: #FFF7FA; border-radius: 10px; padding: 16px 20px; margin-bottom: 12px; }
     .qa .q { font-weight: 700; color: var(--deep-blue); font-size: 15px; margin-bottom: 6px; }
     .qa .a { font-size: 15px; color: var(--dark-text); line-height: 1.85; }
     .steps .step-item { display: flex; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px dashed var(--border); }
     .steps .step-item:last-child { border-bottom: none; }
     .steps .n { flex: 0 0 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
     .steps .t { font-size: 15px; color: var(--dark-text); line-height: 1.8; }
-    .fee-sub { font-size: 16px; color: var(--accent); font-weight: 700; margin: 20px 0 8px; }
 
     /* ===== 页脚 ===== */
     footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
@@ -175,40 +171,32 @@
         data: { headline: "赴美营地辅导员", sub: "沉浸全英文环境 · 收获成长与历练" },
         options: { image: "img/about-hero.jpg", pattern: "img/pattern-box-5.svg" } },
 
-      // ② 正文：分节（中英标题 + 列表 + 问答 + 步骤）
+      // ② 正文：分节（白底）
       { type: "sections",
-        data: { title: "赴美营地辅导员项目介绍", en: "International Camp Counselor Program",
+        data: { title: "赴美营地辅导员项目介绍",
           sections: [
-            { cn: "项目简介", paras: [
+            { cn: "项目介绍", paras: [
               "美国夏令营辅导员项目是美国国务院制定的交流访问项目。",
               "考虑到大多数在读生或刚毕业学生经济能力有限，营地辅导员项目从学生角度出发，每年为世界各地上万名符合条件的年轻人提供在营地工作的机会及相关能力培训。",
               "在获得收入、获得宝贵的海外工作经验与培训经历的同时，还为语言能力及综合素质的提升创造了机会。工作结束后，还可畅游美国整整一个月！" ] },
 
-            { cn: "工作内容", en: "Job Content",
+            { cn: "户外类型",
+              paras: [ "营地辅导员的岗位遍布美国各地，多为寄宿制夏令营，活动涵盖体育、艺术、表演、水上运动、攀岩、马术、露营等。" ],
               list: [
-                "是营员的家人、辅导员，也是营地老师的助手",
-                "负责营员各类室内及户外体育、竞技运动的安全与辅导",
-                "组织孩子参与各类活动（体育、艺术、表演、水上运动、攀岩等）",
-                "监督管理孩子的健康与安全，照料日常生活",
-                "协助营地做好设施维护与秩序管理" ],
-              paras: [
-                "营地生活通常要求较高，意味着较长的工作时间和较少的自由时间，需要申请者充满爱心、喜欢孩子、乐于照顾他人，富有幽默感、精力旺盛，有组织能力、判断力及团队合作精神。" ] },
+                "多数营地位于美国东北部，但几乎在每个州都有营地",
+                "营地位于远离主要城市的边境偏僻区域",
+                "学员可在美国任何地区工作，多数营地临近湖泊、河流、山脉或森林",
+                "美国的夏令营位于一些最美丽的地方",
+                "参与者不应只考虑特定区域，应保持开放的心态，准备好冒险" ] },
 
-            { cn: "营地在哪里", en: "Outdoor Type", list: [
-              "多数营地位于美国东北部，但几乎在每个州都有营地",
-              "营地位于远离主要城市的边境偏僻区域",
-              "学员可在美国任何地区工作，多数营地临近湖泊、河流、山脉或森林",
-              "美国的夏令营位于一些最美丽的地方",
-              "参与者不应只考虑特定区域，应保持开放的心态，准备好冒险" ] },
-
-            { cn: "项目优势", en: "Our Advantages", list: [
+            { cn: "项目优势", list: [
               "合法性：美国政府依据法案制定的教育文化交流项目，已有 40 余年成熟运作经验",
               "可靠性：美国国务院指定项目，全程美国政府监管",
               "安全性：合法营地辅导员岗位，合作营地经验丰富；费用含医疗与意外保险，驻美办公室协调员及时解决问题",
               "提升英语听说、领导力、自理与协调能力，对从事教育事业尤为有帮助",
               "项目结束后有 30 天合法旅行期，可自由游历美国" ] },
 
-            { cn: "申请条件", en: "Application Requirements", list: [
+            { cn: "申请条件", list: [
               "英语水平：良好的英语沟通及书写能力",
               "年龄：18–28 岁",
               "项目参加者：学生、教师、青年工作者或具有专门技能者（可提供资格证明）",
@@ -218,27 +206,17 @@
               "项目时间：6 月 1 日至 9 月 1 日期间可参与项目",
               "态度：积极、灵活、「愿意尝试」，对儿童工作感兴趣" ] },
 
-            { cn: "常见疑问", en: "Q & A", qa: [
+            { cn: "常见疑问", qa: [
               { q: "营地辅导员主要做什么？", a: "组织营员参与各类室内外活动，照料他们的日常生活与安全，并协助营地老师维护秩序与设施。" },
               { q: "项目期间包食宿吗？", a: "是的，营地期间提供免费住宿及三餐。" },
               { q: "需要什么样的经验？", a: "喜欢与孩子相处、有照顾儿童的经验更佳；具备良好的英语沟通能力即可报名。" },
               { q: "一般工作在什么时间？", a: "每年 6 月上旬开始、8 月中下旬结束，工作时长约 63 天，每周休息一天。" },
               { q: "项目结束后能旅游吗？", a: "项目结束后有 30 天的合法停留期，可在美国境内自由旅行。" } ] },
 
-            { cn: "报名流程", en: "The Program Process", steps: [
+            { cn: "报名流程", steps: [
               "确认报名", "填写在线表格", "中惠面试并填写面试报告", "中惠审核后提交",
               "项目举办方决定是否接受申请", "匹配", "确认匹配", "匹配确认函",
-              "在线培训", "签证申请", "抵达" ] },
-
-            { cn: "费用说明", groups: [
-              { sub: "费用包含", list: [
-                "申请综合评估", "签证辅导", "安全教育及培训", "美国国际营地辅导员项目岗位名额",
-                "核发 DS-2019 Form", "SEVIS 费用（申请 J-1 签证必备文件）",
-                "全程（DS-2019 表起止日期内）美国医疗保险和意外伤害保险", "当地紧急支持服务",
-                "美国营地工作期间食宿费用" ] },
-              { sub: "费用不含", list: [
-                "护照办理费", "签证费", "交通费", "中国大陆—美国往返国际机票",
-                "旅游期间（DS-2019 表起止时间外）保险", "个人消费" ] } ] }
+              "在线培训", "签证申请", "抵达" ] }
           ] },
         options: {} }
     ]
@@ -265,18 +243,16 @@
     "sections"(b) {
       const d = b.data;
       const secs = (d.sections || []).map(s => {
-        const head = `<div class="cn-en"><h3>${esc(s.cn)}</h3>${s.en ? `<div class="en">${esc(s.en)}</div>` : ""}</div>`;
+        const head = `<div class="cn-en"><h3>${esc(s.cn)}</h3></div>`;
         let body = "";
         if (s.paras) body += s.paras.map(p => `<p class="sec-p">${esc(p)}</p>`).join("");
         if (s.list) body += `<ul class="sec-list">${s.list.map(i => `<li>${esc(i)}</li>`).join("")}</ul>`;
         if (s.qa) body += s.qa.map(x => `<div class="qa"><div class="q">Q：${esc(x.q)}</div><div class="a">A：${esc(x.a)}</div></div>`).join("");
         if (s.steps) body += `<div class="steps">${s.steps.map((t, i) => `<div class="step-item"><span class="n">${i + 1}</span><span class="t">${esc(t)}</span></div>`).join("")}</div>`;
-        if (s.groups) body += s.groups.map(g => `<h4 class="fee-sub">${esc(g.sub)}</h4><ul class="sec-list">${g.list.map(i => `<li>${esc(i)}</li>`).join("")}</ul>`).join("");
         return `<div class="sec">${head}${body}</div>`;
       }).join("");
-      return `<section class="section section-alt"><div class="container article">
+      return `<section class="section"><div class="container article">
         ${d.title ? `<h2 class="article-title">${esc(d.title)}</h2>` : ""}
-        ${d.en ? `<div class="article-en">${esc(d.en)}</div>` : ""}
         ${secs}
       </div></section>`;
     }
