@@ -96,11 +96,17 @@
     .steps .n { flex: 0 0 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
     .steps .t { font-size: 15px; color: var(--dark-text); line-height: 1.8; }
 
-    /* ===== 项目介绍：通栏色带（左文右图） ===== */
-    .intro-band { background: linear-gradient(124deg, #6E0B3E 0%, #A11254 50%, #C2185B 100%); color: #fff; padding: 60px 0 68px; }
+    /* ===== 标题行（浅灰底图） ===== */
+    .title-strip { background: url('img/title-bg.jpg') center/cover no-repeat; padding: 56px 0; }
+    .strip-title { text-align: center; font-size: 30px; font-weight: 700; color: var(--deep-blue); }
+    .strip-en { text-align: center; font-size: 14px; color: #9a9a9a; letter-spacing: 1px; margin-top: 8px; }
+
+    /* ===== 项目介绍：居中的色块（四周留白，左文右图） ===== */
+    .intro-band-wrap { padding: 48px 0; }
+    .intro-band { background: linear-gradient(124deg, #6E0B3E 0%, #A11254 50%, #C2185B 100%); border-radius: 16px; padding: 56px 48px; box-shadow: 0 16px 40px rgba(138,14,75,0.18); }
     .intro-band-inner { display: flex; align-items: center; gap: 44px; }
     .intro-text { flex: 0 0 40%; }
-    .intro-text h3 { font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+    .intro-text h3 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 16px; }
     .intro-text p { font-size: 15px; line-height: 1.95; color: rgba(255,255,255,.94); margin-bottom: 12px; }
     .intro-media { flex: 1; }
     .intro-media img { width: 100%; display: block; border-radius: 12px; box-shadow: 0 14px 34px rgba(0,0,0,0.28); }
@@ -182,7 +188,7 @@
 
       // ② 项目介绍：通栏色带（左文右图）
       { type: "intro-band",
-        data: { title: "赴美营地辅导员项目介绍", heading: "项目介绍",
+        data: { title: "赴美营地辅导员项目介绍", en: "International Camp Counselor Program", heading: "项目介绍",
           paras: [
             "美国夏令营辅导员项目是美国国务院制定的交流访问项目。",
             "考虑到大多数在读生或刚毕业学生经济能力有限，营地辅导员项目从学生角度出发，每年为世界各地上万名符合条件的年轻人提供在营地工作的机会及相关能力培训。",
@@ -272,16 +278,17 @@
     },
     "intro-band"(b) {
       const d = b.data;
-      return `<section class="section"><div class="container article">
-        ${d.title ? `<h2 class="article-title">${esc(d.title)}</h2>` : ""}
+      return `<section class="title-strip"><div class="container">
+        <h2 class="strip-title">${esc(d.title)}</h2>
+        ${d.en ? `<div class="strip-en">${esc(d.en)}</div>` : ""}
       </div></section>
-      <section class="intro-band"><div class="container intro-band-inner">
+      <section class="intro-band-wrap"><div class="container"><div class="intro-band"><div class="intro-band-inner">
         <div class="intro-text">
           <h3>${esc(d.heading)}</h3>
           ${(d.paras || []).map(p => `<p>${esc(p)}</p>`).join("")}
         </div>
         <div class="intro-media"><img src="${esc(d.img)}" alt=""></div>
-      </div></section>`;
+      </div></div></div></section>`;
     }
   };
 
