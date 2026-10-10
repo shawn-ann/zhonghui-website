@@ -96,6 +96,15 @@
     .steps .n { flex: 0 0 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
     .steps .t { font-size: 15px; color: var(--dark-text); line-height: 1.8; }
 
+    /* ===== 项目介绍：通栏色带（左文右图） ===== */
+    .intro-band { background: linear-gradient(124deg, #6E0B3E 0%, #A11254 50%, #C2185B 100%); color: #fff; padding: 60px 0 68px; }
+    .intro-band-inner { display: flex; align-items: center; gap: 44px; }
+    .intro-text { flex: 0 0 40%; }
+    .intro-text h3 { font-size: 30px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+    .intro-text p { font-size: 15px; line-height: 1.95; color: rgba(255,255,255,.94); margin-bottom: 12px; }
+    .intro-media { flex: 1; }
+    .intro-media img { width: 100%; display: block; border-radius: 12px; box-shadow: 0 14px 34px rgba(0,0,0,0.28); }
+
     /* ===== 页脚 ===== */
     footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
     .footer-grid { max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
@@ -171,15 +180,20 @@
         data: { headline: "赴美营地辅导员", sub: "沉浸全英文环境 · 收获成长与历练" },
         options: { image: "img/about-hero.jpg", pattern: "img/pattern-box-5.svg" } },
 
-      // ② 正文：分节（白底）
-      { type: "sections",
-        data: { title: "赴美营地辅导员项目介绍",
-          sections: [
-            { cn: "项目介绍", paras: [
-              "美国夏令营辅导员项目是美国国务院制定的交流访问项目。",
-              "考虑到大多数在读生或刚毕业学生经济能力有限，营地辅导员项目从学生角度出发，每年为世界各地上万名符合条件的年轻人提供在营地工作的机会及相关能力培训。",
-              "在获得收入、获得宝贵的海外工作经验与培训经历的同时，还为语言能力及综合素质的提升创造了机会。工作结束后，还可畅游美国整整一个月！" ] },
+      // ② 项目介绍：通栏色带（左文右图）
+      { type: "intro-band",
+        data: { title: "赴美营地辅导员项目介绍", heading: "项目介绍",
+          paras: [
+            "美国夏令营辅导员项目是美国国务院制定的交流访问项目。",
+            "考虑到大多数在读生或刚毕业学生经济能力有限，营地辅导员项目从学生角度出发，每年为世界各地上万名符合条件的年轻人提供在营地工作的机会及相关能力培训。",
+            "在获得收入、获得宝贵的海外工作经验与培训经历的同时，还为语言能力及综合素质的提升创造了机会。工作结束后，还可畅游美国整整一个月！" ],
+          img: "img/iccp-intro.jpg" },
+        options: {} },
 
+      // ③ 正文：分节（白底）
+      { type: "sections",
+        data: {
+          sections: [
             { cn: "户外类型",
               paras: [ "营地辅导员的岗位遍布美国各地，多为寄宿制夏令营，活动涵盖体育、艺术、表演、水上运动、攀岩、马术、露营等。" ],
               list: [
@@ -254,6 +268,19 @@
       return `<section class="section"><div class="container article">
         ${d.title ? `<h2 class="article-title">${esc(d.title)}</h2>` : ""}
         ${secs}
+      </div></section>`;
+    },
+    "intro-band"(b) {
+      const d = b.data;
+      return `<section class="section"><div class="container article">
+        ${d.title ? `<h2 class="article-title">${esc(d.title)}</h2>` : ""}
+      </div></section>
+      <section class="intro-band"><div class="container intro-band-inner">
+        <div class="intro-text">
+          <h3>${esc(d.heading)}</h3>
+          ${(d.paras || []).map(p => `<p>${esc(p)}</p>`).join("")}
+        </div>
+        <div class="intro-media"><img src="${esc(d.img)}" alt=""></div>
       </div></section>`;
     }
   };
