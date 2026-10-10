@@ -312,7 +312,7 @@
             { img: "img/prog-uk-study.jpg",    title: "英国留学",    desc: "英伦名校，开启留学之旅" },
             { img: "img/prog-iccp.jpg",        title: "澳洲留学",    desc: "南半球留学体验" },
             { img: "img/prog-us-study.jpg",    title: "美国留学",    desc: "美国名校留学申请" } ] },
-        options: { columns: 3, alt: false, bg: "img/yinji-bg.jpg" } },
+        options: { columns: 3, alt: false, bg: "img/bg2.jpg" } },
 
       // ③ 中惠优势：2×4 图标网格
       { type: "advantage-grid",
@@ -326,7 +326,7 @@
             { icon: "safety", title: "安全保障", desc: "全程护航无忧\n海外紧急联络\n权益保障完善" },
             { icon: "team", title: "专业顾问团队", desc: "资深顾问一对一\n熟悉项目全流程\n耐心细致负责" },
             { icon: "reputation", title: "口碑见证", desc: "学员真实好评\n往届案例可查\n家长放心之选" } ] },
-        options: { columns: 4, alt: true, bg: "img/bg2.jpg" } },
+        options: { columns: 4, alt: true } },
 
       // ④ 中惠印记：Swiper 封面流轮播
       { type: "memory-slider",
@@ -460,7 +460,7 @@
         <p>${esc(p.desc).replace(/\n/g, "<br>")}</p>
       </div>`).join("");
       const inner = `<div class="container">
-        <div class="section-title${b.options.bg ? " title-on-image" : ""}"><h2>${esc(b.data.title)}</h2></div>
+        <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
         <div class="adv-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
       </div>`;
       return shell(b, inner);
