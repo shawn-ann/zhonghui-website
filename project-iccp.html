@@ -211,7 +211,7 @@
 
       // ③ 工作内容：两列错落 + 中间装饰
       { type: "work-content",
-        data: { title: "工作内容",
+        data: { title: "工作内容", en: "Job Content",
           photos: [ "img/memory-2.jpg", "img/memory-3.jpg", "img/memory-4.jpg" ],
           left: [
             "是营员的家人、辅导员，也是营地老师的助手",
@@ -320,7 +320,7 @@
       const d = b.data;
       const item = (t) => `<div class="wc-item">${esc(t)}</div>`;
       const photos = (d.photos || []).map(s => `<img src="${esc(s)}" alt="">`).join("");
-      return `<section class="title-strip"><div class="container"><h2 class="strip-title">${esc(d.title)}</h2></div></section>
+      return `<section class="title-strip"><div class="container"><h2 class="strip-title">${esc(d.title)}</h2>${d.en ? `<div class="strip-en">${esc(d.en)}</div>` : ""}</div></section>
       <section class="section"><div class="container">
         <div class="wc-grid">
           <div class="wc-col">${(d.left || []).map(item).join("")}</div>
