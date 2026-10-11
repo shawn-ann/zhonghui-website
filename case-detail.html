@@ -84,7 +84,7 @@
     .article { margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 40px 48px; box-shadow: 0 10px 30px rgba(138,14,75,0.06); }
     .article-title { font-size: 30px; color: var(--deep-blue); font-weight: 700; line-height: 1.4; }
     .article-meta { color: var(--gray-blue); font-size: 14px; margin-top: 12px; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
-    .article-cover { height: 340px; border-radius: 12px; margin: 28px 0; background: linear-gradient(135deg,#C2185B,#8A0E4B); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.85); font-size: 15px; }
+    .article-cover { height: 340px; border-radius: 12px; margin: 28px 0; background-size: cover; background-position: center; }
     .article-body { font-size: 16px; line-height: 2; color: var(--dark-text); }
     .article-body h2 { font-size: 21px; color: var(--deep-blue); margin: 32px 0 14px; }
     .article-body h3 { font-size: 18px; color: var(--deep-blue); margin: 24px 0 10px; }
@@ -95,11 +95,8 @@
       border-left: 4px solid var(--accent); background: var(--light-blue);
       padding: 14px 20px; border-radius: 6px; margin: 20px 0; color: var(--deep-blue);
     }
-    .article-body .figure {
-      height: 260px; border-radius: 10px; margin: 22px 0;
-      background: linear-gradient(135deg,#C2185B,#6E0B3E);
-      display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.8); font-size: 14px;
-    }
+    .article-body .img-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0; }
+    .article-body .img-row img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; display: block; }
 
     /* ===== 页脚 ===== */
     footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
@@ -140,21 +137,22 @@
   // 内容集合（模拟后端）；详情页取其中一项
   const collections = {
     cases: [
-      { id: "xiaoding", title: "小丁同学的英语逆袭之路", date: "2025-07-18", cover: "linear-gradient(135deg,#C2185B,#8A0E4B)",
+      { id: "xiaoding", title: "小丁同学的英语逆袭之路", date: "2025-07-18", cover: "url('img/prog-iccp.jpg')",
         body: [
           { type: "p", text: "小丁同学是一位前期入库英语被系统自动降分的 boy，提交入库的那一版视频已经是他当下最好的一版。因为入库一直没有企业，他也有过自我怀疑的瞬间。" },
           { type: "p", text: "但是焦虑无用。丁同学每天都在练口语、磨听力，一模的时候听到他的口语，远远超出预期。仅仅几个月的时间，丁同学就给我们带来了猝不及防的惊喜。" },
           { type: "h2", text: "一、笨拙的坚持" },
           { type: "p", text: "丁同学直到最后匹配岗位都不断地在学习，4 月 28 日顺利一签过签。" },
           { type: "blockquote", text: "英语不好？听不懂？那就只能反复练习。SWT 的签证问题只有这些，在不断的重复、模拟之下，小丁同学终得所愿。" },
-          { type: "figure", text: "[ 文中插图 · 学员在美生活 ]" },
+          { type: "imgs", items: ["img/memory-5.jpg", "img/memory-6.jpg", "img/memory-7.jpg"] },
           { type: "h2", text: "二、越努力越幸运" },
           { type: "p", text: "当天签证官问到了我们模拟时出现过的问题。运气何尝不是一种努力的表现形式，我们一直相信越努力越幸运——逆袭者没有魔法，只有笨拙的坚持。" }
         ] },
-      { id: "xiaocao", title: "小曹同学的赴美之旅", date: "2025-07-02", cover: "linear-gradient(135deg,#C2185B,#8A0E4B)",
+      { id: "xiaocao", title: "小曹同学的赴美之旅", date: "2025-07-02", cover: "url('img/memory-4.jpg')",
         body: [
           { type: "p", text: "小曹同学是中惠 24 年 swter，在读大三时，便毅然选择报名中惠 SWT 赴美带薪实习项目。" },
-          { type: "p", text: "从前期材料筹备、签证办理，到远赴海外后的工作与日常生活，全程尽享细致周全的一站式专属服务，专业靠谱的陪伴贯穿旅途始终。" }
+          { type: "p", text: "从前期材料筹备、签证办理，到远赴海外后的工作与日常生活，全程尽享细致周全的一站式专属服务，专业靠谱的陪伴贯穿旅途始终。" },
+          { type: "imgs", items: ["img/memory-3.jpg", "img/memory-6.jpg", "img/memory-7.jpg"] }
         ] }
     ]
   };
@@ -207,7 +205,7 @@
       { type: "detail",
         data: {
           title: article.title, date: article.date,
-          cover: article.cover, coverLabel: "[ 文章头图 ]",
+          cover: article.cover,
           body: article.body
         },
         options: {} }
@@ -238,14 +236,14 @@
         if (node.type === "h2") return `<h2>${esc(node.text)}</h2>`;
         if (node.type === "h3") return `<h3>${esc(node.text)}</h3>`;
         if (node.type === "blockquote") return `<blockquote>${esc(node.text)}</blockquote>`;
-        if (node.type === "figure") return `<div class="figure">${esc(node.text)}</div>`;
+        if (node.type === "imgs") return `<div class="img-row">${(node.items||[]).map(s=>`<img src="${esc(s)}" alt="">`).join("")}</div>`;
         if (node.type === "ul") return `<ul>${(node.items||[]).map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`;
         return `<p>${esc(node.text)}</p>`;
       }).join("");
       return `<section class="section section-alt"><div class="container article">
         <h1 class="article-title">${esc(d.title)}</h1>
         <div class="article-meta">📅 ${esc(d.date)}</div>
-        <div class="article-cover" style="background:${esc(d.cover)};">${esc(d.coverLabel || "")}</div>
+        <div class="article-cover" style="background-image:${esc(d.cover)};"></div>
         <div class="article-body">${body}</div>
       </div></section>`;
     }
