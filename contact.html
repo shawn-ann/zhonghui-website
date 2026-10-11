@@ -79,7 +79,8 @@
     .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; }
 
     /* ===== 区块通用（背景交替：背景图 / 浅粉底 交替） ===== */
-    .section { padding: 72px 0; }
+    .section { padding: 72px 0; min-height: 600px; display: flex; flex-direction: column; justify-content: center; }
+    .section > .container { width: 100%; }
     .section-alt { background: var(--light-blue); }
     .section-title { text-align: center; margin-bottom: 36px; }
     .section-title h2 { font-size: 30px; color: var(--deep-blue); font-weight: 700; }
