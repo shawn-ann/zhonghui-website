@@ -127,7 +127,7 @@
     .wcr-cell-left { justify-content: flex-start; padding-right: 52px; }
     .wcr-cell-right { justify-content: flex-end; padding-left: 52px; }
     .wcr-text { font-size: 15px; color: var(--dark-text); line-height: 1.9; }
-    .wcr-dot { width: 28px; height: 28px; flex: 0 0 auto; display: block; }
+    .wcr-dot { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 28px; height: 28px; display: block; }
 
     /* ===== 页脚 ===== */
     footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
@@ -331,9 +331,9 @@
         const text = `<div class="wcr-text">${esc(r.text)}</div>`;
         const dot = `<img class="wcr-dot" src="${esc(r.icon || icon)}" alt="">`;
         const cells = left
-          ? `<div class="wcr-cell wcr-cell-left">${text}${dot}</div><div class="wcr-cell"></div>`
-          : `<div class="wcr-cell"></div><div class="wcr-cell wcr-cell-right">${dot}${text}</div>`;
-        return `<div class="wcr-row">${cells}</div>`;
+          ? `<div class="wcr-cell wcr-cell-left">${text}</div><div class="wcr-cell"></div>`
+          : `<div class="wcr-cell"></div><div class="wcr-cell wcr-cell-right">${text}</div>`;
+        return `<div class="wcr-row">${cells}${dot}</div>`;
       }).join("");
       return `<section class="title-strip"><div class="container"><h2 class="strip-title">${esc(d.title)}</h2>${d.en ? `<div class="strip-en">${esc(d.en)}</div>` : ""}</div></section>
       <section class="section"><div class="container article">
