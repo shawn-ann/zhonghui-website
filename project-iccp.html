@@ -82,8 +82,6 @@
     .section { padding: 72px 0; background: #fff; }
     .article { max-width: 900px; margin: 0 auto; }
     .article-title { font-size: 30px; color: var(--deep-blue); font-weight: 700; text-align: center; margin-bottom: 32px; }
-    .cn-en { text-align: center; margin: 44px 0 20px; }
-    .cn-en h3 { font-size: 24px; color: var(--deep-blue); font-weight: 700; }
     .sec-p { font-size: 15px; color: var(--dark-text); line-height: 1.9; margin-bottom: 10px; }
     .sec-list { list-style: none; margin: 0 0 8px; }
     .sec-list li { position: relative; padding-left: 22px; margin-bottom: 9px; font-size: 15px; color: var(--dark-text); line-height: 1.8; }
@@ -226,7 +224,7 @@
       { type: "sections",
         data: {
           sections: [
-            { cn: "户外类型",
+            { cn: "户外类型", en: "Outdoor Type",
               paras: [ "营地辅导员的岗位遍布美国各地，多为寄宿制夏令营，活动涵盖体育、艺术、表演、水上运动、攀岩、马术、露营等。" ],
               list: [
                 "多数营地位于美国东北部，但几乎在每个州都有营地",
@@ -235,14 +233,14 @@
                 "美国的夏令营位于一些最美丽的地方",
                 "参与者不应只考虑特定区域，应保持开放的心态，准备好冒险" ] },
 
-            { cn: "项目优势", list: [
+            { cn: "项目优势", en: "Our Advantages", list: [
               "合法性：美国政府依据法案制定的教育文化交流项目，已有 40 余年成熟运作经验",
               "可靠性：美国国务院指定项目，全程美国政府监管",
               "安全性：合法营地辅导员岗位，合作营地经验丰富；费用含医疗与意外保险，驻美办公室协调员及时解决问题",
               "提升英语听说、领导力、自理与协调能力，对从事教育事业尤为有帮助",
               "项目结束后有 30 天合法旅行期，可自由游历美国" ] },
 
-            { cn: "申请条件", list: [
+            { cn: "申请条件", en: "Application Requirements", list: [
               "英语水平：良好的英语沟通及书写能力",
               "年龄：18–28 岁",
               "项目参加者：学生、教师、青年工作者或具有专门技能者（可提供资格证明）",
@@ -252,14 +250,14 @@
               "项目时间：6 月 1 日至 9 月 1 日期间可参与项目",
               "态度：积极、灵活、「愿意尝试」，对儿童工作感兴趣" ] },
 
-            { cn: "常见疑问", qa: [
+            { cn: "常见疑问", en: "Q & A", qa: [
               { q: "营地辅导员主要做什么？", a: "组织营员参与各类室内外活动，照料他们的日常生活与安全，并协助营地老师维护秩序与设施。" },
               { q: "项目期间包食宿吗？", a: "是的，营地期间提供免费住宿及三餐。" },
               { q: "需要什么样的经验？", a: "喜欢与孩子相处、有照顾儿童的经验更佳；具备良好的英语沟通能力即可报名。" },
               { q: "一般工作在什么时间？", a: "每年 6 月上旬开始、8 月中下旬结束，工作时长约 63 天，每周休息一天。" },
               { q: "项目结束后能旅游吗？", a: "项目结束后有 30 天的合法停留期，可在美国境内自由旅行。" } ] },
 
-            { cn: "报名流程", steps: [
+            { cn: "报名流程", en: "The Program Process", steps: [
               "确认报名", "填写在线表格", "中惠面试并填写面试报告", "中惠审核后提交",
               "项目举办方决定是否接受申请", "匹配", "确认匹配", "匹配确认函",
               "在线培训", "签证申请", "抵达" ] }
@@ -288,19 +286,15 @@
     },
     "sections"(b) {
       const d = b.data;
-      const secs = (d.sections || []).map(s => {
-        const head = `<div class="cn-en"><h3>${esc(s.cn)}</h3></div>`;
+      return (d.sections || []).map(s => {
+        const strip = `<section class="title-strip"><div class="container"><h2 class="strip-title">${esc(s.cn)}</h2>${s.en ? `<div class="strip-en">${esc(s.en)}</div>` : ""}</div></section>`;
         let body = "";
         if (s.paras) body += s.paras.map(p => `<p class="sec-p">${esc(p)}</p>`).join("");
         if (s.list) body += `<ul class="sec-list">${s.list.map(i => `<li>${esc(i)}</li>`).join("")}</ul>`;
         if (s.qa) body += s.qa.map(x => `<div class="qa"><div class="q">Q：${esc(x.q)}</div><div class="a">A：${esc(x.a)}</div></div>`).join("");
         if (s.steps) body += `<div class="steps">${s.steps.map((t, i) => `<div class="step-item"><span class="n">${i + 1}</span><span class="t">${esc(t)}</span></div>`).join("")}</div>`;
-        return `<div class="sec">${head}${body}</div>`;
+        return strip + `<section class="section"><div class="container article">${body}</div></section>`;
       }).join("");
-      return `<section class="section"><div class="container article">
-        ${d.title ? `<h2 class="article-title">${esc(d.title)}</h2>` : ""}
-        ${secs}
-      </div></section>`;
     },
     "intro-band"(b) {
       const d = b.data;
