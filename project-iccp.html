@@ -111,6 +111,16 @@
     .intro-media { flex: 1; }
     .intro-media img { width: 100%; display: block; border-radius: 12px; box-shadow: 0 14px 34px rgba(0,0,0,0.28); }
 
+    /* ===== 工作内容：两列错落 + 中间装饰 ===== */
+    .wc-grid { display: grid; grid-template-columns: 1fr 44px 1fr; gap: 44px; }
+    .wc-col { display: flex; flex-direction: column; gap: 44px; }
+    .wc-col-right { padding-top: 48px; }
+    .wc-item { position: relative; padding-left: 22px; font-size: 15px; color: var(--dark-text); line-height: 1.95; }
+    .wc-item::before { content: ""; position: absolute; left: 2px; top: 10px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .wc-center { display: flex; justify-content: center; }
+    .wc-line { width: 2px; border-radius: 2px; background: linear-gradient(#E60039, #C2185B); }
+    .wc-note { max-width: 860px; margin: 44px auto 0; text-align: center; font-size: 15px; color: var(--gray-blue); line-height: 1.95; }
+
     /* ===== 页脚 ===== */
     footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
     .footer-grid { max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
@@ -196,7 +206,19 @@
           img: "img/iccp-intro.jpg" },
         options: {} },
 
-      // ③ 正文：分节（白底）
+      // ③ 工作内容：两列错落 + 中间装饰
+      { type: "work-content",
+        data: { title: "工作内容",
+          left: [
+            "是营员的家人、辅导员，也是营地老师的助手",
+            "负责营员各类室内及户外体育、竞技运动的安全与辅导" ],
+          right: [
+            "组织孩子参与各类活动（体育、艺术、表演、水上运动、攀岩、马术和露营等）",
+            "监督管理孩子的健康与安全，照料日常生活" ],
+          note: "营地生活通常要求较高，意味着较长的工作时间和较少的自由时间，需要申请者充满爱心、喜欢孩子、乐于照顾他人，富有幽默感、精力旺盛，有组织能力、判断力及团队合作精神；并协助营地做好设施维护与秩序管理。" },
+        options: {} },
+
+      // ④ 正文：分节（白底）
       { type: "sections",
         data: {
           sections: [
@@ -289,6 +311,19 @@
         </div>
         <div class="intro-media"><img src="${esc(d.img)}" alt=""></div>
       </div></div></div></section>`;
+    },
+    "work-content"(b) {
+      const d = b.data;
+      const item = (t) => `<div class="wc-item">${esc(t)}</div>`;
+      return `<section class="section"><div class="container">
+        <div class="cn-en"><h3>${esc(d.title)}</h3></div>
+        <div class="wc-grid">
+          <div class="wc-col">${(d.left || []).map(item).join("")}</div>
+          <div class="wc-center"><span class="wc-line"></span></div>
+          <div class="wc-col wc-col-right">${(d.right || []).map(item).join("")}</div>
+        </div>
+        ${d.note ? `<p class="wc-note">${esc(d.note)}</p>` : ""}
+      </div></section>`;
     }
   };
 
