@@ -93,6 +93,10 @@
     .steps .step-item:last-child { border-bottom: none; }
     .steps .n { flex: 0 0 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
     .steps .t { font-size: 15px; color: var(--dark-text); line-height: 1.8; }
+    .steps-row { display: flex; gap: 48px; align-items: flex-start; }
+    .steps-media { flex: 0 0 46%; }
+    .steps-media img { width: 100%; display: block; border-radius: 12px; box-shadow: 0 12px 30px rgba(138,14,75,0.16); }
+    .steps-col { flex: 1; }
 
     /* ===== 标题行（浅灰底图） ===== */
     .title-strip { background: url('img/title-bg.jpg') center/cover no-repeat; padding: 20px 0; }
@@ -257,7 +261,7 @@
               { q: "一般工作在什么时间？", a: "每年 6 月上旬开始、8 月中下旬结束，工作时长约 63 天，每周休息一天。" },
               { q: "项目结束后能旅游吗？", a: "项目结束后有 30 天的合法停留期，可在美国境内自由旅行。" } ] },
 
-            { cn: "报名流程", en: "The Program Process", steps: [
+            { cn: "报名流程", en: "The Program Process", img: "img/prog-iccp.jpg", steps: [
               "确认报名", "填写在线表格", "中惠面试并填写面试报告", "中惠审核后提交",
               "项目举办方决定是否接受申请", "匹配", "确认匹配", "匹配确认函",
               "在线培训", "签证申请", "抵达" ] }
@@ -292,7 +296,10 @@
         if (s.paras) body += s.paras.map(p => `<p class="sec-p">${esc(p)}</p>`).join("");
         if (s.list) body += `<ul class="sec-list">${s.list.map(i => `<li>${esc(i)}</li>`).join("")}</ul>`;
         if (s.qa) body += s.qa.map(x => `<div class="qa"><div class="q">Q：${esc(x.q)}</div><div class="a">A：${esc(x.a)}</div></div>`).join("");
-        if (s.steps) body += `<div class="steps">${s.steps.map((t, i) => `<div class="step-item"><span class="n">${i + 1}</span><span class="t">${esc(t)}</span></div>`).join("")}</div>`;
+        if (s.steps) {
+          const stepsHtml = `<div class="steps">${s.steps.map((t, i) => `<div class="step-item"><span class="n">${i + 1}</span><span class="t">${esc(t)}</span></div>`).join("")}</div>`;
+          body += s.img ? `<div class="steps-row"><div class="steps-media"><img src="${esc(s.img)}" alt=""></div><div class="steps-col">${stepsHtml}</div></div>` : stepsHtml;
+        }
         return strip + `<section class="section"><div class="container article">${body}</div></section>`;
       }).join("");
     },
