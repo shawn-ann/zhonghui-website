@@ -123,12 +123,11 @@
     .wc-body { position: relative; }
     .wc-divider { position: absolute; left: 50%; top: 10px; bottom: 10px; width: 2px; transform: translateX(-1px); background: linear-gradient(#F0E3EA, #F3B9D2, #F0E3EA); }
     .wcr-row { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 34px 0; }
-    .wcr-cell { display: flex; align-items: center; }
+    .wcr-cell { display: flex; align-items: center; gap: 14px; }
     .wcr-cell-left { justify-content: flex-start; padding-right: 52px; }
     .wcr-cell-right { justify-content: flex-end; padding-left: 52px; }
     .wcr-text { font-size: 15px; color: var(--dark-text); line-height: 1.9; }
-    .wcr-dot { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 2px solid var(--accent); color: var(--accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(138,14,75,0.16); }
-    .wcr-dot svg { width: 24px; height: 24px; }
+    .wcr-dot { width: 28px; height: 28px; flex: 0 0 auto; display: block; }
 
     /* ===== 页脚 ===== */
     footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
@@ -219,10 +218,10 @@
       { type: "work-content",
         data: { title: "工作内容", en: "Job Content",
           rows: [
-            { text: "是营员的家人、辅导员，也是营地老师的助手", icon: "heart" },
-            { text: "负责营员各类室内及户外体育、竞技运动的安全与辅导", icon: "ball" },
-            { text: "组织孩子参与各类活动（体育、艺术、表演、水上运动、攀岩、马术和露营等）", icon: "tent" },
-            { text: "监督管理孩子的健康与安全，照料日常生活", icon: "shield" }
+            { text: "是营员的家人、辅导员，也是营地老师的助手" },
+            { text: "负责营员各类室内及户外体育、竞技运动的安全与辅导" },
+            { text: "组织孩子参与各类活动（体育、艺术、表演、水上运动、攀岩、马术和露营等）" },
+            { text: "监督管理孩子的健康与安全，照料日常生活" }
           ] },
         options: {} },
 
@@ -276,14 +275,6 @@
   // ---------------- 渲染器 ----------------
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 
-  // 工作内容圆形图标（内联 SVG，stroke=currentColor）
-  const wcIcons = {
-    heart: '<path d="M12 21s-7-4.5-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.5-9 9-9 9z"/>',
-    ball: '<circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/>',
-    tent: '<path d="M12 4 3 20h18L12 4z"/><path d="m12 12 3 8H9l3-8z"/>',
-    shield: '<path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3z"/><path d="m9 12 2 2 4-4"/>'
-  };
-
   const renderers = {
     banner(b) {
       const c = b.data, img = b.options.image || "", pattern = b.options.pattern || "";
@@ -334,14 +325,15 @@
     },
     "work-content"(b) {
       const d = b.data;
+      const icon = d.icon || "img/dot.png";
       const rows = (d.rows || []).map((r, i) => {
         const left = i % 2 === 0;
         const text = `<div class="wcr-text">${esc(r.text)}</div>`;
-        const dot = `<span class="wcr-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${wcIcons[r.icon] || ""}</svg></span>`;
+        const dot = `<img class="wcr-dot" src="${esc(r.icon || icon)}" alt="">`;
         const cells = left
-          ? `<div class="wcr-cell wcr-cell-left">${text}</div><div class="wcr-cell"></div>`
-          : `<div class="wcr-cell"></div><div class="wcr-cell wcr-cell-right">${text}</div>`;
-        return `<div class="wcr-row">${cells}${dot}</div>`;
+          ? `<div class="wcr-cell wcr-cell-left">${text}${dot}</div><div class="wcr-cell"></div>`
+          : `<div class="wcr-cell"></div><div class="wcr-cell wcr-cell-right">${dot}${text}</div>`;
+        return `<div class="wcr-row">${cells}</div>`;
       }).join("");
       return `<section class="title-strip"><div class="container"><h2 class="strip-title">${esc(d.title)}</h2>${d.en ? `<div class="strip-en">${esc(d.en)}</div>` : ""}</div></section>
       <section class="section"><div class="container article">
