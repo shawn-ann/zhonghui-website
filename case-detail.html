@@ -6,15 +6,15 @@
   <title>案例详情 — 中惠文化</title>
   <style>
     :root {
-      --deep-blue: #1A4B7A;
-      --bright-blue: #4A90E2;
-      --light-blue: #E5F0FA;
-      --pale-blue: #D0E7F8;
-      --gray-blue: #5A7A9A;
-      --dark-text: #44546A;
+      --deep-blue: #8A0E4B;      /* 标题主色：深玫 */
+      --bright-blue: #C2185B;    /* 链接/文字强调：深玫 */
+      --light-blue: #FFF1F6;     /* 浅玫瑰底 */
+      --gray-blue: #7C6B73;      /* 次要文字：暖玫灰 */
+      --dark-text: #5A4A52;      /* 正文：暖玫灰 */
       --white: #FFFFFF;
-      --border: #E1E9F2;
-      --orange: #EE822F;
+      --border: #F0E3EA;
+      --orange: #E60039;         /* 辅助强调色：品牌玫红 */
+      --accent: #E60039;         /* 图标/主强调：品牌玫红 */
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,33 +25,33 @@
       background: var(--white);
     }
     a { text-decoration: none; color: inherit; }
-    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
     /* ===== 顶部导航栏 ===== */
     header {
-      background: linear-gradient(120deg, var(--deep-blue) 0%, #24598f 100%);
+      background: var(--white);
       position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 10px rgba(26,75,122,0.25);
+      box-shadow: 0 0 5px rgba(22,22,22,0.14);
     }
-    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-    .logo img { display: block; height: 44px; width: auto; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
-    .nav-menu { display: flex; list-style: none; gap: 28px; align-items: center; }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 88px; }
+    .logo img { display: block; height: 88px; width: auto; }
+    .nav-right { display: flex; align-items: center; gap: 32px; }
+    .nav-menu { display: flex; list-style: none; gap: 24px; align-items: center; }
     .nav-menu > li { position: relative; }
     .nav-menu > li > a {
-      font-size: 15px; color: #d7e6f5; font-weight: 500; padding: 6px 0;
-      display: flex; align-items: center; gap: 4px; transition: color .2s;
+      font-size: 16px; color: #E60039; font-weight: 600; padding: 6px 0;
+      display: flex; align-items: center; gap: 4px;
     }
-    .nav-menu > li > a:hover { color: #fff; }
-    .nav-menu > li > a.active { color: #fff; }
+    .nav-menu > li > a.active { color: #E60039; }
     .nav-menu > li > a.active::after {
-      content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
-      height: 3px; border-radius: 2px; background: var(--bright-blue);
+      content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
+      height: 3px; border-radius: 2px; background: #E60039;
     }
     .nav-menu .caret { font-size: 10px; opacity: .8; }
     .nav-menu .dropdown {
       position: absolute; top: 100%; left: -12px; min-width: 172px;
       background: var(--white); border-radius: 0 0 8px 8px;
-      box-shadow: 0 10px 24px rgba(26,75,122,0.18); overflow: hidden;
+      box-shadow: 0 10px 24px rgba(138,14,75,0.18); overflow: hidden;
       opacity: 0; visibility: hidden; transform: translateY(8px);
       transition: opacity .2s, transform .2s, visibility .2s;
       padding: 6px 0; z-index: 200;
@@ -59,30 +59,30 @@
     .nav-menu > li:hover .dropdown,
     .nav-menu > li:focus-within .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
     .nav-menu .dropdown a {
-      display: block; padding: 11px 20px; font-size: 14px; color: var(--deep-blue);
+      display: block; padding: 11px 20px; font-size: 14px; color: #E60039;
       transition: background .15s, color .15s; white-space: nowrap;
     }
-    .nav-menu .dropdown a:hover { background: var(--light-blue); color: var(--bright-blue); }
-    .nav-lang { font-size: 14px; color: #9db6cf; display: flex; gap: 6px; }
-    .nav-lang .sep { color: #5a7a9a; }
-    .nav-lang a { color: #9db6cf; }
-    .nav-lang a:hover { color: #fff; }
-    .nav-lang a.active { color: #fff; font-weight: 600; }
+    .nav-menu .dropdown a:hover { background: #E60039; color: #fff; }
+    .nav-lang { font-size: 14px; color: var(--gray-blue); display: flex; gap: 6px; }
+    .nav-lang .sep { color: var(--gray-blue); }
+    .nav-lang a { color: var(--gray-blue); }
+    .nav-lang a.active { color: #E60039; font-weight: 600; }
 
     /* ===== Banner ===== */
     .banner {
       height: 240px; display: flex; align-items: center; justify-content: center;
       position: relative; overflow: hidden; background-size: cover; background-position: center;
     }
-    .banner.bg-gradient { background: linear-gradient(135deg, #0e3d63 0%, #1A4B7A 50%, #3372b8 100%); }
+    .banner.bg-gradient { background: linear-gradient(135deg, #6E0B3E 0%, #8A0E4B 50%, #C2185B 100%); }
     .banner::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(#ffffff22 1px, transparent 1px); background-size: 28px 28px; }
-    .banner-note { position: relative; z-index: 1; color: rgba(255,255,255,.7); font-size: 15px; letter-spacing: 2px; padding: 8px 20px; border: 1px dashed rgba(255,255,255,.4); border-radius: 6px; }
+    .banner-note { position: relative; z-index: 1; color: rgba(255,255,255,.75); font-size: 15px; letter-spacing: 2px; padding: 8px 20px; border: 1px dashed rgba(255,255,255,.4); border-radius: 6px; }
 
-    /* ===== 文章 ===== */
+    /* ===== 文章（外层 1200 容器 + 内层 820 阅读列） ===== */
     .article { padding: 48px 0 64px; }
+    .article-inner { max-width: 820px; margin: 0 auto; }
     .article-title { font-size: 30px; color: var(--deep-blue); font-weight: 700; line-height: 1.4; }
     .article-meta { color: var(--gray-blue); font-size: 14px; margin-top: 12px; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
-    .article-cover { height: 340px; border-radius: 12px; margin: 28px 0; background: linear-gradient(135deg,#4A90E2,#1A4B7A); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.85); font-size: 15px; }
+    .article-cover { height: 340px; border-radius: 12px; margin: 28px 0; background: linear-gradient(135deg,#C2185B,#8A0E4B); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.85); font-size: 15px; }
     .article-body { font-size: 16px; line-height: 2; color: var(--dark-text); }
     .article-body h2 { font-size: 21px; color: var(--deep-blue); margin: 32px 0 14px; }
     .article-body h3 { font-size: 18px; color: var(--deep-blue); margin: 24px 0 10px; }
@@ -90,29 +90,28 @@
     .article-body ul { margin: 0 0 16px 22px; }
     .article-body li { margin-bottom: 8px; }
     .article-body blockquote {
-      border-left: 4px solid var(--bright-blue); background: var(--light-blue);
+      border-left: 4px solid var(--accent); background: var(--light-blue);
       padding: 14px 20px; border-radius: 6px; margin: 20px 0; color: var(--deep-blue);
     }
     .article-body .figure {
       height: 260px; border-radius: 10px; margin: 22px 0;
-      background: linear-gradient(135deg,#5A7A9A,#24598f);
+      background: linear-gradient(135deg,#C2185B,#6E0B3E);
       display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.8); font-size: 14px;
     }
 
     /* ===== 页脚 ===== */
-    footer { background: var(--deep-blue); color: #cfdff0; }
-    .footer-grid { max-width: 1280px; margin: 0 auto; padding: 56px 24px 32px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
+    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
     .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
-    .footer-brand .zh { font-size: 22px; font-weight: 700; color: #fff; }
-    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #9db6cf; margin-top: 4px; }
-    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #d7e6f5; }
-    .footer-info .label { color: #9db6cf; margin-right: 8px; }
-    .footer-copy { border-top: 1px solid rgba(255,255,255,.12); padding: 20px 24px; text-align: center; font-size: 13px; color: #9db6cf; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #ffd7e6; }
+    .footer-info .label { color: #f0a9c6; margin-right: 8px; }
     .footer-qr { text-align: center; }
     .footer-qr h4 { color: #fff; font-size: 16px; margin-bottom: 16px; }
     .qr-box { display: flex; gap: 16px; justify-content: center; }
     .qr-item .qr { width: 92px; height: 92px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--deep-blue); font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px; }
-    .qr-item p { font-size: 13px; color: #d7e6f5; }
+    .qr-item p { font-size: 13px; color: #ffd7e6; }
+    .foot-contact { display: block; margin-top: 18px; text-align: left; color: #ffd7e6; font-size: 14px; text-decoration: none; }
+    .foot-contact:hover { color: #ffffff; }
 
     @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr; } }
   </style>
@@ -132,7 +131,7 @@
   // 内容集合（模拟后端）；详情页取其中一项
   const collections = {
     cases: [
-      { id: "xiaoding", title: "小丁同学的英语逆袭之路", date: "2025-07-18", cover: "linear-gradient(135deg,#5A7A9A,#1A4B7A)",
+      { id: "xiaoding", title: "小丁同学的英语逆袭之路", date: "2025-07-18", cover: "linear-gradient(135deg,#C2185B,#8A0E4B)",
         body: [
           { type: "p", text: "小丁同学是一位前期入库英语被系统自动降分的 boy，提交入库的那一版视频已经是他当下最好的一版。因为入库一直没有企业，他也有过自我怀疑的瞬间。" },
           { type: "p", text: "但是焦虑无用。丁同学每天都在练口语、磨听力，一模的时候听到他的口语，远远超出预期。仅仅几个月的时间，丁同学就给我们带来了猝不及防的惊喜。" },
@@ -143,7 +142,7 @@
           { type: "h2", text: "二、越努力越幸运" },
           { type: "p", text: "当天签证官问到了我们模拟时出现过的问题。运气何尝不是一种努力的表现形式，我们一直相信越努力越幸运——逆袭者没有魔法，只有笨拙的坚持。" }
         ] },
-      { id: "xiaocao", title: "小曹同学的赴美之旅", date: "2025-07-02", cover: "linear-gradient(135deg,#4A90E2,#1A4B7A)",
+      { id: "xiaocao", title: "小曹同学的赴美之旅", date: "2025-07-02", cover: "linear-gradient(135deg,#C2185B,#8A0E4B)",
         body: [
           { type: "p", text: "小曹同学是中惠 24 年 swter，在读大三时，便毅然选择报名中惠 SWT 赴美带薪实习项目。" },
           { type: "p", text: "从前期材料筹备、签证办理，到远赴海外后的工作与日常生活，全程尽享细致周全的一站式专属服务，专业靠谱的陪伴贯穿旅途始终。" }
@@ -159,18 +158,19 @@
   const pageConfig = {
     title: article.title,
     nav: {
-      logo: "img/logo.png",
+      logo: "img/pink_logo_with_text_1.jpg",
       langCurrent: "中文", langOther: "EN",
       items: [
         { label: "首页", link: "index.html" },
-        { label: "关于我们", link: "about.html" },
-        { label: "项目介绍", link: "project-swt.html", children: [
-            { label: "SWT 赴美带薪实习", link: "project-swt.html" },
-            { label: "ITP 赴美专业实习", link: "#" },
-            { label: "ICCP 赴美营地辅导员", link: "#" },
-            { label: "Au Pair 赴美互惠生", link: "#" } ] },
+        { label: "关于中惠", link: "about.html" },
+        { label: "互惠生", link: "aupair-usa.html" },
+        { label: "赴美J1交流项目", link: "project-iccp.html", children: [
+            { label: "SWT 赴美带薪实习", link: "project-iccp.html" },
+            { label: "ITP 赴美专业实习", link: "project-iccp.html" },
+            { label: "ICCP 赴美营地辅导员", link: "project-iccp.html" } ] },
+        { label: "海外留学", link: "study-abroad.html", children: [
+            { label: "新西兰留学", link: "new-zealand.html" } ] },
         { label: "案例分享", link: "cases.html", active: true },
-        { label: "资讯中心", link: "news.html" },
         { label: "联系我们", link: "contact.html" }
       ]
     },
@@ -185,9 +185,9 @@
       ],
       qrcodes: [
         { title: "公众号", text: "公众号\n二维码" },
-        { title: "咨询微信", text: "咨询微信\n二维码" }
-      ],
-      copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
+        { title: "咨询微信", text: "咨询微信\n二维码" },
+        { title: "视频号", text: "视频号\n二维码" }
+      ]
     },
     blocks: [
       // Banner 大图块
@@ -222,12 +222,12 @@
         if (node.type === "ul") return `<ul>${(node.items||[]).map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`;
         return `<p>${esc(node.text)}</p>`;
       }).join("");
-      return `<article class="article"><div class="container">
+      return `<article class="article"><div class="container"><div class="article-inner">
         <h1 class="article-title">${esc(d.title)}</h1>
         <div class="article-meta">📅 ${esc(d.date)}</div>
         <div class="article-cover" style="background:${esc(d.cover)};">${esc(d.coverLabel || "")}</div>
         <div class="article-body">${body}</div>
-      </div></article>`;
+      </div></div></article>`;
     }
   };
 
@@ -239,10 +239,12 @@
       return `<li><a href="${esc(m.link)}" class="${m.active ? "active" : ""}">${esc(m.label)}${m.children ? ' <span class="caret">▾</span>' : ""}</a>${sub}</li>`;
     }).join("");
     document.getElementById("site-header").innerHTML = `
-      <div class="nav">
+      <div class="container nav">
         <a class="logo" href="index.html"><img src="${esc(nav.logo)}" alt="中惠文化"></a>
-        <ul class="nav-menu">${menu}</ul>
-        <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+        <div class="nav-right">
+          <ul class="nav-menu">${menu}</ul>
+          <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+        </div>
       </div>`;
   }
 
@@ -255,14 +257,13 @@
   function renderFooter(f) {
     const info = f.info.map(i => `<p><span class="label">${esc(i.label)}</span>${esc(i.text)}</p>`).join("");
     const qr = f.qrcodes.map(q => `
-      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div><p>${esc(q.title)}</p></div>`).join("");
+      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div></div>`).join("");
     document.getElementById("site-footer").innerHTML = `
       <div class="footer-grid">
         <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
         <div class="footer-info">${info}</div>
-        <div class="footer-qr"><h4>关注我们</h4><div class="qr-box">${qr}</div></div>
-      </div>
-      <div class="footer-copy">${esc(f.copyright)}</div>`;
+        <div class="footer-qr"><div class="qr-box">${qr}</div><a class="foot-contact" href="contact.html">联系我们</a></div>
+      </div>`;
   }
 
   renderNav(pageConfig.nav);
