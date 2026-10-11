@@ -126,7 +126,9 @@
     .wcr-cell { display: flex; align-items: center; gap: 14px; }
     .wcr-cell-left { justify-content: flex-start; padding-right: 52px; }
     .wcr-cell-right { justify-content: flex-end; padding-left: 52px; }
+    .wcr-spread { justify-content: space-between; }
     .wcr-text { font-size: 15px; color: var(--dark-text); line-height: 1.9; }
+    .wcr-img { width: 46px; height: 46px; object-fit: contain; flex: 0 0 auto; }
     .wcr-dot { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 28px; height: 28px; display: block; }
 
     /* ===== 页脚 ===== */
@@ -218,7 +220,7 @@
       { type: "work-content",
         data: { title: "工作内容", en: "Job Content",
           rows: [
-            { text: "是营员的家人、辅导员，也是营地老师的助手" },
+            { text: "是营员的家人、辅导员，也是营地老师的助手", img: "img/wc-1.png" },
             { text: "负责营员各类室内及户外体育、竞技运动的安全与辅导" },
             { text: "组织孩子参与各类活动（体育、艺术、表演、水上运动、攀岩、马术和露营等）" },
             { text: "监督管理孩子的健康与安全，照料日常生活" }
@@ -329,10 +331,12 @@
       const rows = (d.rows || []).map((r, i) => {
         const left = i % 2 === 0;
         const text = `<div class="wcr-text">${esc(r.text)}</div>`;
+        const rim = r.img ? `<img class="wcr-img" src="${esc(r.img)}" alt="">` : "";
+        const spread = r.img ? " wcr-spread" : "";
         const dot = `<img class="wcr-dot" src="${esc(r.icon || icon)}" alt="">`;
         const cells = left
-          ? `<div class="wcr-cell wcr-cell-left">${text}</div><div class="wcr-cell"></div>`
-          : `<div class="wcr-cell"></div><div class="wcr-cell wcr-cell-right">${text}</div>`;
+          ? `<div class="wcr-cell wcr-cell-left${spread}">${text}${rim}</div><div class="wcr-cell"></div>`
+          : `<div class="wcr-cell"></div><div class="wcr-cell wcr-cell-right${spread}">${rim}${text}</div>`;
         return `<div class="wcr-row">${cells}${dot}</div>`;
       }).join("");
       return `<section class="title-strip"><div class="container"><h2 class="strip-title">${esc(d.title)}</h2>${d.en ? `<div class="strip-en">${esc(d.en)}</div>` : ""}</div></section>
