@@ -98,6 +98,12 @@
     .steps-media img { width: 100%; display: block; border-radius: 12px; box-shadow: 0 12px 30px rgba(138,14,75,0.16); }
     .steps-col { flex: 1; }
 
+    /* ===== 户外类型：横向自动滚动图片 ===== */
+    .marquee { overflow: hidden; margin-top: 44px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+    .marquee-track { display: flex; gap: 20px; width: max-content; animation: marquee-scroll 26s linear infinite; }
+    .marquee-track img { width: 320px; height: 210px; object-fit: cover; border-radius: 10px; flex: 0 0 auto; display: block; }
+    @keyframes marquee-scroll { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
     /* ===== 标题行（浅灰底图） ===== */
     .title-strip { background: url('img/title-bg.jpg') center/cover no-repeat; padding: 20px 0; }
     .strip-title { text-align: center; font-size: 30px; font-weight: 700; color: var(--deep-blue); }
@@ -229,6 +235,7 @@
         data: {
           sections: [
             { cn: "户外类型", en: "Outdoor Type",
+              images: [ "img/memory-2.jpg", "img/memory-3.jpg", "img/memory-5.jpg", "img/memory-6.jpg" ],
               paras: [ "营地辅导员的岗位遍布美国各地，多为寄宿制夏令营，活动涵盖体育、艺术、表演、水上运动、攀岩、马术、露营等。" ],
               list: [
                 "多数营地位于美国东北部，但几乎在每个州都有营地",
@@ -299,6 +306,10 @@
         if (s.steps) {
           const stepsHtml = `<div class="steps">${s.steps.map((t, i) => `<div class="step-item"><span class="n">${i + 1}</span><span class="t">${esc(t)}</span></div>`).join("")}</div>`;
           body += s.img ? `<div class="steps-row"><div class="steps-media"><img src="${esc(s.img)}" alt=""></div><div class="steps-col">${stepsHtml}</div></div>` : stepsHtml;
+        }
+        if (s.images) {
+          const im = s.images.map(src => `<img src="${esc(src)}" alt="">`).join("");
+          body += `<div class="marquee"><div class="marquee-track">${im}${im}</div></div>`;
         }
         return strip + `<section class="section"><div class="container article">${body}</div></section>`;
       }).join("");
