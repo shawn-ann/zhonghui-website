@@ -320,8 +320,8 @@
       const d = b.data;
       const item = (t) => `<div class="wc-item">${esc(t)}</div>`;
       const photos = (d.photos || []).map(s => `<img src="${esc(s)}" alt="">`).join("");
-      return `<section class="section"><div class="container">
-        <div class="cn-en"><h3>${esc(d.title)}</h3></div>
+      return `<section class="title-strip"><div class="container"><h2 class="strip-title">${esc(d.title)}</h2></div></section>
+      <section class="section"><div class="container">
         <div class="wc-grid">
           <div class="wc-col">${(d.left || []).map(item).join("")}</div>
           <div class="wc-center">${photos}</div>
