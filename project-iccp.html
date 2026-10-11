@@ -119,16 +119,18 @@
     .intro-media { flex: 1; }
     .intro-media img { width: 100%; display: block; border-radius: 12px; box-shadow: 0 14px 34px rgba(0,0,0,0.28); }
 
-    /* ===== 工作内容：两列 + 中间分割线（圆图标在线上） ===== */
-    .wc-body { position: relative; }
+    /* ===== 工作内容：两列 + 中间分割线（圆图标在线上，行图标在中带、绝对定位） ===== */
+    .wc-body { position: relative; --wcr-band: 120px; }
     .wc-divider { position: absolute; left: 50%; top: 10px; bottom: 10px; width: 2px; transform: translateX(-1px); background: linear-gradient(#F0E3EA, #F3B9D2, #F0E3EA); }
     .wcr-row { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 34px 0; }
-    .wcr-cell { display: flex; align-items: center; gap: 14px; }
-    .wcr-cell-left { justify-content: flex-start; padding-right: 52px; }
-    .wcr-cell-right { justify-content: flex-end; padding-left: 52px; }
-    .wcr-spread { justify-content: space-between; }
+    .wcr-cell { display: flex; align-items: center; }
+    .wcr-cell-left { justify-content: flex-start; padding-right: var(--wcr-band); }
+    .wcr-cell-right { justify-content: flex-end; padding-left: var(--wcr-band); }
     .wcr-text { font-size: 15px; color: var(--dark-text); line-height: 1.9; }
-    .wcr-img { width: 46px; height: 46px; object-fit: contain; flex: 0 0 auto; color: var(--accent); }
+    .wcr-icon { position: absolute; top: 50%; transform: translateY(-50%); width: var(--isz, 60px); height: var(--isz, 60px); color: var(--accent); display: flex; align-items: center; justify-content: center; }
+    .wcr-icon svg, .wcr-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .wcr-icon-left { right: calc(50% + var(--wcr-band) / 2 - var(--isz, 60px) / 2); }
+    .wcr-icon-right { left: calc(50% + var(--wcr-band) / 2 - var(--isz, 60px) / 2); }
     .wcr-dot { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 28px; height: 28px; display: block; }
 
     /* ===== 页脚 ===== */
@@ -220,7 +222,7 @@
       { type: "work-content",
         data: { title: "工作内容", en: "Job Content",
           rows: [
-            { text: "在营地教育活动中，是营员的家人、辅导员，也是营地老师的助手，陪伴并引导他们的日常", hex: true },
+            { text: "在营地教育活动中，是营员的家人、辅导员，也是营地老师的助手，陪伴并引导他们的日常", symbol: "dumbbell", iconSize: 60 },
             { text: "负责营员各类室内及户外体育、竞技运动的安全与辅导，并维护活动秩序" },
             { text: "组织孩子参与各类活动（如体育、艺术、表演艺术、水上运动、游泳、攀岩、马术和露营等）" },
             { text: "监督管理孩子的健康与安全，照料日常生活，帮助他们建立友谊" }
@@ -327,18 +329,26 @@
     },
     "work-content"(b) {
       const d = b.data;
-      const icon = d.icon || "img/dot.png";
-      const hexSvg = `<svg class="wcr-img" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"><polygon points="50,4 90,27 90,73 50,96 10,73 10,27" stroke-width="5"/><line x1="36" y1="50" x2="64" y2="50" stroke-width="5"/><line x1="36" y1="41" x2="36" y2="59" stroke-width="6"/><line x1="64" y1="41" x2="64" y2="59" stroke-width="6"/><line x1="27" y1="45" x2="27" y2="55" stroke-width="5"/><line x1="73" y1="45" x2="73" y2="55" stroke-width="5"/></svg>`;
+      const dotSrc = d.icon || "img/dot.png";
+      const hexPoly = `<polygon points="50,4 90,27 90,73 50,96 10,73 10,27" stroke-width="5"/>`;
+      const symbols = {
+        dumbbell: `<line x1="36" y1="50" x2="64" y2="50" stroke-width="5"/><line x1="36" y1="41" x2="36" y2="59" stroke-width="6"/><line x1="64" y1="41" x2="64" y2="59" stroke-width="6"/><line x1="27" y1="45" x2="27" y2="55" stroke-width="5"/><line x1="73" y1="45" x2="73" y2="55" stroke-width="5"/>`
+      };
+      const iconOf = (r) => {
+        if (r.symbol && symbols[r.symbol]) return `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round">${hexPoly}${symbols[r.symbol]}</svg>`;
+        if (r.icon) return `<img src="${esc(r.icon)}" alt="">`;
+        return "";
+      };
       const rows = (d.rows || []).map((r, i) => {
-        const left = i % 2 === 0;
+        const side = r.side || (i % 2 === 0 ? "left" : "right");
         const text = `<div class="wcr-text">${esc(r.text)}</div>`;
-        const rim = r.hex ? hexSvg : (r.img ? `<img class="wcr-img" src="${esc(r.img)}" alt="">` : "");
-        const spread = (r.img || r.hex) ? " wcr-spread" : "";
-        const dot = `<img class="wcr-dot" src="${esc(r.icon || icon)}" alt="">`;
-        const cells = left
-          ? `<div class="wcr-cell wcr-cell-left${spread}">${text}${rim}</div><div class="wcr-cell"></div>`
-          : `<div class="wcr-cell"></div><div class="wcr-cell wcr-cell-right${spread}">${rim}${text}</div>`;
-        return `<div class="wcr-row">${cells}${dot}</div>`;
+        const ih = iconOf(r);
+        const rowIcon = ih ? `<span class="wcr-icon wcr-icon-${side}" style="--isz:${r.iconSize || 60}px">${ih}</span>` : "";
+        const dot = `<img class="wcr-dot" src="${esc(r.dot || dotSrc)}" alt="">`;
+        const cells = side === "left"
+          ? `<div class="wcr-cell wcr-cell-left">${text}</div><div class="wcr-cell"></div>`
+          : `<div class="wcr-cell"></div><div class="wcr-cell wcr-cell-right">${text}</div>`;
+        return `<div class="wcr-row">${cells}${rowIcon}${dot}</div>`;
       }).join("");
       return `<section class="title-strip"><div class="container"><h2 class="strip-title">${esc(d.title)}</h2>${d.en ? `<div class="strip-en">${esc(d.en)}</div>` : ""}</div></section>
       <section class="section"><div class="container article">
