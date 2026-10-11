@@ -129,7 +129,8 @@
     .wcr-spread { justify-content: space-between; }
     .wcr-text { font-size: 15px; color: var(--dark-text); line-height: 1.9; }
     .wcr-img { width: 46px; height: 46px; object-fit: contain; flex: 0 0 auto; }
-    .wcr-dot { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 28px; height: 28px; display: block; }
+    .wcr-dot { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 34px; height: 34px; color: var(--accent); background: #fff; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+    .wcr-dot svg { width: 100%; height: 100%; display: block; }
 
     /* ===== 页脚 ===== */
     footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
@@ -333,7 +334,7 @@
         const text = `<div class="wcr-text">${esc(r.text)}</div>`;
         const rim = r.img ? `<img class="wcr-img" src="${esc(r.img)}" alt="">` : "";
         const spread = r.img ? " wcr-spread" : "";
-        const dot = `<img class="wcr-dot" src="${esc(r.icon || icon)}" alt="">`;
+        const dot = `<span class="wcr-dot"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"><polygon points="50,4 90,27 90,73 50,96 10,73 10,27"/></svg></span>`;
         const cells = left
           ? `<div class="wcr-cell wcr-cell-left${spread}">${text}${rim}</div><div class="wcr-cell"></div>`
           : `<div class="wcr-cell"></div><div class="wcr-cell wcr-cell-right${spread}">${rim}${text}</div>`;
