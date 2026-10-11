@@ -78,9 +78,10 @@
     .banner-pattern { position: absolute; top: -45px; right: 10px; width: 80%; height: auto; display: block; z-index: 0; }
     .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; }
 
-    /* ===== 文章（外层 1200 容器 + 内层 820 阅读列） ===== */
-    .article { padding: 48px 0 64px; }
-    .article-inner { max-width: 820px; margin: 0 auto; }
+    /* ===== 正文（浅玫底 + 白卡，参考 new-zealand） ===== */
+    .section { padding: 72px 0; }
+    .section-alt { background: var(--light-blue); }
+    .article { margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 40px 48px; box-shadow: 0 10px 30px rgba(138,14,75,0.06); }
     .article-title { font-size: 30px; color: var(--deep-blue); font-weight: 700; line-height: 1.4; }
     .article-meta { color: var(--gray-blue); font-size: 14px; margin-top: 12px; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
     .article-cover { height: 340px; border-radius: 12px; margin: 28px 0; background: linear-gradient(135deg,#C2185B,#8A0E4B); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.85); font-size: 15px; }
@@ -241,12 +242,12 @@
         if (node.type === "ul") return `<ul>${(node.items||[]).map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`;
         return `<p>${esc(node.text)}</p>`;
       }).join("");
-      return `<article class="article"><div class="container"><div class="article-inner">
+      return `<section class="section section-alt"><div class="container article">
         <h1 class="article-title">${esc(d.title)}</h1>
         <div class="article-meta">📅 ${esc(d.date)}</div>
         <div class="article-cover" style="background:${esc(d.cover)};">${esc(d.coverLabel || "")}</div>
         <div class="article-body">${body}</div>
-      </div></div></article>`;
+      </div></section>`;
     }
   };
 
