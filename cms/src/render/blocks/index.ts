@@ -4,6 +4,7 @@ import { renderImage } from './image'
 import { renderImageText } from './imageText'
 import { renderButton } from './button'
 import { renderBanner } from './banner'
+import { renderGallery } from './gallery'
 
 export type Renderer = (b: Block) => string
 
@@ -13,6 +14,7 @@ export const renderers: Record<string, Renderer> = {
   imageText: (b) => renderImageText(b as Parameters<typeof renderImageText>[0]),
   button: (b) => renderButton(b as Parameters<typeof renderButton>[0]),
   banner: (b) => renderBanner(b as Parameters<typeof renderBanner>[0]),
+  gallery: (b) => renderGallery(b as Parameters<typeof renderGallery>[0]),
 }
 
 export function renderBlock(block: Block): string {
