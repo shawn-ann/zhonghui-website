@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { bgField, altField } from './common'
 
 export const TextBlock: Block = {
   slug: 'text',
@@ -15,7 +16,7 @@ export const TextBlock: Block = {
         { label: '居中', value: 'center' },
       ],
     },
-    { name: 'bg', type: 'text', admin: { description: '背景图路径/颜色/渐变，留空为白底' } },
-    { name: 'alt', type: 'checkbox', label: '浅粉底', defaultValue: false },
+    bgField(),
+    altField(),
   ],
 }

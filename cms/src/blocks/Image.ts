@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { bgField, altField, linkField } from './common'
 
 export const ImageBlock: Block = {
   slug: 'image',
@@ -6,8 +7,8 @@ export const ImageBlock: Block = {
   fields: [
     { name: 'media', type: 'upload', relationTo: 'media', required: true },
     { name: 'altText', type: 'text' },
-    { name: 'link', type: 'text' },
-    { name: 'bg', type: 'text' },
-    { name: 'alt', type: 'checkbox', label: '浅粉底', defaultValue: false },
+    linkField(),
+    bgField(),
+    altField(),
   ],
 }

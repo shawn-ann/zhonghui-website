@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { TextBlock } from '../blocks/Text'
-import { ImageBlock } from '../blocks/Image'
+import { pageBlocks } from '../blocks'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -17,7 +16,7 @@ export const Pages: CollectionConfig = {
       validate: (val: unknown) =>
         typeof val === 'string' && val.startsWith('/') ? true : 'route 必须以 / 开头',
     },
-    { name: 'blocks', type: 'blocks', blocks: [TextBlock, ImageBlock] },
+    { name: 'blocks', type: 'blocks', blocks: pageBlocks },
     {
       name: 'seo',
       type: 'group',
