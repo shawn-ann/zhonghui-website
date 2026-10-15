@@ -13,6 +13,18 @@ Payload 3.90.2 + PostgreSQL + Next 16 的后台，配一个纯 TypeScript 的**�
 - Docker（本地跑 PostgreSQL）
 - TypeScript 5.7 / Vitest 4（随依赖安装）
 
+## 一键脚本
+
+`scripts/start.sh` 会按需自动：启动 Docker/PostgreSQL 容器、从 `.env.example` 生成 `.env`、安装依赖。
+
+```bash
+./scripts/start.sh            # 启动后台开发服务器 → http://localhost:3000/admin
+./scripts/start.sh preview    # 生成静态站点并在 8331 端口预览 → http://127.0.0.1:8331/
+./scripts/start.sh stop       # 停止 dev / preview 服务（PostgreSQL 容器保持运行）
+```
+
+> 停止数据库容器：`docker stop zhonghui-postgres`。
+
 ## 快速开始
 
 ### 1. 启动 PostgreSQL（Docker）
