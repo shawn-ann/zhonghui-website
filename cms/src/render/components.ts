@@ -3,7 +3,7 @@ import { shell } from './shell'
 import type { Block, TextBlockData, ImageBlockData } from './types'
 
 function renderText(b: TextBlockData): string {
-  const align = b.align || 'left'
+  const align = b.align === 'center' ? 'center' : 'left'
   const inner = `<div class="container"><div class="text-block" style="text-align:${align}">
     ${b.title ? `<h2>${esc(b.title)}</h2>` : ''}
     <p>${esc(b.body)}</p>

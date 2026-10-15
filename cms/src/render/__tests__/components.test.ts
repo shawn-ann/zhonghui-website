@@ -25,3 +25,12 @@ describe('renderBlock', () => {
     expect(renderBlock({ type: 'nope' })).toBe('')
   })
 })
+
+describe('renderBlock text align safety', () => {
+  it('only allows known align values', () => {
+    // @ts-expect-error intentionally invalid at runtime
+    const html = renderBlock({ type: 'text', body: 'x', align: 'left" onmouseover="alert(1)' })
+    expect(html).toContain('text-align:left')
+    expect(html).not.toContain('onmouseover')
+  })
+})

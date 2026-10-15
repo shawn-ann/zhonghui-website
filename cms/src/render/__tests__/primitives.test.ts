@@ -25,3 +25,17 @@ describe('bgStyle', () => {
       .toBe("style=\"background-image:url('img/bg2.jpg');background-size:cover;background-position:center;\"")
   })
 })
+
+describe('esc apostrophe', () => {
+  it('escapes single quotes', () => {
+    expect(esc("it's")).toBe('it&#39;s')
+  })
+})
+
+describe('bgStyle injection safety', () => {
+  it('cannot break out of the style attribute', () => {
+    const out = bgStyle('#fff" onmouseover="alert(1)')
+    expect(out).not.toContain('onmouseover="')
+    expect(out).toBe('style="background:#fff&quot; onmouseover=&quot;alert(1);"')
+  })
+})
