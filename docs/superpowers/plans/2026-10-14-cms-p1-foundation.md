@@ -777,7 +777,12 @@ Create `cms/src/generate/route.ts`：
 ```ts
 export function routeToFile(route: string): string {
   const clean = route.trim().replace(/^\/+/, '').replace(/\/+$/, '')
-  return clean === '' ? 'index.html' : `${clean}/index.html`
+  if (clean === '') return 'index.html'
+  const segments = clean.split('/')
+  if (segments.some((s) => s === '' || s === '.' || s === '..')) {
+    throw new Error(`invalid route: ${route}`)
+  }
+  return `${clean}/index.html`
 }
 ```
 
@@ -919,8 +924,12 @@ import { mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
 
 export function writeSite(files: Map<string, string>, outDir: string): void {
+  const root = path.resolve(outDir)
   for (const [rel, content] of files) {
-    const full = path.join(outDir, rel)
+    const full = path.resolve(path.join(outDir, rel))
+    if (full !== root && !full.startsWith(root + path.sep)) {
+      throw new Error(`refusing to write outside outDir: ${rel}`)
+    }
     mkdirSync(path.dirname(full), { recursive: true })
     writeFileSync(full, content)
   }
@@ -997,17 +1006,32 @@ import type { Block, PageDoc, SiteData } from '../render/types'
 type MediaResolver = (media: unknown) => string
 
 export function mapPageDoc(raw: Record<string, any>, resolveMedia: MediaResolver): PageDoc {
-  const blocks: Block[] = (raw.blocks || []).map((b: Record<string, any>): Block => {
-    if (b.blockType === 'text') {
-      return { type: 'text', title: b.title || undefined, body: b.body, align: b.align || 'left', bg: b.bg || undefined, alt: !!b.alt }
-    }
-    return {
-      type: 'image',
-      media: resolveMedia(b.media),
-      altText: b.altText || undefined,
-      link: b.link || undefined,
-      bg: b.bg || undefined,
-      alt: !!b.alt,
+  const blocks: Block[] = (raw.blocks || []).flatMap((b: Record<string, any>): Block[] => {
+    switch (b.blockType) {
+      case 'text':
+        return [
+          {
+            type: 'text',
+            title: b.title || undefined,
+            body: b.body,
+            align: b.align || 'left',
+            bg: b.bg || undefined,
+            alt: !!b.alt,
+          },
+        ]
+      case 'image':
+        return [
+          {
+            type: 'image',
+            media: resolveMedia(b.media),
+            altText: b.altText || undefined,
+            link: b.link || undefined,
+            bg: b.bg || undefined,
+            alt: !!b.alt,
+          },
+        ]
+      default:
+        return []
     }
   })
   return {
@@ -1025,7 +1049,10 @@ export async function loadSiteData(payload: { find: (args: any) => Promise<{ doc
     limit: 1000,
     depth: 1,
   })
-  const resolveMedia = (m: unknown): string => (m && typeof m === 'object' && 'url' in (m as any) ? (m as any).url : String(m || ''))
+  const resolveMedia = (m: unknown): string => {
+    if (m && typeof m === 'object' && 'url' in (m as any)) return String((m as any).url || '')
+    return ''
+  }
   return { pages: res.docs.map((d) => mapPageDoc(d, resolveMedia)) }
 }
 ```
@@ -1055,8 +1082,10 @@ git commit -m "feat(generate): load + map payload pages"
 
 Create `cms/src/generate/cli.ts`：
 ```ts
+import 'dotenv/config'
 import { getPayload } from 'payload'
-import config from '../../payload.config'
+import config from '../payload.config'
+import { rmSync } from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { loadSiteData } from './loadSiteData'
@@ -1069,9 +1098,11 @@ async function main() {
   const payload = await getPayload({ config })
   const data = await loadSiteData(payload as any)
   const outDir = path.resolve(dirname, '../../dist')
+  rmSync(outDir, { recursive: true, force: true })
   const files = generateSite(data)
   writeSite(files, outDir)
   console.log(`Generated ${data.pages.length} pages -> ${outDir}`)
+  await payload.destroy()
   process.exit(0)
 }
 
