@@ -54,6 +54,10 @@ export interface ButtonBlock extends BlockBase {
 
 export interface RichTextBlock extends BlockBase {
   type: 'richtext'
+  /**
+   * Pre-sanitized HTML produced by the Lexical serializer (see `src/render/richText.ts`).
+   * Trusted editor content only — NEVER assign raw user input here.
+   */
   html: string
 }
 

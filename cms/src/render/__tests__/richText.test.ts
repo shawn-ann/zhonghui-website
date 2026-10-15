@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { renderBlock } from '../blocks'
-import { lexicalToHtml } from '../richText'
+import { lexicalToHtml, sanitizeHtml } from '../richText'
 import type { RichTextBlock } from '../types'
 
 describe('richtext renderer', () => {
@@ -16,5 +16,39 @@ describe('richtext renderer', () => {
 describe('lexicalToHtml', () => {
   it('returns empty string for empty input', () => {
     expect(lexicalToHtml(undefined)).toBe('')
+  })
+
+  it('drops dangerous URL from a link node', () => {
+    const state = {
+      root: {
+        type: 'root',
+        children: [
+          {
+            type: 'link',
+            fields: { url: 'javascript:alert(1)', newTab: false },
+            children: [{ type: 'text', text: 'click', version: 1 }],
+            version: 3,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        version: 1,
+      },
+    }
+    const html = lexicalToHtml(state)
+    expect(html).not.toContain('javascript:')
+  })
+})
+
+describe('sanitizeHtml', () => {
+  it('neutralizes javascript: and data: urls', () => {
+    expect(sanitizeHtml('<a href="javascript:alert(1)">x</a>')).not.toContain('javascript:')
+    expect(sanitizeHtml('<img src="data:text/html,x">')).not.toContain('data:')
+    expect(sanitizeHtml('<a href="https://ok.com">x</a>')).toContain('https://ok.com')
+  })
+  it('lexicalToHtml returns empty for null and non-object', () => {
+    expect(lexicalToHtml(null)).toBe('')
+    expect(lexicalToHtml('str')).toBe('')
   })
 })
