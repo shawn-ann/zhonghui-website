@@ -6,6 +6,7 @@ import { renderButton } from './button'
 import { renderBanner } from './banner'
 import { renderGallery } from './gallery'
 import { renderSlider } from './slider'
+import { renderRichText } from './richText'
 
 export type Renderer = (b: Block) => string
 
@@ -17,6 +18,7 @@ export const renderers: Record<string, Renderer> = {
   banner: (b) => renderBanner(b as Parameters<typeof renderBanner>[0]),
   gallery: (b) => renderGallery(b as Parameters<typeof renderGallery>[0]),
   slider: (b) => renderSlider(b as Parameters<typeof renderSlider>[0]),
+  richtext: (b) => renderRichText(b as Parameters<typeof renderRichText>[0]),
 }
 
 export function renderBlock(block: Block): string {
