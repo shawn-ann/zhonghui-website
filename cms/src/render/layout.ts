@@ -1,5 +1,5 @@
 import { esc } from './primitives'
-import { renderBlock } from './components'
+import { renderBlock } from './blocks'
 import type { PageDoc } from './types'
 
 function renderHead(page: PageDoc): string {

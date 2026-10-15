@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { renderBlock } from '../components'
+import { renderBlock } from '../blocks'
 import type { Block } from '../types'
 
 describe('renderBlock', () => {
