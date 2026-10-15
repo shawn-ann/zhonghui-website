@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { zh } from '@payloadcms/translations/languages/zh'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -23,6 +24,21 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    meta: {
+      titleSuffix: ' · 中惠文化管理后台',
+      description: '中惠文化官网管理后台',
+      icons: [{ rel: 'icon', type: 'image/jpeg', url: '/favicon.jpg' }],
+    },
+    components: {
+      graphics: {
+        Logo: '/components/Logo',
+        Icon: '/components/Icon',
+      },
+    },
+  },
+  i18n: {
+    supportedLanguages: { zh },
+    fallbackLanguage: 'zh',
   },
   collections: [Users, Media, Pages],
   editor: lexicalEditor(),

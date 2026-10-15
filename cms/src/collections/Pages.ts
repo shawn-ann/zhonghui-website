@@ -4,6 +4,7 @@ import { ImageBlock } from '../blocks/Image'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  labels: { singular: '页面', plural: '页面' },
   admin: { useAsTitle: 'title', defaultColumns: ['title', 'route', 'status'] },
   fields: [
     { name: 'title', type: 'text', required: true },
