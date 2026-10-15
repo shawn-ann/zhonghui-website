@@ -1190,5 +1190,6 @@ git commit -m "chore(cms): p1 acceptance fixes"
 
 ## 备注
 
+- **P1 已知限制（延后 P2）**：`loadSiteData` 目前把图片 `media` 解析为 Payload 的 API URL（`/api/media/file/...`），静态生成**尚未**把媒体文件复制进 `dist/` 并重写路径（spec §7.2 的"复制媒体到 dist/assets/"）。P1 验收页为纯文本，故未暴露；**静态媒体导出留待 P2** 实现（届时 `image` 区块才可独立部署）。
 - 若 `create-payload-app` 生成的目录结构与本计划略有差异（Payload 版本差异），以**脚手架实际结构为准**，保持 `src/render`、`src/generate`、`src/collections`、`src/blocks` 的职责划分不变。
 - Payload 具体 API 以官方文档为准；执行时如遇 API 变更，修正调用但**保持测试断言的对外行为不变**。
