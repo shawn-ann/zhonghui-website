@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { esc, bgStyle } from '../primitives'
+import { esc, bgStyle, safeUrl } from '../primitives'
 
 describe('esc', () => {
   it('escapes html-sensitive chars', () => {
@@ -37,5 +37,19 @@ describe('bgStyle injection safety', () => {
     const out = bgStyle('#fff" onmouseover="alert(1)')
     expect(out).not.toContain('onmouseover="')
     expect(out).toBe('style="background:#fff&quot; onmouseover=&quot;alert(1);"')
+  })
+})
+
+describe('safeUrl', () => {
+  it('allows http/https/mailto/tel, paths and anchors', () => {
+    expect(safeUrl('https://x.com')).toBe('https://x.com')
+    expect(safeUrl('mailto:a@b.com')).toBe('mailto:a@b.com')
+    expect(safeUrl('/x/')).toBe('/x/')
+    expect(safeUrl('#top')).toBe('#top')
+    expect(safeUrl('img/a.jpg')).toBe('img/a.jpg')
+  })
+  it('rejects dangerous schemes', () => {
+    expect(safeUrl('javascript:alert(1)')).toBe('')
+    expect(safeUrl('data:text/html,x')).toBe('')
   })
 })

@@ -24,6 +24,12 @@ describe('renderBlock', () => {
     // @ts-expect-error 故意测试未知类型
     expect(renderBlock({ type: 'nope' })).toBe('')
   })
+
+  it('drops javascript: links on image blocks', () => {
+    const html = renderBlock({ type: 'image', media: '/a.jpg', link: 'javascript:alert(1)' })
+    expect(html).toContain('src="/a.jpg"')
+    expect(html).not.toContain('javascript:')
+  })
 })
 
 describe('renderBlock text align safety', () => {
