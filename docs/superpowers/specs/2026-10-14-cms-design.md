@@ -44,14 +44,14 @@
 | 项 | 选择 |
 |---|---|
 | 后端 / CMS | **Node.js + Payload CMS（v3，TypeScript）** |
-| 数据库 | **MySQL** |
+| 数据库 | **PostgreSQL** |
 | 后台 UI | Payload 自带 Admin（React） |
 | 公开站点 | 静态生成的 HTML/CSS/JS |
 | 反向代理 | Nginx |
 | 进程守护 | systemd 或 pm2 |
 | 部署 | 每语言实例独立部署（独立库、独立服务器/目录） |
 
-**选型理由**：Payload 的 **Blocks 字段**原生支持"区块库 + 自由拼页 + 嵌套"，Media / Drafts / Preview / Access / Local API 全内置，支持 MySQL，与现有前端同语言（JS/TS），发布钩子天然适配静态生成。方案对比详见附录 A。
+**选型理由**：Payload 的 **Blocks 字段**原生支持"区块库 + 自由拼页 + 嵌套"，Media / Drafts / Preview / Access / Local API 全内置，支持 PostgreSQL（Payload 无官方 MySQL 适配器），与现有前端同语言（JS/TS），发布钩子天然适配静态生成。方案对比详见附录 A。
 
 ---
 
@@ -64,7 +64,7 @@
 │   ├─ /admin, /api → 反代 → Payload（Node，仅管理员）              │
 │   └─ /preview     → 反代 → Payload（草稿动态预览）                │
 │                                                                  │
-│  Payload (Node) ◄──► MySQL（本地，不对外）                        │
+│  Payload (Node) ◄──► PostgreSQL（本地，不对外）                   │
 │  Payload (Node) ──发布──► 静态生成器 ──写入──► dist/              │
 └──────────────────────────────────────────────────────────────────┘
         ▲
@@ -331,7 +331,7 @@ dist/
 
 - **公开站点=纯静态**：无动态攻击面。
 - **后台与预览**：经 Nginx 反代，HTTPS；可加 **IP 白名单**、**登录限流**；`/admin` 可改为非默认路径。
-- **数据库**：MySQL 仅监听本地，最小权限账号；连接密钥走环境变量。
+- **数据库**：PostgreSQL 仅监听本地，最小权限账号；连接密钥走环境变量。
 - **上传校验**：限制 MIME 与文件大小；**禁止上传 SVG**（防 XSS），或强制净化。
 - **响应头**：由 Nginx 统一设置安全头（HSTS、X-Content-Type-Options 等）。
 
@@ -339,10 +339,10 @@ dist/
 
 ## 11. 部署与运维
 
-- 服务器：Node(Payload) + MySQL + Nginx；`systemd`/`pm2` 常驻 Node。
+- 服务器：Node(Payload) + PostgreSQL + Nginx；`systemd`/`pm2` 常驻 Node。
 - 部署命令：`npm ci && npm run build` → `npm run generate`（产出 `dist/`）。
 - 中/英两个实例部署相同，仅数据库与 `SiteSettings.languageLink` 不同。
-- 备份：`mysqldump` + 媒体目录定期备份。
+- 备份：`pg_dump` + 媒体目录定期备份。
 
 ---
 
@@ -362,7 +362,7 @@ dist/
 
 | 阶段 | 内容 | 里程碑 |
 |---|---|---|
-| P1 地基 | Payload + MySQL 接入；Pages / Media / Users；共享渲染模块抽离；最小静态生成器（组合页） | 首页可由配置生成 |
+| P1 地基 | Payload + PostgreSQL 接入；Pages / Media / Users；共享渲染模块抽离；最小静态生成器（组合页） | 首页可由配置生成 |
 | P2 组件系统 | grid 容器 + 内容组件（banner/image/text/imageText/richtext/slider）；嵌套渲染 | 首页 1:1 复现 |
 | P3 集合 | ContentTypes / Entries / Categories；collectionList + 分页；详情模板 | 案例列表/详情自动生成 |
 | P4 站点配置 | Menu / ThemeSettings / SiteSettings；主题令牌注入；菜单高亮；语言链接 | 全站可配 |
@@ -385,7 +385,7 @@ dist/
 |---|---|---|---|
 | 区块拼页/嵌套 | Blocks 字段原生支持 | StreamField 最成熟 | 全部自写 |
 | 后台/媒体/草稿/预览 | 全内置 | 全内置 | 全自写，工期最长、易出安全坑 |
-| MySQL | 支持 | 支持 | 视实现 |
+| PostgreSQL | 支持 | 支持 | 视实现 |
 | 与现有前端同语言 | ✅ JS/TS | ❌ 两套语言 | ✅ |
 | 静态生成 | Local API + 发布钩子，复用现有 renderers | 需自定义导出命令 | 需自写 |
 

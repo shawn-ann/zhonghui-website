@@ -2,11 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 在 `cms/` 目录搭起 Payload(MySQL) 后台，含 Pages/Media/Users，并抽取共享渲染模块 + 最小静态生成器，使"一个配置好的页面"能生成静态 HTML 到 `dist/`。
+**Goal:** 在 `cms/` 目录搭起 Payload(PostgreSQL) 后台，含 Pages/Media/Users，并抽取共享渲染模块 + 最小静态生成器，使"一个配置好的页面"能生成静态 HTML 到 `dist/`。
 
-**Architecture:** Payload v3（Next.js App Router + MySQL）提供后台与数据存储；一个纯 TypeScript 渲染模块 `src/render/` 把页面数据递归渲染成 HTML；一个 Node CLI 脚本读取 Payload Local API 的已发布数据，调用渲染模块，写入 `dist/`。渲染模块是纯函数、可单测，后续 P2–P5 复用。
+**Architecture:** Payload v3（Next.js App Router + PostgreSQL）提供后台与数据存储；一个纯 TypeScript 渲染模块 `src/render/` 把页面数据递归渲染成 HTML；一个 Node CLI 脚本读取 Payload Local API 的已发布数据，调用渲染模块，写入 `dist/`。渲染模块是纯函数、可单测，后续 P2–P5 复用。
 
-**Tech Stack:** Node.js 20+, TypeScript, Payload CMS v3, Next.js (Payload v3 内置), `@payloadcms/db-mysql`, MySQL 8, Vitest。
+**Tech Stack:** Node.js 20+, TypeScript, Payload CMS v3 (3.90.2), Next.js 16 (Payload v3 内置), `@payloadcms/db-postgres`, PostgreSQL 16, Vitest。
 
 **前置约定**
 - 全部新代码位于仓库根目录下的 `cms/`。
@@ -20,12 +20,12 @@
 ```
 cms/
 ├─ package.json                      # 依赖与脚本（dev / build / generate / test）
-├─ .env                              # DATABASE_URI / PAYLOAD_SECRET（不入库）
+├─ .env                              # DATABASE_URL / PAYLOAD_SECRET（不入库）
 ├─ .env.example                      # 环境变量示例
-├─ payload.config.ts                 # Payload 主配置（db adapter、collections、editor）
+├─ src/payload.config.ts             # Payload 主配置（db adapter、collections、editor）
 ├─ vitest.config.ts                  # Vitest 配置
-├─ tsconfig.json                     # TS 配置（create-payload-app 生成）
-├─ next.config.mjs                   # Next 配置（create-payload-app 生成）
+├─ tsconfig.json                     # TS 配置
+├─ next.config.ts                    # Next 配置
 ├─ src/
 │  ├─ app/
 │  │  ├─ (payload)/admin/[[...segments]]/page.tsx   # Payload Admin（脚手架生成）
@@ -64,76 +64,94 @@ cms/
 
 ---
 
-## Task 1: 脚手架 + MySQL + 环境变量
+## Task 1: 脚手架 + PostgreSQL + 环境变量  ✅ 已完成
+
+> 说明：`create-payload-app` 的交互式提示无法在非 TTY 下驱动（clack 吞按键），且其数据库选择里**没有 MySQL**、Payload 也无官方 MySQL 适配器。故改为**直接基于官方 `templates/blank`（v3.90.2 tag）手动搭建**，并使用 `@payloadcms/db-postgres`。
 
 **Files:**
-- Create: `cms/`（整目录，由 create-payload-app 生成）
+- Create: `cms/`（整目录，基于 payload v3.90.2 的 `templates/blank`）
 - Create: `cms/.env`, `cms/.env.example`
-- Modify: `cms/payload.config.ts`（接 MySQL）
+- Create: `cms/src/payload.config.ts`（postgresAdapter）
 
-- [ ] **Step 1: 生成 Payload 项目**
+- [x] **Step 1: 生成本地 PostgreSQL（Docker）**
 
-Run（在仓库根目录）：
+Run：
 ```bash
-npx create-payload-app@latest cms --db mysql
+docker run -d --name zhonghui-postgres \
+  -e POSTGRES_USER=zhonghui -e POSTGRES_PASSWORD=zhonghui_pw -e POSTGRES_DB=zhonghui_cms \
+  -p 5432:5432 postgres:16
 ```
-交互选择：template = `blank`，package manager = `npm`。
+Expected：容器 Up，`pg_isready` 通过。
 
-- [ ] **Step 2: 配置连接串**
+- [x] **Step 2: 复制官方 blank 模板（v3.90.2）**
 
-Create `cms/.env`：
+Run：
+```bash
+git clone --depth 1 https://github.com/payloadcms/payload.git /tmp/payload-src
+git -C /tmp/payload-src fetch --depth 1 origin refs/tags/v3.90.2:refs/tags/v3.90.2
+git -C /tmp/payload-src checkout v3.90.2
+cp -R /tmp/payload-src/templates/blank/src cms/src
+cp /tmp/payload-src/templates/blank/{next.config.ts,tsconfig.json,.gitignore,.prettierrc.json} cms/
+rm -rf cms/src/app/my-route
 ```
-DATABASE_URI=mysql://zhonghui:zhonghui_pw@127.0.0.1:3306/zhonghui_cms
+
+- [x] **Step 3: 改写 package.json（发布版本 + postgres）**
+
+`cms/package.json`：将 `workspace:*` 换成已发布版本（payload/`@payloadcms/*` = `3.90.2`，next `16.3.3`，react `19.2.6`），把 `@payloadcms/db-mongodb` 换成 `@payloadcms/db-postgres`，移除 pnpm/playwright 相关脚本与字段，保留 `sharp`。`scripts` 至少含 `dev`/`build`/`start`/`generate:types`/`generate:importmap`/`payload`。
+
+- [x] **Step 4: 环境变量**
+
+`cms/.env`：
+```
+DATABASE_URL=postgres://zhonghui:zhonghui_pw@127.0.0.1:5432/zhonghui_cms
 PAYLOAD_SECRET=dev-secret-change-me
 ```
-Create `cms/.env.example`：同上但值为占位（`PAYLOAD_SECRET=replace-me`）。
+`cms/.env.example`：同结构，值为占位。
 
-- [ ] **Step 3: 确认 payload.config.ts 使用 mysqlAdapter**
+- [x] **Step 5: payload.config.ts 用 postgresAdapter**
 
-打开 `cms/payload.config.ts`，确认数据库适配器为：
+`cms/src/payload.config.ts`：
 ```ts
-import { mysqlAdapter } from '@payloadcms/db-mysql'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { buildConfig } from 'payload'
 import path from 'path'
+import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
+import sharp from 'sharp'
+import { Users } from './collections/Users'
+import { Media } from './collections/Media'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  admin: { user: 'users' },
+  admin: { user: Users.slug, importMap: { baseDir: path.resolve(dirname) } },
+  collections: [Users, Media],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
-  db: mysqlAdapter({ url: process.env.DATABASE_URI || '' }),
-  collections: [],
+  db: postgresAdapter({ pool: { connectionString: process.env.DATABASE_URL || '' } }),
+  sharp,
+  plugins: [],
 })
 ```
 
-- [ ] **Step 4: 本地建库**
+- [x] **Step 6: 安装并验证**
 
 Run：
 ```bash
-mysql -uroot -e "CREATE DATABASE IF NOT EXISTS zhonghui_cms CHARACTER SET utf8mb4;"
-mysql -uroot -e "CREATE USER IF NOT EXISTS 'zhonghui'@'localhost' IDENTIFIED BY 'zhonghui_pw'; GRANT ALL ON zhonghui_cms.* TO 'zhonghui'@'localhost'; FLUSH PRIVILEGES;"
+cd cms && npm install
+npm run dev
 ```
-Expected：命令无错误返回。
+Expected：`http://localhost:3000/admin` 可访问，显示"Create first user"；Postgres 中已由 Payload 自动建出 `users`/`media`/`payload_*` 等表。
 
-- [ ] **Step 5: 启动并验证后台**
-
-Run：
-```bash
-cd cms && npm run dev
-```
-Expected：控制台输出 `http://localhost:3000/admin`，浏览器打开能进入创建首个管理员账号的页面。创建账号后能登录。
-
-- [ ] **Step 6: 提交**
+- [x] **Step 7: 提交**
 
 ```bash
-git add cms
-git commit -m "chore(cms): scaffold payload + mysql + env"
+git add -A cms
+git commit -m "chore(cms): scaffold payload 3.90 + postgres + admin"
 ```
+提交 SHA：`a2fda8b`。
 
 ---
 
@@ -145,7 +163,7 @@ git commit -m "chore(cms): scaffold payload + mysql + env"
 - Create: `cms/src/collections/Pages.ts`
 - Create: `cms/src/blocks/Text.ts`
 - Create: `cms/src/blocks/Image.ts`
-- Modify: `cms/payload.config.ts`
+- Modify: `cms/src/payload.config.ts`
 
 - [ ] **Step 1: Users 集合**
 
@@ -272,7 +290,7 @@ export const Pages: CollectionConfig = {
 
 - [ ] **Step 6: 注册到 payload.config.ts**
 
-Modify `cms/payload.config.ts`，在顶部加导入并把 `collections` 改为：
+Modify `cms/src/payload.config.ts`，在顶部加导入并把 `collections` 改为：
 ```ts
 import { Users } from './src/collections/Users'
 import { Media } from './src/collections/Media'
@@ -289,7 +307,7 @@ Expected：后台侧边栏出现 Pages / Media / Users；进入 Pages 能新建�
 - [ ] **Step 8: 提交**
 
 ```bash
-git add cms/src cms/payload.config.ts
+git add cms/src
 git commit -m "feat(cms): users/media/pages collections + text/image blocks"
 ```
 
@@ -1125,7 +1143,7 @@ git commit -m "chore(cms): p1 acceptance fixes"
 
 | spec 章节 | 本计划任务 |
 |---|---|
-| 2 技术选型（Payload+MySQL） | Task 1 |
+| 2 技术选型（Payload+PostgreSQL） | Task 1 |
 | 4 数据模型 Pages/Media/Users | Task 2 |
 | 7.1 共享渲染模块 | Task 4–7 |
 | 5 组件系统（P1 最小：text/image） | Task 6 |
