@@ -28,3 +28,21 @@ describe('loadSiteData', () => {
     expect(data.pages[0].route).toBe('/')
   })
 })
+
+describe('mapPageDoc robustness', () => {
+  it('skips unknown block types', () => {
+    const doc = mapPageDoc(
+      { title: 't', route: '/', blocks: [{ blockType: 'richText', body: 'x' }, { blockType: 'text', body: 'ok' }] } as any,
+      () => '',
+    )
+    expect(doc.blocks).toHaveLength(1)
+    expect(doc.blocks[0].type).toBe('text')
+  })
+  it('resolves unpopulated media to empty string', () => {
+    const doc = mapPageDoc({ title: 't', route: '/', blocks: [{ blockType: 'image', media: 7 }] } as any, (m) =>
+      m && typeof m === 'object' && 'url' in (m as any) ? (m as any).url : '',
+    )
+    const img = doc.blocks[0]
+    expect(img.type === 'image' && img.media).toBe('')
+  })
+})

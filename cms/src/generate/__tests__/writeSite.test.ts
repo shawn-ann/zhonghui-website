@@ -18,4 +18,8 @@ describe('writeSite', () => {
     expect(existsSync(path.join(dir, 'about/index.html'))).toBe(true)
     expect(readFileSync(path.join(dir, 'index.html'), 'utf-8')).toBe('<html>home</html>')
   })
+
+  it('refuses to write outside outDir', () => {
+    expect(() => writeSite(new Map([['../evil.html', 'x']]), dir)).toThrow()
+  })
 })
