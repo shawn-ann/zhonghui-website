@@ -1,0 +1,22 @@
+import 'dotenv/config'
+import { getPayload } from 'payload'
+import config from '../payload.config'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { loadSiteData } from './loadSiteData'
+import { generateSite } from './buildSite'
+import { writeSite } from './writeSite'
+
+const dirname = path.dirname(fileURLToPath(import.meta.url))
+
+async function main() {
+  const payload = await getPayload({ config })
+  const data = await loadSiteData(payload as any)
+  const outDir = path.resolve(dirname, '../../dist')
+  const files = generateSite(data)
+  writeSite(files, outDir)
+  console.log(`Generated ${data.pages.length} pages -> ${outDir}`)
+  process.exit(0)
+}
+
+main().catch((err) => { console.error(err); process.exit(1) })

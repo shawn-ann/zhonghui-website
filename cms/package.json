@@ -14,7 +14,8 @@
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "test": "vitest run",
     "test:watch": "vitest",
-    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload"
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "generate": "tsx src/generate/cli.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.90.2",
