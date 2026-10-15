@@ -453,17 +453,19 @@ Expected：FAIL，`Cannot find module '../primitives'`。
 Create `cms/src/render/primitives.ts`：
 ```ts
 export const esc = (s: unknown): string =>
-  String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string))
+  String(s).replace(/[&<>"']/g, (c) =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string),
+  )
 
 export function bgStyle(bg?: string): string {
   if (!bg) return ''
   const v = String(bg).trim()
   if (!v) return ''
-  if (/^(linear-gradient|radial-gradient)/i.test(v)) return `style="background:${v};"`
-  if (/^(#|var\(|rgb|hsl)/i.test(v)) return `style="background:${v};"`
+  if (/^(linear-gradient|radial-gradient)/i.test(v)) return `style="background:${esc(v)};"`
+  if (/^(#|var\(|rgb|hsl)/i.test(v)) return `style="background:${esc(v)};"`
   if (/\/|\.(png|jpe?g|gif|webp|svg)(\?|$)/i.test(v))
     return `style="background-image:url('${esc(v)}');background-size:cover;background-position:center;"`
-  return `style="background:${v};"`
+  return `style="background:${esc(v)};"`
 }
 ```
 
@@ -594,7 +596,7 @@ import { shell } from './shell'
 import type { Block, TextBlockData, ImageBlockData } from './types'
 
 function renderText(b: TextBlockData): string {
-  const align = b.align || 'left'
+  const align = b.align === 'center' ? 'center' : 'left'
   const inner = `<div class="container"><div class="text-block" style="text-align:${align}">
     ${b.title ? `<h2>${esc(b.title)}</h2>` : ''}
     <p>${esc(b.body)}</p>
