@@ -32,4 +32,20 @@ describe('generateSite', () => {
     }
     expect([...collectMediaUrls(d)]).toContain('/api/media/file/a.jpg')
   })
+  it('collects media urls from section children (incl. nested grid/slider)', () => {
+    const d: SiteData = {
+      pages: [{
+        title: 't', route: '/', blocks: [
+          { type: 'section', padding: 'md', children: [
+            { type: 'heading', title: 'T' },
+            { type: 'grid', columns: 1, cells: [{ components: [{ type: 'imageText', media: '/api/media/file/b.jpg' }] }] },
+            { type: 'slider', images: ['/api/media/file/c.jpg'] },
+          ] },
+        ],
+      }],
+    }
+    const urls = [...collectMediaUrls(d)]
+    expect(urls).toContain('/api/media/file/b.jpg')
+    expect(urls).toContain('/api/media/file/c.jpg')
+  })
 })
