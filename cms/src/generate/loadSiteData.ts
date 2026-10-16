@@ -9,6 +9,8 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
   const bg = raw.bg || undefined
   const alt = !!raw.alt
   switch (raw.blockType) {
+    case 'heading':
+      return { type: 'heading', title: String(raw.title ?? ''), subtitle: raw.subtitle || undefined, align: raw.align === 'left' ? 'left' : 'center', bg, alt }
     case 'text':
       return { type: 'text', title: raw.title || undefined, body: String(raw.body ?? ''), align: raw.align === 'center' ? 'center' : 'left', bg, alt }
     case 'image':
