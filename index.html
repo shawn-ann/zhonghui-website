@@ -7,15 +7,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
   <style>
     :root {
-      --deep-blue: #1A2958;      /* 藏青主色（Alliance Abroad） */
-      --bright-blue: #FAB816;    /* 金黄强调色 */
-      --light-blue: #F4F6FB;     /* 冷色浅底 */
-      --pale-blue: #F5EBD0;      /* 米金 */
-      --gray-blue: #54595F;      /* 深灰文字 */
-      --dark-text: #1A2958;
+      --deep-blue: #8A0E4B;      /* 标题主色：深玫 */
+      --bright-blue: #C2185B;    /* 链接/文字强调：深玫（对比度更好） */
+      --light-blue: #FFF1F6;     /* 浅玫瑰底 */
+      --gray-blue: #7C6B73;      /* 次要文字：暖玫灰 */
+      --dark-text: #5A4A52;      /* 正文：暖玫灰 */
       --white: #FFFFFF;
-      --border: #E5E7EB;
-      --orange: #FAB816;         /* 辅助强调色 */
+      --border: #F0E3EA;
+      --orange: #E60039;         /* 辅助强调色：品牌玫红 */
+      --accent: #E60039;         /* 图标/主强调：品牌玫红 */
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,18 +36,17 @@
       z-index: 100;
       box-shadow: 0 0 5px rgba(22,22,22,0.14);
     }
-    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 88px; }
     .nav-right { display: flex; align-items: center; gap: 32px; }
     .logo { display: flex; align-items: center; gap: 10px; }
-    .logo img { display: block; height: 44px; width: auto; background: var(--deep-blue); border-radius: 6px; padding: 5px 12px; }
+    .logo img { display: block; height: 88px; width: auto; }
     .nav-menu { display: flex; list-style: none; gap: 24px; align-items: center; }
-    .nav-menu a { font-size: 15px; color: var(--deep-blue); font-weight: 500; position: relative; padding: 6px 0; transition: color .2s; }
-    .nav-menu a:hover { color: var(--bright-blue); }
-    .nav-menu a.active { color: var(--bright-blue); }
+    .nav-menu a { font-size: 16px; color: #E60039; font-weight: 600; position: relative; padding: 6px 0; }
+    .nav-menu a.active { color: #E60039; }
     .nav-menu li { position: relative; }
     .nav-menu li.active > a::after {
       content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
-      height: 3px; border-radius: 2px; background: var(--bright-blue);
+      height: 3px; border-radius: 2px; background: #E60039;
     }
     .nav-menu .caret { font-size: 10px; opacity: .8; }
     .nav-menu .dropdown {
@@ -60,15 +59,14 @@
     }
     .nav-menu li:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
     .nav-menu .dropdown a {
-      display: block; padding: 11px 20px; font-size: 14px; color: var(--deep-blue);
+      display: block; padding: 11px 20px; font-size: 14px; color: #E60039;
       transition: background .15s, color .15s; white-space: nowrap;
     }
-    .nav-menu .dropdown a:hover { background: var(--deep-blue); color: #ffffff; }
+    .nav-menu .dropdown a:hover { background: #E60039; color: #ffffff; }
     .nav-lang { font-size: 14px; color: var(--gray-blue); display: flex; gap: 6px; }
     .nav-lang .sep { color: var(--gray-blue); }
     .nav-lang a { color: var(--gray-blue); }
-    .nav-lang a:hover { color: var(--bright-blue); }
-    .nav-lang a.active { color: var(--deep-blue); font-weight: 600; }
+    .nav-lang a.active { color: #E60039; font-weight: 600; }
 
     /* ===== 区块通用 ===== */
     .section { padding: 72px 0; }
@@ -77,31 +75,18 @@
     .section-title h2 { font-size: 32px; color: var(--deep-blue); font-weight: 700; }
 
     /* ===== Banner 块 ===== */
-    .banner {
-      height: 420px;
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-      background-size: cover; background-position: center;
-    }
-    .banner.bg-gradient { background: linear-gradient(135deg, #101d40 0%, #1A2958 50%, #2E4380 100%); }
-    .banner::before {
-      content: ""; position: absolute; inset: 0;
-      background-image: radial-gradient(#ffffff22 1px, transparent 1px);
-      background-size: 28px 28px;
-    }
-    .banner .cover { position: relative; z-index: 1; text-align: center; color: #fff; padding: 0 24px; }
-    .banner .cover h1 { font-size: 52px; font-weight: 700; letter-spacing: 4px; text-shadow: 0 2px 16px rgba(0,0,0,0.45); }
-    .banner .cover .sub { font-size: 40px; font-weight: 500; margin-top: 12px; letter-spacing: 2px; }
-    .banner .cover .intro { font-size: 18px; margin-top: 24px; opacity: .9; }
-
-    /* ===== 数据带块（可选列数） ===== */
-    .stats { background: var(--white); }
-    .stats-grid { display: grid; gap: 0; }
-    .stat { text-align: center; padding: 44px 20px; border-right: 1px solid var(--border); }
-    .stat:first-child { border-left: 1px solid var(--border); }
-    .stat .num { font-size: 42px; font-weight: 700; color: var(--deep-blue); }
-    .stat .num em { font-style: normal; color: var(--bright-blue); }
-    .stat .label { font-size: 15px; color: var(--gray-blue); margin-top: 6px; }
+    .banner { position: relative; overflow: hidden; background: var(--white); padding: 0; }
+    .banner--split .banner-grid { display: flex; flex-direction: row; align-items: stretch; gap: 20px; padding: 60px 0 120px; }
+    .banner--split .banner-text { display: flex; flex-direction: column; justify-content: center; gap: 20px; flex: 1.25; padding-top: 20px; }
+    .banner--split .banner-text h1 { font-size: 48px; font-weight: 700; color: var(--deep-blue); line-height: 1.3; margin-bottom: 0; }
+    .banner--split .banner-text .sub { font-size: 24px; font-weight: 500; color: var(--gray-blue); }
+    .banner--split .banner-media { position: relative; flex: 1; min-height: 340px; }
+    .banner--split .banner-pattern { position: absolute; top: -45px; right: 10px; width: 80%; height: auto; display: block; z-index: 0; }
+    .banner--split .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; border-radius: 0; }
+    .banner--centered { min-height: 420px; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; }
+    .banner--centered .cover { position: relative; z-index: 1; text-align: center; color: #fff; padding: 0 24px; }
+    .banner--centered .cover h1 { font-size: 52px; font-weight: 700; letter-spacing: 4px; text-shadow: 0 2px 16px rgba(0,0,0,0.45); }
+    .banner--centered .cover .sub { font-size: 40px; font-weight: 500; margin-top: 12px; letter-spacing: 2px; }
 
     /* ===== 卡片网格块（可选列数） ===== */
     .prog-grid { display: grid; gap: 28px; }
@@ -156,12 +141,7 @@
     .proj-body { padding: 20px 24px 24px; }
     .proj-body h3 { font-size: 20px; color: var(--deep-blue); font-weight: 600; }
     .proj-body p { font-size: 14px; color: var(--gray-blue); margin-top: 8px; }
-    .proj-wrap { position: relative; background: var(--white); overflow: hidden; }
-    .proj-band {
-      position: absolute; left: 0; right: 0; top: 0; height: 348px; z-index: 1;
-      background: linear-gradient(123deg, #FF0000 0%, #F35D5D 50.52%, #FF007A 100%);
-    }
-    .proj-content { position: relative; z-index: 2; padding: 56px 0 72px; }
+    .title-on-image h2 { color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.55); }
 
     /* ===== 优势图标网格块（图标+标题+描述） ===== */
     .adv-grid { display: grid; gap: 28px; }
@@ -172,17 +152,17 @@
     }
     .adv-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,41,88,0.14); }
     .adv-card .icon {
-      width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 20px;
-      background: var(--light-blue); color: var(--deep-blue);
-      display: flex; align-items: center; justify-content: center; font-size: 28px;
+      width: 104px; height: 104px; border-radius: 50%; margin: 0 auto 20px;
+      background: #fff; border: 2px solid currentColor; color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
     }
+    .adv-card .icon svg { width: 60px; height: 60px; display: block; }
     .adv-card h3 { font-size: 19px; color: var(--deep-blue); font-weight: 600; }
-    .adv-card p { font-size: 14px; color: var(--gray-blue); margin-top: 10px; }
+    .adv-card p { font-size: 14px; color: var(--gray-blue); margin-top: 10px; line-height: 1.8; }
 
     /* ===== 中惠印记：Swiper 3D 封面流（参照 chinaaupairs.com） ===== */
-    .memory-slider { position: relative; background: url('img/yinji-bg.jpg') center / cover no-repeat; overflow: hidden; }
+    .memory-slider { position: relative; overflow: hidden; background-color: #3A0A22; }
     .memory-slider .container { position: relative; z-index: 1; }
-    .memory-slider .section-title h2 { color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.55); }
     .memory-slider .swiper { padding: 24px 0 44px; position: relative; }
     .memory-slider .slide-inner { position: relative; transition: transform .45s ease; }
     .memory-slider .swiper-slide img {
@@ -210,17 +190,16 @@
     .memory-arrow.next { right: 16px; }
 
     /* ===== 页脚 ===== */
-    footer { background: linear-gradient(124deg, #1A2958 0%, #0055A4 50%, #4F2683 100%); color: #cfdff0; }
+    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
     .footer-grid {
-      max-width: 1200px; margin: 0 auto; padding: 56px 24px 32px;
+      max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px;
       display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px;
     }
     .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
     .footer-brand .zh { font-size: 22px; font-weight: 700; color: #fff; }
-    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #9db6cf; margin-top: 4px; }
-    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #d7e6f5; }
-    .footer-info .label { color: #9db6cf; margin-right: 8px; }
-    .footer-copy { border-top: 1px solid rgba(255,255,255,.12); padding: 20px 24px; text-align: center; font-size: 13px; color: #9db6cf; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #f0a9c6; margin-top: 4px; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #ffd7e6; }
+    .footer-info .label { color: #f0a9c6; margin-right: 8px; }
     .footer-qr { text-align: center; }
     .footer-qr h4 { color: #fff; font-size: 16px; margin-bottom: 16px; }
     .qr-box { display: flex; gap: 16px; justify-content: center; }
@@ -229,15 +208,20 @@
       display: flex; align-items: center; justify-content: center; color: var(--deep-blue);
       font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px;
     }
-    .qr-item p { font-size: 13px; color: #d7e6f5; }
+    .qr-item p { font-size: 13px; color: #ffd7e6; }
     .foot-contact {
       display: block; margin-top: 18px; text-align: left;
-      color: #cfdff0; font-size: 14px; text-decoration: none;
+      color: #ffd7e6; font-size: 14px; text-decoration: none;
     }
     .foot-contact:hover { color: #ffffff; }
 
     @media (max-width: 900px) {
       .story-grid, .footer-grid, .proj-grid, .adv-grid { grid-template-columns: 1fr; }
+      .banner--split .banner-grid { flex-direction: column; padding: 40px 0 60px; }
+      .banner--split .banner-text { justify-content: flex-start; padding-top: 0; }
+      .banner--split .banner-media { min-height: 0; position: relative; }
+      .banner--split .banner-photo { position: static; width: 100%; margin-top: 24px; }
+      .banner--split .banner-pattern { display: none; }
     }
   </style>
 </head>
@@ -268,7 +252,7 @@
         cover: "img/prog-iccp.jpg" },
       { title: "德州营地体验感悟", tag: "ICCP", link: "#",
         intro: "从安静的手工体验到特色马术训练，再到热闹的集体节庆，收获满满。",
-        cover: "linear-gradient(135deg,#2E4380,#101d40)" }
+        cover: "linear-gradient(135deg,#C2185B,#6E0B3E)" }
       // 可继续增加故事…
     ]
   };
@@ -277,17 +261,18 @@
   const pageConfig = {
     title: "首页",
     nav: {
-      logo: "img/logo.png",
+      logo: "img/pink_logo_with_text_1.jpg",
       langCurrent: "中文", langOther: "EN",
       items: [
         { label: "首页", link: "index.html", active: true },
         { label: "关于中惠", link: "about.html" },
-        { label: "互惠生", link: "#" },
-        { label: "赴美J1交流项目", link: "project-swt.html", children: [
-            { label: "SWT 赴美带薪实习", link: "project-swt.html" },
-            { label: "ITP 赴美专业实习", link: "#" },
-            { label: "ICCP 赴美营地辅导员", link: "#" } ] },
-        { label: "海外留学", link: "#" },
+        { label: "互惠生", link: "aupair-usa.html" },
+        { label: "赴美J1交流项目", link: "project-iccp.html", children: [
+            { label: "SWT 赴美带薪实习", link: "project-iccp.html" },
+            { label: "ITP 赴美专业实习", link: "project-iccp.html" },
+            { label: "ICCP 赴美营地辅导员", link: "project-iccp.html" } ] },
+        { label: "海外留学", link: "study-abroad.html", children: [
+            { label: "新西兰留学", link: "new-zealand.html" } ] },
         { label: "案例分享", link: "cases.html" },
         { label: "联系我们", link: "contact.html" }
       ]
@@ -309,10 +294,10 @@
       copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
     },
     blocks: [
-      // ① Banner 块：可配背景（图或渐变色）与文案
+      // ① Banner 块：options.layout 选预制布局变体（split / centered）
       { type: "banner",
-        data: { bg: "img/brand.png", headline: "工作、学习、生活三位一体" },
-        options: {} },
+        data: { headline: "覆盖美国、欧洲、英国、澳洲的文化交流、工作与留学项目", sub: "无论你的目标是什么，都有合适的项目为你规划" },
+        options: { layout: "split", image: "img/banner-hero.jpg", pattern: "img/pattern-box-5.svg" } },
 
       // ② 项目一览矩阵块：3×3 卡片，图片 + 标题 + 描述
       { type: "project-grid",
@@ -327,20 +312,20 @@
             { img: "img/prog-uk-study.jpg",    title: "英国留学",    desc: "英伦名校，开启留学之旅" },
             { img: "img/prog-iccp.jpg",        title: "澳洲留学",    desc: "南半球留学体验" },
             { img: "img/prog-us-study.jpg",    title: "美国留学",    desc: "美国名校留学申请" } ] },
-        options: { columns: 3, alt: false } },
+        options: { columns: 3, alt: false, bg: "img/bg2.jpg" } },
 
       // ③ 中惠优势：2×4 图标网格
       { type: "advantage-grid",
         data: { title: "中惠优势",
           items: [
-            { icon: "✓", title: "资质齐全", desc: "官方认可，合规运营" },
-            { icon: "🌏", title: "深耕国际交流", desc: "专注领域多年积累" },
-            { icon: "🛎", title: "一站式服务", desc: "材料/签证/行前全程跟进" },
-            { icon: "🌐", title: "全球服务网络", desc: "海外资源与本地支持" },
-            { icon: "🛂", title: "高签证通过率", desc: "专业签证辅导" },
-            { icon: "🛡", title: "安全保障", desc: "全程护航，放心出行" },
-            { icon: "👥", title: "专业顾问团队", desc: "资深顾问一对一" },
-            { icon: "⭐", title: "口碑见证", desc: "学员真实好评" } ] },
+            { icon: "badge", title: "资质齐全", desc: "官方认可资质\n合规规范运营\n全流程受监管" },
+            { icon: "globe", title: "深耕国际交流", desc: "多年专注国际交流\n项目经验丰富\n资源持续积累" },
+            { icon: "service", title: "一站式服务", desc: "材料准备代办\n签证全程辅导\n行前贴心跟进" },
+            { icon: "network", title: "全球服务网络", desc: "覆盖多个国家\n海外资源丰富\n落地本地支持" },
+            { icon: "visa", title: "高签证通过率", desc: "资深签证辅导\n材料精准把关\n通过率领先" },
+            { icon: "safety", title: "安全保障", desc: "全程护航无忧\n海外紧急联络\n权益保障完善" },
+            { icon: "team", title: "专业顾问团队", desc: "资深顾问一对一\n熟悉项目全流程\n耐心细致负责" },
+            { icon: "reputation", title: "口碑见证", desc: "学员真实好评\n往届案例可查\n家长放心之选" } ] },
         options: { columns: 4, alt: true } },
 
       // ④ 中惠印记：Swiper 封面流轮播
@@ -351,7 +336,7 @@
             "img/memory-4.jpg", "img/memory-5.jpg", "img/memory-6.jpg",
             "img/memory-7.jpg", "img/memory-8.png", "img/memory-9.jpg",
             "img/memory-10.jpg" ] },
-        options: {} },
+        options: { bg: "img/yinji-bg.jpg" } },
 
       // ⑤ 故事列表块：自动加载 stories 集合前 limit 条
       { type: "story-list",
@@ -363,23 +348,61 @@
   // ---------------- 渲染器 ----------------
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 
+  // ---------------- 统一区块外壳：支持背景（图/纯色/渐变）与前置背景带 ----------------
+  // 把 b.options.bg 转成背景 style 字符串。"" | linear-gradient…/radial-gradient… → 渐变 | #hex/var()/rgb/hsl/颜色名 → 纯色 | 其余 → 图片
+  function bgStyle(bg) {
+    if (!bg) return "";
+    const v = String(bg).trim();
+    if (/^(linear-gradient|radial-gradient)/i.test(v)) return `style="background:${v};"`;
+    if (/^(#|var\(|rgb|hsl)/i.test(v)) return `style="background:${v};"`;
+    if (/\/|\.(png|jpe?g|gif|webp|svg)(\?|$)/i.test(v)) return `style="background-image:url('${esc(v)}');background-size:cover;background-position:center;"`;
+    return `style="background:${v};"`;
+  }
+
+  function shell(b, innerHtml) {
+    const bg = b.options.bg || "";
+    const style = bgStyle(bg);
+    const cls = ["section"];
+    if (!style && b.options.alt) cls.push("section-alt");
+    return `<section class="${cls.join(" ")}" ${style}>${innerHtml}</section>`;
+  }
+
+  // 优势图标（内联 SVG，stroke=currentColor，颜色由 CSS 的 --accent 控制）
+  const advIcons = {
+    badge:      '<circle cx="12" cy="9" r="5.5"/><path d="M8.6 13.8 7 22l5-2.8 5 2.8-1.6-8.2"/>',
+    globe:      '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/>',
+    service:    '<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="m9 12 2 2 4-4"/>',
+    network:    '<circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M12 7.2 6.4 16M12 7.2 17.6 16M7.2 18h9.6"/>',
+    visa:       '<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="9.5" r="2.4"/><path d="m9 12.5 2 2 4-4"/>',
+    safety:     '<path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3z"/><path d="m9 12 2 2 4-4"/>',
+    team:       '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.6a3 3 0 0 1 0 5.8M21 20c0-2.4-1.4-4.5-3.4-5.4"/>',
+    reputation: '<path d="m12 3 2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8L6.6 19.6l1-6L3.3 9.4l6-.9L12 3z"/>'
+  };
+
   const renderers = {
     banner(b) {
       const c = b.data;
-      const style = c.bg && c.bg !== "gradient" ? `style="background-image:url('${c.bg}')"` : "";
-      const cls = c.bg === "gradient" || !c.bg ? "banner bg-gradient" : "banner";
-      return `<section class="${cls}" ${style}><div class="cover">
-        ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
-        ${c.sub ? `<div class="sub">${esc(c.sub)}</div>` : ""}
-        ${c.intro ? `<div class="intro">${esc(c.intro)}</div>` : ""}
-      </div></section>`;
-    },
-    stats(b) {
-      const cols = b.options.columns || b.data.items.length;
-      const items = b.data.items.map(s => `<div class="stat">
-          <div class="num">${esc(s.num)}${s.unit ? `<em>${esc(s.unit)}</em>` : ""}</div>
-          <div class="label">${esc(s.label)}</div></div>`).join("");
-      return `<section class="stats"><div class="container stats-grid" style="grid-template-columns:repeat(${cols},1fr);">${items}</div></section>`;
+      const layout = b.options.layout;
+      if (layout === "centered") {
+        const inner = `<div class="cover">
+          ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
+          ${c.sub ? `<div class="sub">${esc(c.sub)}</div>` : ""}
+        </div>`;
+        return shell(b, inner).replace("class=\"section", "class=\"banner banner--centered section");
+      }
+      const img = b.options.image || "";
+      const pattern = b.options.pattern || "";
+      const inner = `<div class="container banner-grid">
+        <div class="banner-text">
+          ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
+          ${c.sub ? `<p class="sub">${esc(c.sub)}</p>` : ""}
+        </div>
+        ${img ? `<div class="banner-media">
+          ${pattern ? `<img class="banner-pattern" src="${esc(pattern)}" alt="">` : ""}
+          <img class="banner-photo" src="${esc(img)}" alt="${esc(c.headline || '中惠文化')}">
+        </div>` : ""}
+      </div>`;
+      return shell(b, inner).replace("class=\"section", "class=\"banner banner--split section");
     },
     "card-grid"(b) {
       const cols = b.options.columns || 4;
@@ -389,11 +412,11 @@
           <p class="sub">${esc(p.desc)}</p>
           <a class="more" href="${esc(p.link)}">查看详情 →</a>
         </div>`).join("");
-      const cls = b.options.alt ? "section section-alt" : "section";
-      return `<section class="${cls}"><div class="container">
+      const inner = `<div class="container">
         <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
         <div class="prog-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
-      </div></section>`;
+      </div>`;
+      return shell(b, inner);
     },
     "story-list"(b) {
       const src = b.data.source;
@@ -405,17 +428,15 @@
           ? `background-image:url('${esc(s.cover)}');`
           : `background:${s.cover};`;
         return `<a class="story-card" href="${esc(s.link)}">
-          <div class="thumb" style="${bg}">
-            ${s.tag ? `<span class="tag">${esc(s.tag)}</span>` : ""}
-          </div>
+          <div class="thumb" style="${bg}"></div>
           <div class="body"><h3>${esc(s.title)}</h3><p>${esc(s.intro)}</p><span class="read">阅读全文</span></div>
         </a>`;
       }).join("");
-      const cls = b.options.alt ? "section section-alt" : "section";
-      return `<section class="${cls}"><div class="container">
+      const inner = `<div class="container">
         <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
         <div class="story-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
-      </div></section>`;
+      </div>`;
+      return shell(b, inner);
     },
     "project-grid"(b) {
       const cols = b.options.columns || 3;
@@ -423,38 +444,37 @@
         <div class="ph"><img src="${esc(p.img)}" alt="${esc(p.title)}"></div>
         <div class="proj-body"><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p></div>
       </div>`).join("");
-      return `<div class="proj-wrap">
-        <div class="proj-band"></div>
-        <div class="container proj-content">
-          <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
-          <div class="proj-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
-        </div>
+      const inner = `<div class="container">
+        <div class="section-title title-on-image"><h2>${esc(b.data.title)}</h2></div>
+        <div class="proj-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
       </div>`;
+      return shell(b, inner);
     },
     "advantage-grid"(b) {
       const cols = b.options.columns || 4;
       const cards = b.data.items.map(p => `<div class="adv-card">
-        <div class="icon">${esc(p.icon)}</div>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${advIcons[p.icon] || ""}</svg></div>
         <h3>${esc(p.title)}</h3>
-        <p>${esc(p.desc)}</p>
+        <p>${esc(p.desc).replace(/\n/g, "<br>")}</p>
       </div>`).join("");
-      const cls = b.options.alt ? "section section-alt" : "section";
-      return `<section class="${cls}"><div class="container">
+      const inner = `<div class="container">
         <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
         <div class="adv-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
-      </div></section>`;
+      </div>`;
+      return shell(b, inner);
     },
     "memory-slider"(b) {
       const imgs = (b.data.images || []).map(src =>
         `<div class="swiper-slide"><a href="#"><div class="slide-inner"><img src="${esc(src)}" alt="${esc(b.data.title)}"></div></a></div>`).join("");
-      return `<section class="memory-slider section"><div class="container">
-        <div class="section-title"><h2>${esc(b.data.title)}</h2></div>
+      const inner = `<div class="container">
+        <div class="section-title title-on-image"><h2>${esc(b.data.title)}</h2></div>
         <div class="swiper memory-swiper">
           <div class="swiper-wrapper">${imgs}</div>
           <span class="memory-arrow prev"><svg viewBox="0 0 27 44"><path d="M0,22L22,0l4.2,4.2L8.4,22l17.8,17.8L22,44L0,22z" fill="#fff"></path></svg></span>
           <span class="memory-arrow next"><svg viewBox="0 0 27 44"><path d="M0,22L22,0l4.2,4.2L8.4,22l17.8,17.8L22,44L0,22z" transform="rotate(180 13.5 22)" fill="#fff"></path></svg></span>
         </div>
-      </div></section>`;
+      </div>`;
+      return shell(b, inner).replace("class=\"section", "class=\"memory-slider section");
     }
   };
 
@@ -492,8 +512,7 @@
         <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
         <div class="footer-info">${info}</div>
         <div class="footer-qr"><div class="qr-box">${qr}</div><a class="foot-contact" href="contact.html">联系我们</a></div>
-      </div>
-      <div class="footer-copy">${esc(f.copyright)}</div>`;
+      </div>`;
   }
 
   renderNav(pageConfig.nav);

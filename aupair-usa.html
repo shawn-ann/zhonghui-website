@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>美国互惠生 — 中惠文化</title>
+  <style>
+    :root {
+      --deep-blue: #8A0E4B;      /* 标题主色：深玫 */
+      --bright-blue: #C2185B;    /* 链接/文字强调：深玫 */
+      --light-blue: #FFF1F6;     /* 浅玫瑰底 */
+      --gray-blue: #7C6B73;      /* 次要文字：暖玫灰 */
+      --dark-text: #5A4A52;      /* 正文：暖玫灰 */
+      --white: #FFFFFF;
+      --border: #F0E3EA;
+      --orange: #E60039;         /* 辅助强调色：品牌玫红 */
+      --accent: #E60039;         /* 图标/主强调：品牌玫红 */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+      color: var(--dark-text);
+      line-height: 1.6;
+      background: var(--white);
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== 顶部导航栏 ===== */
+    header {
+      background: var(--white);
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 0 5px rgba(22,22,22,0.14);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 88px; }
+    .logo img { display: block; height: 88px; width: auto; }
+    .nav-right { display: flex; align-items: center; gap: 32px; }
+    .nav-menu { display: flex; list-style: none; gap: 24px; align-items: center; }
+    .nav-menu > li { position: relative; }
+    .nav-menu > li > a {
+      font-size: 16px; color: #E60039; font-weight: 600; padding: 6px 0;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .nav-menu > li > a.active { color: #E60039; }
+    .nav-menu > li > a.active::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
+      height: 3px; border-radius: 2px; background: #E60039;
+    }
+    .nav-menu .caret { font-size: 10px; opacity: .8; }
+    .nav-menu .dropdown {
+      position: absolute; top: 100%; left: -12px; min-width: 172px;
+      background: var(--white); border-radius: 0 0 8px 8px;
+      box-shadow: 0 10px 24px rgba(138,14,75,0.18); overflow: hidden;
+      opacity: 0; visibility: hidden; transform: translateY(8px);
+      transition: opacity .2s, transform .2s, visibility .2s;
+      padding: 6px 0; z-index: 200;
+    }
+    .nav-menu > li:hover .dropdown,
+    .nav-menu > li:focus-within .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-menu .dropdown a {
+      display: block; padding: 11px 20px; font-size: 14px; color: #E60039;
+      transition: background .15s, color .15s; white-space: nowrap;
+    }
+    .nav-menu .dropdown a:hover { background: #E60039; color: #fff; }
+    .nav-lang { font-size: 14px; color: var(--gray-blue); display: flex; gap: 6px; }
+    .nav-lang .sep { color: var(--gray-blue); }
+    .nav-lang a { color: var(--gray-blue); }
+    .nav-lang a.active { color: #E60039; font-weight: 600; }
+
+    /* ===== Banner（左文右图，与首页一致） ===== */
+    .banner { position: relative; overflow: hidden; background: var(--white); padding: 0; }
+    .banner-grid { display: flex; flex-direction: row; align-items: stretch; gap: 20px; padding: 60px 0 120px; }
+    .banner-text { display: flex; flex-direction: column; justify-content: center; gap: 20px; flex: 1.25; padding-top: 20px; }
+    .banner-text h1 { font-size: 48px; font-weight: 700; color: var(--deep-blue); line-height: 1.3; margin-bottom: 0; }
+    .banner-text .sub { font-size: 24px; font-weight: 500; color: var(--gray-blue); }
+    .banner-media { position: relative; flex: 1; min-height: 340px; }
+    .banner-pattern { position: absolute; top: -45px; right: 10px; width: 80%; height: auto; display: block; z-index: 0; }
+    .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; }
+
+    /* ===== 区块通用 ===== */
+    .section { padding: 72px 0; }
+    .section-alt { background: var(--light-blue); }
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title h2 { font-size: 32px; color: var(--deep-blue); font-weight: 700; }
+    .title-on-image h2 { color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
+
+    /* ===== 待遇 / 要求：单列列表（标签：说明 + 玫红圆点），白卡包裹 ===== */
+    .spec-list { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 30px 34px; box-shadow: 0 8px 22px rgba(138,14,75,0.06); }
+    .spec-item { display: flex; gap: 12px; align-items: baseline; padding: 9px 0; font-size: 15px; line-height: 1.7; }
+    .spec-item .dot { flex: 0 0 7px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-top: 9px; }
+    .spec-item b { color: var(--deep-blue); }
+    .spec-item span { color: var(--dark-text); }
+
+    /* ===== 申请流程：编号面板（参照 project-swt 流程） ===== */
+    .process-single { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 26px 30px; }
+    .stage { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px dashed var(--border); }
+    .stage:last-child { border-bottom: none; }
+    .stage .no { flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--light-blue); color: var(--deep-blue); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+    .stage .name { font-size: 15px; font-weight: 600; color: var(--deep-blue); }
+
+    /* ===== 页脚 ===== */
+    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
+    .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #f0a9c6; margin-top: 4px; }
+    .footer-info p { font-size: 14px; margin-bottom: 12px; color: #ffd7e6; }
+    .footer-info .label { color: #f0a9c6; margin-right: 8px; }
+    .footer-qr { text-align: center; }
+    .qr-box { display: flex; gap: 16px; justify-content: center; }
+    .qr-item .qr { width: 92px; height: 92px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--deep-blue); font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px; }
+    .foot-contact { display: block; margin-top: 18px; text-align: left; color: #ffd7e6; font-size: 14px; text-decoration: none; }
+    .foot-contact:hover { color: #ffffff; }
+
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .banner-grid { flex-direction: column; padding: 40px 0 60px; }
+      .banner-text { justify-content: flex-start; padding-top: 0; }
+      .banner-media { min-height: 0; }
+      .banner-photo { position: static; width: 100%; margin-top: 24px; }
+      .banner-pattern { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="site-header"></header>
+  <main id="page"></main>
+  <footer id="site-footer"></footer>
+
+  <script>
+  /* =========================================================
+     CMS 配置化内容模型 —— 美国互惠生页
+     pageConfig 模拟后端返回值。真实后端就绪后，仅需替换数据源。
+     ========================================================= */
+
+  const pageConfig = {
+    title: "美国互惠生",
+    nav: {
+      logo: "img/pink_logo_with_text_1.jpg",
+      langCurrent: "中文", langOther: "EN",
+      items: [
+        { label: "首页", link: "index.html" },
+        { label: "关于中惠", link: "about.html" },
+        { label: "互惠生", link: "aupair-usa.html", active: true },
+        { label: "赴美J1交流项目", link: "project-iccp.html", children: [
+            { label: "SWT 赴美带薪实习", link: "project-iccp.html" },
+            { label: "ITP 赴美专业实习", link: "project-iccp.html" },
+            { label: "ICCP 赴美营地辅导员", link: "project-iccp.html" } ] },
+        { label: "海外留学", link: "study-abroad.html", children: [
+            { label: "新西兰留学", link: "new-zealand.html" } ] },
+        { label: "案例分享", link: "cases.html" },
+        { label: "联系我们", link: "contact.html" }
+      ]
+    },
+    footer: {
+      logo: "img/footLogo.png",
+      info: [
+        { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
+        { label: "📞 电话：", text: "010-64159286" },
+        { label: "✉ 邮箱：", text: "info@zhonghui.com" },
+        { label: "🌐 中文官网：", text: "www.chinaaupairs.com" },
+        { label: "🌐 英文官网：", text: "www.aupaircn.com" }
+      ],
+      qrcodes: [
+        { title: "公众号",     text: "公众号\n二维码" },
+        { title: "咨询微信",   text: "咨询微信\n二维码" },
+        { title: "视频号",     text: "视频号\n二维码" }
+      ],
+      copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
+    },
+    blocks: [
+      // ① Banner（左文右图，与首页一致）
+      { type: "banner",
+        data: { headline: "美国互惠生", sub: "入住美国家庭 · 体验深度文化 · 提升口语" },
+        options: { image: "img/about-hero.jpg", pattern: "img/pattern-box-5.svg" } },
+
+      // ② 项目待遇 BENEFITS
+      { type: "feature-list",
+        data: { title: "项目待遇",
+          items: [
+            { label: "生活地点", desc: "互惠生可以居住在美国优质家庭并为美国家庭工作" },
+            { label: "食宿", desc: "免费" },
+            { label: "薪水", desc: "每周获得 195.75 美金零用钱" },
+            { label: "工作时间", desc: "每周工作不超过 45 小时，每天不超过 10 小时" },
+            { label: "休息时间", desc: "每周休息 1.5 天，每个月有一个完整的周末" },
+            { label: "带薪假期", desc: "每年有 2 周带薪假期" },
+            { label: "保险", desc: "美国协会提供医疗意外保险" },
+            { label: "教育补助", desc: "每年有 500 美金的教育补助" },
+            { label: "课程要求", desc: "互惠生一年完成 6 个学分的课程" },
+            { label: "培训", desc: "在纽约进行培训 3 天" },
+            { label: "互惠生活保障", desc: "每个月可以参加由社区联络员组织的所有互惠生的聚会" },
+            { label: "旅行时间", desc: "项目结束后可以在美国合法旅游 30 天" }
+          ] },
+        options: { bg: "img/yinji-bg.jpg" } },
+
+      // ③ 项目要求 REQUIREMENTS
+      { type: "feature-list",
+        data: { title: "项目要求",
+          items: [
+            { label: "年龄", desc: "18–26 周岁" },
+            { label: "学历", desc: "有高中毕业证" },
+            { label: "英语水平", desc: "英语能够达到交流的水平" },
+            { label: "照顾孩子经验", desc: "对和孩子一起工作有热情，至少有 200 小时照顾小孩的经验" },
+            { label: "照顾孩子证明", desc: "提供至少两份非亲属关系的照顾孩子证明" },
+            { label: "性格推荐信", desc: "提供非亲属提供的性格推荐信" },
+            { label: "驾驶经验", desc: "必须有驾照，有驾驶经验" },
+            { label: "个人习惯", desc: "不抽烟，不酗酒" },
+            { label: "婚姻情况", desc: "未婚无子女" },
+            { label: "背景", desc: "没有犯罪记录" },
+            { label: "身体素质", desc: "身心健康" },
+            { label: "签证历史", desc: "无美国拒签史" }
+          ] },
+        options: { alt: true } },
+
+      // ④ 申请流程 APPLY
+      { type: "steps",
+        data: { title: "申请流程",
+          steps: [ "了解项目", "英语测试", "交报名费并签订合同", "准备材料", "匹配家庭", "成功匹配家庭并交尾款", "准备面签", "拿到签证", "出国" ] },
+        options: { bg: "img/yinji-bg.jpg" } }
+    ]
+  };
+
+  // ---------------- 渲染器 ----------------
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+  const renderers = {
+    banner(b) {
+      const c = b.data, img = b.options.image || "", pattern = b.options.pattern || "";
+      const inner = `<div class="container banner-grid">
+        <div class="banner-text">
+          ${c.headline ? `<h1>${esc(c.headline)}</h1>` : ""}
+          ${c.sub ? `<p class="sub">${esc(c.sub)}</p>` : ""}
+        </div>
+        ${img ? `<div class="banner-media">
+          ${pattern ? `<img class="banner-pattern" src="${esc(pattern)}" alt="">` : ""}
+          <img class="banner-photo" src="${esc(img)}" alt="${esc(c.headline || "中惠文化")}">
+        </div>` : ""}
+      </div>`;
+      return `<section class="banner">${inner}</section>`;
+    },
+    "feature-list"(b) {
+      const d = b.data;
+      const bg = b.options.bg;
+      const secStyle = bg ? `style="background-image:url('${esc(bg)}');background-size:cover;background-position:center;"` : "";
+      const items = (d.items || []).map(it =>
+        `<div class="spec-item"><span class="dot"></span><div><b>${esc(it.label)}</b>${it.desc ? `<span>：${esc(it.desc)}</span>` : ""}</div></div>`).join("");
+      const cls = bg ? "section on-image" : (b.options.alt ? "section section-alt" : "section");
+      return `<section class="${cls}" ${secStyle}><div class="container">
+        <div class="section-title${bg ? " title-on-image" : ""}"><h2>${esc(d.title)}</h2></div>
+        <div class="spec-list">${items}</div>
+      </div></section>`;
+    },
+    "steps"(b) {
+      const d = b.data;
+      const bg = b.options.bg;
+      const secStyle = bg ? `style="background-image:url('${esc(bg)}');background-size:cover;background-position:center;"` : "";
+      const stages = (d.steps || []).map((s, i) =>
+        `<div class="stage"><span class="no">${i + 1}</span><span class="name">${esc(s)}</span></div>`).join("");
+      const cls = bg ? "section on-image" : (b.options.alt ? "section section-alt" : "section");
+      return `<section class="${cls}" ${secStyle}><div class="container">
+        <div class="section-title${bg ? " title-on-image" : ""}"><h2>${esc(d.title)}</h2></div>
+        <div class="process-single">${stages}</div>
+      </div></section>`;
+    }
+  };
+
+  // ---------------- 渲染页面 ----------------
+  function renderNav(nav) {
+    const menu = nav.items.map(m => {
+      const sub = m.children ? `<div class="dropdown">${m.children.map(c =>
+        `<a href="${esc(c.link)}">${esc(c.label)}</a>`).join("")}</div>` : "";
+      return `<li><a href="${esc(m.link)}" class="${m.active ? "active" : ""}">${esc(m.label)}${m.children ? ' <span class="caret">▾</span>' : ""}</a>${sub}</li>`;
+    }).join("");
+    document.getElementById("site-header").innerHTML = `
+      <div class="container nav">
+        <a class="logo" href="index.html"><img src="${esc(nav.logo)}" alt="中惠文化"></a>
+        <div class="nav-right">
+          <ul class="nav-menu">${menu}</ul>
+          <div class="nav-lang"><a class="active" href="#">${esc(nav.langCurrent)}</a><span class="sep">|</span><a href="#">${esc(nav.langOther)}</a></div>
+        </div>
+      </div>`;
+  }
+
+  function renderBlocks(blocks) {
+    document.getElementById("page").innerHTML = blocks
+      .filter(b => renderers[b.type])
+      .map(b => renderers[b.type](b)).join("");
+  }
+
+  function renderFooter(f) {
+    const info = f.info.map(i => `<p><span class="label">${esc(i.label)}</span>${esc(i.text)}</p>`).join("");
+    const qr = f.qrcodes.map(q => `
+      <div class="qr-item"><div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div></div>`).join("");
+    document.getElementById("site-footer").innerHTML = `
+      <div class="footer-grid">
+        <div class="footer-brand"><img src="${esc(f.logo)}" alt="中惠文化"></div>
+        <div class="footer-info">${info}</div>
+        <div class="footer-qr"><div class="qr-box">${qr}</div><a class="foot-contact" href="contact.html">联系我们</a></div>
+      </div>`;
+  }
+
+  renderNav(pageConfig.nav);
+  renderBlocks(pageConfig.blocks);
+  renderFooter(pageConfig.footer);
+  </script>
+</body>
+</html>

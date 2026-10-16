@@ -9,6 +9,17 @@
 memory-slider-*.png
 pink-*.png
 proj-band-*.png
+full-home-*.png
+banner-*.png
+footer-*.png
+debug-*.png
+
+# Superpowers 头脑风暴 mockup
+.superpowers/
+
+# CMS 生产静态资源不受上面的截图规则影响（如 footer-logo.png）
+!cms/src/static/**
+!cms/public/**
 
 # 含报价明细的商务文档（不入库）
 网页截图/网站功能说明.md
