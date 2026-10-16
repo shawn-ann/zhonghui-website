@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mapPageDoc, loadSiteData } from '../loadSiteData'
+import { mapPageDoc, mapBlock, loadSiteData } from '../loadSiteData'
 
 describe('mapPageDoc', () => {
   it('maps a payload page + blocks to PageDoc', () => {
@@ -44,5 +44,31 @@ describe('mapPageDoc robustness', () => {
     )
     const img = doc.blocks[0]
     expect(img.type === 'image' && img.media).toBe('')
+  })
+})
+
+const resolve = (m: unknown) => (m && typeof m === 'object' && 'url' in (m as any) ? (m as any).url : '')
+
+describe('mapBlock', () => {
+  it('maps grid recursively with inner components', () => {
+    const raw = { blockType: 'grid', columns: 2, cells: [{ components: [{ blockType: 'text', body: 'hi' }] }] }
+    const b = mapBlock(raw, resolve) as any
+    expect(b.type).toBe('grid')
+    expect(b.cells[0].components[0].type).toBe('text')
+  })
+  it('maps gallery images to urls', () => {
+    const raw = { blockType: 'gallery', columns: 2, images: [{ image: { url: '/media/1.jpg' } }, { image: { url: '/media/2.jpg' } }] }
+    const b = mapBlock(raw, resolve) as any
+    expect(b.type).toBe('gallery')
+    expect(b.images).toEqual(['/media/1.jpg', '/media/2.jpg'])
+  })
+  it('maps richtext content to html', () => {
+    const raw = { blockType: 'richtext', content: { root: { children: [] } } }
+    const b = mapBlock(raw, resolve) as any
+    expect(b.type).toBe('richtext')
+    expect(typeof b.html).toBe('string')
+  })
+  it('returns null for unknown blockType', () => {
+    expect(mapBlock({ blockType: 'nope' }, resolve)).toBeNull()
   })
 })
