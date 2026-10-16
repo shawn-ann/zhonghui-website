@@ -71,4 +71,19 @@ describe('mapBlock', () => {
   it('returns null for unknown blockType', () => {
     expect(mapBlock({ blockType: 'nope' }, resolve)).toBeNull()
   })
+  it('drops unknown child blocks inside a grid cell', () => {
+    const raw = { blockType: 'grid', columns: 2, cells: [{ components: [{ blockType: 'nope' }, { blockType: 'text', body: 'x' }] }] }
+    const b = mapBlock(raw, resolve) as any
+    expect(b.cells[0].components).toHaveLength(1)
+    expect(b.cells[0].components[0].type).toBe('text')
+  })
+  it('maps gridInner to a grid block', () => {
+    const raw = { blockType: 'gridInner', columns: 1, cells: [{ components: [{ blockType: 'text', body: 'x' }] }] }
+    const b = mapBlock(raw, resolve) as any
+    expect(b.type).toBe('grid')
+  })
+  it('coerces missing required strings to empty', () => {
+    const b = mapBlock({ blockType: 'text' }, resolve) as any
+    expect(b.body).toBe('')
+  })
 })

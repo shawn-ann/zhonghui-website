@@ -10,17 +10,17 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
   const alt = !!raw.alt
   switch (raw.blockType) {
     case 'text':
-      return { type: 'text', title: raw.title || undefined, body: raw.body, align: raw.align || 'left', bg, alt }
+      return { type: 'text', title: raw.title || undefined, body: String(raw.body ?? ''), align: raw.align === 'center' ? 'center' : 'left', bg, alt }
     case 'image':
       return { type: 'image', media: resolveMedia(raw.media), altText: raw.altText || undefined, link: raw.link || undefined, bg, alt }
     case 'imageText':
       return { type: 'imageText', media: resolveMedia(raw.media), title: raw.title || undefined, desc: raw.desc || undefined, link: raw.link || undefined, bg, alt }
     case 'button':
-      return { type: 'button', label: raw.label, link: raw.link || '', style: raw.style || 'primary', bg, alt }
+      return { type: 'button', label: String(raw.label ?? ''), link: raw.link || '', style: raw.style === 'outline' ? 'outline' : 'primary', bg, alt }
     case 'banner':
       return {
         type: 'banner',
-        variant: raw.variant || 'split',
+        variant: raw.variant === 'centered' ? 'centered' : 'split',
         title: raw.title || undefined,
         sub: raw.sub || undefined,
         image: raw.image ? resolveMedia(raw.image) : undefined,
@@ -35,7 +35,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
           .map((child) => mapBlock(child, resolveMedia))
           .filter((x): x is Block => x !== null),
       }))
-      return { type: 'grid', columns: raw.columns || 3, gap: raw.gap || 'md', cells, bg, alt }
+      return { type: 'grid', columns: raw.columns || 3, gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md', cells, bg, alt }
     }
     case 'gallery':
       return {
@@ -56,8 +56,8 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
 
 export function mapPageDoc(raw: Record<string, any>, resolveMedia: MediaResolver): PageDoc {
   return {
-    title: raw.title,
-    route: raw.route,
+    title: String(raw.title ?? ''),
+    route: String(raw.route ?? ''),
     blocks: arr<Record<string, any>>(raw.blocks)
       .map((b) => mapBlock(b, resolveMedia))
       .filter((x): x is Block => x !== null),
