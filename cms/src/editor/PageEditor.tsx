@@ -6,24 +6,35 @@ import Canvas from './Canvas'
 import PropertyPanel from './PropertyPanel'
 import TopBar from './TopBar'
 import { BLOCKS } from './blocks'
-import { getPage, savePage, publishPage } from './api'
+import { getPage, savePage, publishPage, listMedia } from './api'
 import { addBlock, ensureIds, moveBlock, removeBlock, updateBlockField } from './state'
+import { editorToPayloadBlocks } from './map'
 import type { EditorDoc, Block } from './types'
 
 export default function PageEditor({ id }: { id: number | string }) {
   const [doc, setDoc] = useState<EditorDoc | null>(null)
   const [selectedId, setSelectedId] = useState<string>()
   const [dirty, setDirty] = useState(false)
+  const [urlToId, setUrlToId] = useState<Map<string, number | string>>(new Map())
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   useEffect(() => {
     getPage(id).then((d) => setDoc({ ...d, blocks: ensureIds(d.blocks) }))
+    listMedia()
+      .then((items) => {
+        const map = new Map<string, number | string>()
+        for (const m of items) if (m.url) map.set(m.url, m.id)
+        setUrlToId(map)
+      })
+      .catch(() => setUrlToId(new Map()))
   }, [id])
 
   const persist = useCallback(
     (d: EditorDoc) =>
-      savePage(id, { title: d.title, route: d.route, seo: d.seo, blocks: d.blocks }).then(() => setDirty(false)),
-    [id],
+      savePage(id, { title: d.title, route: d.route, seo: d.seo, blocks: editorToPayloadBlocks(d.blocks, urlToId) }).then(() =>
+        setDirty(false),
+      ),
+    [id, urlToId],
   )
 
   const update = useCallback(
@@ -53,8 +64,8 @@ export default function PageEditor({ id }: { id: number | string }) {
         onPreview={() => window.open(`/preview/pages/${id}`, '_blank')}
         onSave={() => persist(doc)}
         onPublish={() =>
-          publishPage(id, { title: doc.title, route: doc.route, seo: doc.seo, blocks: doc.blocks }).then(() =>
-            setDoc((d) => (d ? { ...d, _status: 'published' } : d)),
+          publishPage(id, { title: doc.title, route: doc.route, seo: doc.seo, blocks: editorToPayloadBlocks(doc.blocks, urlToId) }).then(
+            () => setDoc((d) => (d ? { ...d, _status: 'published' } : d)),
           )
         }
       />

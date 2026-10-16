@@ -3,6 +3,8 @@ export interface BlockBase {
   alt?: boolean
   /** editor-stable id, ignored by generation */
   _id?: string
+  /** original Payload block, kept so serialization can preserve non-render fields (e.g. richtext content) */
+  _raw?: unknown
 }
 
 export interface BannerBlock extends BlockBase {
