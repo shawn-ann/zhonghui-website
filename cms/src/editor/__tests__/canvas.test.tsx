@@ -21,4 +21,12 @@ describe('Canvas', () => {
     )
     expect(container.querySelector('iframe')).toBeTruthy()
   })
+
+  it('renders the iframe at the given device width', () => {
+    const { container } = render(
+      <Canvas doc={doc} selectedId={undefined} onSelect={() => {}} onEditField={() => {}} deviceWidth={768} />
+    )
+    const iframe = container.querySelector('iframe') as HTMLIFrameElement
+    expect(iframe.style.width).toBe('768px')
+  })
 })

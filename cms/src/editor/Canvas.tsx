@@ -5,8 +5,10 @@ import type { EditorDoc, Block } from './types'
 
 const OUTLINE = 'outline:2px solid #E60039'
 
+const WRAP_PAD = 12
+
 export default function Canvas({
-  doc, selectedId, onSelect, onEditField, onReorder, onAddAt, onDelete,
+  doc, selectedId, onSelect, onEditField, onReorder, onAddAt, onDelete, deviceWidth = 1280,
 }: {
   doc: EditorDoc
   selectedId?: string
@@ -15,10 +17,28 @@ export default function Canvas({
   onReorder?: (from: number, to: number) => void
   onAddAt?: (type: Block['type'], index: number) => void
   onDelete?: (index: number) => void
+  deviceWidth?: number
 }) {
   const ref = useRef<HTMLIFrameElement>(null)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [scale, setScale] = useState(1)
+  const [contentHeight, setContentHeight] = useState(0)
   const [toolbar, setToolbar] = useState<{ top: number; left: number } | null>(null)
   const html = renderDocument(doc, { mode: 'external' })
+
+  useEffect(() => {
+    const wrap = wrapRef.current
+    if (!wrap) return
+    const measure = () => {
+      const avail = wrap.clientWidth - WRAP_PAD * 2
+      setScale(Math.min(1, avail > 0 ? avail / deviceWidth : 1))
+    }
+    measure()
+    if (typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(measure)
+    ro.observe(wrap)
+    return () => ro.disconnect()
+  }, [deviceWidth])
 
   const applySelection = useCallback((id?: string) => {
     const d = ref.current?.contentDocument
@@ -35,8 +55,8 @@ export default function Canvas({
     const el = d.querySelector(`[data-bid="${id}"]`) as HTMLElement | null
     if (!el) { setToolbar(null); return }
     const rect = el.getBoundingClientRect()
-    setToolbar({ top: rect.top + 6, left: rect.left + 6 })
-  }, [])
+    setToolbar({ top: rect.top * scale + WRAP_PAD, left: rect.left * scale + WRAP_PAD })
+  }, [scale])
 
   useEffect(() => {
     applySelection(selectedId)
@@ -102,6 +122,8 @@ export default function Canvas({
     })
     applySelection(selectedId)
     updateToolbar(selectedId)
+    const h = d.body?.scrollHeight || d.documentElement?.scrollHeight || 0
+    if (h) setContentHeight(h)
   }
 
   const deleteSelected = () => {
@@ -114,7 +136,20 @@ export default function Canvas({
 
   return (
     <div className="ed-canvas">
-      <iframe ref={ref} title="canvas" className="ed-canvas-frame" srcDoc={html} onLoad={handleLoad} />
+      <div
+        className="ed-canvas-wrap"
+        ref={wrapRef}
+        style={contentHeight ? { minHeight: contentHeight * scale + WRAP_PAD * 2 } : undefined}
+      >
+        <iframe
+          ref={ref}
+          title="canvas"
+          className="ed-canvas-frame"
+          srcDoc={html}
+          onLoad={handleLoad}
+          style={{ width: deviceWidth, height: '900px', border: 0, transform: `scale(${scale})`, transformOrigin: 'top left' }}
+        />
+      </div>
       {toolbar ? (
         <div className="ed-block-toolbar" style={{ top: toolbar.top, left: toolbar.left }}>
           <button type="button" onClick={deleteSelected}>删除选中区块</button>

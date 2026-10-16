@@ -14,6 +14,8 @@ import type { EditorDoc, Block } from './types'
 export default function PageEditor({ id }: { id: number | string }) {
   const [doc, setDoc] = useState<EditorDoc | null>(null)
   const [selectedId, setSelectedId] = useState<string>()
+  const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop')
+  const deviceWidth = device === 'desktop' ? 1280 : device === 'tablet' ? 768 : 390
   const [dirty, setDirty] = useState(false)
   const urlToId = useRef<Map<string, number | string>>(new Map())
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -90,6 +92,8 @@ export default function PageEditor({ id }: { id: number | string }) {
         onPreview={() => window.open(`/preview/pages/${id}`, '_blank')}
         onSave={saveNow}
         onPublish={publishNow}
+        device={device}
+        onDeviceChange={setDevice}
       />
       <div className="ed-body">
         <Palette onAdd={(type) => update(addBlock(doc.blocks, BLOCKS[type].defaults()))} />
@@ -104,6 +108,7 @@ export default function PageEditor({ id }: { id: number | string }) {
           onReorder={(from, to) => update(moveBlock(doc.blocks, from, to))}
           onAddAt={(type, index) => update(addBlock(doc.blocks, BLOCKS[type].defaults(), index))}
           onDelete={(i) => update(removeBlock(doc.blocks, i))}
+          deviceWidth={deviceWidth}
         />
         <PropertyPanel
           block={selected}

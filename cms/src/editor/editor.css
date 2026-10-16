@@ -120,11 +120,35 @@
   border-radius: 8px;
   overflow: hidden;
 }
-.ed-canvas-frame {
-  width: 100%;
+.ed-canvas-wrap {
+  overflow: auto;
+  background: #eef0f3;
+  padding: 12px;
   height: 100%;
-  border: 0;
+  box-sizing: border-box;
+}
+.ed-canvas-frame {
   display: block;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+.ed-device {
+  display: inline-flex;
+  gap: 4px;
+  margin-right: 8px;
+}
+.ed-device button {
+  font-size: 12px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  color: #5a4a52;
+  cursor: pointer;
+}
+.ed-device button.is-active {
+  background: #E60039;
+  color: #fff;
 }
 .ed-block-toolbar {
   position: absolute;
