@@ -17,6 +17,15 @@ describe('editor state', () => {
   it('removes a block', () => {
     expect(removeBlock([t('a', '1'), t('b', '2')], 0).length).toBe(1)
   })
+  it('moveBlock ignores out-of-range from', () => {
+    const src = [t('a','1'), t('b','2')]
+    expect(moveBlock(src, 5, 0)).toEqual(src)
+    expect(moveBlock(src, -1, 0)).toEqual(src)
+  })
+  it('updateBlockField ignores out-of-range index', () => {
+    const src = [t('a','1')]
+    expect(updateBlockField(src, 9, 'body', 'x')).toEqual(src)
+  })
   it('updates a top-level field', () => {
     const out = updateBlockField([t('a', '1')], 0, 'body', 'A') as any[]
     expect(out[0].body).toBe('A')

@@ -12,15 +12,19 @@ export function addBlock(blocks: Block[], block: Block, index = blocks.length): 
   return next
 }
 export function moveBlock(blocks: Block[], from: number, to: number): Block[] {
+  if (from < 0 || from >= blocks.length) return blocks.slice()
   const next = blocks.slice()
   const [item] = next.splice(from, 1)
-  next.splice(to, 0, item)
+  const target = Math.max(0, Math.min(to, blocks.length - 1))
+  next.splice(target, 0, item)
   return next
 }
 export function removeBlock(blocks: Block[], index: number): Block[] {
+  if (index < 0 || index >= blocks.length) return blocks.slice()
   return blocks.filter((_, i) => i !== index)
 }
 export function updateBlockField(blocks: Block[], index: number, key: string, value: unknown): Block[] {
+  if (index < 0 || index >= blocks.length) return blocks.slice()
   const next = blocks.slice()
   next[index] = { ...next[index], [key]: value } as Block
   return next

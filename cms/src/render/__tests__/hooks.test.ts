@@ -18,4 +18,8 @@ describe('editor hooks', () => {
     const html = renderBlock({ type: 'button', label: 'x', link: '/a', _id: 'b3' } as any)
     expect(html).toContain('data-field="label"')
   })
+  it('omits data-bid when no _id', () => {
+    expect(renderBlock({ type: 'banner', variant: 'split', title: 't' } as any)).not.toContain('data-bid')
+    expect(renderBlock({ type: 'text', body: 'x' } as any)).not.toContain('data-bid')
+  })
 })

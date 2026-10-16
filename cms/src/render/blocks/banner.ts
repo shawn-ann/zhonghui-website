@@ -2,7 +2,8 @@ import { esc, safeUrl, bgStyle } from '../primitives'
 import type { BannerBlock } from '../types'
 
 function bannerShell(cls: string, style: string, inner: string, id?: string): string {
-  return `<section class="${cls}" data-bid="${id || ''}" ${style}>${inner}</section>`
+  const bid = id ? ` data-bid="${esc(id)}"` : ''
+  return `<section class="${cls}"${bid} ${style}>${inner}</section>`
 }
 
 export function renderBanner(b: BannerBlock): string {

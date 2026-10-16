@@ -1,4 +1,5 @@
 import type { EditorDoc } from './types'
+import { docToEditorDoc } from './map'
 
 const json = { 'content-type': 'application/json' }
 async function j(res: Response) {
@@ -7,7 +8,7 @@ async function j(res: Response) {
 }
 export async function getPage(id: number | string): Promise<EditorDoc> {
   const res = await fetch(`/api/pages/${id}?draft=true&depth=1`, { credentials: 'include' })
-  return (await j(res)).doc as EditorDoc
+  return docToEditorDoc((await j(res)).doc)
 }
 export async function savePage(id: number | string, data: Partial<EditorDoc>): Promise<void> {
   await j(await fetch(`/api/pages/${id}?draft=true`, { method: 'PATCH', headers: json, credentials: 'include', body: JSON.stringify({ ...data, _status: 'draft' }) }))
