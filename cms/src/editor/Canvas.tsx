@@ -1,18 +1,19 @@
 'use client'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { renderDocument } from '../render/document'
-import type { EditorDoc } from './types'
+import type { EditorDoc, Block } from './types'
 
 const OUTLINE = 'outline:2px solid #E60039'
 
 export default function Canvas({
-  doc, selectedId, onSelect, onEditField, onReorder, onDelete,
+  doc, selectedId, onSelect, onEditField, onReorder, onAddAt, onDelete,
 }: {
   doc: EditorDoc
   selectedId?: string
   onSelect: (id: string) => void
   onEditField: (blockId: string, field: string, value: string) => void
   onReorder?: (from: number, to: number) => void
+  onAddAt?: (type: Block['type'], index: number) => void
   onDelete?: (index: number) => void
 }) {
   const ref = useRef<HTMLIFrameElement>(null)
@@ -53,21 +54,22 @@ export default function Canvas({
       d.head.appendChild(s)
     }
     const topLevel = Array.from(d.querySelectorAll('main#page > [data-bid]')) as HTMLElement[]
+    const topIds = new Set(topLevel.map((el) => el.getAttribute('data-bid')))
     topLevel.forEach((el, index) => {
       el.setAttribute('draggable', 'true')
       el.dataset.idx = String(index)
-    })
-    d.querySelectorAll('[data-bid]').forEach((el) => {
       el.addEventListener('click', (e) => {
         e.preventDefault()
         e.stopPropagation()
         onSelect(el.getAttribute('data-bid')!)
       })
     })
+    // Only top-level text fields are inline-editable (nested editing returns in phase 2).
     d.querySelectorAll('[data-field]').forEach((el) => {
+      const host = (el as HTMLElement).closest('[data-bid]')
+      if (!host || !topIds.has(host.getAttribute('data-bid'))) return
       el.addEventListener('dblclick', () => {
-        const host = (el as HTMLElement).closest('[data-bid]')
-        const id = host?.getAttribute('data-bid') || ''
+        const id = host.getAttribute('data-bid') || ''
         const field = el.getAttribute('data-field') || ''
         ;(el as HTMLElement).setAttribute('contenteditable', 'true')
         ;(el as HTMLElement).focus()
@@ -81,14 +83,21 @@ export default function Canvas({
     })
     topLevel.forEach((el) => {
       el.addEventListener('dragstart', (e) => {
-        ;(e as DragEvent).dataTransfer?.setData('text/plain', el.dataset.idx!)
+        ;(e as DragEvent).dataTransfer?.setData('text/x-reorder', el.dataset.idx!)
       })
       el.addEventListener('dragover', (e) => e.preventDefault())
       el.addEventListener('drop', (e) => {
         e.preventDefault()
-        const from = Number((e as DragEvent).dataTransfer?.getData('text/plain'))
+        const dt = (e as DragEvent).dataTransfer
         const to = Number(el.dataset.idx)
-        if (!Number.isNaN(from) && !Number.isNaN(to) && from !== to) onReorder?.(from, to)
+        if (!Number.isFinite(to)) return
+        if (dt?.types.includes('text/x-block')) {
+          const type = dt.getData('text/x-block') as Block['type']
+          if (type) onAddAt?.(type, to)
+        } else if (dt?.types.includes('text/x-reorder')) {
+          const from = Number(dt.getData('text/x-reorder'))
+          if (Number.isFinite(from) && from !== to) onReorder?.(from, to)
+        }
       })
     })
     applySelection(selectedId)

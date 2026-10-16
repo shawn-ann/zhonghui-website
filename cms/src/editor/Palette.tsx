@@ -41,17 +41,17 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
   ),
 }
 
-export default function Palette({ onAdd, onDragStartType }: { onAdd: (type: Block['type']) => void; onDragStartType?: (type: Block['type']) => void }) {
+export default function Palette({ onAdd }: { onAdd: (type: Block['type']) => void }) {
   return (
     <aside className="ed-palette">
       <div className="ed-label">组件（拖入画布）</div>
       <div className="ed-palette-grid">
-        {PAGE_BLOCKS.map((t) => (
+        {PAGE_BLOCKS.filter((t) => BLOCKS[t]).map((t) => (
           <button
             key={t}
             className="ed-palette-item"
             draggable
-            onDragStart={(e) => { e.dataTransfer.setData('text/x-block', t); onDragStartType?.(t) }}
+            onDragStart={(e) => e.dataTransfer.setData('text/x-block', t)}
             onClick={() => onAdd(t)}
             title={`添加${BLOCKS[t].label}`}
           >

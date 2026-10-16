@@ -23,6 +23,37 @@ describe('editorToPayloadBlocks', () => {
     expect(back[1].content).toEqual({ root: { children: [] } }) // richtext preserved via _raw
   })
 
+  it('maps a registered upload url to its media id', () => {
+    const ed: any = [{ type: 'image', media: '/assets/media/a.jpg', _id: 'i1' }]
+    const urlToId = new Map<string, number>([['/assets/media/a.jpg', 42]])
+    const back = editorToPayloadBlocks(ed, urlToId)
+    expect(back[0].media).toBe(42)
+  })
+
+  it('falls back to the _raw media id when the new url is unresolved (not dropped)', () => {
+    const raw = { id: 1, title: 't', route: '/', blocks: [{ id: 'i1', blockType: 'image', media: 7 }] }
+    const ed = docToEditorDoc(raw)
+    ;(ed.blocks[0] as any).media = '/assets/media/unmapped.jpg'
+    const back = editorToPayloadBlocks(ed.blocks, new Map())
+    expect(back[0].media).toBe(7)
+  })
+
+  it('falls back to _raw gallery images when urls are unresolved', () => {
+    const raw = { id: 1, title: 't', route: '/', blocks: [{ id: 'g1', blockType: 'gallery', images: [{ image: 5 }, { image: 6 }] }] }
+    const ed = docToEditorDoc(raw)
+    ;(ed.blocks[0] as any).images = ['/assets/media/x.jpg', '/assets/media/y.jpg']
+    const back = editorToPayloadBlocks(ed.blocks, new Map())
+    expect(back[0].images).toEqual([{ image: 5 }, { image: 6 }])
+  })
+
+  it('keeps unknown block types as passthrough and round-trips them unchanged', () => {
+    const raw = { id: 1, title: 't', route: '/', blocks: [{ id: 'u1', blockType: 'futureBlock', foo: 'bar' }] }
+    const ed = docToEditorDoc(raw)
+    expect(ed.blocks).toHaveLength(1)
+    const back = editorToPayloadBlocks(ed.blocks, new Map())
+    expect(back[0]).toEqual({ id: 'u1', blockType: 'futureBlock', foo: 'bar' })
+  })
+
   it('serializes nested grid cells', () => {
     const ed: any = [{ type: 'grid', columns: 2, gap: 'md', _id: 'g1', cells: [{ components: [{ type: 'text', body: 'x', _id: 't2' }] }] }]
     const back = editorToPayloadBlocks(ed, new Map())

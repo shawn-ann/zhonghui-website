@@ -21,12 +21,12 @@ function withIds(rawBlock: any, mapped: Block): Block {
 
 export function docToEditorDoc(raw: any): EditorDoc {
   const rawBlocks = Array.isArray(raw?.blocks) ? raw.blocks : []
-  const blocks: Block[] = rawBlocks
-    .map((rb: any) => {
-      const mapped = mapBlock(rb, resolveMedia)
-      return mapped ? withIds(rb, mapped) : null
-    })
-    .filter((x: Block | null): x is Block => x !== null)
+  const blocks: Block[] = rawBlocks.map((rb: any) => {
+    const mapped = mapBlock(rb, resolveMedia)
+    if (mapped) return withIds(rb, mapped)
+    // Unknown/unmapped block types are kept as a passthrough so a save does not delete them.
+    return { type: '_unknown', _id: rb?.id != null ? String(rb.id) : newId(), _raw: rb } as unknown as Block
+  })
   return {
     id: raw.id,
     title: raw.title,
@@ -39,12 +39,16 @@ export function docToEditorDoc(raw: any): EditorDoc {
 
 type MediaId = number | string
 
-function resolveMediaId(value: unknown, urlToId: Map<string, MediaId>): MediaId | null {
+function resolveMediaId(value: unknown, urlToId: Map<string, MediaId>, fallback?: unknown): MediaId | null {
   if (value == null || value === '') return null
   if (typeof value === 'number') return value
   if (typeof value === 'string') {
     if (/^\d+$/.test(value)) return Number(value)
-    return urlToId.get(value) ?? null
+    const id = urlToId.get(value)
+    if (id != null) return id
+    // A non-empty url that is not in the map: fall back to the raw value so an
+    // unresolved/new upload is never silently dropped.
+    return fallback != null ? resolveMediaId(fallback, urlToId) : null
   }
   if (typeof value === 'object' && 'id' in (value as any)) return (value as any).id
   return null
@@ -52,6 +56,7 @@ function resolveMediaId(value: unknown, urlToId: Map<string, MediaId>): MediaId 
 
 function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
   const raw = (b as any)._raw
+  if ((b as { type: string }).type === '_unknown') return raw
   const out: any = { blockType: raw?.blockType ?? b.type, id: b._id }
   if (b.bg !== undefined) out.bg = b.bg
   if (b.alt !== undefined) out.alt = b.alt
@@ -61,8 +66,8 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.variant = b.variant
       if (b.title !== undefined) out.title = b.title
       if (b.sub !== undefined) out.sub = b.sub
-      out.image = resolveMediaId(b.image, urlToId)
-      out.pattern = resolveMediaId(b.pattern, urlToId)
+      out.image = resolveMediaId(b.image, urlToId, raw?.image)
+      out.pattern = resolveMediaId(b.pattern, urlToId, raw?.pattern)
       break
     case 'text':
       if (b.title !== undefined) out.title = b.title
@@ -70,12 +75,12 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.align = b.align ?? 'left'
       break
     case 'image':
-      out.media = resolveMediaId(b.media, urlToId)
+      out.media = resolveMediaId(b.media, urlToId, raw?.media)
       if (b.altText !== undefined) out.altText = b.altText
       if (b.link !== undefined) out.link = b.link
       break
     case 'imageText':
-      out.media = resolveMediaId(b.media, urlToId)
+      out.media = resolveMediaId(b.media, urlToId, raw?.media)
       if (b.title !== undefined) out.title = b.title
       if (b.desc !== undefined) out.desc = b.desc
       if (b.link !== undefined) out.link = b.link
@@ -95,17 +100,21 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
         components: editorToPayloadBlocks(c.components || [], urlToId),
       }))
       break
-    case 'gallery':
+    case 'gallery': {
+      const rawImages = Array.isArray(raw?.images) ? raw.images : []
       out.images = (b.images || [])
-        .map((url) => ({ image: resolveMediaId(url, urlToId) }))
+        .map((url, i) => ({ image: resolveMediaId(url, urlToId, rawImages[i]?.image) }))
         .filter((i) => i.image != null)
       if (b.columns !== undefined) out.columns = b.columns
       break
-    case 'slider':
+    }
+    case 'slider': {
+      const rawImages = Array.isArray(raw?.images) ? raw.images : []
       out.images = (b.images || [])
-        .map((url) => ({ image: resolveMediaId(url, urlToId) }))
+        .map((url, i) => ({ image: resolveMediaId(url, urlToId, rawImages[i]?.image) }))
         .filter((i) => i.image != null)
       break
+    }
   }
   return out
 }

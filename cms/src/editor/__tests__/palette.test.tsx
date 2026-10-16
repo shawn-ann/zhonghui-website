@@ -15,7 +15,7 @@ describe('Palette', () => {
   it('calls onAdd on click', () => {
     const onAdd = vi.fn()
     render(<Palette onAdd={onAdd} />)
-    fireEvent.click(screen.getByTitle('添加网格'))
-    expect(onAdd).toHaveBeenCalledWith('grid')
+    fireEvent.click(screen.getByTitle('添加文本'))
+    expect(onAdd).toHaveBeenCalledWith('text')
   })
 })

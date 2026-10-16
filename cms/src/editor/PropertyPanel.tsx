@@ -4,15 +4,20 @@ import { BLOCKS } from './blocks'
 import type { Block } from './types'
 import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, BgControl, MediaControl } from './controls'
 import MediaModal from './MediaModal'
+import type { MediaItem } from './api'
 
 export default function PropertyPanel({
-  block, onChange,
+  block, onChange, onPickMedia,
 }: {
   block?: Block
   onChange: (key: string, value: unknown) => void
+  onPickMedia?: (item: MediaItem) => void
 }) {
   const [mediaFor, setMediaFor] = useState<string | null>(null)
   if (!block) return <aside className="ed-props"><div className="ed-label">属性</div><p className="ed-muted">未选中区块</p></aside>
+  if ((block as { type: string }).type === '_unknown') {
+    return <aside className="ed-props"><div className="ed-label">属性</div><p className="ed-muted">未知区块（透传，保存时原样保留）</p></aside>
+  }
   const meta = BLOCKS[block.type]
   const b = block as unknown as Record<string, unknown>
   const val = (k: string) => b[k]
@@ -44,7 +49,7 @@ export default function PropertyPanel({
       {mediaFor ? (
         <MediaModal
           onClose={() => setMediaFor(null)}
-          onSelect={(url) => { onChange(mediaFor, url); setMediaFor(null) }}
+          onSelect={(item) => { onPickMedia?.(item); if (item.url) onChange(mediaFor, item.url); setMediaFor(null) }}
         />
       ) : null}
     </aside>

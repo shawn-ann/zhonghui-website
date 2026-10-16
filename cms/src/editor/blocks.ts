@@ -47,4 +47,7 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   ] },
 }
 
-export const PAGE_BLOCKS: Block['type'][] = ['grid', 'banner', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'slider']
+// 'grid' is intentionally omitted: it cannot receive children yet, so the palette
+// must not offer it. The 'grid' entry stays in BLOCKS for type completeness; nested
+// editing returns in phase 2.
+export const PAGE_BLOCKS: Block['type'][] = ['banner', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'slider']
