@@ -8,7 +8,7 @@ function bannerShell(cls: string, style: string, inner: string): string {
 export function renderBanner(b: BannerBlock): string {
   if (b.variant === 'centered') {
     const style = bgStyle(b.image) || bgStyle(b.bg)
-    const inner = `<div class="container banner-cover">
+    const inner = `<div class="container cover">
       ${b.title ? `<h1>${esc(b.title)}</h1>` : ''}
       ${b.sub ? `<div class="sub">${esc(b.sub)}</div>` : ''}
     </div>`

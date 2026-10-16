@@ -18,5 +18,6 @@ describe('banner', () => {
     const html = renderBlock(b)
     expect(html).toContain('banner--centered')
     expect(html).toContain('/m/bg.jpg')
+    expect(html).toContain('class="container cover"')
   })
 })

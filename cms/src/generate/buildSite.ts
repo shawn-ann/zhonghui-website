@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url'
 import { renderPage } from '../render/layout'
 import type { SiteData } from '../render/types'
 import { routeToFile } from './route'
-import { collectMediaUrls, rewriteMediaUrls } from './media'
+import { rewriteMediaUrls } from './media'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const read = (p: string) => readFileSync(path.resolve(dirname, p), 'utf-8')
@@ -14,11 +14,7 @@ const readStatic = (rel: string): Buffer => readFileSync(path.join(staticDir, re
 const baseCss = read('../render/styles/base.css')
 const mainJs = read('../render/styles/main.js')
 
-export interface BuildOptions {
-  mediaDir?: string
-}
-
-export function generateSite(data: SiteData, _opts?: BuildOptions): Map<string, string | Buffer> {
+export function generateSite(data: SiteData): Map<string, string | Buffer> {
   const out = new Map<string, string | Buffer>()
   for (const page of data.pages) {
     out.set(routeToFile(page.route), rewriteMediaUrls(renderPage(page)))
@@ -35,5 +31,3 @@ export function generateSite(data: SiteData, _opts?: BuildOptions): Map<string, 
   out.set('assets/pattern-box-5.svg', readStatic('pattern-box-5.svg'))
   return out
 }
-
-export { collectMediaUrls, staticDir }
