@@ -22,8 +22,8 @@
 |---|---|
 | 图案 | **转 PNG** 进媒体库（不放宽 SVG 上传） |
 | 分栏结构 | **通用方案**：`section` 容器 + `heading` 组件 |
-| section | 可设背景色/图/渐变 + **内边距预设**；**不允许嵌套 section** |
-| heading | 主标题 + 副标题 + 对齐（不再加其它） |
+| section | 可设背景色/图/渐变 + **内边距预设**（`sm/md/lg` = 32/72/96px）；**不允许嵌套 section** |
+| heading | 主标题 + 副标题 + 对齐；**副标题默认为空，为空不渲染**；在背景图 section 内**默认白字** |
 | 画布宽度 | iframe 按**桌面宽度**（默认 1280）渲染 + CSS **缩放适配** + 顶栏**设备预设**（桌面/平板/手机） |
 
 ---
@@ -64,11 +64,11 @@
 
 字段：
 - `title`（text）
-- `subtitle`（text）
+- `subtitle`（text，**可选；为空不渲染**）
 - `align`（select：`center`(默认) / `left`）
 
-渲染：`.container` 内 `.section-heading`，居中/左对齐的 `h2` + `p.subtitle`。
-- 位于背景图 section 内时，标题白字（由 section 上下文决定，见 §6）。
+渲染：`.container` 内 `.section-heading`，居中/左对齐的 `h2` + （非空时）`p.subtitle`。
+- 位于**背景图** section 内时，标题**默认白字**（见 §6）。
 
 ---
 
@@ -136,8 +136,8 @@
 - 集合/学生分享（P3）。
 - 菜单/主题后台可配（延后）。
 
-## 12. 开放问题
+## 12. 已解决问题
 
-1. `section` 是否也用于**纯文本/图文**等其它分栏（默认允许）。
-2. `section` 的 `padding` 预设具体数值（sm/md/lg → 建议 32/72/96px）。
-3. 背景图 section 的标题白字：统一规则（子树全部白字）是否可接受。
+1. `section` 也用于纯文本/图文等其它分栏（默认允许，`children` 已开放这些类型）。
+2. `section` 内边距预设：`sm/md/lg = 32/72/96px`。
+3. 背景图 section 的标题：**默认白字**；`heading.subtitle` 为空时不渲染副标题。
