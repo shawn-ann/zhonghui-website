@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { addBlock, moveBlock, removeBlock, updateBlockField, ensureIds } from '../state'
+import {
+  addBlock, moveBlock, removeBlock, updateBlockField, ensureIds,
+  findPath, getAtPath, updateAtPath, removeAtPath, insertInto,
+  blockChildren, withChildren, childPath, moveChild,
+} from '../state'
 import type { Block } from '../../render/types'
 
 describe('editor state', () => {
@@ -34,5 +38,107 @@ describe('editor state', () => {
     const out = ensureIds([t('a'), t('b')]) as any[]
     expect(out[0]._id).toBeTruthy()
     expect(out[1]._id).toBeTruthy()
+  })
+})
+
+describe('nested paths', () => {
+  const t = (body: string, id?: string): Block => ({ type: 'text', body, _id: id })
+  const heading = (id: string): Block => ({ type: 'heading', title: id, _id: id })
+  const tree = (): Block[] => [
+    { type: 'section', _id: 'sec', children: [heading('h1'), heading('h2')] },
+    heading('top'),
+    {
+      type: 'grid', _id: 'grid', columns: 2,
+      cells: [{ components: [heading('g0')] }, { components: [heading('g1')] }],
+    },
+  ]
+
+  it('findPath locates top-level, section children and grid components', () => {
+    expect(findPath(tree(), 'top')).toEqual([1])
+    expect(findPath(tree(), 'h1')).toEqual([0, 0])
+    expect(findPath(tree(), 'h2')).toEqual([0, 1])
+    expect(findPath(tree(), 'g0')).toEqual([2, 0, 0])
+    expect(findPath(tree(), 'g1')).toEqual([2, 1, 0])
+  })
+
+  it('findPath returns null when missing', () => {
+    expect(findPath(tree(), 'nope')).toBeNull()
+  })
+
+  it('getAtPath resolves nested blocks', () => {
+    expect((getAtPath(tree(), [0, 1]) as any).title).toBe('h2')
+    expect((getAtPath(tree(), [2, 1, 0]) as any).title).toBe('g1')
+    expect(getAtPath(tree(), [9])).toBeUndefined()
+    expect(getAtPath(tree(), [0, 9])).toBeUndefined()
+  })
+
+  it('updateAtPath updates immutably at a nested path', () => {
+    const src = tree()
+    const out = updateAtPath(src, [0, 1], { type: 'heading', title: 'X', _id: 'h2' })
+    expect((getAtPath(out, [0, 1]) as any).title).toBe('X')
+    expect((getAtPath(src, [0, 1]) as any).title).toBe('h2')
+    expect(out).not.toBe(src)
+    expect(out[0]).not.toBe(src[0])
+  })
+
+  it('updateAtPath updates a grid component immutably', () => {
+    const src = tree()
+    const out = updateAtPath(src, [2, 1, 0], { type: 'heading', title: 'Y', _id: 'g1' })
+    expect((getAtPath(out, [2, 1, 0]) as any).title).toBe('Y')
+    expect((getAtPath(src, [2, 1, 0]) as any).title).toBe('g1')
+    expect(out[2]).not.toBe(src[2])
+    expect((out[2] as any).cells[1]).not.toBe((src[2] as any).cells[1])
+  })
+
+  it('updateAtPath leaves tree untouched for bad paths', () => {
+    const src = tree()
+    expect(updateAtPath(src, [9], heading('z'))).toEqual(src)
+    expect(updateAtPath(src, [0, 9], heading('z'))).toEqual(src)
+  })
+
+  it('removeAtPath removes nested blocks immutably', () => {
+    const src = tree()
+    const out = removeAtPath(src, [0, 0])
+    expect((out[0] as any).children.map((b: any) => b._id)).toEqual(['h2'])
+    expect((src[0] as any).children.length).toBe(2)
+  })
+
+  it('removeAtPath removes a grid component', () => {
+    const src = tree()
+    const out = removeAtPath(src, [2, 1, 0])
+    expect((out[2] as any).cells[1].components.length).toBe(0)
+    expect((src[2] as any).cells[1].components.length).toBe(1)
+  })
+
+  it('insertInto adds section and grid children', () => {
+    const sec = insertInto(tree(), [0], t('new') as any)
+    const secKids = (sec[0] as any).children
+    expect(secKids.length).toBe(3)
+    expect(secKids[2].body).toBe('new')
+    expect(secKids[2]._id).toBeTruthy()
+    const grid = insertInto(tree(), [2], t('gx') as any)
+    expect((grid[2] as any).cells[0].components.length).toBe(2)
+  })
+
+  it('insertInto at root appends with a fresh id', () => {
+    const out = insertInto(tree(), [], t('r') as any)
+    expect(out.length).toBe(4)
+    expect(out[3]._id).toBeTruthy()
+  })
+
+  it('blockChildren / withChildren round-trip', () => {
+    const src = tree()
+    const kids = blockChildren(src[2])
+    expect(kids.map((b) => b._id)).toEqual(['g0'])
+    const next = withChildren(src[2], [...kids, heading('g2')])
+    expect(blockChildren(next).length).toBe(2)
+    expect(src[2].type === 'grid' && src[2].cells[0].components.length).toBe(1)
+  })
+
+  it('childPath and moveChild work for section and grid parents', () => {
+    expect(childPath([2], tree()[2], 0)).toEqual([2, 0, 0])
+    expect(childPath([0], tree()[0], 1)).toEqual([0, 1])
+    expect(moveChild([heading('a'), heading('b')], 0, 1).map((b) => b._id)).toEqual(['b', 'a'])
+    expect(moveChild([heading('a'), heading('b')], 0, -1).map((b) => b._id)).toEqual(['a', 'b'])
   })
 })

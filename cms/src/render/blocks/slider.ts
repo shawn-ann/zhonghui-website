@@ -10,7 +10,8 @@ export function renderSlider(b: SliderBlock): string {
         `<div class="swiper-slide"><div class="slide-inner"><img src="${esc(src)}" alt=""></div></div>`,
     )
     .join('')
-  return `<div class="memory-slider">
+  const idAttr = b._id ? ` data-bid="${esc(b._id)}"` : ''
+  return `<div class="memory-slider"${idAttr}>
     <div class="container">
       <div class="swiper memory-swiper">
         <div class="swiper-wrapper">${slides}</div>

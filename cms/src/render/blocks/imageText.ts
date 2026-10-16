@@ -12,5 +12,6 @@ export function renderImageText(b: ImageTextBlock): string {
     </div>
   </div>`
   const wrapped = href ? `<a class="it-link" href="${esc(href)}">${card}</a>` : card
-  return `<div class="container">${wrapped}</div>`
+  const idAttr = b._id ? ` data-bid="${esc(b._id)}"` : ''
+  return `<div class="container"${idAttr}>${wrapped}</div>`
 }

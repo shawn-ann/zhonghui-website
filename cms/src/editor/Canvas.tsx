@@ -16,7 +16,7 @@ export default function Canvas({
   onEditField: (blockId: string, field: string, value: string) => void
   onReorder?: (from: number, to: number) => void
   onAddAt?: (type: Block['type'], index: number) => void
-  onDelete?: (index: number) => void
+  onDelete?: (id: string) => void
   deviceWidth?: number
 }) {
   const ref = useRef<HTMLIFrameElement>(null)
@@ -73,21 +73,28 @@ export default function Canvas({
       s.textContent = `.ed-selected{${OUTLINE};outline-offset:-2px}`
       d.head.appendChild(s)
     }
-    const topLevel = Array.from(d.querySelectorAll('main#page > [data-bid]')) as HTMLElement[]
-    const topIds = new Set(topLevel.map((el) => el.getAttribute('data-bid')))
-    topLevel.forEach((el, index) => {
-      el.setAttribute('draggable', 'true')
-      el.dataset.idx = String(index)
+    // Any block (including nested section/grid children) is selectable.
+    d.querySelectorAll('[data-bid]').forEach((el) => {
       el.addEventListener('click', (e) => {
         e.preventDefault()
         e.stopPropagation()
         onSelect(el.getAttribute('data-bid')!)
       })
     })
-    // Only top-level text fields are inline-editable (nested editing returns in phase 2).
+    // Reorder stays top-level only: map each top-level slot to its block root.
+    const topLevel = (Array.from(d.querySelectorAll('main#page > *')) as HTMLElement[])
+      .map((host) =>
+        host.hasAttribute('data-bid') ? host : (host.querySelector('[data-bid]') as HTMLElement | null),
+      )
+      .filter((el): el is HTMLElement => !!el)
+    topLevel.forEach((el, index) => {
+      el.setAttribute('draggable', 'true')
+      el.dataset.idx = String(index)
+    })
+    // Inline edit any data-field, nested included.
     d.querySelectorAll('[data-field]').forEach((el) => {
       const host = (el as HTMLElement).closest('[data-bid]')
-      if (!host || !topIds.has(host.getAttribute('data-bid'))) return
+      if (!host) return
       el.addEventListener('dblclick', () => {
         const id = host.getAttribute('data-bid') || ''
         const field = el.getAttribute('data-field') || ''
@@ -127,11 +134,8 @@ export default function Canvas({
   }
 
   const deleteSelected = () => {
-    const d = ref.current?.contentDocument
-    if (!d || !selectedId) return
-    const top = Array.from(d.querySelectorAll('main#page > [data-bid]'))
-    const i = top.findIndex((el) => el.getAttribute('data-bid') === selectedId)
-    if (i >= 0) onDelete?.(i)
+    if (!selectedId) return
+    onDelete?.(selectedId)
   }
 
   return (

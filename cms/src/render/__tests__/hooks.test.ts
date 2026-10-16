@@ -3,9 +3,9 @@ import { renderBlock } from '../blocks'
 import { renderTop } from '../blocks/wrap'
 
 describe('editor hooks', () => {
-  it('text emits data-field; data-bid comes from the top-level wrapper', () => {
+  it('text emits data-field and its own data-bid root', () => {
     const html = renderBlock({ type: 'text', body: 'x', title: 't', _id: 'b1' } as any)
-    expect(html).not.toContain('data-bid')
+    expect(html).toContain('data-bid="b1"')
     expect(html).toContain('data-field="title"')
     expect(html).toContain('data-field="body"')
     expect(renderTop({ type: 'text', body: 'x', title: 't', _id: 'b1' } as any)).toContain('data-bid="b1"')
@@ -19,7 +19,7 @@ describe('editor hooks', () => {
   it('button label field hook', () => {
     const html = renderBlock({ type: 'button', label: 'x', link: '/a', _id: 'b3' } as any)
     expect(html).toContain('data-field="label"')
-    expect(html).not.toContain('data-bid')
+    expect(html).toContain('data-bid="b3"')
   })
   it('omits data-bid when no _id', () => {
     expect(renderBlock({ type: 'banner', variant: 'split', title: 't' } as any)).not.toContain('data-bid')

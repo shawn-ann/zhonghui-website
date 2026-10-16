@@ -8,5 +8,6 @@ export function renderGallery(b: GalleryBlock): string {
     .filter(Boolean)
     .map((src) => `<figure class="gallery-item"><img src="${esc(src)}" alt=""></figure>`)
     .join('')
-  return `<div class="container"><div class="gallery gallery-cols-${cols}">${imgs}</div></div>`
+  const idAttr = b._id ? ` data-bid="${esc(b._id)}"` : ''
+  return `<div class="container"${idAttr}><div class="gallery gallery-cols-${cols}">${imgs}</div></div>`
 }

@@ -55,7 +55,9 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   ] },
 }
 
-// 'grid' is intentionally omitted: it cannot receive children yet, so the palette
-// must not offer it. The 'grid' entry stays in BLOCKS for type completeness; nested
-// editing returns in phase 2.
 export const PAGE_BLOCKS: Block['type'][] = ['section', 'heading', 'banner', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'slider']
+
+export const CONTAINER_CHILD_TYPES: { section: Block['type'][]; grid: Block['type'][] } = {
+  section: ['heading', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'grid', 'slider'],
+  grid: ['text', 'image', 'imageText', 'button', 'richtext', 'gallery'],
+}

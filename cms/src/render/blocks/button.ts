@@ -7,5 +7,6 @@ export function renderButton(b: ButtonBlock): string {
   const btn = href
     ? `<a class="btn btn--${style}" href="${esc(href)}" data-field="label">${esc(b.label)}</a>`
     : `<span class="btn btn--${style}" data-field="label">${esc(b.label)}</span>`
-  return `<div class="container"><div class="button-block">${btn}</div></div>`
+  const idAttr = b._id ? ` data-bid="${esc(b._id)}"` : ''
+  return `<div class="container"${idAttr}><div class="button-block">${btn}</div></div>`
 }

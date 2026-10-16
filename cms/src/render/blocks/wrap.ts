@@ -11,6 +11,5 @@ export function renderTop(block: Block): string {
   const style = bgStyle(block.bg)
   const cls = ['section']
   if (!style && block.alt) cls.push('section-alt')
-  const idAttr = block._id ? ` data-bid="${block._id}"` : ''
-  return `<section class="${cls.join(' ')}"${idAttr} ${style}>${inner}</section>`
+  return `<section class="${cls.join(' ')}" ${style}>${inner}</section>`
 }

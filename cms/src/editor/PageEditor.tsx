@@ -7,7 +7,11 @@ import PropertyPanel from './PropertyPanel'
 import TopBar from './TopBar'
 import { BLOCKS } from './blocks'
 import { getPage, savePage, publishPage, listMedia, type MediaItem } from './api'
-import { addBlock, ensureIds, moveBlock, removeBlock, updateBlockField } from './state'
+import {
+  addBlock, ensureIds, moveBlock,
+  findPath, getAtPath, updateAtPath, removeAtPath, insertInto,
+  blockChildren, withChildren, childPath, moveChild,
+} from './state'
 import { editorToPayloadBlocks } from './map'
 import type { EditorDoc, Block } from './types'
 
@@ -65,8 +69,8 @@ export default function PageEditor({ id }: { id: number | string }) {
   }, [])
 
   if (!doc) return <div className="ed-loading">加载中…</div>
-  const idx = doc.blocks.findIndex((b) => b._id === selectedId)
-  const selected = idx >= 0 ? doc.blocks[idx] : undefined
+  const selectedPath = selectedId ? findPath(doc.blocks, selectedId) : null
+  const selected = selectedPath ? getAtPath(doc.blocks, selectedPath) : undefined
 
   const saveNow = () => {
     clearTimeout(timer.current)
@@ -102,19 +106,37 @@ export default function PageEditor({ id }: { id: number | string }) {
           selectedId={selectedId}
           onSelect={setSelectedId}
           onEditField={(bid, field, value) => {
-            const i = doc.blocks.findIndex((b) => b._id === bid)
-            if (i >= 0) update(updateBlockField(doc.blocks, i, field, value))
+            const p = findPath(doc.blocks, bid)
+            const block = p ? getAtPath(doc.blocks, p) : undefined
+            if (p && block) update(updateAtPath(doc.blocks, p, { ...block, [field]: value } as Block))
           }}
           onReorder={(from, to) => update(moveBlock(doc.blocks, from, to))}
           onAddAt={(type, index) => update(addBlock(doc.blocks, BLOCKS[type].defaults(), index))}
-          onDelete={(i) => update(removeBlock(doc.blocks, i))}
+          onDelete={(bid) => {
+            const p = findPath(doc.blocks, bid)
+            if (p) update(removeAtPath(doc.blocks, p))
+          }}
           deviceWidth={deviceWidth}
         />
         <PropertyPanel
           block={selected}
           onPickMedia={onPickMedia}
           onChange={(key, value) => {
-            if (idx >= 0) update(updateBlockField(doc.blocks, idx, key, value))
+            if (selectedPath && selected) {
+              update(updateAtPath(doc.blocks, selectedPath, { ...selected, [key]: value } as Block))
+            }
+          }}
+          onAddChild={(type) => {
+            if (selectedPath) update(insertInto(doc.blocks, selectedPath, BLOCKS[type].defaults()))
+          }}
+          onRemoveChild={(index) => {
+            if (selectedPath && selected) update(removeAtPath(doc.blocks, childPath(selectedPath, selected, index)))
+          }}
+          onMoveChild={(index, dir) => {
+            if (selectedPath && selected) {
+              const next = moveChild(blockChildren(selected), index, dir)
+              update(updateAtPath(doc.blocks, selectedPath, withChildren(selected, next)))
+            }
           }}
         />
       </div>

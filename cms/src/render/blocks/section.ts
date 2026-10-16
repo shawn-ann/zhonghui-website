@@ -1,4 +1,4 @@
-import { bgStyle } from '../primitives'
+import { bgStyle, esc } from '../primitives'
 import type { SectionBlock } from '../types'
 import { renderBlock } from './renderBlock'
 
@@ -10,7 +10,7 @@ export function renderSection(b: SectionBlock): string {
   const isImage = !!b.bg && /\//.test(b.bg) && !/^(#|var\(|rgb|hsl|linear-gradient|radial-gradient)/i.test(b.bg)
   const cls = ['section', `sec-pad-${pad}`]
   if (isImage) cls.push('on-image')
-  const idAttr = b._id ? ` data-bid="${b._id}"` : ''
+  const idAttr = b._id ? ` data-bid="${esc(b._id)}"` : ''
   const inner = (b.children || []).map(renderBlock).join('')
   return `<section class="${cls.join(' ')}"${idAttr} ${style}>${inner}</section>`
 }
