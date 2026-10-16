@@ -29,5 +29,6 @@ export function generateSite(data: SiteData): Map<string, string | Buffer> {
   out.set('assets/bg2.jpg', readStatic('bg2.jpg'))
   out.set('assets/yinji-bg.jpg', readStatic('yinji-bg.jpg'))
   out.set('assets/pattern-box-5.svg', readStatic('pattern-box-5.svg'))
+  out.set('assets/pattern-box-5.png', readStatic('pattern-box-5.png'))
   return out
 }
