@@ -65,16 +65,17 @@ export function mapPageDoc(raw: Record<string, any>, resolveMedia: MediaResolver
   }
 }
 
+export function resolveMedia(m: unknown): string {
+  if (m && typeof m === 'object' && 'url' in (m as any)) return String((m as any).url || '')
+  return ''
+}
+
 export async function loadSiteData(payload: { find: (args: any) => Promise<{ docs: any[] }> }): Promise<SiteData> {
   const res = await payload.find({
     collection: 'pages',
-    where: { status: { equals: 'published' } },
+    where: { _status: { equals: 'published' } },
     limit: 1000,
     depth: 1,
   })
-  const resolveMedia = (m: unknown): string => {
-    if (m && typeof m === 'object' && 'url' in (m as any)) return String((m as any).url || '')
-    return ''
-  }
   return { pages: res.docs.map((d) => mapPageDoc(d, resolveMedia)) }
 }

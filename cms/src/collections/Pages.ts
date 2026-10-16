@@ -4,7 +4,8 @@ import { pageBlocks } from '../blocks'
 export const Pages: CollectionConfig = {
   slug: 'pages',
   labels: { singular: '页面', plural: '页面' },
-  admin: { useAsTitle: 'title', defaultColumns: ['title', 'route', 'status'] },
+  versions: { drafts: true },
+  admin: { useAsTitle: 'title', defaultColumns: ['title', 'route', '_status'] },
   fields: [
     { name: 'title', type: 'text', required: true },
     {
@@ -23,15 +24,6 @@ export const Pages: CollectionConfig = {
       fields: [
         { name: 'title', type: 'text' },
         { name: 'description', type: 'textarea' },
-      ],
-    },
-    {
-      name: 'status',
-      type: 'select',
-      defaultValue: 'draft',
-      options: [
-        { label: '草稿', value: 'draft' },
-        { label: '已发布', value: 'published' },
       ],
     },
   ],

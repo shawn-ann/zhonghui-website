@@ -18,13 +18,16 @@ describe('mapPageDoc', () => {
 })
 
 describe('loadSiteData', () => {
-  it('queries published pages via payload.find', async () => {
+  it('queries published pages via _status', async () => {
+    let captured: any
     const payload = {
-      find: async () => ({
-        docs: [{ title: '首页', route: '/', status: 'published', blocks: [{ blockType: 'text', body: 'home' }] }],
-      }),
+      find: async (args: any) => {
+        captured = args
+        return { docs: [{ title: '首页', route: '/', _status: 'published', blocks: [{ blockType: 'text', body: 'home' }] }] }
+      },
     }
     const data = await loadSiteData(payload as any)
+    expect(captured.where).toEqual({ _status: { equals: 'published' } })
     expect(data.pages[0].route).toBe('/')
   })
 })
