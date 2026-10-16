@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from 'fs'
+import { readFileSync, statSync } from 'fs'
 import path from 'path'
 
 export const dynamic = 'force-dynamic'
@@ -34,7 +34,13 @@ export async function GET(_req: Request, { params }: { params: Promise<{ path: s
   if (!allowedRoots.some((r) => abs === r || abs.startsWith(r + path.sep))) {
     return new Response('Forbidden', { status: 403 })
   }
-  if (!existsSync(abs)) return new Response('Not found', { status: 404 })
+  let stat
+  try {
+    stat = statSync(abs)
+  } catch {
+    return new Response('Not found', { status: 404 })
+  }
+  if (!stat.isFile()) return new Response('Not found', { status: 404 })
   const type = TYPES[path.extname(abs)] ?? 'application/octet-stream'
   return new Response(readFileSync(abs), { headers: { 'content-type': type } })
 }

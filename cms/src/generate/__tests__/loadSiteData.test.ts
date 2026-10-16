@@ -4,7 +4,7 @@ import { mapPageDoc, mapBlock, loadSiteData } from '../loadSiteData'
 describe('mapPageDoc', () => {
   it('maps a payload page + blocks to PageDoc', () => {
     const raw = {
-      title: '首页', route: '/', status: 'published',
+      title: '首页', route: '/',
       seo: { title: 'T', description: 'D' },
       blocks: [
         { blockType: 'text', title: 'a', body: 'b', align: 'center', bg: null, alt: false },
