@@ -17,5 +17,5 @@ export function renderSlider(b: SliderBlock): string {
       <span class="memory-arrow next"><svg viewBox="0 0 27 44"><path d="M22,0l4.2,4.2L8.4,22l17.8,17.8L22,44L0,22L22,0z" transform="rotate(180 13.5 22)" fill="#fff"></path></svg></span>
     </div>
   </div>`
-  return `<section class="section memory-slider ${b.alt ? 'section-alt' : ''}" ${bgStyle(b.bg)}>${inner}</section>`
+  return `<section class="section memory-slider" ${bgStyle(b.bg)}>${inner}</section>`
 }

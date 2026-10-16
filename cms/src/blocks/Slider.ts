@@ -8,6 +8,7 @@ export const SliderBlock: Block = {
     {
       name: 'images',
       type: 'array',
+      required: true,
       minRows: 1,
       fields: [{ name: 'image', type: 'upload', relationTo: 'media', required: true }],
     },
