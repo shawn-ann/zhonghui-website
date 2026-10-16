@@ -13,7 +13,15 @@ async function up(file: string, alt: string): Promise<number | string> {
   return (doc as any).id
 }
 
+async function upFrom(absPath: string, alt: string): Promise<number | string> {
+  const found = await payload.find({ collection: 'media', where: { alt: { equals: alt } }, limit: 1 })
+  if (found.docs[0]) return (found.docs[0] as any).id
+  const doc = await payload.create({ collection: 'media', data: { alt }, filePath: absPath })
+  return (doc as any).id
+}
+
 const hero = await up('banner-hero.jpg', 'home-hero')
+const pattern = await upFrom(path.resolve(process.cwd(), 'src/static/pattern-box-5.png'), 'home-pattern')
 const proj = {
   usAP: await up('prog-au-pair-usa.jpg', 'home-prog-usap'),
   euAP: await up('prog-au-pair-eu.jpg', 'home-prog-euap'),
@@ -60,25 +68,44 @@ const blocks: any[] = [
     title: '覆盖美国、欧洲、英国、澳洲的文化交流、工作与留学项目',
     sub: '无论你的目标是什么，都有合适的项目为你规划',
     image: hero,
+    pattern,
   },
   {
-    blockType: 'grid',
-    columns: 3,
-    gap: 'md',
+    blockType: 'section',
     bg: '/assets/bg2.jpg',
-    cells: projectItems.map((p) => ({ components: [{ blockType: 'imageText', media: p.media, title: p.title, desc: p.desc }] })),
+    padding: 'md',
+    children: [
+      { blockType: 'heading', title: '项目一览', align: 'center' },
+      {
+        blockType: 'grid',
+        columns: 3,
+        gap: 'md',
+        cells: projectItems.map((p) => ({ components: [{ blockType: 'imageText', media: p.media, title: p.title, desc: p.desc }] })),
+      },
+    ],
   },
   {
-    blockType: 'grid',
-    columns: 4,
-    gap: 'md',
-    alt: true,
-    cells: advantages.map((a) => ({ components: [{ blockType: 'text', title: a.title, body: a.body, align: 'center' }] })),
+    blockType: 'section',
+    bg: '#FFF1F6',
+    padding: 'md',
+    children: [
+      { blockType: 'heading', title: '中惠优势', align: 'center' },
+      {
+        blockType: 'grid',
+        columns: 4,
+        gap: 'md',
+        cells: advantages.map((a) => ({ components: [{ blockType: 'text', title: a.title, body: a.body, align: 'center' }] })),
+      },
+    ],
   },
   {
-    blockType: 'slider',
+    blockType: 'section',
     bg: '/assets/yinji-bg.jpg',
-    images: mem.map((id) => ({ image: id })),
+    padding: 'md',
+    children: [
+      { blockType: 'heading', title: '中惠印记', align: 'center' },
+      { blockType: 'slider', images: mem.map((id) => ({ image: id })) },
+    ],
   },
 ]
 
@@ -94,6 +121,6 @@ await payload.create({
     blocks,
   },
 })
-console.log('homepage configured (banner + 项目一览 grid + 中惠优势 grid + 中惠印记 slider)')
+console.log('homepage configured (banner+pattern + 项目一览 + 中惠优势 + 中惠印记 sections)')
 await payload.destroy()
 process.exit(0)
