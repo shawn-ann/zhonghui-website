@@ -182,7 +182,7 @@ header {
 .memory-arrow.next { right: 16px; }
 
 /* ===== 页脚 ===== */
-footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
+footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('/assets/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
 .footer-grid {
   max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px;
   display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px;

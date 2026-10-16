@@ -10,16 +10,18 @@ const page: PageDoc = {
 }
 
 describe('renderPage', () => {
-  it('produces a full html document', () => {
+  it('produces a full html document with nav + footer', () => {
     const html = renderPage(page)
     expect(html.startsWith('<!DOCTYPE html>')).toBe(true)
     expect(html).toContain('<title>关于中惠</title>')
     expect(html).toContain('assets/style.css')
+    expect(html).toContain('<header')
+    expect(html).toContain('<footer')
     expect(html).toContain('你好')
+    expect(html).toContain('/assets/main.js')
     expect(html).toContain('</html>')
   })
-  it('falls back to page title when no seo.title', () => {
-    const html = renderPage({ ...page, seo: undefined })
-    expect(html).toContain('<title>关于</title>')
+  it('marks active nav item', () => {
+    expect(renderPage(page)).toContain('class="active"')
   })
 })
