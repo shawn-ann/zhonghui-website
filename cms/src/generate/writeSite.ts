@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
 
-export function writeSite(files: Map<string, string>, outDir: string): void {
+export function writeSite(files: Map<string, string | Buffer>, outDir: string): void {
   const root = path.resolve(outDir)
   for (const [rel, content] of files) {
     const full = path.resolve(path.join(outDir, rel))

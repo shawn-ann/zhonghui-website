@@ -7,6 +7,7 @@ import { rmSync } from 'fs'
 import { loadSiteData } from './loadSiteData'
 import { generateSite } from './buildSite'
 import { writeSite } from './writeSite'
+import { collectMediaUrls, copyMedia } from './media'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -17,6 +18,8 @@ async function main() {
   const files = generateSite(data)
   rmSync(outDir, { recursive: true, force: true })
   writeSite(files, outDir)
+  const mediaDir = path.resolve(dirname, '../media')
+  copyMedia(collectMediaUrls(data), mediaDir, outDir)
   console.log(`Generated ${data.pages.length} pages -> ${outDir}`)
   await payload.destroy()
   process.exit(0)
