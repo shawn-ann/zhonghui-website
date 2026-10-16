@@ -1,6 +1,8 @@
 export interface BlockBase {
   bg?: string
   alt?: boolean
+  /** editor-stable id, ignored by generation */
+  _id?: string
 }
 
 export interface BannerBlock extends BlockBase {

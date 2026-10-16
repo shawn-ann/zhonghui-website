@@ -9,5 +9,5 @@ export function renderGrid(b: GridBlock): string {
     .map((c) => `<div class="grid-cell">${(c.components || []).map(renderBlock).join('')}</div>`)
     .join('')
   const inner = `<div class="container"><div class="grid grid-cols-${cols} grid-gap-${gap}">${cells}</div></div>`
-  return shell({ bg: b.bg, alt: b.alt }, inner)
+  return shell({ bg: b.bg, alt: b.alt, id: b._id }, inner)
 }

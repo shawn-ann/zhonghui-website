@@ -10,5 +10,5 @@ export function renderGallery(b: GalleryBlock): string {
     .map((src) => `<figure class="gallery-item"><img src="${esc(src)}" alt=""></figure>`)
     .join('')
   const inner = `<div class="container"><div class="gallery gallery-cols-${cols}">${imgs}</div></div>`
-  return shell({ bg: b.bg, alt: b.alt }, inner)
+  return shell({ bg: b.bg, alt: b.alt, id: b._id }, inner)
 }

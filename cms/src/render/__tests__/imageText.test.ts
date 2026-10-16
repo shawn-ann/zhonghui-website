@@ -8,7 +8,7 @@ describe('imageText', () => {
     const html = renderBlock(b)
     expect(html).toContain('class="image-text"')
     expect(html).toContain('src="/m/a.jpg"')
-    expect(html).toContain('<h3>标题</h3>')
+    expect(html).toContain('<h3 data-field="title">标题</h3>')
     expect(html).toContain('描述')
     expect(html).toContain('href="/x/"')
   })

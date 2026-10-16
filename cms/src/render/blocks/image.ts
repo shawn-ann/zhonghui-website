@@ -8,5 +8,5 @@ export function renderImage(b: ImageBlock): string {
   const href = b.link ? safeUrl(b.link) : ''
   const wrapped = href ? `<a href="${esc(href)}">${img}</a>` : img
   const inner = `<div class="container"><div class="image-block">${wrapped}</div></div>`
-  return shell({ bg: b.bg, alt: b.alt }, inner)
+  return shell({ bg: b.bg, alt: b.alt, id: b._id }, inner)
 }

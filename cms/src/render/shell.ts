@@ -1,8 +1,9 @@
 import { bgStyle } from './primitives'
 
-export function shell(options: { bg?: string; alt?: boolean }, inner: string): string {
+export function shell(options: { bg?: string; alt?: boolean; id?: string }, inner: string): string {
   const style = bgStyle(options.bg)
   const cls = ['section']
   if (!style && options.alt) cls.push('section-alt')
-  return `<section class="${cls.join(' ')}" ${style}>${inner}</section>`
+  const idAttr = options.id ? ` data-bid="${options.id}"` : ''
+  return `<section class="${cls.join(' ')}"${idAttr} ${style}>${inner}</section>`
 }

@@ -6,7 +6,7 @@ describe('renderBlock', () => {
   it('renders text block with title and body', () => {
     const b: Block = { type: 'text', title: '标题', body: '正文', align: 'center' }
     const html = renderBlock(b)
-    expect(html).toContain('<h2>标题</h2>')
+    expect(html).toContain('<h2 data-field="title">标题</h2>')
     expect(html).toContain('正文')
     expect(html).toContain('text-align:center')
     expect(html).toContain('class="section"')

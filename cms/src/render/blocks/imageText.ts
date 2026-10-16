@@ -8,10 +8,10 @@ export function renderImageText(b: ImageTextBlock): string {
   const card = `<div class="image-text">
     ${src ? `<div class="it-img"><img src="${esc(src)}" alt="${esc(b.title || '')}"></div>` : ''}
     <div class="it-body">
-      ${b.title ? `<h3>${esc(b.title)}</h3>` : ''}
-      ${b.desc ? `<p>${esc(b.desc)}</p>` : ''}
+      ${b.title ? `<h3 data-field="title">${esc(b.title)}</h3>` : ''}
+      ${b.desc ? `<p data-field="desc">${esc(b.desc)}</p>` : ''}
     </div>
   </div>`
   const wrapped = href ? `<a class="it-link" href="${esc(href)}">${card}</a>` : card
-  return shell({ bg: b.bg, alt: b.alt }, `<div class="container">${wrapped}</div>`)
+  return shell({ bg: b.bg, alt: b.alt, id: b._id }, `<div class="container">${wrapped}</div>`)
 }
