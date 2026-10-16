@@ -272,12 +272,10 @@ export interface Page {
                             blockType: 'richtext';
                           }
                         | {
-                            images?:
-                              | {
-                                  image: number | Media;
-                                  id?: string | null;
-                                }[]
-                              | null;
+                            images: {
+                              image: number | Media;
+                              id?: string | null;
+                            }[];
                             columns?: number | null;
                             /**
                              * 背景图路径/颜色/渐变，留空为白底
@@ -383,12 +381,10 @@ export interface Page {
                                             blockType: 'richtext';
                                           }
                                         | {
-                                            images?:
-                                              | {
-                                                  image: number | Media;
-                                                  id?: string | null;
-                                                }[]
-                                              | null;
+                                            images: {
+                                              image: number | Media;
+                                              id?: string | null;
+                                            }[];
                                             columns?: number | null;
                                             /**
                                              * 背景图路径/颜色/渐变，留空为白底
@@ -530,12 +526,10 @@ export interface Page {
             blockType: 'richtext';
           }
         | {
-            images?:
-              | {
-                  image: number | Media;
-                  id?: string | null;
-                }[]
-              | null;
+            images: {
+              image: number | Media;
+              id?: string | null;
+            }[];
             columns?: number | null;
             /**
              * 背景图路径/颜色/渐变，留空为白底
@@ -547,12 +541,10 @@ export interface Page {
             blockType: 'gallery';
           }
         | {
-            images?:
-              | {
-                  image: number | Media;
-                  id?: string | null;
-                }[]
-              | null;
+            images: {
+              image: number | Media;
+              id?: string | null;
+            }[];
             /**
              * 背景图路径/颜色/渐变，留空为白底
              */

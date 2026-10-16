@@ -30,6 +30,8 @@ export function generateSite(data: SiteData, _opts?: BuildOptions): Map<string, 
   out.set('assets/brand/logo.jpg', readStatic('brand/logo.jpg'))
   out.set('assets/brand/footer-logo.png', readStatic('brand/footer-logo.png'))
   out.set('assets/footbg.jpg', readStatic('footbg.jpg'))
+  out.set('assets/bg2.jpg', readStatic('bg2.jpg'))
+  out.set('assets/yinji-bg.jpg', readStatic('yinji-bg.jpg'))
   out.set('assets/pattern-box-5.svg', readStatic('pattern-box-5.svg'))
   return out
 }

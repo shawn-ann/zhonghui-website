@@ -18,7 +18,7 @@ async function main() {
   const files = generateSite(data)
   rmSync(outDir, { recursive: true, force: true })
   writeSite(files, outDir)
-  const mediaDir = path.resolve(dirname, '../media')
+  const mediaDir = path.resolve(dirname, '../../media')
   copyMedia(collectMediaUrls(data), mediaDir, outDir)
   console.log(`Generated ${data.pages.length} pages -> ${outDir}`)
   await payload.destroy()

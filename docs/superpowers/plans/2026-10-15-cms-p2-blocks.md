@@ -1727,7 +1727,7 @@ export function writeSite(files: Map<string, string | Buffer>, outDir: string): 
 ```ts
 import { collectMediaUrls, copyMedia } from './media'
 // ...
-  const mediaDir = path.resolve(dirname, '../media')
+  const mediaDir = path.resolve(dirname, '../../media')
   copyMedia(collectMediaUrls(data), mediaDir, outDir)
 ```
 
