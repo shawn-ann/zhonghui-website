@@ -8,6 +8,7 @@ import { renderGrid } from './grid'
 import { renderGallery } from './gallery'
 import { renderSlider } from './slider'
 import { renderRichText } from './richText'
+import { renderHeading } from './heading'
 
 export type Renderer = (b: Block) => string
 
@@ -21,6 +22,7 @@ export const renderers: Record<Block['type'], Renderer> = {
   gallery: (b) => renderGallery(b as never),
   slider: (b) => renderSlider(b as never),
   richtext: (b) => renderRichText(b as never),
+  heading: (b) => renderHeading(b as never),
 }
 
 export function renderBlock(block: Block): string {

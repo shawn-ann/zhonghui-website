@@ -45,9 +45,13 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   grid: { type: 'grid', label: '网格', defaults: () => ({ type: 'grid', columns: 3, gap: 'md', cells: [{ components: [] }] }), fields: [
     { key: 'columns', label: '列数', control: 'number' }, { key: 'gap', label: '间距', control: 'select', options: [{ label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] }, ...common,
   ] },
+  heading: { type: 'heading', label: '标题', defaults: () => ({ type: 'heading', title: '标题' }), fields: [
+    { key: 'title', label: '标题', control: 'text' }, { key: 'subtitle', label: '副标题', control: 'text' },
+    { key: 'align', label: '对齐', control: 'select', options: [{ label: '居中', value: 'center' }, { label: '左对齐', value: 'left' }] },
+  ] },
 }
 
 // 'grid' is intentionally omitted: it cannot receive children yet, so the palette
 // must not offer it. The 'grid' entry stays in BLOCKS for type completeness; nested
 // editing returns in phase 2.
-export const PAGE_BLOCKS: Block['type'][] = ['banner', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'slider']
+export const PAGE_BLOCKS: Block['type'][] = ['heading', 'banner', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'slider']

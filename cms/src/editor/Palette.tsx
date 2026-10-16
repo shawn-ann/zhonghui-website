@@ -13,6 +13,12 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
       <div style={{ width: '45%', background: 'linear-gradient(135deg,#C2185B,#8A0E4B)' }} />
     </div>
   ),
+  heading: (
+    <div style={{ height: 44, padding: 8, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ height: 9, width: '60%', background: '#8A0E4B', borderRadius: 2, marginBottom: 6 }} />
+      <div style={{ height: 5, width: '40%', background: '#ddd', borderRadius: 2 }} />
+    </div>
+  ),
   text: <div style={{ height: 44, padding: 8 }}><div style={line('90%')} /><div style={line('75%')} /><div style={line('55%')} /></div>,
   image: <div style={{ ...box, background: 'linear-gradient(135deg,#c9d3de,#e6ebf1)', color: '#9aa7b4' }}>🖼</div>,
   imageText: (

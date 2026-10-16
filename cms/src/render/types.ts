@@ -16,6 +16,13 @@ export interface BannerBlock extends BlockBase {
   pattern?: string
 }
 
+export interface HeadingBlock extends BlockBase {
+  type: 'heading'
+  title: string
+  subtitle?: string
+  align?: 'center' | 'left'
+}
+
 export interface GridCell {
   components: Block[]
 }
@@ -78,6 +85,7 @@ export interface SliderBlock extends BlockBase {
 
 export type Block =
   | BannerBlock
+  | HeadingBlock
   | GridBlock
   | TextBlock
   | ImageBlock

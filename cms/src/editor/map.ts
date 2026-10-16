@@ -62,6 +62,11 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
   if (b.alt !== undefined) out.alt = b.alt
 
   switch (b.type) {
+    case 'heading':
+      out.title = b.title
+      if (b.subtitle !== undefined) out.subtitle = b.subtitle
+      out.align = b.align ?? 'center'
+      break
     case 'banner':
       out.variant = b.variant
       if (b.title !== undefined) out.title = b.title
