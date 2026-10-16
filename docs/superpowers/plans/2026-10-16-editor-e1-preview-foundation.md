@@ -422,3 +422,4 @@ git commit -m "chore(cms): e1 preview acceptance fixes"
 - 同构渲染：`render/blocks`、`nav`、`footer`、`document` 均**无 Node 依赖**，可被 E2 的浏览器画布直接复用。
 - 预览路由**内联**资源（CSS/JS），使其不依赖 `dist/` 的 `/assets/*`。
 - 预览路由用 `@/` 别名导入源码、用 `process.cwd()` 定位 `src/` 下静态资源，避免 `(frontend)` 目录带来的相对层级问题。
+- **发布细节**：本地 API `create`/`update` 仅传 `draft: false` 不足以发布；需显式 `data: { _status: 'published' }`（或 `update({ draft: false, data: { _status: 'published' } })`）。生成器以 `_status='published'` 过滤。
