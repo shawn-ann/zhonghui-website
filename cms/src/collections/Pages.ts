@@ -5,7 +5,17 @@ export const Pages: CollectionConfig = {
   slug: 'pages',
   labels: { singular: '页面', plural: '页面' },
   versions: { drafts: true },
-  admin: { useAsTitle: 'title', defaultColumns: ['title', 'route', '_status'] },
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'route', '_status'],
+    components: {
+      views: {
+        edit: {
+          default: { Component: '/components/PageEditorView' },
+        },
+      },
+    },
+  },
   fields: [
     { name: 'title', type: 'text', required: true },
     {

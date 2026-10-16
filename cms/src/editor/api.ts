@@ -8,7 +8,8 @@ async function j(res: Response) {
 }
 export async function getPage(id: number | string): Promise<EditorDoc> {
   const res = await fetch(`/api/pages/${id}?draft=true&depth=1`, { credentials: 'include' })
-  return docToEditorDoc((await j(res)).doc)
+  const data = await j(res)
+  return docToEditorDoc((data as { doc?: unknown }).doc ?? data)
 }
 export async function savePage(id: number | string, data: Partial<EditorDoc>): Promise<void> {
   await j(await fetch(`/api/pages/${id}?draft=true`, { method: 'PATCH', headers: json, credentials: 'include', body: JSON.stringify({ ...data, _status: 'draft' }) }))
