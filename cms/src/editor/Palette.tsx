@@ -19,6 +19,14 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
       <div style={{ height: 5, width: '40%', background: '#ddd', borderRadius: 2 }} />
     </div>
   ),
+  section: (
+    <div style={{ height: 44, background: '#FFF1F6', padding: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <div style={{ height: 6, width: '55%', background: '#8A0E4B', borderRadius: 2, margin: '0 auto' }} />
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 3, flex: 1 }}>
+        <div style={{ background: '#f0d7e3', borderRadius: 2 }} /><div style={{ background: '#f0d7e3', borderRadius: 2 }} /><div style={{ background: '#f0d7e3', borderRadius: 2 }} />
+      </div>
+    </div>
+  ),
   text: <div style={{ height: 44, padding: 8 }}><div style={line('90%')} /><div style={line('75%')} /><div style={line('55%')} /></div>,
   image: <div style={{ ...box, background: 'linear-gradient(135deg,#c9d3de,#e6ebf1)', color: '#9aa7b4' }}>🖼</div>,
   imageText: (

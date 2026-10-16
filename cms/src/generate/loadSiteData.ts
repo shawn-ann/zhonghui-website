@@ -11,6 +11,18 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
   switch (raw.blockType) {
     case 'heading':
       return { type: 'heading', title: String(raw.title ?? ''), subtitle: raw.subtitle || undefined, align: raw.align === 'left' ? 'left' : 'center', bg, alt }
+    case 'section': {
+      const children = arr<Record<string, any>>(raw.children)
+        .map((c) => mapBlock(c, resolveMedia))
+        .filter((x): x is Block => x !== null)
+      return {
+        type: 'section',
+        padding: raw.padding === 'none' || raw.padding === 'sm' || raw.padding === 'lg' ? raw.padding : 'md',
+        bg,
+        alt,
+        children,
+      }
+    }
     case 'text':
       return { type: 'text', title: raw.title || undefined, body: String(raw.body ?? ''), align: raw.align === 'center' ? 'center' : 'left', bg, alt }
     case 'image':

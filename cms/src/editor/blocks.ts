@@ -49,9 +49,13 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'title', label: '标题', control: 'text' }, { key: 'subtitle', label: '副标题', control: 'text' },
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '居中', value: 'center' }, { label: '左对齐', value: 'left' }] },
   ] },
+  section: { type: 'section', label: '分栏', defaults: () => ({ type: 'section', padding: 'md', children: [] }), fields: [
+    { key: 'bg', label: '背景', control: 'bg' },
+    { key: 'padding', label: '内边距', control: 'select', options: [{ label: '无', value: 'none' }, { label: '小', value: 'sm' }, { label: '中', value: 'md' }, { label: '大', value: 'lg' }] },
+  ] },
 }
 
 // 'grid' is intentionally omitted: it cannot receive children yet, so the palette
 // must not offer it. The 'grid' entry stays in BLOCKS for type completeness; nested
 // editing returns in phase 2.
-export const PAGE_BLOCKS: Block['type'][] = ['heading', 'banner', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'slider']
+export const PAGE_BLOCKS: Block['type'][] = ['section', 'heading', 'banner', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'slider']

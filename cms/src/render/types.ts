@@ -83,6 +83,12 @@ export interface SliderBlock extends BlockBase {
   images: string[]
 }
 
+export interface SectionBlock extends BlockBase {
+  type: 'section'
+  padding?: 'none' | 'sm' | 'md' | 'lg'
+  children: Block[]
+}
+
 export type Block =
   | BannerBlock
   | HeadingBlock
@@ -94,6 +100,7 @@ export type Block =
   | RichTextBlock
   | GalleryBlock
   | SliderBlock
+  | SectionBlock
 
 export interface PageDoc {
   title: string

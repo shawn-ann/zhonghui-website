@@ -37,6 +37,12 @@ export default function PropertyPanel({
           case 'media': return <MediaControl key={f.key} label={f.label} value={val(f.key) as string} onPick={() => setMediaFor(f.key)} onChange={(v) => onChange(f.key, v)} />
         }
       })}
+      {block.type === 'section' ? (
+        <div className="ed-grid-cells">
+          <div className="ed-label">分栏子组件（MVP）</div>
+          <p className="ed-muted">含 {block.children.length} 个子组件 · 内边距 {block.padding ?? 'md'}</p>
+        </div>
+      ) : null}
       {block.type === 'grid' ? (
         <div className="ed-grid-cells">
           <div className="ed-label">格与子组件（MVP）</div>
