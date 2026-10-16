@@ -5,27 +5,6 @@ import type { EditorDoc } from './types'
 
 const OUTLINE = 'outline:2px solid #E60039'
 
-export function highlightSelection(html: string, id?: string): string {
-  if (!id) return html
-  const marker = `data-bid="${id}"`
-  const idx = html.indexOf(marker)
-  if (idx === -1) return html
-  const tagStart = html.lastIndexOf('<section', idx)
-  const tagEnd = html.indexOf('>', idx)
-  if (tagStart === -1 || tagEnd === -1) return html
-  const openTag = html.slice(tagStart, tagEnd)
-  let newTag: string
-  if (/style="/.test(openTag)) {
-    newTag = openTag.replace(/style="([^"]*)"/, (_m, s: string) => {
-      const sep = s && !s.trim().endsWith(';') ? ';' : ''
-      return `style="${s}${sep}${OUTLINE};"`
-    })
-  } else {
-    newTag = `${openTag} style="${OUTLINE};"`
-  }
-  return html.slice(0, tagStart) + newTag + html.slice(tagEnd)
-}
-
 export default function Canvas({
   doc, selectedId, onSelect, onEditField, onReorder, onDelete,
 }: {
@@ -44,8 +23,7 @@ export default function Canvas({
     const d = ref.current?.contentDocument
     if (!d) return
     d.querySelectorAll('[data-bid]').forEach((el) => {
-      const on = el.getAttribute('data-bid') === id
-      el.setAttribute('style', on ? `${OUTLINE};outline-offset:-2px` : '')
+      el.classList.toggle('ed-selected', el.getAttribute('data-bid') === id)
     })
   }, [])
 
@@ -68,6 +46,12 @@ export default function Canvas({
     const frame = ref.current
     const d = frame?.contentDocument
     if (!d) return
+    if (!d.getElementById('ed-canvas-style')) {
+      const s = d.createElement('style')
+      s.id = 'ed-canvas-style'
+      s.textContent = `.ed-selected{${OUTLINE};outline-offset:-2px}`
+      d.head.appendChild(s)
+    }
     const topLevel = Array.from(d.querySelectorAll('main#page > [data-bid]')) as HTMLElement[]
     topLevel.forEach((el, index) => {
       el.setAttribute('draggable', 'true')
