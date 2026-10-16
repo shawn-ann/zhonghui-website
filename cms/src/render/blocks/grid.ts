@@ -1,4 +1,3 @@
-import { shell } from '../shell'
 import type { GridBlock } from '../types'
 import { renderBlock } from './renderBlock'
 
@@ -8,6 +7,5 @@ export function renderGrid(b: GridBlock): string {
   const cells = (b.cells || [])
     .map((c) => `<div class="grid-cell">${(c.components || []).map(renderBlock).join('')}</div>`)
     .join('')
-  const inner = `<div class="container"><div class="grid grid-cols-${cols} grid-gap-${gap}">${cells}</div></div>`
-  return shell({ bg: b.bg, alt: b.alt, id: b._id }, inner)
+  return `<div class="container"><div class="grid grid-cols-${cols} grid-gap-${gap}">${cells}</div></div>`
 }

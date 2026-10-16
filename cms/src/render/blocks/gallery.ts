@@ -1,5 +1,4 @@
 import { esc, safeUrl } from '../primitives'
-import { shell } from '../shell'
 import type { GalleryBlock } from '../types'
 
 export function renderGallery(b: GalleryBlock): string {
@@ -9,6 +8,5 @@ export function renderGallery(b: GalleryBlock): string {
     .filter(Boolean)
     .map((src) => `<figure class="gallery-item"><img src="${esc(src)}" alt=""></figure>`)
     .join('')
-  const inner = `<div class="container"><div class="gallery gallery-cols-${cols}">${imgs}</div></div>`
-  return shell({ bg: b.bg, alt: b.alt, id: b._id }, inner)
+  return `<div class="container"><div class="gallery gallery-cols-${cols}">${imgs}</div></div>`
 }

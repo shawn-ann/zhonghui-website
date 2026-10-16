@@ -9,7 +9,8 @@ describe('renderBlock', () => {
     expect(html).toContain('<h2 data-field="title">标题</h2>')
     expect(html).toContain('正文')
     expect(html).toContain('text-align:center')
-    expect(html).toContain('class="section"')
+    expect(html).toContain('class="container"')
+    expect(html).not.toContain('<section')
   })
 
   it('renders image block with img and link', () => {

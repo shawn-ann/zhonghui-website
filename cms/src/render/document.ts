@@ -1,5 +1,5 @@
 import { esc } from './primitives'
-import { renderBlock } from './blocks'
+import { renderTop } from './blocks/wrap'
 import { renderNav } from './nav'
 import { renderFooter } from './footer'
 import type { PageDoc } from './types'
@@ -38,7 +38,7 @@ function scripts(a: DocumentAssets): string {
 }
 
 export function renderDocument(page: PageDoc, assets: DocumentAssets): string {
-  const body = page.blocks.map(renderBlock).join('')
+  const body = page.blocks.map(renderTop).join('')
   return `${head(page, assets)}
 <body>
   ${renderNav(page.route)}

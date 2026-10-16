@@ -1,5 +1,4 @@
 import { esc, safeUrl } from '../primitives'
-import { shell } from '../shell'
 import type { ImageBlock } from '../types'
 
 export function renderImage(b: ImageBlock): string {
@@ -7,6 +6,5 @@ export function renderImage(b: ImageBlock): string {
   const img = `<img src="${esc(src)}" alt="${esc(b.altText || '')}">`
   const href = b.link ? safeUrl(b.link) : ''
   const wrapped = href ? `<a href="${esc(href)}">${img}</a>` : img
-  const inner = `<div class="container"><div class="image-block">${wrapped}</div></div>`
-  return shell({ bg: b.bg, alt: b.alt, id: b._id }, inner)
+  return `<div class="container"><div class="image-block">${wrapped}</div></div>`
 }
