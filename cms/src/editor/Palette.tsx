@@ -61,10 +61,10 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
   ),
 }
 
-export default function Palette({ onAdd }: { onAdd: (type: Block['type']) => void }) {
+export default function Palette() {
   return (
     <aside className="ed-palette">
-      <div className="ed-label">组件（拖入画布）</div>
+      <div className="ed-label">组件（拖入分栏或网格）</div>
       <div className="ed-palette-grid">
         {PAGE_BLOCKS.filter((t) => t !== 'section' && BLOCKS[t]).map((t) => (
           <button
@@ -72,8 +72,7 @@ export default function Palette({ onAdd }: { onAdd: (type: Block['type']) => voi
             className="ed-palette-item"
             draggable
             onDragStart={(e) => e.dataTransfer.setData('text/x-block', t)}
-            onClick={() => onAdd(t)}
-            title={`添加${BLOCKS[t].label}`}
+            title={`拖动添加${BLOCKS[t].label}`}
           >
             <div className="ed-thumb">{THUMBS[t]}</div>
             <div className="ed-thumb-label">{BLOCKS[t].label}</div>

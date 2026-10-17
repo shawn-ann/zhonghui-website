@@ -25,6 +25,14 @@ describe('StructureTree', () => {
     fireEvent.click(delBtns[0])
     expect(onDelete).toHaveBeenCalled()
   })
+  it('renders a page root and selects it', () => {
+    const onSelectRoot = vi.fn()
+    render(<StructureTree blocks={blocks} selectedId="s1" onSelect={() => {}} onSelectRoot={onSelectRoot} onDelete={() => {}} />)
+    expect(screen.getByText('页面根目录')).toBeTruthy()
+    expect(screen.getByText('1 个分栏')).toBeTruthy()
+    fireEvent.click(screen.getByText('页面根目录'))
+    expect(onSelectRoot).toHaveBeenCalled()
+  })
   it('shows top-level move buttons and calls onMoveTop', () => {
     const onMoveTop = vi.fn()
     const two: any[] = [...blocks, { type: 'text', _id: 't2', body: 'x' }]

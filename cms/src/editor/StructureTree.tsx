@@ -25,7 +25,7 @@ function Node({
   const open = expanded.has(id)
   const label = BLOCKS[block.type]?.label ?? block.type
   const summary = (blockSummary(block) || '').slice(0, 12)
-  const isTop = depth === 0
+  const isTop = depth === 1
   return (
     <div>
       <div
@@ -70,11 +70,12 @@ function collectIds(blocks: Block[], out: Set<string> = new Set()): Set<string> 
 }
 
 export default function StructureTree({
-  blocks, selectedId, onSelect, onDelete, onMoveTop, onAddSection,
+  blocks, selectedId, onSelect, onSelectRoot, onDelete, onMoveTop, onAddSection,
 }: {
   blocks: Block[]
   selectedId?: string
   onSelect: (id: string) => void
+  onSelectRoot?: () => void
   onDelete: (id: string) => void
   onMoveTop?: (index: number, dir: -1 | 1) => void
   onAddSection?: () => void
@@ -96,10 +97,18 @@ export default function StructureTree({
         <span className="ed-label">结构</span>
         {onAddSection ? <button className="ed-tree-add" type="button" onClick={onAddSection}>＋ 分栏</button> : null}
       </div>
-      {blocks.length === 0 ? <p className="ed-muted">暂无区块</p> : null}
+      <div
+        className={`ed-tree-row ed-tree-root${selectedId ? '' : ' is-selected'}`}
+        onClick={onSelectRoot}
+      >
+        <span className="ed-tree-caret">▾</span>
+        <span className="ed-tree-label">页面根目录</span>
+        <span className="ed-tree-summary">{blocks.length} 个分栏</span>
+      </div>
+      {blocks.length === 0 ? <p className="ed-muted">暂无分栏</p> : null}
       {blocks.map((b, i) => (
         <Node
-          key={b._id} block={b} depth={0} selectedId={selectedId}
+          key={b._id} block={b} depth={1} selectedId={selectedId}
           onSelect={onSelect} onDelete={onDelete}
           expanded={expanded} toggle={toggle}
           topIndex={i} topCount={blocks.length} onMoveTop={onMoveTop}

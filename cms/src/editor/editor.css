@@ -81,17 +81,19 @@
   border-radius: 8px;
   overflow: hidden;
 }
+.ed-left .ed-tree {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  border-top: 0;
+  border-bottom: 1px solid #eee;
+}
 .ed-left .ed-palette {
   flex: 0 0 auto;
   border: 0;
-  border-bottom: 1px solid #eee;
+  border-top: 1px solid #eee;
   border-radius: 0;
-  max-height: 55%;
-}
-.ed-left .ed-tree {
-  flex: 1 1 auto;
-  overflow: auto;
-  border-top: 0;
+  max-height: 45%;
 }
 
 .ed-loading {
@@ -361,6 +363,7 @@
 
 /* Structure tree */
 .ed-tree { padding: 8px; border-top: 1px solid #eee; overflow: auto; }
+.ed-tree-root { font-weight: 600; }
 .ed-tree-row { display: flex; align-items: center; gap: 6px; padding: 4px 6px; border-radius: 4px; cursor: pointer; font-size: 12px; }
 .ed-tree-row:hover { background: #f4f4f4; }
 .ed-tree-row.is-selected { background: #e7f0ff; box-shadow: inset 3px 0 0 #1E6FFF; }

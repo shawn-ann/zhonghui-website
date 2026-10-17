@@ -79,7 +79,8 @@ export default function PageEditor({ id }: { id: number | string }) {
 
   const addSection = () => {
     const block = { ...BLOCKS.section.defaults(), _id: newId() } as Block
-    update(addBlock(doc.blocks, block))
+    const index = selectedPath ? selectedPath[0] + 1 : doc.blocks.length
+    update(addBlock(doc.blocks, block, index))
     setSelectedId(block._id)
   }
 
@@ -111,15 +112,16 @@ export default function PageEditor({ id }: { id: number | string }) {
       />
       <div className="ed-body">
         <div className="ed-left">
-          <Palette onAdd={(type) => update(addBlock(doc.blocks, BLOCKS[type].defaults()))} />
           <StructureTree
             blocks={doc.blocks}
             selectedId={selectedId}
             onSelect={setSelectedId}
+            onSelectRoot={() => setSelectedId(undefined)}
             onDelete={deleteBlock}
             onMoveTop={(i, dir) => update(moveChild(doc.blocks, i, dir))}
             onAddSection={addSection}
           />
+          <Palette />
         </div>
         <Canvas
           doc={doc}
@@ -132,7 +134,13 @@ export default function PageEditor({ id }: { id: number | string }) {
             if (p && block) update(updateAtPath(doc.blocks, p, { ...block, [field]: value } as Block))
           }}
           onReorder={(from, to) => update(moveBlock(doc.blocks, from, to))}
-          onAddAt={(type, index) => update(addBlock(doc.blocks, BLOCKS[type].defaults(), index))}
+          onAddInto={(parentId, type, index) => {
+            const p = findPath(doc.blocks, parentId)
+            if (!p) return
+            const block = { ...BLOCKS[type].defaults(), _id: newId() } as Block
+            update(insertInto(doc.blocks, p, block, index))
+            setSelectedId(block._id)
+          }}
           onDelete={deleteBlock}
         />
         <PropertyPanel
