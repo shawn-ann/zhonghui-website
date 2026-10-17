@@ -1,4 +1,4 @@
-/* 静态站点交互：Swiper 轮播（纯静态，无框架） */
+/* 静态站点交互：Swiper 轮播 + 移动端导航（纯静态，无框架） */
 (function () {
   function initSliders() {
     if (typeof Swiper === 'undefined') return
@@ -14,6 +14,19 @@
       })
     })
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSliders)
-  else initSliders()
+
+  function initNav() {
+    var toggle = document.querySelector('.nav-toggle')
+    var nav = document.querySelector('.nav')
+    if (!toggle || !nav) return
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('nav--open')
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false')
+    })
+  }
+
+  function init() { initSliders(); initNav() }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init)
+  else init()
 })()
+

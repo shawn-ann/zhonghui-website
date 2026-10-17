@@ -169,24 +169,6 @@
   background: #fff;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
-.ed-device {
-  display: inline-flex;
-  gap: 4px;
-  margin-right: 8px;
-}
-.ed-device button {
-  font-size: 12px;
-  padding: 5px 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: #fff;
-  color: #5a4a52;
-  cursor: pointer;
-}
-.ed-device button.is-active {
-  background: #E60039;
-  color: #fff;
-}
 .ed-block-overlay { position: absolute; display: flex; gap: 6px; align-items: center; transform: translateY(-100%); z-index: 5; }
 .ed-block-badge { background: #1E6FFF; color: #fff; font-size: 10px; padding: 1px 8px; border-radius: 3px; }
 .ed-block-del { background: #fff; border: 1px solid #1E6FFF; color: #1E6FFF; font-size: 10px; padding: 1px 8px; border-radius: 3px; cursor: pointer; }

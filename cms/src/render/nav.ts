@@ -44,6 +44,7 @@ export function renderNav(activeRoute: string): string {
   const menu = NAV_ITEMS.map((m) => item(m, activeRoute)).join('')
   return `<header><div class="container nav">
     <a class="logo" href="/"><img src="${esc(LOGO_SRC)}" alt="中惠文化"></a>
+    <button class="nav-toggle" type="button" aria-label="菜单" aria-expanded="false">☰</button>
     <div class="nav-right">
       <ul class="nav-menu">${menu}</ul>
       <div class="nav-lang"><a class="active" href="#">中文</a><span class="sep">|</span><a href="${esc(safeUrl(LANG_LINK) || '#')}">EN</a></div>

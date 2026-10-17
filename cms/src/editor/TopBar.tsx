@@ -1,10 +1,8 @@
 'use client'
 import React from 'react'
 
-type Device = 'desktop' | 'tablet' | 'mobile'
-
 export default function TopBar({
-  id, title, status, dirty, onSave, onPublish, onPreview, device = 'desktop', onDeviceChange,
+  id, title, status, dirty, onSave, onPublish, onPreview,
 }: {
   id: number | string
   title: string
@@ -13,14 +11,7 @@ export default function TopBar({
   onSave: () => void
   onPublish: () => void
   onPreview: () => void
-  device?: Device
-  onDeviceChange?: (d: Device) => void
 }) {
-  const devices: { key: Device; label: string }[] = [
-    { key: 'desktop', label: '桌面' },
-    { key: 'tablet', label: '平板' },
-    { key: 'mobile', label: '手机' },
-  ]
   return (
     <div className="ed-topbar">
       <span className="ed-title">页面：{title}</span>
@@ -31,18 +22,6 @@ export default function TopBar({
         <a href={`/admin/collections/pages/${id}/versions`}>版本</a>
         <a href={`/admin/collections/pages/${id}/api`}>API</a>
       </nav>
-      <div className="ed-device">
-        {devices.map((d) => (
-          <button
-            key={d.key}
-            type="button"
-            className={device === d.key ? 'is-active' : ''}
-            onClick={() => onDeviceChange?.(d.key)}
-          >
-            {d.label}
-          </button>
-        ))}
-      </div>
       <div className="ed-actions">
         <a className="ed-account" href="/admin/account" title="账号">账号</a>
         <button onClick={onPreview}>预览</button>
