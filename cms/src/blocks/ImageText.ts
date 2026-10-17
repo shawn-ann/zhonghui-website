@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import { bgField, altField, linkField } from './common'
+import { bgField, altField, linkField, paddingField } from './common'
 
 export const ImageTextBlock: Block = {
   slug: 'imageText',
@@ -11,5 +11,6 @@ export const ImageTextBlock: Block = {
     linkField(),
     bgField(),
     altField(),
+    paddingField(),
   ],
 }

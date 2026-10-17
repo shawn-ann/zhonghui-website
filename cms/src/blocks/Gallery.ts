@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import { bgField, altField } from './common'
+import { bgField, altField, paddingField } from './common'
 
 export const GalleryBlock: Block = {
   slug: 'gallery',
@@ -15,5 +15,6 @@ export const GalleryBlock: Block = {
     { name: 'columns', type: 'number', defaultValue: 3, min: 1, max: 4 },
     bgField(),
     altField(),
+    paddingField(),
   ],
 }

@@ -61,6 +61,28 @@ describe('editorToPayloadBlocks', () => {
     expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', id: 't2' })
   })
 
+  it('round-trips section 4-direction padding', () => {
+    const raw = {
+      id: 1,
+      title: 't',
+      route: '/',
+      blocks: [{
+        id: 's1',
+        blockType: 'section',
+        paddingTop: 60,
+        paddingRight: 10,
+        paddingBottom: 120,
+        paddingLeft: 20,
+        children: [{ id: 't1', blockType: 'text', body: 'x', padding: 8 }],
+      }],
+    }
+    const ed = docToEditorDoc(raw)
+    expect(ed.blocks[0]).toMatchObject({ type: 'section', paddingTop: 60, paddingRight: 10, paddingBottom: 120, paddingLeft: 20 })
+    const back = editorToPayloadBlocks(ed.blocks, new Map())
+    expect(back[0]).toMatchObject({ blockType: 'section', paddingTop: 60, paddingRight: 10, paddingBottom: 120, paddingLeft: 20 })
+    expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', padding: 8 })
+  })
+
   it('round-trips grid children through the editor document', () => {
     const raw = { id: 1, title: 't', route: '/', blocks: [
       { id: 'g1', blockType: 'grid', columns: 2, children: [{ id: 't1', blockType: 'text', body: 'x' }] },

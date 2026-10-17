@@ -6,17 +6,10 @@ export function makeSection(childrenBlocks: Block[]): Block {
     labels: { singular: '分栏', plural: '分栏' },
     fields: [
       { name: 'bg', type: 'text', admin: { description: '背景图路径/颜色/渐变' } },
-      {
-        name: 'padding',
-        type: 'select',
-        defaultValue: 'md',
-        options: [
-          { label: '无', value: 'none' },
-          { label: '小', value: 'sm' },
-          { label: '中', value: 'md' },
-          { label: '大', value: 'lg' },
-        ],
-      },
+      { name: 'paddingTop', type: 'number', defaultValue: 72, min: 0 },
+      { name: 'paddingRight', type: 'number', defaultValue: 0, min: 0 },
+      { name: 'paddingBottom', type: 'number', defaultValue: 72, min: 0 },
+      { name: 'paddingLeft', type: 'number', defaultValue: 0, min: 0 },
       { name: 'children', type: 'blocks', blocks: childrenBlocks },
     ],
   }

@@ -10,27 +10,30 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
   const alt = !!raw.alt
   switch (raw.blockType) {
     case 'heading':
-      return { type: 'heading', title: String(raw.title ?? ''), subtitle: raw.subtitle || undefined, align: raw.align === 'left' ? 'left' : 'center', bg, alt }
+      return { type: 'heading', title: String(raw.title ?? ''), subtitle: raw.subtitle || undefined, align: raw.align === 'left' ? 'left' : 'center', padding: raw.padding || undefined, bg, alt }
     case 'section': {
       const children = arr<Record<string, any>>(raw.children)
         .map((c) => mapBlock(c, resolveMedia))
         .filter((x): x is Block => x !== null)
       return {
         type: 'section',
-        padding: raw.padding === 'none' || raw.padding === 'sm' || raw.padding === 'lg' ? raw.padding : 'md',
+        paddingTop: raw.paddingTop ?? 72,
+        paddingRight: raw.paddingRight ?? 0,
+        paddingBottom: raw.paddingBottom ?? 72,
+        paddingLeft: raw.paddingLeft ?? 0,
         bg,
         alt,
         children,
       }
     }
     case 'text':
-      return { type: 'text', title: raw.title || undefined, body: String(raw.body ?? ''), align: raw.align === 'center' ? 'center' : 'left', bg, alt }
+      return { type: 'text', title: raw.title || undefined, body: String(raw.body ?? ''), align: raw.align === 'center' ? 'center' : 'left', padding: raw.padding || undefined, bg, alt }
     case 'image':
-      return { type: 'image', media: resolveMedia(raw.media), altText: raw.altText || undefined, link: raw.link || undefined, bg, alt }
+      return { type: 'image', media: resolveMedia(raw.media), altText: raw.altText || undefined, link: raw.link || undefined, padding: raw.padding || undefined, bg, alt }
     case 'imageText':
-      return { type: 'imageText', media: resolveMedia(raw.media), title: raw.title || undefined, desc: raw.desc || undefined, link: raw.link || undefined, bg, alt }
+      return { type: 'imageText', media: resolveMedia(raw.media), title: raw.title || undefined, desc: raw.desc || undefined, link: raw.link || undefined, padding: raw.padding || undefined, bg, alt }
     case 'button':
-      return { type: 'button', label: String(raw.label ?? ''), link: raw.link || '', style: raw.style === 'outline' ? 'outline' : 'primary', bg, alt }
+      return { type: 'button', label: String(raw.label ?? ''), link: raw.link || '', style: raw.style === 'outline' ? 'outline' : 'primary', padding: raw.padding || undefined, bg, alt }
     case 'banner':
       return {
         type: 'banner',
@@ -54,13 +57,14 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
         type: 'gallery',
         images: arr<Record<string, any>>(raw.images).map((i) => resolveMedia(i.image)).filter(Boolean),
         columns: raw.columns || 3,
+        padding: raw.padding || undefined,
         bg,
         alt,
       }
     case 'slider':
       return { type: 'slider', images: arr<Record<string, any>>(raw.images).map((i) => resolveMedia(i.image)).filter(Boolean), bg }
     case 'richtext':
-      return { type: 'richtext', html: lexicalToHtml(raw.content), bg, alt }
+      return { type: 'richtext', html: lexicalToHtml(raw.content), padding: raw.padding || undefined, bg, alt }
     default:
       return null
   }

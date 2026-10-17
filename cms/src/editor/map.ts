@@ -65,6 +65,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.title = b.title
       if (b.subtitle !== undefined) out.subtitle = b.subtitle
       out.align = b.align ?? 'center'
+      if ((b as any).padding > 0) out.padding = (b as any).padding
       break
     case 'banner':
       out.variant = b.variant
@@ -77,28 +78,36 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.title !== undefined) out.title = b.title
       out.body = b.body
       out.align = b.align ?? 'left'
+      if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'image':
       out.media = resolveMediaId(b.media, urlToId, raw?.media)
       if (b.altText !== undefined) out.altText = b.altText
       if (b.link !== undefined) out.link = b.link
+      if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'imageText':
       out.media = resolveMediaId(b.media, urlToId, raw?.media)
       if (b.title !== undefined) out.title = b.title
       if (b.desc !== undefined) out.desc = b.desc
       if (b.link !== undefined) out.link = b.link
+      if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'button':
       out.label = b.label
       out.link = b.link
       if (b.style !== undefined) out.style = b.style
+      if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'richtext':
       out.content = raw?.content ?? null
+      if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'section':
-      out.padding = b.padding ?? 'md'
+      out.paddingTop = b.paddingTop ?? 72
+      out.paddingRight = b.paddingRight ?? 0
+      out.paddingBottom = b.paddingBottom ?? 72
+      out.paddingLeft = b.paddingLeft ?? 0
       out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'grid':
@@ -112,6 +121,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
         .map((url, i) => ({ image: resolveMediaId(url, urlToId, rawImages[i]?.image) }))
         .filter((i) => i.image != null)
       if (b.columns !== undefined) out.columns = b.columns
+      if (b.padding && b.padding > 0) out.padding = b.padding
       break
     }
     case 'slider': {

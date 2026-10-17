@@ -11,7 +11,7 @@ import { Grid, contentBlocks } from './Grid'
 import { HeadingBlock } from './Heading'
 import { makeSection } from './Section'
 
-export const sectionChildren: Block[] = [...contentBlocks, Grid, SliderBlock]
+export const sectionChildren: Block[] = [...contentBlocks, Grid, SliderBlock, BannerBlock]
 
 export const SectionBlock = makeSection(sectionChildren)
 

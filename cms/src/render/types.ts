@@ -92,8 +92,6 @@ export interface SectionBlock extends BlockBase {
   paddingRight?: number
   paddingBottom?: number
   paddingLeft?: number
-  /** @deprecated 旧版预设留白，仅用于过渡期类型兼容，渲染时忽略 */
-  padding?: 'none' | 'sm' | 'md' | 'lg'
   children: Block[]
 }
 

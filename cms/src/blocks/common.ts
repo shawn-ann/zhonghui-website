@@ -13,6 +13,14 @@ export const altField = (): Field => ({
   defaultValue: false,
 })
 
+export const paddingField = (): Field => ({
+  name: 'padding',
+  type: 'number',
+  defaultValue: 0,
+  min: 0,
+  admin: { description: '内容内边距(px)，默认0' },
+})
+
 export const linkField = (name = 'link'): Field => ({
   name,
   type: 'text',

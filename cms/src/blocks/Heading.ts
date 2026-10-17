@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { paddingField } from './common'
 
 export const HeadingBlock: Block = {
   slug: 'heading',
@@ -7,5 +8,6 @@ export const HeadingBlock: Block = {
     { name: 'title', type: 'text', required: true },
     { name: 'subtitle', type: 'text' },
     { name: 'align', type: 'select', defaultValue: 'center', options: [{ label: '居中', value: 'center' }, { label: '左对齐', value: 'left' }] },
+    paddingField(),
   ],
 }

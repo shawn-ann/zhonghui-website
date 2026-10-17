@@ -45,7 +45,7 @@ describe('generateSite', () => {
     const d: SiteData = {
       pages: [{
         title: 't', route: '/', blocks: [
-          { type: 'section', padding: 'md', children: [
+          { type: 'section', paddingTop: 72, paddingRight: 0, paddingBottom: 72, paddingLeft: 0, children: [
             { type: 'heading', title: 'T' },
             { type: 'grid', columns: 1, children: [{ type: 'imageText', media: '/api/media/file/b.jpg' }] },
             { type: 'slider', images: ['/api/media/file/c.jpg'] },

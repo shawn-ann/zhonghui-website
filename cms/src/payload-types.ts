@@ -182,13 +182,20 @@ export interface Page {
              * 背景图路径/颜色/渐变
              */
             bg?: string | null;
-            padding?: ('none' | 'sm' | 'md' | 'lg') | null;
+            paddingTop?: number | null;
+            paddingRight?: number | null;
+            paddingBottom?: number | null;
+            paddingLeft?: number | null;
             children?:
               | (
                   | {
                       title: string;
                       subtitle?: string | null;
                       align?: ('center' | 'left') | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'heading';
@@ -202,6 +209,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'text';
@@ -218,6 +229,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'image';
@@ -235,6 +250,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'imageText';
@@ -251,6 +270,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'button';
@@ -276,6 +299,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'richtext';
@@ -291,6 +318,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'gallery';
@@ -304,6 +335,10 @@ export interface Page {
                                 title: string;
                                 subtitle?: string | null;
                                 align?: ('center' | 'left') | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'heading';
@@ -317,6 +352,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'text';
@@ -333,6 +372,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'image';
@@ -350,6 +393,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'imageText';
@@ -366,6 +413,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'button';
@@ -391,6 +442,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'richtext';
@@ -406,6 +461,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'gallery';
@@ -419,6 +478,10 @@ export interface Page {
                                           title: string;
                                           subtitle?: string | null;
                                           align?: ('center' | 'left') | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'heading';
@@ -432,6 +495,10 @@ export interface Page {
                                            */
                                           bg?: string | null;
                                           alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'text';
@@ -448,6 +515,10 @@ export interface Page {
                                            */
                                           bg?: string | null;
                                           alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'image';
@@ -465,6 +536,10 @@ export interface Page {
                                            */
                                           bg?: string | null;
                                           alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'imageText';
@@ -481,6 +556,10 @@ export interface Page {
                                            */
                                           bg?: string | null;
                                           alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'button';
@@ -506,6 +585,10 @@ export interface Page {
                                            */
                                           bg?: string | null;
                                           alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'richtext';
@@ -521,6 +604,10 @@ export interface Page {
                                            */
                                           bg?: string | null;
                                           alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'gallery';
@@ -560,6 +647,21 @@ export interface Page {
                       blockName?: string | null;
                       blockType: 'slider';
                     }
+                  | {
+                      variant?: ('split' | 'centered') | null;
+                      title?: string | null;
+                      sub?: string | null;
+                      image?: (number | null) | Media;
+                      pattern?: (number | null) | Media;
+                      /**
+                       * 背景图路径/颜色/渐变，留空为白底
+                       */
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'banner';
+                    }
                 )[]
               | null;
             id?: string | null;
@@ -570,6 +672,10 @@ export interface Page {
             title: string;
             subtitle?: string | null;
             align?: ('center' | 'left') | null;
+            /**
+             * 内容内边距(px)，默认0
+             */
+            padding?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'heading';
@@ -583,6 +689,10 @@ export interface Page {
                       title: string;
                       subtitle?: string | null;
                       align?: ('center' | 'left') | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'heading';
@@ -596,6 +706,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'text';
@@ -612,6 +726,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'image';
@@ -629,6 +747,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'imageText';
@@ -645,6 +767,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'button';
@@ -670,6 +796,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'richtext';
@@ -685,6 +815,10 @@ export interface Page {
                        */
                       bg?: string | null;
                       alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'gallery';
@@ -698,6 +832,10 @@ export interface Page {
                                 title: string;
                                 subtitle?: string | null;
                                 align?: ('center' | 'left') | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'heading';
@@ -711,6 +849,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'text';
@@ -727,6 +869,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'image';
@@ -744,6 +890,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'imageText';
@@ -760,6 +910,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'button';
@@ -785,6 +939,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'richtext';
@@ -800,6 +958,10 @@ export interface Page {
                                  */
                                 bg?: string | null;
                                 alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'gallery';
@@ -850,6 +1012,10 @@ export interface Page {
              */
             bg?: string | null;
             alt?: boolean | null;
+            /**
+             * 内容内边距(px)，默认0
+             */
+            padding?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'text';
@@ -866,6 +1032,10 @@ export interface Page {
              */
             bg?: string | null;
             alt?: boolean | null;
+            /**
+             * 内容内边距(px)，默认0
+             */
+            padding?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'image';
@@ -883,6 +1053,10 @@ export interface Page {
              */
             bg?: string | null;
             alt?: boolean | null;
+            /**
+             * 内容内边距(px)，默认0
+             */
+            padding?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'imageText';
@@ -899,6 +1073,10 @@ export interface Page {
              */
             bg?: string | null;
             alt?: boolean | null;
+            /**
+             * 内容内边距(px)，默认0
+             */
+            padding?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'button';
@@ -924,6 +1102,10 @@ export interface Page {
              */
             bg?: string | null;
             alt?: boolean | null;
+            /**
+             * 内容内边距(px)，默认0
+             */
+            padding?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'richtext';
@@ -939,6 +1121,10 @@ export interface Page {
              */
             bg?: string | null;
             alt?: boolean | null;
+            /**
+             * 内容内边距(px)，默认0
+             */
+            padding?: number | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'gallery';
@@ -1099,7 +1285,10 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               bg?: T;
-              padding?: T;
+              paddingTop?: T;
+              paddingRight?: T;
+              paddingBottom?: T;
+              paddingLeft?: T;
               children?:
                 | T
                 | {
@@ -1109,6 +1298,7 @@ export interface PagesSelect<T extends boolean = true> {
                           title?: T;
                           subtitle?: T;
                           align?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1120,6 +1310,7 @@ export interface PagesSelect<T extends boolean = true> {
                           align?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1131,6 +1322,7 @@ export interface PagesSelect<T extends boolean = true> {
                           link?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1143,6 +1335,7 @@ export interface PagesSelect<T extends boolean = true> {
                           link?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1154,6 +1347,7 @@ export interface PagesSelect<T extends boolean = true> {
                           style?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1163,6 +1357,7 @@ export interface PagesSelect<T extends boolean = true> {
                           content?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1178,6 +1373,7 @@ export interface PagesSelect<T extends boolean = true> {
                           columns?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1195,6 +1391,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       title?: T;
                                       subtitle?: T;
                                       align?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1206,6 +1403,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       align?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1217,6 +1415,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       link?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1229,6 +1428,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       link?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1240,6 +1440,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       style?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1249,6 +1450,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       content?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1264,6 +1466,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       columns?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1281,6 +1484,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   title?: T;
                                                   subtitle?: T;
                                                   align?: T;
+                                                  padding?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -1292,6 +1496,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   align?: T;
                                                   bg?: T;
                                                   alt?: T;
+                                                  padding?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -1303,6 +1508,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   link?: T;
                                                   bg?: T;
                                                   alt?: T;
+                                                  padding?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -1315,6 +1521,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   link?: T;
                                                   bg?: T;
                                                   alt?: T;
+                                                  padding?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -1326,6 +1533,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   style?: T;
                                                   bg?: T;
                                                   alt?: T;
+                                                  padding?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -1335,6 +1543,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   content?: T;
                                                   bg?: T;
                                                   alt?: T;
+                                                  padding?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -1350,6 +1559,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   columns?: T;
                                                   bg?: T;
                                                   alt?: T;
+                                                  padding?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -1378,6 +1588,19 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
+                    banner?:
+                      | T
+                      | {
+                          variant?: T;
+                          title?: T;
+                          sub?: T;
+                          image?: T;
+                          pattern?: T;
+                          bg?: T;
+                          alt?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
                   };
               id?: T;
               blockName?: T;
@@ -1388,6 +1611,7 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               subtitle?: T;
               align?: T;
+              padding?: T;
               id?: T;
               blockName?: T;
             };
@@ -1405,6 +1629,7 @@ export interface PagesSelect<T extends boolean = true> {
                           title?: T;
                           subtitle?: T;
                           align?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1416,6 +1641,7 @@ export interface PagesSelect<T extends boolean = true> {
                           align?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1427,6 +1653,7 @@ export interface PagesSelect<T extends boolean = true> {
                           link?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1439,6 +1666,7 @@ export interface PagesSelect<T extends boolean = true> {
                           link?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1450,6 +1678,7 @@ export interface PagesSelect<T extends boolean = true> {
                           style?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1459,6 +1688,7 @@ export interface PagesSelect<T extends boolean = true> {
                           content?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1474,6 +1704,7 @@ export interface PagesSelect<T extends boolean = true> {
                           columns?: T;
                           bg?: T;
                           alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1491,6 +1722,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       title?: T;
                                       subtitle?: T;
                                       align?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1502,6 +1734,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       align?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1513,6 +1746,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       link?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1525,6 +1759,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       link?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1536,6 +1771,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       style?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1545,6 +1781,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       content?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1560,6 +1797,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       columns?: T;
                                       bg?: T;
                                       alt?: T;
+                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1596,6 +1834,7 @@ export interface PagesSelect<T extends boolean = true> {
               align?: T;
               bg?: T;
               alt?: T;
+              padding?: T;
               id?: T;
               blockName?: T;
             };
@@ -1607,6 +1846,7 @@ export interface PagesSelect<T extends boolean = true> {
               link?: T;
               bg?: T;
               alt?: T;
+              padding?: T;
               id?: T;
               blockName?: T;
             };
@@ -1619,6 +1859,7 @@ export interface PagesSelect<T extends boolean = true> {
               link?: T;
               bg?: T;
               alt?: T;
+              padding?: T;
               id?: T;
               blockName?: T;
             };
@@ -1630,6 +1871,7 @@ export interface PagesSelect<T extends boolean = true> {
               style?: T;
               bg?: T;
               alt?: T;
+              padding?: T;
               id?: T;
               blockName?: T;
             };
@@ -1639,6 +1881,7 @@ export interface PagesSelect<T extends boolean = true> {
               content?: T;
               bg?: T;
               alt?: T;
+              padding?: T;
               id?: T;
               blockName?: T;
             };
@@ -1654,6 +1897,7 @@ export interface PagesSelect<T extends boolean = true> {
               columns?: T;
               bg?: T;
               alt?: T;
+              padding?: T;
               id?: T;
               blockName?: T;
             };

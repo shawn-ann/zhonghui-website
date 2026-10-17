@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import { bgField, altField } from './common'
+import { bgField, altField, paddingField } from './common'
 
 export const TextBlock: Block = {
   slug: 'text',
@@ -18,5 +18,6 @@ export const TextBlock: Block = {
     },
     bgField(),
     altField(),
+    paddingField(),
   ],
 }
