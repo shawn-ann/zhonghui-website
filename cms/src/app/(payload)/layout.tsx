@@ -4,9 +4,12 @@ import config from '@payload-config'
 import '@payloadcms/next/css'
 import type { ServerFunctionClient } from 'payload'
 import { handleServerFunctions, RootLayout } from '@payloadcms/next/layouts'
+import { headers } from 'next/headers'
 import React from 'react'
 
 import { importMap } from './admin/importMap.js'
+import RouteSync from '@/components/RouteSync'
+import { isEditorPath } from '@/lib/editorRoute'
 import './custom.scss'
 
 type Args = {
@@ -22,10 +25,20 @@ const serverFunction: ServerFunctionClient = async function (args) {
   })
 }
 
-const Layout = ({ children }: Args) => (
-  <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
-    {children}
-  </RootLayout>
-)
+const Layout = async ({ children }: Args) => {
+  const h = await headers()
+  const isEditor = isEditorPath(h.get('x-pathname'))
+  return (
+    <RootLayout
+      config={config}
+      importMap={importMap}
+      serverFunction={serverFunction}
+      htmlProps={isEditor ? { className: 'ed-route' } : undefined}
+    >
+      <RouteSync />
+      {children}
+    </RootLayout>
+  )
+}
 
 export default Layout

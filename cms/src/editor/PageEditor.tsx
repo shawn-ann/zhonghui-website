@@ -37,11 +37,6 @@ export default function PageEditor({ id }: { id: number | string }) {
 
   useEffect(() => () => clearTimeout(timer.current), [])
 
-  useEffect(() => {
-    document.body.classList.add('ed-active')
-    return () => document.body.classList.remove('ed-active')
-  }, [])
-
   const persist = useCallback(
     (d: EditorDoc, version?: number) =>
       savePage(id, {
