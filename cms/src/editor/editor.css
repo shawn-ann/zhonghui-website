@@ -351,3 +351,14 @@
   object-fit: cover;
   display: block;
 }
+
+/* Structure tree */
+.ed-tree { padding: 8px; border-top: 1px solid #eee; overflow: auto; }
+.ed-tree-row { display: flex; align-items: center; gap: 6px; padding: 4px 6px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+.ed-tree-row:hover { background: #f4f4f4; }
+.ed-tree-row.is-selected { background: #e7f0ff; box-shadow: inset 3px 0 0 #1E6FFF; }
+.ed-tree-caret { width: 14px; background: none; border: 0; cursor: pointer; color: #888; padding: 0; }
+.ed-tree-label { color: #333; }
+.ed-tree-summary { color: #aaa; font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ed-tree-del { margin-left: auto; border: 0; background: none; color: #bbb; cursor: pointer; }
+.ed-tree-row:hover .ed-tree-del { color: #E60039; }
