@@ -182,10 +182,6 @@ export interface Page {
              * 背景图路径/颜色/渐变
              */
             bg?: string | null;
-            paddingTop?: number | null;
-            paddingRight?: number | null;
-            paddingBottom?: number | null;
-            paddingLeft?: number | null;
             children?:
               | (
                   | {
@@ -1285,10 +1281,6 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               bg?: T;
-              paddingTop?: T;
-              paddingRight?: T;
-              paddingBottom?: T;
-              paddingLeft?: T;
               children?:
                 | T
                 | {

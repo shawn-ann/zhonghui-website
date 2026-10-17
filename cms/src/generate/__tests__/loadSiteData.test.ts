@@ -89,15 +89,13 @@ describe('mapBlock', () => {
     const b = mapBlock({ blockType: 'text' }, resolve) as any
     expect(b.body).toBe('')
   })
-  it('maps section 4-direction padding to flat fields', () => {
+  it('maps section without padding fields', () => {
     const b = mapBlock({ blockType: 'section', paddingTop: 60, paddingBottom: 120 }, resolve) as any
-    expect(b).toMatchObject({
-      type: 'section',
-      paddingTop: 60,
-      paddingRight: 0,
-      paddingBottom: 120,
-      paddingLeft: 0,
-    })
+    expect(b).toMatchObject({ type: 'section' })
+    expect(b).not.toHaveProperty('paddingTop')
+    expect(b).not.toHaveProperty('paddingBottom')
+    expect(b).not.toHaveProperty('paddingLeft')
+    expect(b).not.toHaveProperty('paddingRight')
   })
   it('maps content block padding', () => {
     const b = mapBlock({ blockType: 'text', body: 'x', padding: 16 }, resolve) as any

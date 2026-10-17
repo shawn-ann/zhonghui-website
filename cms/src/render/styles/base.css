@@ -19,6 +19,7 @@ body {
 }
 a { text-decoration: none; color: inherit; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.container--full { padding-left: 0; padding-right: 0; }
 
 /* ===== 顶部导航栏 ===== */
 header {

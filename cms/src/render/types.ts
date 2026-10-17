@@ -88,10 +88,6 @@ export interface SliderBlock extends BlockBase {
 
 export interface SectionBlock extends BlockBase {
   type: 'section'
-  paddingTop?: number
-  paddingRight?: number
-  paddingBottom?: number
-  paddingLeft?: number
   children: Block[]
 }
 

@@ -61,7 +61,7 @@ describe('editorToPayloadBlocks', () => {
     expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', id: 't2' })
   })
 
-  it('round-trips section 4-direction padding', () => {
+  it('round-trips section without padding fields', () => {
     const raw = {
       id: 1,
       title: 't',
@@ -77,9 +77,11 @@ describe('editorToPayloadBlocks', () => {
       }],
     }
     const ed = docToEditorDoc(raw)
-    expect(ed.blocks[0]).toMatchObject({ type: 'section', paddingTop: 60, paddingRight: 10, paddingBottom: 120, paddingLeft: 20 })
+    expect(ed.blocks[0]).toMatchObject({ type: 'section' })
+    expect(ed.blocks[0]).not.toHaveProperty('paddingTop')
     const back = editorToPayloadBlocks(ed.blocks, new Map())
-    expect(back[0]).toMatchObject({ blockType: 'section', paddingTop: 60, paddingRight: 10, paddingBottom: 120, paddingLeft: 20 })
+    expect(back[0]).toMatchObject({ blockType: 'section' })
+    expect(back[0]).not.toHaveProperty('paddingTop')
     expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', padding: 8 })
   })
 

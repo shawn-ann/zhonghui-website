@@ -104,10 +104,6 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'section':
-      out.paddingTop = b.paddingTop ?? 72
-      out.paddingRight = b.paddingRight ?? 0
-      out.paddingBottom = b.paddingBottom ?? 72
-      out.paddingLeft = b.paddingLeft ?? 0
       out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'grid':

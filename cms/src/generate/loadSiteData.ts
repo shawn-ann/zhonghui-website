@@ -17,10 +17,6 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
         .filter((x): x is Block => x !== null)
       return {
         type: 'section',
-        paddingTop: raw.paddingTop ?? 72,
-        paddingRight: raw.paddingRight ?? 0,
-        paddingBottom: raw.paddingBottom ?? 72,
-        paddingLeft: raw.paddingLeft ?? 0,
         bg,
         alt,
         children,

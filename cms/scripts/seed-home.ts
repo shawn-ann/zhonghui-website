@@ -64,10 +64,6 @@ const advantages = [
 const blocks: any[] = [
   {
     blockType: 'section',
-    paddingTop: 60,
-    paddingRight: 0,
-    paddingBottom: 120,
-    paddingLeft: 0,
     children: [
       {
         blockType: 'banner',
@@ -82,7 +78,6 @@ const blocks: any[] = [
   {
     blockType: 'section',
     bg: '/assets/bg2.jpg',
-    paddingTop: 72, paddingRight: 0, paddingBottom: 72, paddingLeft: 0,
     children: [
       { blockType: 'heading', title: '项目一览', align: 'center' },
       {
@@ -96,7 +91,6 @@ const blocks: any[] = [
   {
     blockType: 'section',
     bg: '#FFF1F6',
-    paddingTop: 72, paddingRight: 0, paddingBottom: 72, paddingLeft: 0,
     children: [
       { blockType: 'heading', title: '中惠优势', align: 'center' },
       {
@@ -110,7 +104,6 @@ const blocks: any[] = [
   {
     blockType: 'section',
     bg: '/assets/yinji-bg.jpg',
-    paddingTop: 72, paddingRight: 0, paddingBottom: 72, paddingLeft: 0,
     children: [
       { blockType: 'heading', title: '中惠印记', align: 'center' },
       { blockType: 'slider', images: mem.map((id) => ({ image: id })) },
