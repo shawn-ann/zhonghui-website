@@ -4,7 +4,8 @@ import { renderDocument } from '../render/document'
 import type { EditorDoc, Block } from './types'
 
 export const CANVAS_STYLE =
-  '.ed-selected{outline:3px solid #1E6FFF;outline-offset:-3px;background:rgba(30,111,255,.08)}' +
+  '.ed-selected{position:relative}' +
+  '.ed-selected::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9999;outline:3px solid #1E6FFF;outline-offset:-3px;background:rgba(30,111,255,.06)}' +
   '.ed-hover{outline:2px dashed #1E6FFF;outline-offset:-2px}'
 
 const WRAP_PAD = 12

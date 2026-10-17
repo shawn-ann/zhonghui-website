@@ -25,7 +25,8 @@ describe('Canvas', () => {
   it('uses blue selection + hover style', () => {
     expect(CANVAS_STYLE).toContain('#1E6FFF')
     expect(CANVAS_STYLE).toContain('ed-hover')
-    expect(CANVAS_STYLE).toContain('rgba(30,111,255,.08)')
+    expect(CANVAS_STYLE).toContain('rgba(30,111,255,.06)')
+    expect(CANVAS_STYLE).toContain('ed-selected::after')
   })
 
   it('renders the iframe at the given device width', () => {
