@@ -229,6 +229,7 @@
 .ed-ctl-inline > span {
   margin: 0;
 }
+.ed-bg-swatch { width: 28px; height: 20px; border: 1px solid #ddd; border-radius: 3px; display: inline-block; }
 .ed-media-row {
   display: flex;
   align-items: center;

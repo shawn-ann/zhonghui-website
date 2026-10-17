@@ -28,8 +28,26 @@ export function BooleanControl({ label, value, onChange }: Base & V<boolean>) {
 export function LinkControl({ label, value, onChange }: Base & V<string>) {
   return <label className="ed-ctl"><span>{label}</span><input placeholder="/path/ 或 https://…" value={value ?? ''} onChange={(e) => onChange(e.target.value)} /></label>
 }
-export function BgControl({ label, value, onChange }: Base & V<string>) {
-  return <label className="ed-ctl"><span>{label}</span><input placeholder="图片路径 / 颜色 / 渐变" value={value ?? ''} onChange={(e) => onChange(e.target.value)} /></label>
+export function BgControl({ label, value, onChange, onPick }: Base & V<string> & { onPick?: () => void }) {
+  const v = value ?? ''
+  const isImage = !!v && !/^(#|var\(|rgb|hsl|linear-gradient|radial-gradient)/i.test(v)
+  return (
+    <div className="ed-ctl">
+      <span>{label}</span>
+      <div className="ed-media-row">
+        {isImage
+          ? <img className="ed-media-thumb" src={v} alt="" />
+          : <span className="ed-bg-swatch" style={{ background: v || '#fff' }} />}
+        <button type="button" onClick={onPick}>选择图片</button>
+        {v ? <button type="button" onClick={() => onChange('')}>清除</button> : null}
+      </div>
+      <input
+        placeholder="或输入颜色/渐变（如 #FFF1F6 / linear-gradient(…)）"
+        value={isImage ? '' : v}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  )
 }
 export function MediaControl({ label, value, onChange, onPick }: Base & V<string> & { onPick: () => void }) {
   return (

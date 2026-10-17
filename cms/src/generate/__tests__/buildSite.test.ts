@@ -32,6 +32,15 @@ describe('generateSite', () => {
     }
     expect([...collectMediaUrls(d)]).toContain('/api/media/file/a.jpg')
   })
+  it('collects media from section/block bg', () => {
+    const d = { pages: [{ title: 't', route: '/', blocks: [
+      { type: 'section', padding: 'md', bg: '/api/media/file/bg.jpg', children: [] },
+      { type: 'grid', columns: 2, bg: '/api/media/file/g.jpg', children: [] },
+    ] }] } as any
+    const urls = [...collectMediaUrls(d)]
+    expect(urls).toContain('/api/media/file/bg.jpg')
+    expect(urls).toContain('/api/media/file/g.jpg')
+  })
   it('collects media urls from section children (incl. nested grid/slider)', () => {
     const d: SiteData = {
       pages: [{

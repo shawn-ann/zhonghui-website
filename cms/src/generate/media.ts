@@ -24,6 +24,7 @@ export function collectMediaUrls(data: SiteData): Set<string> {
           break
         }
       }
+      add((b as { bg?: string }).bg)
     }
   }
   data.pages.forEach((p) => walk(p.blocks))
