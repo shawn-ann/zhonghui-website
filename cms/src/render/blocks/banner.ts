@@ -9,7 +9,7 @@ export function renderBanner(b: BannerBlock): string {
   const idAttr = b._id ? ` data-bid="${esc(b._id)}"` : ''
   if (b.variant === 'centered') {
     const style = bgStyle(b.image) || bgStyle(b.bg)
-    const inner = `<div class="container container--full cover"${idAttr}>
+    const inner = `<div class="container cover"${idAttr}>
       ${b.title ? `<h1 data-field="title">${esc(b.title)}</h1>` : ''}
       ${b.sub ? `<div class="sub" data-field="sub">${esc(b.sub)}</div>` : ''}
     </div>`
@@ -17,7 +17,7 @@ export function renderBanner(b: BannerBlock): string {
   }
   const img = safeUrl(b.image)
   const pattern = b.pattern ? safeUrl(b.pattern) : ''
-  const inner = `<div class="container container--full banner-grid"${idAttr}>
+  const inner = `<div class="container banner-grid"${idAttr}>
     <div class="banner-text">
       ${b.title ? `<h1 data-field="title">${esc(b.title)}</h1>` : ''}
       ${b.sub ? `<p class="sub" data-field="sub">${esc(b.sub)}</p>` : ''}
