@@ -64,10 +64,24 @@ export default function Canvas({
     setToolbar({ top: rect.top * scale + WRAP_PAD, left: rect.left * scale + WRAP_PAD })
   }, [scale])
 
+  // 选中区块时，将 iframe 内部滚动到该区块（并把外层容器回到顶部，保证 iframe 可见）。
+  const scrollToSelected = useCallback((id?: string) => {
+    const frame = ref.current
+    const win = frame?.contentWindow
+    const d = frame?.contentDocument
+    if (!frame || !win || !d || !id) return
+    const el = d.querySelector(`[data-bid="${id}"]`) as HTMLElement | null
+    if (!el) return
+    const top = el.getBoundingClientRect().top + win.scrollY
+    win.scrollTo({ top: Math.max(0, top - 80), behavior: 'auto' })
+    wrapRef.current?.scrollTo({ top: 0 })
+  }, [])
+
   useEffect(() => {
     applySelection(selectedId)
+    scrollToSelected(selectedId)
     updateToolbar(selectedId)
-  }, [selectedId, applySelection, updateToolbar])
+  }, [selectedId, applySelection, scrollToSelected, updateToolbar])
 
   const handleLoad = () => {
     const frame = ref.current
@@ -138,6 +152,7 @@ export default function Canvas({
       })
     })
     applySelection(selectedId)
+    scrollToSelected(selectedId)
     updateToolbar(selectedId)
     const h = d.body?.scrollHeight || d.documentElement?.scrollHeight || 0
     if (h) setContentHeight(h)
