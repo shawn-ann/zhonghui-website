@@ -11,8 +11,8 @@ export function renderSlider(b: SliderBlock): string {
     )
     .join('')
   const idAttr = b._id ? ` data-bid="${esc(b._id)}"` : ''
-  return `<div class="memory-slider"${idAttr}>
-    <div class="container container--full">
+  return `<div class="memory-slider">
+    <div class="container container--full"${idAttr}>
       <div class="swiper memory-swiper">
         <div class="swiper-wrapper">${slides}</div>
         <span class="memory-arrow prev"><svg viewBox="0 0 27 44"><path d="M22,0l4.2,4.2L8.4,22l17.8,17.8L22,44L0,22L22,0z" fill="#fff"></path></svg></span>
