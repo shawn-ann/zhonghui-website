@@ -70,13 +70,14 @@ function collectIds(blocks: Block[], out: Set<string> = new Set()): Set<string> 
 }
 
 export default function StructureTree({
-  blocks, selectedId, onSelect, onDelete, onMoveTop,
+  blocks, selectedId, onSelect, onDelete, onMoveTop, onAddSection,
 }: {
   blocks: Block[]
   selectedId?: string
   onSelect: (id: string) => void
   onDelete: (id: string) => void
   onMoveTop?: (index: number, dir: -1 | 1) => void
+  onAddSection?: () => void
 }) {
   const [expanded, setExpanded] = useState<Set<string>>(() => collectIds(blocks))
   const known = useRef<Set<string>>(new Set(collectIds(blocks)))
@@ -91,7 +92,10 @@ export default function StructureTree({
   const toggle = (id: string) => setExpanded((s) => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n })
   return (
     <div className="ed-tree">
-      <div className="ed-label">结构</div>
+      <div className="ed-tree-head">
+        <span className="ed-label">结构</span>
+        {onAddSection ? <button className="ed-tree-add" type="button" onClick={onAddSection}>＋ 分栏</button> : null}
+      </div>
       {blocks.length === 0 ? <p className="ed-muted">暂无区块</p> : null}
       {blocks.map((b, i) => (
         <Node

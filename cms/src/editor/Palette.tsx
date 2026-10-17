@@ -66,7 +66,7 @@ export default function Palette({ onAdd }: { onAdd: (type: Block['type']) => voi
     <aside className="ed-palette">
       <div className="ed-label">组件（拖入画布）</div>
       <div className="ed-palette-grid">
-        {PAGE_BLOCKS.filter((t) => BLOCKS[t]).map((t) => (
+        {PAGE_BLOCKS.filter((t) => t !== 'section' && BLOCKS[t]).map((t) => (
           <button
             key={t}
             className="ed-palette-item"

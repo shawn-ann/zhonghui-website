@@ -373,3 +373,8 @@
 .ed-tree-move { font-size: 11px; }
 .ed-tree-move:disabled { opacity: .35; cursor: default; }
 .ed-tree-del { border: 0; background: none; color: #bbb; cursor: pointer; }
+
+/* 结构面板头部与新增分栏 */
+.ed-tree-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.ed-tree-add { font-size: 11px; border: 1px solid #E60039; color: #E60039; background: #fff; border-radius: 4px; padding: 2px 8px; cursor: pointer; }
+.ed-tree-add:hover { background: #E60039; color: #fff; }

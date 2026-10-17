@@ -9,7 +9,7 @@ import TopBar from './TopBar'
 import { BLOCKS } from './blocks'
 import { getPage, savePage, publishPage, listMedia, type MediaItem } from './api'
 import {
-  addBlock, ensureIds, moveBlock,
+  addBlock, ensureIds, moveBlock, newId,
   findPath, getAtPath, updateAtPath, removeAtPath, insertInto,
   blockChildren, withChildren, childPath, moveChild,
 } from './state'
@@ -77,6 +77,12 @@ export default function PageEditor({ id }: { id: number | string }) {
     if (p) update(removeAtPath(doc.blocks, p))
   }
 
+  const addSection = () => {
+    const block = { ...BLOCKS.section.defaults(), _id: newId() } as Block
+    update(addBlock(doc.blocks, block))
+    setSelectedId(block._id)
+  }
+
   const saveNow = () => {
     clearTimeout(timer.current)
     persist(doc, editVersion.current)
@@ -112,6 +118,7 @@ export default function PageEditor({ id }: { id: number | string }) {
             onSelect={setSelectedId}
             onDelete={deleteBlock}
             onMoveTop={(i, dir) => update(moveChild(doc.blocks, i, dir))}
+            onAddSection={addSection}
           />
         </div>
         <Canvas
