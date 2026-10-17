@@ -111,6 +111,7 @@ export default function PageEditor({ id }: { id: number | string }) {
             selectedId={selectedId}
             onSelect={setSelectedId}
             onDelete={deleteBlock}
+            onMoveTop={(i, dir) => update(moveChild(doc.blocks, i, dir))}
           />
         </div>
         <Canvas

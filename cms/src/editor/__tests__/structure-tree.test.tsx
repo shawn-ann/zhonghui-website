@@ -13,16 +13,23 @@ const blocks: any[] = [
 describe('StructureTree', () => {
   it('renders hierarchy with summaries', () => {
     render(<StructureTree blocks={blocks} onSelect={() => {}} onDelete={() => {}} />)
-    expect(screen.getByText('项目一览')).toBeTruthy()
+    expect(screen.getAllByText('项目一览').length).toBeGreaterThan(0)
     expect(screen.getByText('美国 AuPair')).toBeTruthy()
   })
   it('selects on click and deletes via ✕', () => {
     const onSelect = vi.fn(); const onDelete = vi.fn()
     render(<StructureTree blocks={blocks} onSelect={onSelect} onDelete={onDelete} />)
-    fireEvent.click(screen.getByText('项目一览'))
+    fireEvent.click(screen.getAllByText('项目一览')[0])
     expect(onSelect).toHaveBeenCalled()
     const delBtns = screen.getAllByTitle('删除')
     fireEvent.click(delBtns[0])
     expect(onDelete).toHaveBeenCalled()
+  })
+  it('shows top-level move buttons and calls onMoveTop', () => {
+    const onMoveTop = vi.fn()
+    const two: any[] = [...blocks, { type: 'text', _id: 't2', body: 'x' }]
+    render(<StructureTree blocks={two} onSelect={() => {}} onDelete={() => {}} onMoveTop={onMoveTop} />)
+    fireEvent.click(screen.getAllByTitle('下移')[0])
+    expect(onMoveTop).toHaveBeenCalledWith(0, 1)
   })
 })

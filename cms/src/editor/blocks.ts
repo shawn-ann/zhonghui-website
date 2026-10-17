@@ -1,4 +1,5 @@
 import type { Block } from './types'
+import { newId } from './state'
 
 export interface FieldDef {
   key: string
@@ -61,7 +62,9 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '居中', value: 'center' }, { label: '左对齐', value: 'left' }] },
     { key: 'padding', label: '内边距', control: 'number' },
   ] },
-  section: { type: 'section', label: '分栏', defaults: () => ({ type: 'section', paddingY: 'md', children: [] }), fields: [
+  section: { type: 'section', label: '分栏', defaults: () => ({ type: 'section', paddingY: 'md', children: [
+    { type: 'heading', title: '新分栏', align: 'center', _id: newId() },
+  ] }), fields: [
     { key: 'bg', label: '背景', control: 'bg' },
     { key: 'paddingY', label: '垂直内边距', control: 'select', options: [{ label: '无', value: 'none' }, { label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
   ] },
@@ -95,7 +98,11 @@ export function blockSummary(b: Block): string {
     case 'gallery': return `图集 · ${b.images.length} 张`
     case 'slider': return `轮播 · ${b.images.length} 张`
     case 'grid': return `网格 · ${b.columns} 列`
-    case 'section': return '分栏'
+    case 'section': {
+      const first = (b.children || [])[0]
+      const titled = first && (first.type === 'heading' || first.type === 'text') ? (first as { title?: string }).title : ''
+      return titled || '分栏'
+    }
     case 'banner': return b.title || '横幅'
     case 'richtext': return '富文本'
     default: return (b as { type: string }).type

@@ -367,5 +367,9 @@
 .ed-tree-caret { width: 14px; background: none; border: 0; cursor: pointer; color: #888; padding: 0; }
 .ed-tree-label { color: #333; }
 .ed-tree-summary { color: #aaa; font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ed-tree-del { margin-left: auto; border: 0; background: none; color: #bbb; cursor: pointer; }
-.ed-tree-row:hover .ed-tree-del { color: #E60039; }
+.ed-tree-actions { margin-left: auto; display: flex; align-items: center; gap: 2px; }
+.ed-tree-actions button { border: 0; background: none; color: #bbb; cursor: pointer; padding: 0 2px; }
+.ed-tree-row:hover .ed-tree-actions button { color: #E60039; }
+.ed-tree-move { font-size: 11px; }
+.ed-tree-move:disabled { opacity: .35; cursor: default; }
+.ed-tree-del { border: 0; background: none; color: #bbb; cursor: pointer; }
