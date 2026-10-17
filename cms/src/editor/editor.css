@@ -25,10 +25,15 @@
   color: #9a8c93;
 }
 .ed-actions {
-  margin-left: auto;
   display: flex;
   gap: 8px;
 }
+
+.ed-spacer { flex: 1 1 auto; }
+.ed-docnav { display: flex; gap: 14px; font-size: 13px; }
+.ed-docnav a { color: #666; text-decoration: none; }
+.ed-docnav a:hover { color: #1E6FFF; }
+.ed-docnav a.is-active { color: #1E6FFF; font-weight: 600; }
 .ed-actions button {
   font-size: 13px;
   padding: 6px 14px;

@@ -4,8 +4,9 @@ import React from 'react'
 type Device = 'desktop' | 'tablet' | 'mobile'
 
 export default function TopBar({
-  title, status, dirty, onSave, onPublish, onPreview, device = 'desktop', onDeviceChange,
+  id, title, status, dirty, onSave, onPublish, onPreview, device = 'desktop', onDeviceChange,
 }: {
+  id: number | string
   title: string
   status?: 'draft' | 'published'
   dirty: boolean
@@ -24,6 +25,12 @@ export default function TopBar({
     <div className="ed-topbar">
       <span className="ed-title">页面：{title}</span>
       <span className="ed-status">{status === 'published' ? '已发布' : '草稿'}{dirty ? ' · 未保存' : ''}</span>
+      <span className="ed-spacer" />
+      <nav className="ed-docnav">
+        <a className="is-active" href={`/admin/collections/pages/${id}`}>编辑</a>
+        <a href={`/admin/collections/pages/${id}/versions`}>版本</a>
+        <a href={`/admin/collections/pages/${id}/api`}>API</a>
+      </nav>
       <div className="ed-device">
         {devices.map((d) => (
           <button

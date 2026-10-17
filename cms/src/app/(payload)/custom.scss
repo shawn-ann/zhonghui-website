@@ -1,0 +1,5 @@
+/* 仅在可视化编辑器挂载时（body.ed-active）隐藏 Payload 默认文档头，
+   改由编辑器自定义 TopBar 统一呈现单行头部；其它集合的编辑页不受影响。 */
+body.ed-active .doc-header {
+  display: none !important;
+}
