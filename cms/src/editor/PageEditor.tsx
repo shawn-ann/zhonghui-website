@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import './editor.css'
 import Palette from './Palette'
+import StructureTree from './StructureTree'
 import Canvas from './Canvas'
 import PropertyPanel from './PropertyPanel'
 import TopBar from './TopBar'
@@ -71,6 +72,12 @@ export default function PageEditor({ id }: { id: number | string }) {
   if (!doc) return <div className="ed-loading">加载中…</div>
   const selectedPath = selectedId ? findPath(doc.blocks, selectedId) : null
   const selected = selectedPath ? getAtPath(doc.blocks, selectedPath) : undefined
+  const selectedLabel = selected ? BLOCKS[selected.type]?.label : undefined
+
+  const deleteBlock = (bid: string) => {
+    const p = findPath(doc.blocks, bid)
+    if (p) update(removeAtPath(doc.blocks, p))
+  }
 
   const saveNow = () => {
     clearTimeout(timer.current)
@@ -100,10 +107,19 @@ export default function PageEditor({ id }: { id: number | string }) {
         onDeviceChange={setDevice}
       />
       <div className="ed-body">
-        <Palette onAdd={(type) => update(addBlock(doc.blocks, BLOCKS[type].defaults()))} />
+        <div className="ed-left">
+          <Palette onAdd={(type) => update(addBlock(doc.blocks, BLOCKS[type].defaults()))} />
+          <StructureTree
+            blocks={doc.blocks}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
+            onDelete={deleteBlock}
+          />
+        </div>
         <Canvas
           doc={doc}
           selectedId={selectedId}
+          selectedLabel={selectedLabel}
           onSelect={setSelectedId}
           onEditField={(bid, field, value) => {
             const p = findPath(doc.blocks, bid)
@@ -112,10 +128,7 @@ export default function PageEditor({ id }: { id: number | string }) {
           }}
           onReorder={(from, to) => update(moveBlock(doc.blocks, from, to))}
           onAddAt={(type, index) => update(addBlock(doc.blocks, BLOCKS[type].defaults(), index))}
-          onDelete={(bid) => {
-            const p = findPath(doc.blocks, bid)
-            if (p) update(removeAtPath(doc.blocks, p))
-          }}
+          onDelete={deleteBlock}
           deviceWidth={deviceWidth}
         />
         <PropertyPanel
