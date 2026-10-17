@@ -1,5 +1,8 @@
-/* 仅在可视化编辑器挂载时（body.ed-active）隐藏 Payload 默认文档头，
-   改由编辑器自定义 TopBar 统一呈现单行头部；其它集合的编辑页不受影响。 */
+/* 仅在可视化编辑器挂载时（body.ed-active）隐藏 Payload 默认头部：
+   - app-header：全局栏（汉堡/品牌/账号）→ 其功能并入编辑器 TopBar
+   - doc-header：文档头（大标题 + 编辑/版本/API 标签）
+   其它集合的编辑页不受影响。 */
+body.ed-active .app-header,
 body.ed-active .doc-header {
   display: none !important;
 }

@@ -44,6 +44,7 @@ export default function TopBar({
         ))}
       </div>
       <div className="ed-actions">
+        <a className="ed-account" href="/admin/account" title="账号">账号</a>
         <button onClick={onPreview}>预览</button>
         <button onClick={onSave}>保存</button>
         <button className="ed-publish" onClick={onPublish}>发布</button>
