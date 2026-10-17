@@ -55,8 +55,9 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '居中', value: 'center' }, { label: '左对齐', value: 'left' }] },
     { key: 'padding', label: '内边距', control: 'number' },
   ] },
-  section: { type: 'section', label: '分栏', defaults: () => ({ type: 'section', children: [] }), fields: [
+  section: { type: 'section', label: '分栏', defaults: () => ({ type: 'section', paddingY: 'md', children: [] }), fields: [
     { key: 'bg', label: '背景', control: 'bg' },
+    { key: 'paddingY', label: '垂直内边距', control: 'select', options: [{ label: '无', value: 'none' }, { label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
   ] },
 }
 

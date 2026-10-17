@@ -89,7 +89,13 @@ describe('mapBlock', () => {
     const b = mapBlock({ blockType: 'text' }, resolve) as any
     expect(b.body).toBe('')
   })
-  it('maps section without padding fields', () => {
+  it('maps section paddingY and defaults to md', () => {
+    const b = mapBlock({ blockType: 'section', paddingY: 'none' }, resolve) as any
+    expect(b).toMatchObject({ type: 'section', paddingY: 'none' })
+    const d = mapBlock({ blockType: 'section' }, resolve) as any
+    expect(d.paddingY).toBe('md')
+  })
+  it('ignores legacy per-side section padding fields', () => {
     const b = mapBlock({ blockType: 'section', paddingTop: 60, paddingBottom: 120 }, resolve) as any
     expect(b).toMatchObject({ type: 'section' })
     expect(b).not.toHaveProperty('paddingTop')

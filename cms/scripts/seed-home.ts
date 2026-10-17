@@ -64,6 +64,7 @@ const advantages = [
 const blocks: any[] = [
   {
     blockType: 'section',
+    paddingY: 'none',
     children: [
       {
         blockType: 'banner',
@@ -77,6 +78,7 @@ const blocks: any[] = [
   },
   {
     blockType: 'section',
+    paddingY: 'md',
     bg: '/assets/bg2.jpg',
     children: [
       { blockType: 'heading', title: '项目一览', align: 'center' },
@@ -90,6 +92,7 @@ const blocks: any[] = [
   },
   {
     blockType: 'section',
+    paddingY: 'md',
     bg: '#FFF1F6',
     children: [
       { blockType: 'heading', title: '中惠优势', align: 'center' },
@@ -103,6 +106,7 @@ const blocks: any[] = [
   },
   {
     blockType: 'section',
+    paddingY: 'md',
     bg: '/assets/yinji-bg.jpg',
     children: [
       { blockType: 'heading', title: '中惠印记', align: 'center' },

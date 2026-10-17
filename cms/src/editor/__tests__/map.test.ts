@@ -61,7 +61,7 @@ describe('editorToPayloadBlocks', () => {
     expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', id: 't2' })
   })
 
-  it('round-trips section without padding fields', () => {
+  it('round-trips section paddingY and ignores legacy per-side padding', () => {
     const raw = {
       id: 1,
       title: 't',
@@ -69,6 +69,7 @@ describe('editorToPayloadBlocks', () => {
       blocks: [{
         id: 's1',
         blockType: 'section',
+        paddingY: 'none',
         paddingTop: 60,
         paddingRight: 10,
         paddingBottom: 120,
@@ -77,12 +78,20 @@ describe('editorToPayloadBlocks', () => {
       }],
     }
     const ed = docToEditorDoc(raw)
-    expect(ed.blocks[0]).toMatchObject({ type: 'section' })
+    expect(ed.blocks[0]).toMatchObject({ type: 'section', paddingY: 'none' })
     expect(ed.blocks[0]).not.toHaveProperty('paddingTop')
     const back = editorToPayloadBlocks(ed.blocks, new Map())
-    expect(back[0]).toMatchObject({ blockType: 'section' })
+    expect(back[0]).toMatchObject({ blockType: 'section', paddingY: 'none' })
     expect(back[0]).not.toHaveProperty('paddingTop')
     expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', padding: 8 })
+  })
+
+  it('defaults section paddingY to md when missing', () => {
+    const raw = { id: 1, title: 't', route: '/', blocks: [{ id: 's1', blockType: 'section', children: [] }] }
+    const ed = docToEditorDoc(raw)
+    expect(ed.blocks[0]).toMatchObject({ type: 'section', paddingY: 'md' })
+    const back = editorToPayloadBlocks(ed.blocks, new Map())
+    expect(back[0]).toMatchObject({ blockType: 'section', paddingY: 'md' })
   })
 
   it('round-trips grid children through the editor document', () => {

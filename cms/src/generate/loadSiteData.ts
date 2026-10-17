@@ -19,6 +19,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
         type: 'section',
         bg,
         alt,
+        paddingY: raw.paddingY || 'md',
         children,
       }
     }

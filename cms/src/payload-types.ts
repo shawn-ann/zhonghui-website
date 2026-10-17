@@ -182,6 +182,7 @@ export interface Page {
              * 背景图路径/颜色/渐变
              */
             bg?: string | null;
+            paddingY?: ('none' | 'sm' | 'md' | 'lg') | null;
             children?:
               | (
                   | {
@@ -1281,6 +1282,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               bg?: T;
+              paddingY?: T;
               children?:
                 | T
                 | {

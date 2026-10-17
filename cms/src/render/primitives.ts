@@ -12,13 +12,18 @@ export function safeUrl(url?: string): string {
   return ['http', 'https', 'mailto', 'tel'].includes(scheme) ? v : ''
 }
 
-export function bgStyle(bg?: string): string {
+export function bgDecl(bg?: string): string {
   if (!bg) return ''
   const v = String(bg).trim()
   if (!v) return ''
-  if (/^(linear-gradient|radial-gradient)/i.test(v)) return `style="background:${esc(v)};"`
-  if (/^(#|var\(|rgb|hsl)/i.test(v)) return `style="background:${esc(v)};"`
+  if (/^(linear-gradient|radial-gradient)/i.test(v)) return `background:${esc(v)};`
+  if (/^(#|var\(|rgb|hsl)/i.test(v)) return `background:${esc(v)};`
   if (/\/|\.(png|jpe?g|gif|webp|svg)(\?|$)/i.test(v))
-    return `style="background-image:url('${esc(v)}');background-size:cover;background-position:center;"`
-  return `style="background:${esc(v)};"`
+    return `background-image:url('${esc(v)}');background-size:cover;background-position:center;`
+  return `background:${esc(v)};`
+}
+
+export function bgStyle(bg?: string): string {
+  const decl = bgDecl(bg)
+  return decl ? `style="${decl}"` : ''
 }
