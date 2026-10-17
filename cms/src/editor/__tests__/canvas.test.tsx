@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, it, expect } from 'vitest'
 import { render } from '@testing-library/react'
-import Canvas from '../Canvas'
+import Canvas, { CANVAS_STYLE } from '../Canvas'
 import type { EditorDoc } from '../types'
 
 const doc: EditorDoc = {
@@ -20,6 +20,12 @@ describe('Canvas', () => {
       <Canvas doc={doc} onSelect={() => {}} onEditField={() => {}} />
     )
     expect(container.querySelector('iframe')).toBeTruthy()
+  })
+
+  it('uses blue selection + hover style', () => {
+    expect(CANVAS_STYLE).toContain('#1E6FFF')
+    expect(CANVAS_STYLE).toContain('ed-hover')
+    expect(CANVAS_STYLE).toContain('rgba(30,111,255,.08)')
   })
 
   it('renders the iframe at the given device width', () => {

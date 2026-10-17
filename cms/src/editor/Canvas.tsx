@@ -3,15 +3,18 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { renderDocument } from '../render/document'
 import type { EditorDoc, Block } from './types'
 
-const OUTLINE = 'outline:2px solid #E60039'
+export const CANVAS_STYLE =
+  '.ed-selected{outline:3px solid #1E6FFF;outline-offset:-3px;background:rgba(30,111,255,.08)}' +
+  '.ed-hover{outline:2px dashed #1E6FFF;outline-offset:-2px}'
 
 const WRAP_PAD = 12
 
 export default function Canvas({
-  doc, selectedId, onSelect, onEditField, onReorder, onAddAt, onDelete, deviceWidth = 1280,
+  doc, selectedId, selectedLabel, onSelect, onEditField, onReorder, onAddAt, onDelete, deviceWidth = 1280,
 }: {
   doc: EditorDoc
   selectedId?: string
+  selectedLabel?: string
   onSelect: (id: string) => void
   onEditField: (blockId: string, field: string, value: string) => void
   onReorder?: (from: number, to: number) => void
@@ -44,7 +47,9 @@ export default function Canvas({
     const d = ref.current?.contentDocument
     if (!d) return
     d.querySelectorAll('[data-bid]').forEach((el) => {
-      el.classList.toggle('ed-selected', el.getAttribute('data-bid') === id)
+      const isSelected = el.getAttribute('data-bid') === id
+      el.classList.toggle('ed-selected', isSelected)
+      if (isSelected) el.classList.remove('ed-hover')
     })
   }, [])
 
@@ -70,7 +75,7 @@ export default function Canvas({
     if (!d.getElementById('ed-canvas-style')) {
       const s = d.createElement('style')
       s.id = 'ed-canvas-style'
-      s.textContent = `.ed-selected{${OUTLINE};outline-offset:-2px}`
+      s.textContent = CANVAS_STYLE
       d.head.appendChild(s)
     }
     // Any block (including nested section/grid children) is selectable.
@@ -80,6 +85,10 @@ export default function Canvas({
         e.stopPropagation()
         onSelect(el.getAttribute('data-bid')!)
       })
+      el.addEventListener('mouseenter', () => {
+        if (el.getAttribute('data-bid') !== selectedId) el.classList.add('ed-hover')
+      })
+      el.addEventListener('mouseleave', () => el.classList.remove('ed-hover'))
     })
     // Reorder stays top-level only: map each top-level slot to its block root.
     const topLevel = (Array.from(d.querySelectorAll('main#page > *')) as HTMLElement[])
@@ -155,8 +164,9 @@ export default function Canvas({
         />
       </div>
       {toolbar ? (
-        <div className="ed-block-toolbar" style={{ top: toolbar.top, left: toolbar.left }}>
-          <button type="button" onClick={deleteSelected}>删除选中区块</button>
+        <div className="ed-block-overlay" style={{ top: toolbar.top, left: toolbar.left }}>
+          <span className="ed-block-badge">{selectedLabel || '区块'}</span>
+          <button type="button" className="ed-block-del" onClick={deleteSelected}>删除</button>
         </div>
       ) : null}
     </div>
