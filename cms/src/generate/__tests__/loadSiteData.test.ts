@@ -54,10 +54,10 @@ const resolve = (m: unknown) => (m && typeof m === 'object' && 'url' in (m as an
 
 describe('mapBlock', () => {
   it('maps grid recursively with inner components', () => {
-    const raw = { blockType: 'grid', columns: 2, cells: [{ components: [{ blockType: 'text', body: 'hi' }] }] }
+    const raw = { blockType: 'grid', columns: 2, children: [{ blockType: 'text', body: 'hi' }] }
     const b = mapBlock(raw, resolve) as any
     expect(b.type).toBe('grid')
-    expect(b.cells[0].components[0].type).toBe('text')
+    expect(b.children[0].type).toBe('text')
   })
   it('maps gallery images to urls', () => {
     const raw = { blockType: 'gallery', columns: 2, images: [{ image: { url: '/media/1.jpg' } }, { image: { url: '/media/2.jpg' } }] }
@@ -75,13 +75,13 @@ describe('mapBlock', () => {
     expect(mapBlock({ blockType: 'nope' }, resolve)).toBeNull()
   })
   it('drops unknown child blocks inside a grid cell', () => {
-    const raw = { blockType: 'grid', columns: 2, cells: [{ components: [{ blockType: 'nope' }, { blockType: 'text', body: 'x' }] }] }
+    const raw = { blockType: 'grid', columns: 2, children: [{ blockType: 'nope' }, { blockType: 'text', body: 'x' }] }
     const b = mapBlock(raw, resolve) as any
-    expect(b.cells[0].components).toHaveLength(1)
-    expect(b.cells[0].components[0].type).toBe('text')
+    expect(b.children).toHaveLength(1)
+    expect(b.children[0].type).toBe('text')
   })
   it('maps gridInner to a grid block', () => {
-    const raw = { blockType: 'gridInner', columns: 1, cells: [{ components: [{ blockType: 'text', body: 'x' }] }] }
+    const raw = { blockType: 'gridInner', columns: 1, children: [{ blockType: 'text', body: 'x' }] }
     const b = mapBlock(raw, resolve) as any
     expect(b.type).toBe('grid')
   })

@@ -10,16 +10,10 @@ function withIds(rawBlock: any, mapped: Block): Block {
       withIds(rawBlock.children[i], child),
     )
   }
-  if (b.type === 'grid' && Array.isArray(rawBlock?.cells) && Array.isArray((b as any).cells)) {
-    ;(b as any).cells = (b as any).cells.map((cell: any, ci: number) => {
-      const rawCell = rawBlock.cells[ci]
-      return {
-        ...cell,
-        components: (cell.components || []).map((comp: Block, i: number) =>
-          withIds(rawCell?.components?.[i], comp),
-        ),
-      }
-    })
+  if (b.type === 'grid' && Array.isArray(rawBlock?.children) && Array.isArray((b as any).children)) {
+    ;(b as any).children = (b as any).children.map((child: Block, i: number) =>
+      withIds(rawBlock.children[i], child),
+    )
   }
   return b
 }
@@ -110,9 +104,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
     case 'grid':
       out.columns = b.columns
       if (b.gap !== undefined) out.gap = b.gap
-      out.cells = (b.cells || []).map((c) => ({
-        components: editorToPayloadBlocks(c.components || [], urlToId),
-      }))
+      out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'gallery': {
       const rawImages = Array.isArray(raw?.images) ? raw.images : []

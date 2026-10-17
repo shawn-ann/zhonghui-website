@@ -1,5 +1,5 @@
 import { lexicalToHtml } from '../render/richText'
-import type { Block, GridCell, PageDoc, SiteData } from '../render/types'
+import type { Block, PageDoc, SiteData } from '../render/types'
 
 type MediaResolver = (media: unknown) => string
 
@@ -44,12 +44,10 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
       }
     case 'grid':
     case 'gridInner': {
-      const cells: GridCell[] = arr<Record<string, any>>(raw.cells).map((c) => ({
-        components: arr<Record<string, any>>(c.components)
-          .map((child) => mapBlock(child, resolveMedia))
-          .filter((x): x is Block => x !== null),
-      }))
-      return { type: 'grid', columns: raw.columns || 3, gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md', cells, bg, alt }
+      const children = arr<Record<string, any>>(raw.children)
+        .map((child) => mapBlock(child, resolveMedia))
+        .filter((x): x is Block => x !== null)
+      return { type: 'grid', columns: raw.columns || 3, gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md', children, bg, alt }
     }
     case 'gallery':
       return {

@@ -34,10 +34,21 @@ export function updateBlockField(blocks: Block[], index: number, key: string, va
  * Path into a block tree, expressed as a flat list of indices navigated in a
  * type-aware way:
  * - root:      [i]              → top-level block i
- * - section:   [i, j, ...]      → section i's child j (then recurse on the child)
- * - grid:      [i, c, k, ...]   → grid i's cell c's component k (then recurse)
+ * - container: [i, j, ...]      → container i's (section/grid) child j (then recurse)
  */
 export type Path = number[]
+
+function isContainer(b: Block): boolean {
+  return b.type === 'section' || b.type === 'grid'
+}
+
+function childrenOf(b: Block): Block[] {
+  return isContainer(b) ? ((b as any).children || []) : []
+}
+
+function withKids(b: Block, children: Block[]): Block {
+  return isContainer(b) ? ({ ...b, children } as Block) : b
+}
 
 function insertAt(list: Block[], block: Block, index?: number): Block[] {
   const next = list.slice()
@@ -55,16 +66,9 @@ export function findPath(blocks: Block[], id: string): Path | null {
   for (let i = 0; i < blocks.length; i++) {
     const b = blocks[i]
     if (b._id === id) return [i]
-    if (b.type === 'section') {
-      const sub = findPath(b.children || [], id)
+    if (isContainer(b)) {
+      const sub = findPath(childrenOf(b), id)
       if (sub) return [i, ...sub]
-    }
-    if (b.type === 'grid') {
-      const cells = b.cells || []
-      for (let c = 0; c < cells.length; c++) {
-        const sub = findPath(cells[c].components || [], id)
-        if (sub) return [i, c, ...sub]
-      }
     }
   }
   return null
@@ -75,13 +79,9 @@ export function getAtPath(blocks: Block[], path: Path): Block | undefined {
   let block: Block | undefined = blocks[path[0]]
   let rest = path.slice(1)
   while (block && rest.length) {
-    if (block.type === 'section') {
-      block = (block.children || [])[rest[0]]
+    if (isContainer(block)) {
+      block = childrenOf(block)[rest[0]]
       rest = rest.slice(1)
-    } else if (block.type === 'grid') {
-      const cell: { components?: Block[] } | undefined = (block.cells || [])[rest[0]]
-      block = cell?.components?.[rest[1]]
-      rest = rest.slice(2)
     } else {
       return undefined
     }
@@ -98,17 +98,8 @@ export function updateAtPath(blocks: Block[], path: Path, newBlock: Block): Bloc
     next[i] = newBlock
     return next
   }
-  if (cur.type === 'section') {
-    next[i] = { ...cur, children: updateAtPath(cur.children || [], rest, newBlock) }
-    return next
-  }
-  if (cur.type === 'grid') {
-    const [c, ...rest2] = rest
-    const cells = (cur.cells || []).slice()
-    if (c == null || c < 0 || c >= cells.length) return blocks
-    const cell = cells[c]
-    cells[c] = { ...cell, components: updateAtPath(cell.components || [], rest2, newBlock) }
-    next[i] = { ...cur, cells }
+  if (isContainer(cur)) {
+    next[i] = withKids(cur, updateAtPath(childrenOf(cur), rest, newBlock))
     return next
   }
   return blocks
@@ -120,17 +111,8 @@ export function removeAtPath(blocks: Block[], path: Path): Block[] {
   if (!rest.length) return removeAt(blocks, i)
   const cur = blocks[i]
   const next = blocks.slice()
-  if (cur.type === 'section') {
-    next[i] = { ...cur, children: removeAtPath(cur.children || [], rest) }
-    return next
-  }
-  if (cur.type === 'grid') {
-    const [c, ...rest2] = rest
-    const cells = (cur.cells || []).slice()
-    if (c == null || c < 0 || c >= cells.length) return blocks
-    const cell = cells[c]
-    cells[c] = { ...cell, components: removeAtPath(cell.components || [], rest2) }
-    next[i] = { ...cur, cells }
+  if (isContainer(cur)) {
+    next[i] = withKids(cur, removeAtPath(childrenOf(cur), rest))
     return next
   }
   return blocks
@@ -138,26 +120,16 @@ export function removeAtPath(blocks: Block[], path: Path): Block[] {
 
 /**
  * Insert a block into the container identified by `parentPath` (path to the
- * parent block; [] means top level). Section children go to `children`, grid
- * children go to the first cell's `components`.
+ * parent block; [] means top level). Container children (section/grid) go to
+ * `children`.
  */
 export function insertInto(blocks: Block[], parentPath: Path, block: Block, index?: number): Block[] {
   const withId = { ...block, _id: block._id ?? newId() }
   if (!parentPath.length) return insertAt(blocks, withId, index)
   const parent = getAtPath(blocks, parentPath)
   if (!parent) return blocks
-  if (parent.type === 'section') {
-    return updateAtPath(blocks, parentPath, {
-      ...parent,
-      children: insertAt(parent.children || [], withId, index),
-    })
-  }
-  if (parent.type === 'grid') {
-    const cells = (parent.cells || []).slice()
-    if (!cells.length) cells.push({ components: [] })
-    const cell0 = cells[0]
-    cells[0] = { ...cell0, components: insertAt(cell0.components || [], withId, index) }
-    return updateAtPath(blocks, parentPath, { ...parent, cells })
+  if (isContainer(parent)) {
+    return updateAtPath(blocks, parentPath, withKids(parent, insertAt(childrenOf(parent), withId, index)))
   }
   return blocks
 }
@@ -172,23 +144,13 @@ export function moveChild(list: Block[], from: number, dir: -1 | 1): Block[] {
 }
 
 export function blockChildren(block: Block): Block[] {
-  if (block.type === 'section') return block.children || []
-  if (block.type === 'grid') return block.cells?.[0]?.components || []
-  return []
+  return childrenOf(block)
 }
 
 export function withChildren(block: Block, children: Block[]): Block {
-  if (block.type === 'section') return { ...block, children }
-  if (block.type === 'grid') {
-    const cells = (block.cells || []).slice()
-    if (!cells.length) cells.push({ components: [] })
-    cells[0] = { ...cells[0], components: children }
-    return { ...block, cells }
-  }
-  return block
+  return withKids(block, children)
 }
 
-export function childPath(parentPath: Path, parent: Block, index: number): Path {
-  const base = parent.type === 'grid' ? [...parentPath, 0] : parentPath
-  return [...base, index]
+export function childPath(parentPath: Path, _parent: Block, index: number): Path {
+  return [...parentPath, index]
 }

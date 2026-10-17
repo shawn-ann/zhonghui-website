@@ -6,7 +6,7 @@ import StructureTree from '../StructureTree'
 const blocks: any[] = [
   { type: 'section', _id: 's1', padding: 'md', children: [
     { type: 'heading', _id: 'h1', title: '项目一览' },
-    { type: 'grid', _id: 'g1', columns: 3, cells: [{ components: [{ type: 'imageText', _id: 'i1', media: '', title: '美国 AuPair' }] }] },
+    { type: 'grid', _id: 'g1', columns: 3, children: [{ type: 'imageText', _id: 'i1', media: '', title: '美国 AuPair' }] },
   ] },
 ]
 

@@ -42,7 +42,7 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   slider: { type: 'slider', label: '轮播', defaults: () => ({ type: 'slider', images: [] }), fields: [
     { key: 'bg', label: '背景', control: 'bg' },
   ] },
-  grid: { type: 'grid', label: '网格', defaults: () => ({ type: 'grid', columns: 3, gap: 'md', cells: [{ components: [] }] }), fields: [
+  grid: { type: 'grid', label: '网格', defaults: () => ({ type: 'grid', columns: 3, gap: 'md', children: [] }), fields: [
     { key: 'columns', label: '列数', control: 'number' }, { key: 'gap', label: '间距', control: 'select', options: [{ label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] }, ...common,
   ] },
   heading: { type: 'heading', label: '标题', defaults: () => ({ type: 'heading', title: '标题' }), fields: [

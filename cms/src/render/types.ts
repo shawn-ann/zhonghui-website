@@ -23,15 +23,11 @@ export interface HeadingBlock extends BlockBase {
   align?: 'center' | 'left'
 }
 
-export interface GridCell {
-  components: Block[]
-}
-
 export interface GridBlock extends BlockBase {
   type: 'grid'
   columns: number
   gap?: string
-  cells: GridCell[]
+  children: Block[]
 }
 
 export interface TextBlock extends BlockBase {

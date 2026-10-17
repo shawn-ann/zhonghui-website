@@ -54,10 +54,20 @@ describe('editorToPayloadBlocks', () => {
     expect(back[0]).toEqual({ id: 'u1', blockType: 'futureBlock', foo: 'bar' })
   })
 
-  it('serializes nested grid cells', () => {
-    const ed: any = [{ type: 'grid', columns: 2, gap: 'md', _id: 'g1', cells: [{ components: [{ type: 'text', body: 'x', _id: 't2' }] }] }]
+  it('serializes nested grid children', () => {
+    const ed: any = [{ type: 'grid', columns: 2, gap: 'md', _id: 'g1', children: [{ type: 'text', body: 'x', _id: 't2' }] }]
     const back = editorToPayloadBlocks(ed, new Map())
     expect(back[0].blockType).toBe('grid')
-    expect(back[0].cells[0].components[0]).toMatchObject({ blockType: 'text', body: 'x', id: 't2' })
+    expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', id: 't2' })
+  })
+
+  it('round-trips grid children through the editor document', () => {
+    const raw = { id: 1, title: 't', route: '/', blocks: [
+      { id: 'g1', blockType: 'grid', columns: 2, children: [{ id: 't1', blockType: 'text', body: 'x' }] },
+    ] }
+    const ed = docToEditorDoc(raw)
+    expect((ed.blocks[0] as any).children[0]).toMatchObject({ type: 'text', body: 'x', _id: 't1' })
+    const back = editorToPayloadBlocks(ed.blocks, new Map())
+    expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', id: 't1' })
   })
 })

@@ -298,262 +298,245 @@ export interface Page {
                   | {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
-                      cells?:
-                        | {
-                            components?:
-                              | (
-                                  | {
-                                      title: string;
-                                      subtitle?: string | null;
-                                      align?: ('center' | 'left') | null;
-                                      id?: string | null;
-                                      blockName?: string | null;
-                                      blockType: 'heading';
-                                    }
-                                  | {
-                                      title?: string | null;
-                                      body: string;
-                                      align?: ('left' | 'center') | null;
-                                      /**
-                                       * 背景图路径/颜色/渐变，留空为白底
-                                       */
-                                      bg?: string | null;
-                                      alt?: boolean | null;
-                                      id?: string | null;
-                                      blockName?: string | null;
-                                      blockType: 'text';
-                                    }
-                                  | {
-                                      media: number | Media;
-                                      altText?: string | null;
-                                      /**
-                                       * 站内路由以 / 开头，或完整外链 https://…
-                                       */
-                                      link?: string | null;
-                                      /**
-                                       * 背景图路径/颜色/渐变，留空为白底
-                                       */
-                                      bg?: string | null;
-                                      alt?: boolean | null;
-                                      id?: string | null;
-                                      blockName?: string | null;
-                                      blockType: 'image';
-                                    }
-                                  | {
-                                      media: number | Media;
-                                      title?: string | null;
-                                      desc?: string | null;
-                                      /**
-                                       * 站内路由以 / 开头，或完整外链 https://…
-                                       */
-                                      link?: string | null;
-                                      /**
-                                       * 背景图路径/颜色/渐变，留空为白底
-                                       */
-                                      bg?: string | null;
-                                      alt?: boolean | null;
-                                      id?: string | null;
-                                      blockName?: string | null;
-                                      blockType: 'imageText';
-                                    }
-                                  | {
-                                      label: string;
-                                      /**
-                                       * 站内路由以 / 开头，或完整外链 https://…
-                                       */
-                                      link?: string | null;
-                                      style?: ('primary' | 'outline') | null;
-                                      /**
-                                       * 背景图路径/颜色/渐变，留空为白底
-                                       */
-                                      bg?: string | null;
-                                      alt?: boolean | null;
-                                      id?: string | null;
-                                      blockName?: string | null;
-                                      blockType: 'button';
-                                    }
-                                  | {
-                                      content?: {
-                                        root: {
-                                          type: string;
-                                          children: {
-                                            type: any;
-                                            version: number;
+                      children?:
+                        | (
+                            | {
+                                title: string;
+                                subtitle?: string | null;
+                                align?: ('center' | 'left') | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'heading';
+                              }
+                            | {
+                                title?: string | null;
+                                body: string;
+                                align?: ('left' | 'center') | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'text';
+                              }
+                            | {
+                                media: number | Media;
+                                altText?: string | null;
+                                /**
+                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 */
+                                link?: string | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'image';
+                              }
+                            | {
+                                media: number | Media;
+                                title?: string | null;
+                                desc?: string | null;
+                                /**
+                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 */
+                                link?: string | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'imageText';
+                              }
+                            | {
+                                label: string;
+                                /**
+                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 */
+                                link?: string | null;
+                                style?: ('primary' | 'outline') | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'button';
+                              }
+                            | {
+                                content?: {
+                                  root: {
+                                    type: string;
+                                    children: {
+                                      type: any;
+                                      version: number;
+                                      [k: string]: unknown;
+                                    }[];
+                                    direction: ('ltr' | 'rtl') | null;
+                                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                                    indent: number;
+                                    version: number;
+                                  };
+                                  [k: string]: unknown;
+                                } | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'richtext';
+                              }
+                            | {
+                                images: {
+                                  image: number | Media;
+                                  id?: string | null;
+                                }[];
+                                columns?: number | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'gallery';
+                              }
+                            | {
+                                columns?: number | null;
+                                gap?: ('sm' | 'md' | 'lg') | null;
+                                children?:
+                                  | (
+                                      | {
+                                          title: string;
+                                          subtitle?: string | null;
+                                          align?: ('center' | 'left') | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'heading';
+                                        }
+                                      | {
+                                          title?: string | null;
+                                          body: string;
+                                          align?: ('left' | 'center') | null;
+                                          /**
+                                           * 背景图路径/颜色/渐变，留空为白底
+                                           */
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'text';
+                                        }
+                                      | {
+                                          media: number | Media;
+                                          altText?: string | null;
+                                          /**
+                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           */
+                                          link?: string | null;
+                                          /**
+                                           * 背景图路径/颜色/渐变，留空为白底
+                                           */
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'image';
+                                        }
+                                      | {
+                                          media: number | Media;
+                                          title?: string | null;
+                                          desc?: string | null;
+                                          /**
+                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           */
+                                          link?: string | null;
+                                          /**
+                                           * 背景图路径/颜色/渐变，留空为白底
+                                           */
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'imageText';
+                                        }
+                                      | {
+                                          label: string;
+                                          /**
+                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           */
+                                          link?: string | null;
+                                          style?: ('primary' | 'outline') | null;
+                                          /**
+                                           * 背景图路径/颜色/渐变，留空为白底
+                                           */
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'button';
+                                        }
+                                      | {
+                                          content?: {
+                                            root: {
+                                              type: string;
+                                              children: {
+                                                type: any;
+                                                version: number;
+                                                [k: string]: unknown;
+                                              }[];
+                                              direction: ('ltr' | 'rtl') | null;
+                                              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                                              indent: number;
+                                              version: number;
+                                            };
                                             [k: string]: unknown;
-                                          }[];
-                                          direction: ('ltr' | 'rtl') | null;
-                                          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                                          indent: number;
-                                          version: number;
-                                        };
-                                        [k: string]: unknown;
-                                      } | null;
-                                      /**
-                                       * 背景图路径/颜色/渐变，留空为白底
-                                       */
-                                      bg?: string | null;
-                                      alt?: boolean | null;
-                                      id?: string | null;
-                                      blockName?: string | null;
-                                      blockType: 'richtext';
-                                    }
-                                  | {
-                                      images: {
-                                        image: number | Media;
-                                        id?: string | null;
-                                      }[];
-                                      columns?: number | null;
-                                      /**
-                                       * 背景图路径/颜色/渐变，留空为白底
-                                       */
-                                      bg?: string | null;
-                                      alt?: boolean | null;
-                                      id?: string | null;
-                                      blockName?: string | null;
-                                      blockType: 'gallery';
-                                    }
-                                  | {
-                                      columns?: number | null;
-                                      gap?: ('sm' | 'md' | 'lg') | null;
-                                      cells?:
-                                        | {
-                                            components?:
-                                              | (
-                                                  | {
-                                                      title: string;
-                                                      subtitle?: string | null;
-                                                      align?: ('center' | 'left') | null;
-                                                      id?: string | null;
-                                                      blockName?: string | null;
-                                                      blockType: 'heading';
-                                                    }
-                                                  | {
-                                                      title?: string | null;
-                                                      body: string;
-                                                      align?: ('left' | 'center') | null;
-                                                      /**
-                                                       * 背景图路径/颜色/渐变，留空为白底
-                                                       */
-                                                      bg?: string | null;
-                                                      alt?: boolean | null;
-                                                      id?: string | null;
-                                                      blockName?: string | null;
-                                                      blockType: 'text';
-                                                    }
-                                                  | {
-                                                      media: number | Media;
-                                                      altText?: string | null;
-                                                      /**
-                                                       * 站内路由以 / 开头，或完整外链 https://…
-                                                       */
-                                                      link?: string | null;
-                                                      /**
-                                                       * 背景图路径/颜色/渐变，留空为白底
-                                                       */
-                                                      bg?: string | null;
-                                                      alt?: boolean | null;
-                                                      id?: string | null;
-                                                      blockName?: string | null;
-                                                      blockType: 'image';
-                                                    }
-                                                  | {
-                                                      media: number | Media;
-                                                      title?: string | null;
-                                                      desc?: string | null;
-                                                      /**
-                                                       * 站内路由以 / 开头，或完整外链 https://…
-                                                       */
-                                                      link?: string | null;
-                                                      /**
-                                                       * 背景图路径/颜色/渐变，留空为白底
-                                                       */
-                                                      bg?: string | null;
-                                                      alt?: boolean | null;
-                                                      id?: string | null;
-                                                      blockName?: string | null;
-                                                      blockType: 'imageText';
-                                                    }
-                                                  | {
-                                                      label: string;
-                                                      /**
-                                                       * 站内路由以 / 开头，或完整外链 https://…
-                                                       */
-                                                      link?: string | null;
-                                                      style?: ('primary' | 'outline') | null;
-                                                      /**
-                                                       * 背景图路径/颜色/渐变，留空为白底
-                                                       */
-                                                      bg?: string | null;
-                                                      alt?: boolean | null;
-                                                      id?: string | null;
-                                                      blockName?: string | null;
-                                                      blockType: 'button';
-                                                    }
-                                                  | {
-                                                      content?: {
-                                                        root: {
-                                                          type: string;
-                                                          children: {
-                                                            type: any;
-                                                            version: number;
-                                                            [k: string]: unknown;
-                                                          }[];
-                                                          direction: ('ltr' | 'rtl') | null;
-                                                          format:
-                                                            | 'left'
-                                                            | 'start'
-                                                            | 'center'
-                                                            | 'right'
-                                                            | 'end'
-                                                            | 'justify'
-                                                            | '';
-                                                          indent: number;
-                                                          version: number;
-                                                        };
-                                                        [k: string]: unknown;
-                                                      } | null;
-                                                      /**
-                                                       * 背景图路径/颜色/渐变，留空为白底
-                                                       */
-                                                      bg?: string | null;
-                                                      alt?: boolean | null;
-                                                      id?: string | null;
-                                                      blockName?: string | null;
-                                                      blockType: 'richtext';
-                                                    }
-                                                  | {
-                                                      images: {
-                                                        image: number | Media;
-                                                        id?: string | null;
-                                                      }[];
-                                                      columns?: number | null;
-                                                      /**
-                                                       * 背景图路径/颜色/渐变，留空为白底
-                                                       */
-                                                      bg?: string | null;
-                                                      alt?: boolean | null;
-                                                      id?: string | null;
-                                                      blockName?: string | null;
-                                                      blockType: 'gallery';
-                                                    }
-                                                )[]
-                                              | null;
+                                          } | null;
+                                          /**
+                                           * 背景图路径/颜色/渐变，留空为白底
+                                           */
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'richtext';
+                                        }
+                                      | {
+                                          images: {
+                                            image: number | Media;
                                             id?: string | null;
-                                          }[]
-                                        | null;
-                                      /**
-                                       * 背景图路径/颜色/渐变，留空为白底
-                                       */
-                                      bg?: string | null;
-                                      alt?: boolean | null;
-                                      id?: string | null;
-                                      blockName?: string | null;
-                                      blockType: 'gridInner';
-                                    }
-                                )[]
-                              | null;
-                            id?: string | null;
-                          }[]
+                                          }[];
+                                          columns?: number | null;
+                                          /**
+                                           * 背景图路径/颜色/渐变，留空为白底
+                                           */
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'gallery';
+                                        }
+                                    )[]
+                                  | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'gridInner';
+                              }
+                          )[]
                         | null;
                       /**
                        * 背景图路径/颜色/渐变，留空为白底
@@ -594,255 +577,245 @@ export interface Page {
         | {
             columns?: number | null;
             gap?: ('sm' | 'md' | 'lg') | null;
-            cells?:
-              | {
-                  components?:
-                    | (
-                        | {
-                            title: string;
-                            subtitle?: string | null;
-                            align?: ('center' | 'left') | null;
-                            id?: string | null;
-                            blockName?: string | null;
-                            blockType: 'heading';
-                          }
-                        | {
-                            title?: string | null;
-                            body: string;
-                            align?: ('left' | 'center') | null;
-                            /**
-                             * 背景图路径/颜色/渐变，留空为白底
-                             */
-                            bg?: string | null;
-                            alt?: boolean | null;
-                            id?: string | null;
-                            blockName?: string | null;
-                            blockType: 'text';
-                          }
-                        | {
-                            media: number | Media;
-                            altText?: string | null;
-                            /**
-                             * 站内路由以 / 开头，或完整外链 https://…
-                             */
-                            link?: string | null;
-                            /**
-                             * 背景图路径/颜色/渐变，留空为白底
-                             */
-                            bg?: string | null;
-                            alt?: boolean | null;
-                            id?: string | null;
-                            blockName?: string | null;
-                            blockType: 'image';
-                          }
-                        | {
-                            media: number | Media;
-                            title?: string | null;
-                            desc?: string | null;
-                            /**
-                             * 站内路由以 / 开头，或完整外链 https://…
-                             */
-                            link?: string | null;
-                            /**
-                             * 背景图路径/颜色/渐变，留空为白底
-                             */
-                            bg?: string | null;
-                            alt?: boolean | null;
-                            id?: string | null;
-                            blockName?: string | null;
-                            blockType: 'imageText';
-                          }
-                        | {
-                            label: string;
-                            /**
-                             * 站内路由以 / 开头，或完整外链 https://…
-                             */
-                            link?: string | null;
-                            style?: ('primary' | 'outline') | null;
-                            /**
-                             * 背景图路径/颜色/渐变，留空为白底
-                             */
-                            bg?: string | null;
-                            alt?: boolean | null;
-                            id?: string | null;
-                            blockName?: string | null;
-                            blockType: 'button';
-                          }
-                        | {
-                            content?: {
-                              root: {
-                                type: string;
-                                children: {
-                                  type: any;
-                                  version: number;
+            children?:
+              | (
+                  | {
+                      title: string;
+                      subtitle?: string | null;
+                      align?: ('center' | 'left') | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'heading';
+                    }
+                  | {
+                      title?: string | null;
+                      body: string;
+                      align?: ('left' | 'center') | null;
+                      /**
+                       * 背景图路径/颜色/渐变，留空为白底
+                       */
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'text';
+                    }
+                  | {
+                      media: number | Media;
+                      altText?: string | null;
+                      /**
+                       * 站内路由以 / 开头，或完整外链 https://…
+                       */
+                      link?: string | null;
+                      /**
+                       * 背景图路径/颜色/渐变，留空为白底
+                       */
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'image';
+                    }
+                  | {
+                      media: number | Media;
+                      title?: string | null;
+                      desc?: string | null;
+                      /**
+                       * 站内路由以 / 开头，或完整外链 https://…
+                       */
+                      link?: string | null;
+                      /**
+                       * 背景图路径/颜色/渐变，留空为白底
+                       */
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'imageText';
+                    }
+                  | {
+                      label: string;
+                      /**
+                       * 站内路由以 / 开头，或完整外链 https://…
+                       */
+                      link?: string | null;
+                      style?: ('primary' | 'outline') | null;
+                      /**
+                       * 背景图路径/颜色/渐变，留空为白底
+                       */
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'button';
+                    }
+                  | {
+                      content?: {
+                        root: {
+                          type: string;
+                          children: {
+                            type: any;
+                            version: number;
+                            [k: string]: unknown;
+                          }[];
+                          direction: ('ltr' | 'rtl') | null;
+                          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                          indent: number;
+                          version: number;
+                        };
+                        [k: string]: unknown;
+                      } | null;
+                      /**
+                       * 背景图路径/颜色/渐变，留空为白底
+                       */
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'richtext';
+                    }
+                  | {
+                      images: {
+                        image: number | Media;
+                        id?: string | null;
+                      }[];
+                      columns?: number | null;
+                      /**
+                       * 背景图路径/颜色/渐变，留空为白底
+                       */
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'gallery';
+                    }
+                  | {
+                      columns?: number | null;
+                      gap?: ('sm' | 'md' | 'lg') | null;
+                      children?:
+                        | (
+                            | {
+                                title: string;
+                                subtitle?: string | null;
+                                align?: ('center' | 'left') | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'heading';
+                              }
+                            | {
+                                title?: string | null;
+                                body: string;
+                                align?: ('left' | 'center') | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'text';
+                              }
+                            | {
+                                media: number | Media;
+                                altText?: string | null;
+                                /**
+                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 */
+                                link?: string | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'image';
+                              }
+                            | {
+                                media: number | Media;
+                                title?: string | null;
+                                desc?: string | null;
+                                /**
+                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 */
+                                link?: string | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'imageText';
+                              }
+                            | {
+                                label: string;
+                                /**
+                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 */
+                                link?: string | null;
+                                style?: ('primary' | 'outline') | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'button';
+                              }
+                            | {
+                                content?: {
+                                  root: {
+                                    type: string;
+                                    children: {
+                                      type: any;
+                                      version: number;
+                                      [k: string]: unknown;
+                                    }[];
+                                    direction: ('ltr' | 'rtl') | null;
+                                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                                    indent: number;
+                                    version: number;
+                                  };
                                   [k: string]: unknown;
-                                }[];
-                                direction: ('ltr' | 'rtl') | null;
-                                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                                indent: number;
-                                version: number;
-                              };
-                              [k: string]: unknown;
-                            } | null;
-                            /**
-                             * 背景图路径/颜色/渐变，留空为白底
-                             */
-                            bg?: string | null;
-                            alt?: boolean | null;
-                            id?: string | null;
-                            blockName?: string | null;
-                            blockType: 'richtext';
-                          }
-                        | {
-                            images: {
-                              image: number | Media;
-                              id?: string | null;
-                            }[];
-                            columns?: number | null;
-                            /**
-                             * 背景图路径/颜色/渐变，留空为白底
-                             */
-                            bg?: string | null;
-                            alt?: boolean | null;
-                            id?: string | null;
-                            blockName?: string | null;
-                            blockType: 'gallery';
-                          }
-                        | {
-                            columns?: number | null;
-                            gap?: ('sm' | 'md' | 'lg') | null;
-                            cells?:
-                              | {
-                                  components?:
-                                    | (
-                                        | {
-                                            title: string;
-                                            subtitle?: string | null;
-                                            align?: ('center' | 'left') | null;
-                                            id?: string | null;
-                                            blockName?: string | null;
-                                            blockType: 'heading';
-                                          }
-                                        | {
-                                            title?: string | null;
-                                            body: string;
-                                            align?: ('left' | 'center') | null;
-                                            /**
-                                             * 背景图路径/颜色/渐变，留空为白底
-                                             */
-                                            bg?: string | null;
-                                            alt?: boolean | null;
-                                            id?: string | null;
-                                            blockName?: string | null;
-                                            blockType: 'text';
-                                          }
-                                        | {
-                                            media: number | Media;
-                                            altText?: string | null;
-                                            /**
-                                             * 站内路由以 / 开头，或完整外链 https://…
-                                             */
-                                            link?: string | null;
-                                            /**
-                                             * 背景图路径/颜色/渐变，留空为白底
-                                             */
-                                            bg?: string | null;
-                                            alt?: boolean | null;
-                                            id?: string | null;
-                                            blockName?: string | null;
-                                            blockType: 'image';
-                                          }
-                                        | {
-                                            media: number | Media;
-                                            title?: string | null;
-                                            desc?: string | null;
-                                            /**
-                                             * 站内路由以 / 开头，或完整外链 https://…
-                                             */
-                                            link?: string | null;
-                                            /**
-                                             * 背景图路径/颜色/渐变，留空为白底
-                                             */
-                                            bg?: string | null;
-                                            alt?: boolean | null;
-                                            id?: string | null;
-                                            blockName?: string | null;
-                                            blockType: 'imageText';
-                                          }
-                                        | {
-                                            label: string;
-                                            /**
-                                             * 站内路由以 / 开头，或完整外链 https://…
-                                             */
-                                            link?: string | null;
-                                            style?: ('primary' | 'outline') | null;
-                                            /**
-                                             * 背景图路径/颜色/渐变，留空为白底
-                                             */
-                                            bg?: string | null;
-                                            alt?: boolean | null;
-                                            id?: string | null;
-                                            blockName?: string | null;
-                                            blockType: 'button';
-                                          }
-                                        | {
-                                            content?: {
-                                              root: {
-                                                type: string;
-                                                children: {
-                                                  type: any;
-                                                  version: number;
-                                                  [k: string]: unknown;
-                                                }[];
-                                                direction: ('ltr' | 'rtl') | null;
-                                                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                                                indent: number;
-                                                version: number;
-                                              };
-                                              [k: string]: unknown;
-                                            } | null;
-                                            /**
-                                             * 背景图路径/颜色/渐变，留空为白底
-                                             */
-                                            bg?: string | null;
-                                            alt?: boolean | null;
-                                            id?: string | null;
-                                            blockName?: string | null;
-                                            blockType: 'richtext';
-                                          }
-                                        | {
-                                            images: {
-                                              image: number | Media;
-                                              id?: string | null;
-                                            }[];
-                                            columns?: number | null;
-                                            /**
-                                             * 背景图路径/颜色/渐变，留空为白底
-                                             */
-                                            bg?: string | null;
-                                            alt?: boolean | null;
-                                            id?: string | null;
-                                            blockName?: string | null;
-                                            blockType: 'gallery';
-                                          }
-                                      )[]
-                                    | null;
+                                } | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'richtext';
+                              }
+                            | {
+                                images: {
+                                  image: number | Media;
                                   id?: string | null;
-                                }[]
-                              | null;
-                            /**
-                             * 背景图路径/颜色/渐变，留空为白底
-                             */
-                            bg?: string | null;
-                            alt?: boolean | null;
-                            id?: string | null;
-                            blockName?: string | null;
-                            blockType: 'gridInner';
-                          }
-                      )[]
-                    | null;
-                  id?: string | null;
-                }[]
+                                }[];
+                                columns?: number | null;
+                                /**
+                                 * 背景图路径/颜色/渐变，留空为白底
+                                 */
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'gallery';
+                              }
+                          )[]
+                        | null;
+                      /**
+                       * 背景图路径/颜色/渐变，留空为白底
+                       */
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'gridInner';
+                    }
+                )[]
               | null;
             /**
              * 背景图路径/颜色/渐变，留空为白底
@@ -1213,319 +1186,93 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           columns?: T;
                           gap?: T;
-                          cells?:
+                          children?:
                             | T
                             | {
-                                components?:
+                                heading?:
                                   | T
                                   | {
-                                      heading?:
-                                        | T
-                                        | {
-                                            title?: T;
-                                            subtitle?: T;
-                                            align?: T;
-                                            id?: T;
-                                            blockName?: T;
-                                          };
-                                      text?:
-                                        | T
-                                        | {
-                                            title?: T;
-                                            body?: T;
-                                            align?: T;
-                                            bg?: T;
-                                            alt?: T;
-                                            id?: T;
-                                            blockName?: T;
-                                          };
-                                      image?:
-                                        | T
-                                        | {
-                                            media?: T;
-                                            altText?: T;
-                                            link?: T;
-                                            bg?: T;
-                                            alt?: T;
-                                            id?: T;
-                                            blockName?: T;
-                                          };
-                                      imageText?:
-                                        | T
-                                        | {
-                                            media?: T;
-                                            title?: T;
-                                            desc?: T;
-                                            link?: T;
-                                            bg?: T;
-                                            alt?: T;
-                                            id?: T;
-                                            blockName?: T;
-                                          };
-                                      button?:
-                                        | T
-                                        | {
-                                            label?: T;
-                                            link?: T;
-                                            style?: T;
-                                            bg?: T;
-                                            alt?: T;
-                                            id?: T;
-                                            blockName?: T;
-                                          };
-                                      richtext?:
-                                        | T
-                                        | {
-                                            content?: T;
-                                            bg?: T;
-                                            alt?: T;
-                                            id?: T;
-                                            blockName?: T;
-                                          };
-                                      gallery?:
-                                        | T
-                                        | {
-                                            images?:
-                                              | T
-                                              | {
-                                                  image?: T;
-                                                  id?: T;
-                                                };
-                                            columns?: T;
-                                            bg?: T;
-                                            alt?: T;
-                                            id?: T;
-                                            blockName?: T;
-                                          };
-                                      gridInner?:
-                                        | T
-                                        | {
-                                            columns?: T;
-                                            gap?: T;
-                                            cells?:
-                                              | T
-                                              | {
-                                                  components?:
-                                                    | T
-                                                    | {
-                                                        heading?:
-                                                          | T
-                                                          | {
-                                                              title?: T;
-                                                              subtitle?: T;
-                                                              align?: T;
-                                                              id?: T;
-                                                              blockName?: T;
-                                                            };
-                                                        text?:
-                                                          | T
-                                                          | {
-                                                              title?: T;
-                                                              body?: T;
-                                                              align?: T;
-                                                              bg?: T;
-                                                              alt?: T;
-                                                              id?: T;
-                                                              blockName?: T;
-                                                            };
-                                                        image?:
-                                                          | T
-                                                          | {
-                                                              media?: T;
-                                                              altText?: T;
-                                                              link?: T;
-                                                              bg?: T;
-                                                              alt?: T;
-                                                              id?: T;
-                                                              blockName?: T;
-                                                            };
-                                                        imageText?:
-                                                          | T
-                                                          | {
-                                                              media?: T;
-                                                              title?: T;
-                                                              desc?: T;
-                                                              link?: T;
-                                                              bg?: T;
-                                                              alt?: T;
-                                                              id?: T;
-                                                              blockName?: T;
-                                                            };
-                                                        button?:
-                                                          | T
-                                                          | {
-                                                              label?: T;
-                                                              link?: T;
-                                                              style?: T;
-                                                              bg?: T;
-                                                              alt?: T;
-                                                              id?: T;
-                                                              blockName?: T;
-                                                            };
-                                                        richtext?:
-                                                          | T
-                                                          | {
-                                                              content?: T;
-                                                              bg?: T;
-                                                              alt?: T;
-                                                              id?: T;
-                                                              blockName?: T;
-                                                            };
-                                                        gallery?:
-                                                          | T
-                                                          | {
-                                                              images?:
-                                                                | T
-                                                                | {
-                                                                    image?: T;
-                                                                    id?: T;
-                                                                  };
-                                                              columns?: T;
-                                                              bg?: T;
-                                                              alt?: T;
-                                                              id?: T;
-                                                              blockName?: T;
-                                                            };
-                                                      };
-                                                  id?: T;
-                                                };
-                                            bg?: T;
-                                            alt?: T;
-                                            id?: T;
-                                            blockName?: T;
-                                          };
-                                    };
-                                id?: T;
-                              };
-                          bg?: T;
-                          alt?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    slider?:
-                      | T
-                      | {
-                          images?:
-                            | T
-                            | {
-                                image?: T;
-                                id?: T;
-                              };
-                          bg?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        heading?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              align?: T;
-              id?: T;
-              blockName?: T;
-            };
-        grid?:
-          | T
-          | {
-              columns?: T;
-              gap?: T;
-              cells?:
-                | T
-                | {
-                    components?:
-                      | T
-                      | {
-                          heading?:
-                            | T
-                            | {
-                                title?: T;
-                                subtitle?: T;
-                                align?: T;
-                                id?: T;
-                                blockName?: T;
-                              };
-                          text?:
-                            | T
-                            | {
-                                title?: T;
-                                body?: T;
-                                align?: T;
-                                bg?: T;
-                                alt?: T;
-                                id?: T;
-                                blockName?: T;
-                              };
-                          image?:
-                            | T
-                            | {
-                                media?: T;
-                                altText?: T;
-                                link?: T;
-                                bg?: T;
-                                alt?: T;
-                                id?: T;
-                                blockName?: T;
-                              };
-                          imageText?:
-                            | T
-                            | {
-                                media?: T;
-                                title?: T;
-                                desc?: T;
-                                link?: T;
-                                bg?: T;
-                                alt?: T;
-                                id?: T;
-                                blockName?: T;
-                              };
-                          button?:
-                            | T
-                            | {
-                                label?: T;
-                                link?: T;
-                                style?: T;
-                                bg?: T;
-                                alt?: T;
-                                id?: T;
-                                blockName?: T;
-                              };
-                          richtext?:
-                            | T
-                            | {
-                                content?: T;
-                                bg?: T;
-                                alt?: T;
-                                id?: T;
-                                blockName?: T;
-                              };
-                          gallery?:
-                            | T
-                            | {
-                                images?:
-                                  | T
-                                  | {
-                                      image?: T;
+                                      title?: T;
+                                      subtitle?: T;
+                                      align?: T;
                                       id?: T;
+                                      blockName?: T;
                                     };
-                                columns?: T;
-                                bg?: T;
-                                alt?: T;
-                                id?: T;
-                                blockName?: T;
-                              };
-                          gridInner?:
-                            | T
-                            | {
-                                columns?: T;
-                                gap?: T;
-                                cells?:
+                                text?:
                                   | T
                                   | {
-                                      components?:
+                                      title?: T;
+                                      body?: T;
+                                      align?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                image?:
+                                  | T
+                                  | {
+                                      media?: T;
+                                      altText?: T;
+                                      link?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                imageText?:
+                                  | T
+                                  | {
+                                      media?: T;
+                                      title?: T;
+                                      desc?: T;
+                                      link?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                button?:
+                                  | T
+                                  | {
+                                      label?: T;
+                                      link?: T;
+                                      style?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                richtext?:
+                                  | T
+                                  | {
+                                      content?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                gallery?:
+                                  | T
+                                  | {
+                                      images?:
+                                        | T
+                                        | {
+                                            image?: T;
+                                            id?: T;
+                                          };
+                                      columns?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                gridInner?:
+                                  | T
+                                  | {
+                                      columns?: T;
+                                      gap?: T;
+                                      children?:
                                         | T
                                         | {
                                             heading?:
@@ -1607,15 +1354,221 @@ export interface PagesSelect<T extends boolean = true> {
                                                   blockName?: T;
                                                 };
                                           };
+                                      bg?: T;
+                                      alt?: T;
                                       id?: T;
+                                      blockName?: T;
                                     };
-                                bg?: T;
-                                alt?: T;
-                                id?: T;
-                                blockName?: T;
                               };
+                          bg?: T;
+                          alt?: T;
+                          id?: T;
+                          blockName?: T;
                         };
-                    id?: T;
+                    slider?:
+                      | T
+                      | {
+                          images?:
+                            | T
+                            | {
+                                image?: T;
+                                id?: T;
+                              };
+                          bg?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        heading?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              align?: T;
+              id?: T;
+              blockName?: T;
+            };
+        grid?:
+          | T
+          | {
+              columns?: T;
+              gap?: T;
+              children?:
+                | T
+                | {
+                    heading?:
+                      | T
+                      | {
+                          title?: T;
+                          subtitle?: T;
+                          align?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    text?:
+                      | T
+                      | {
+                          title?: T;
+                          body?: T;
+                          align?: T;
+                          bg?: T;
+                          alt?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    image?:
+                      | T
+                      | {
+                          media?: T;
+                          altText?: T;
+                          link?: T;
+                          bg?: T;
+                          alt?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    imageText?:
+                      | T
+                      | {
+                          media?: T;
+                          title?: T;
+                          desc?: T;
+                          link?: T;
+                          bg?: T;
+                          alt?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    button?:
+                      | T
+                      | {
+                          label?: T;
+                          link?: T;
+                          style?: T;
+                          bg?: T;
+                          alt?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    richtext?:
+                      | T
+                      | {
+                          content?: T;
+                          bg?: T;
+                          alt?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    gallery?:
+                      | T
+                      | {
+                          images?:
+                            | T
+                            | {
+                                image?: T;
+                                id?: T;
+                              };
+                          columns?: T;
+                          bg?: T;
+                          alt?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    gridInner?:
+                      | T
+                      | {
+                          columns?: T;
+                          gap?: T;
+                          children?:
+                            | T
+                            | {
+                                heading?:
+                                  | T
+                                  | {
+                                      title?: T;
+                                      subtitle?: T;
+                                      align?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                text?:
+                                  | T
+                                  | {
+                                      title?: T;
+                                      body?: T;
+                                      align?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                image?:
+                                  | T
+                                  | {
+                                      media?: T;
+                                      altText?: T;
+                                      link?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                imageText?:
+                                  | T
+                                  | {
+                                      media?: T;
+                                      title?: T;
+                                      desc?: T;
+                                      link?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                button?:
+                                  | T
+                                  | {
+                                      label?: T;
+                                      link?: T;
+                                      style?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                richtext?:
+                                  | T
+                                  | {
+                                      content?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                gallery?:
+                                  | T
+                                  | {
+                                      images?:
+                                        | T
+                                        | {
+                                            image?: T;
+                                            id?: T;
+                                          };
+                                      columns?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                              };
+                          bg?: T;
+                          alt?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
                   };
               bg?: T;
               alt?: T;

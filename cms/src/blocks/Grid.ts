@@ -26,12 +26,7 @@ export function makeGrid(slug: string, label: string, cellComponents: Block[]): 
           { label: '宽松', value: 'lg' },
         ],
       },
-      {
-        name: 'cells',
-        type: 'array',
-        minRows: 1,
-        fields: [{ name: 'components', type: 'blocks', blocks: cellComponents }],
-      },
+      { name: 'children', type: 'blocks', blocks: cellComponents },
       bgField(),
       altField(),
     ],

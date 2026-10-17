@@ -26,7 +26,7 @@ describe('generateSite', () => {
     const d: SiteData = {
       pages: [{
         title: 't', route: '/', blocks: [
-          { type: 'grid', columns: 1, cells: [{ components: [{ type: 'image', media: '/api/media/file/a.jpg' }] }] },
+          { type: 'grid', columns: 1, children: [{ type: 'image', media: '/api/media/file/a.jpg' }] },
         ],
       }],
     }
@@ -38,7 +38,7 @@ describe('generateSite', () => {
         title: 't', route: '/', blocks: [
           { type: 'section', padding: 'md', children: [
             { type: 'heading', title: 'T' },
-            { type: 'grid', columns: 1, cells: [{ components: [{ type: 'imageText', media: '/api/media/file/b.jpg' }] }] },
+            { type: 'grid', columns: 1, children: [{ type: 'imageText', media: '/api/media/file/b.jpg' }] },
             { type: 'slider', images: ['/api/media/file/c.jpg'] },
           ] },
         ],
