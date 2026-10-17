@@ -63,17 +63,26 @@ const advantages = [
 
 const blocks: any[] = [
   {
-    blockType: 'banner',
-    variant: 'split',
-    title: '覆盖美国、欧洲、英国、澳洲的文化交流、工作与留学项目',
-    sub: '无论你的目标是什么，都有合适的项目为你规划',
-    image: hero,
-    pattern,
+    blockType: 'section',
+    paddingTop: 60,
+    paddingRight: 0,
+    paddingBottom: 120,
+    paddingLeft: 0,
+    children: [
+      {
+        blockType: 'banner',
+        variant: 'split',
+        title: '覆盖美国、欧洲、英国、澳洲的文化交流、工作与留学项目',
+        sub: '无论你的目标是什么，都有合适的项目为你规划',
+        image: hero,
+        pattern,
+      },
+    ],
   },
   {
     blockType: 'section',
     bg: '/assets/bg2.jpg',
-    padding: 'md',
+    paddingTop: 72, paddingRight: 0, paddingBottom: 72, paddingLeft: 0,
     children: [
       { blockType: 'heading', title: '项目一览', align: 'center' },
       {
@@ -87,7 +96,7 @@ const blocks: any[] = [
   {
     blockType: 'section',
     bg: '#FFF1F6',
-    padding: 'md',
+    paddingTop: 72, paddingRight: 0, paddingBottom: 72, paddingLeft: 0,
     children: [
       { blockType: 'heading', title: '中惠优势', align: 'center' },
       {
@@ -101,7 +110,7 @@ const blocks: any[] = [
   {
     blockType: 'section',
     bg: '/assets/yinji-bg.jpg',
-    padding: 'md',
+    paddingTop: 72, paddingRight: 0, paddingBottom: 72, paddingLeft: 0,
     children: [
       { blockType: 'heading', title: '中惠印记', align: 'center' },
       { blockType: 'slider', images: mem.map((id) => ({ image: id })) },
