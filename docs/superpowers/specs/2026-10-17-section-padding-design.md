@@ -65,7 +65,7 @@
 
 ## 7. 数据模型改动
 
-- `SectionBlock`：`padding?: { top:number; right:number; bottom:number; left:number }`（渲染模型）；Payload 用四个 number 字段（或 group）。
+- `SectionBlock`：`paddingTop?/paddingRight?/paddingBottom?/paddingLeft?`（数字，渲染模型与 Payload 一致，扁平四字段）。
 - 内容块（`text/image/imageText/button/gallery/richtext/heading`）：`padding?: number`。
 - `banner`：从"自包装"改为内容块；渲染模型不变（仍是 BannerBlock），只是输出 `div`。
 - 映射/序列化：透传 padding；section 四向；banner 无外层 section。
