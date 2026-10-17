@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { BLOCKS, CONTAINER_CHILD_TYPES } from './blocks'
+import { BLOCKS, isLayout, allowedChildTypes } from './blocks'
 import type { Block } from './types'
 import { blockChildren } from './state'
 import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, BgControl, MediaControl } from './controls'
@@ -26,8 +26,8 @@ export default function PropertyPanel({
   const meta = BLOCKS[block.type]
   const b = block as unknown as Record<string, unknown>
   const val = (k: string) => b[k]
-  const isContainer = block.type === 'section' || block.type === 'grid'
-  const allowed = isContainer ? CONTAINER_CHILD_TYPES[block.type] : []
+  const isContainer = isLayout(block.type)
+  const allowed = isLayout(block.type) ? allowedChildTypes(block.type) : []
   const children = blockChildren(block)
   const chosen: Block['type'] = addType && allowed.includes(addType) ? addType : allowed[0]
 

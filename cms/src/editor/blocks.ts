@@ -55,6 +55,40 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   ] },
 }
 
+export const LAYOUT_TYPES = ['section', 'grid'] as const
+export const CONTENT_TYPES = [
+  'heading', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'slider',
+] as const
+
+export function isLayout(type: Block['type']): boolean {
+  return (LAYOUT_TYPES as readonly string[]).includes(type)
+}
+
+/** 依据放置规则返回某容器允许的子组件类型。 */
+export function allowedChildTypes(parent: Block['type']): Block['type'][] {
+  if (parent === 'section') return [...CONTENT_TYPES, 'grid'] as Block['type'][]
+  if (parent === 'grid') return [...CONTENT_TYPES] as Block['type'][]
+  return []
+}
+
+/** 结构树节点摘要。 */
+export function blockSummary(b: Block): string {
+  switch (b.type) {
+    case 'heading': return b.title || '标题'
+    case 'text': return b.title || b.body || '文本'
+    case 'image': return b.altText || '图片'
+    case 'imageText': return b.title || '图文卡片'
+    case 'button': return b.label || '按钮'
+    case 'gallery': return `图集 · ${b.images.length} 张`
+    case 'slider': return `轮播 · ${b.images.length} 张`
+    case 'grid': return `网格 · ${b.columns} 列`
+    case 'section': return '分栏'
+    case 'banner': return b.title || '横幅'
+    case 'richtext': return '富文本'
+    default: return (b as { type: string }).type
+  }
+}
+
 export const PAGE_BLOCKS: Block['type'][] = ['section', 'heading', 'banner', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'slider']
 
 export const CONTAINER_CHILD_TYPES: { section: Block['type'][]; grid: Block['type'][] } = {
