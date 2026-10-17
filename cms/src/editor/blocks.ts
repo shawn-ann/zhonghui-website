@@ -21,23 +21,28 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   ] },
   text: { type: 'text', label: '文本', defaults: () => ({ type: 'text', body: '' }), fields: [
     { key: 'title', label: '标题', control: 'text' }, { key: 'body', label: '正文', control: 'textarea' },
-    { key: 'align', label: '对齐', control: 'select', options: [{ label: '左', value: 'left' }, { label: '居中', value: 'center' }] }, ...common,
+    { key: 'align', label: '对齐', control: 'select', options: [{ label: '左', value: 'left' }, { label: '居中', value: 'center' }] },
+    { key: 'padding', label: '内边距', control: 'number' }, ...common,
   ] },
   image: { type: 'image', label: '图片', defaults: () => ({ type: 'image', media: '' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'altText', label: '替代文本', control: 'text' },
-    { key: 'link', label: '链接', control: 'link' }, ...common,
+    { key: 'link', label: '链接', control: 'link' }, { key: 'padding', label: '内边距', control: 'number' }, ...common,
   ] },
   imageText: { type: 'imageText', label: '图文卡片', defaults: () => ({ type: 'imageText', media: '' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'title', label: '标题', control: 'text' },
-    { key: 'desc', label: '描述', control: 'textarea' }, { key: 'link', label: '链接', control: 'link' }, ...common,
+    { key: 'desc', label: '描述', control: 'textarea' }, { key: 'link', label: '链接', control: 'link' },
+    { key: 'padding', label: '内边距', control: 'number' }, ...common,
   ] },
   button: { type: 'button', label: '按钮', defaults: () => ({ type: 'button', label: '', link: '' }), fields: [
     { key: 'label', label: '文字', control: 'text' }, { key: 'link', label: '链接', control: 'link' },
-    { key: 'style', label: '样式', control: 'select', options: [{ label: '实心', value: 'primary' }, { label: '描边', value: 'outline' }] }, ...common,
+    { key: 'style', label: '样式', control: 'select', options: [{ label: '实心', value: 'primary' }, { label: '描边', value: 'outline' }] },
+    { key: 'padding', label: '内边距', control: 'number' }, ...common,
   ] },
-  richtext: { type: 'richtext', label: '富文本', defaults: () => ({ type: 'richtext', html: '' }), fields: [...common] },
+  richtext: { type: 'richtext', label: '富文本', defaults: () => ({ type: 'richtext', html: '' }), fields: [
+    { key: 'padding', label: '内边距', control: 'number' }, ...common,
+  ] },
   gallery: { type: 'gallery', label: '图集', defaults: () => ({ type: 'gallery', images: [] }), fields: [
-    { key: 'columns', label: '列数', control: 'number' }, ...common,
+    { key: 'columns', label: '列数', control: 'number' }, { key: 'padding', label: '内边距', control: 'number' }, ...common,
   ] },
   slider: { type: 'slider', label: '轮播', defaults: () => ({ type: 'slider', images: [] }), fields: [
     { key: 'bg', label: '背景', control: 'bg' },
@@ -48,10 +53,14 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   heading: { type: 'heading', label: '标题', defaults: () => ({ type: 'heading', title: '标题' }), fields: [
     { key: 'title', label: '标题', control: 'text' }, { key: 'subtitle', label: '副标题', control: 'text' },
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '居中', value: 'center' }, { label: '左对齐', value: 'left' }] },
+    { key: 'padding', label: '内边距', control: 'number' },
   ] },
-  section: { type: 'section', label: '分栏', defaults: () => ({ type: 'section', padding: 'md', children: [] }), fields: [
+  section: { type: 'section', label: '分栏', defaults: () => ({ type: 'section', paddingTop: 72, paddingRight: 0, paddingBottom: 72, paddingLeft: 0, children: [] }), fields: [
     { key: 'bg', label: '背景', control: 'bg' },
-    { key: 'padding', label: '内边距', control: 'select', options: [{ label: '无', value: 'none' }, { label: '小', value: 'sm' }, { label: '中', value: 'md' }, { label: '大', value: 'lg' }] },
+    { key: 'paddingTop', label: '上留白', control: 'number' },
+    { key: 'paddingRight', label: '右留白', control: 'number' },
+    { key: 'paddingBottom', label: '下留白', control: 'number' },
+    { key: 'paddingLeft', label: '左留白', control: 'number' },
   ] },
 }
 
