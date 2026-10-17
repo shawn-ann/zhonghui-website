@@ -93,6 +93,12 @@ export default function Canvas({
       s.textContent = CANVAS_STYLE
       d.head.appendChild(s)
     }
+    // 画布是"预览"：拦截所有 <a> 的默认导航，避免点击 logo/菜单/页脚时 iframe 跳转，
+    // 导致画布里嵌入后台页面（重复嵌套）。只 preventDefault，不阻断选择事件冒泡。
+    d.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement | null
+      if (target?.closest?.('a')) e.preventDefault()
+    }, true)
     // Any block (including nested section/grid children) is selectable.
     d.querySelectorAll('[data-bid]').forEach((el) => {
       el.addEventListener('click', (e) => {
