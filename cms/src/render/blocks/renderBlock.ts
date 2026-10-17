@@ -10,6 +10,7 @@ import { renderSlider } from './slider'
 import { renderRichText } from './richText'
 import { renderHeading } from './heading'
 import { renderSection } from './section'
+import { renderIconCard } from './iconCard'
 
 export type Renderer = (b: Block) => string
 
@@ -25,6 +26,7 @@ export const renderers: Record<Block['type'], Renderer> = {
   richtext: (b) => renderRichText(b as never),
   heading: (b) => renderHeading(b as never),
   section: (b) => renderSection(b as never),
+  iconCard: (b) => renderIconCard(b as never),
 }
 
 export function renderBlock(block: Block): string {

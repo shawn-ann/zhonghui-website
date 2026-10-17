@@ -7,8 +7,9 @@ import { ButtonBlock } from './Button'
 import { RichTextBlock } from './RichText'
 import { GalleryBlock } from './Gallery'
 import { HeadingBlock } from './Heading'
+import { IconCardBlock } from './IconCard'
 
-export const contentBlocks: Block[] = [HeadingBlock, TextBlock, ImageBlock, ImageTextBlock, ButtonBlock, RichTextBlock, GalleryBlock]
+export const contentBlocks: Block[] = [HeadingBlock, TextBlock, ImageBlock, ImageTextBlock, ButtonBlock, RichTextBlock, GalleryBlock, IconCardBlock]
 
 export function makeGrid(slug: string, label: string, cellComponents: Block[]): Block {
   return {

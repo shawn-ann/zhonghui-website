@@ -33,6 +33,12 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'desc', label: '描述', control: 'textarea' }, { key: 'link', label: '链接', control: 'link' },
     { key: 'padding', label: '内边距', control: 'number' }, ...common,
   ] },
+  iconCard: { type: 'iconCard', label: '图标卡片', defaults: () => ({ type: 'iconCard', icon: '' }), fields: [
+    { key: 'icon', label: '图标', control: 'media' },
+    { key: 'title', label: '标题', control: 'text' },
+    { key: 'desc', label: '描述', control: 'textarea' },
+    { key: 'link', label: '链接', control: 'link' },
+  ] },
   button: { type: 'button', label: '按钮', defaults: () => ({ type: 'button', label: '', link: '' }), fields: [
     { key: 'label', label: '文字', control: 'text' }, { key: 'link', label: '链接', control: 'link' },
     { key: 'style', label: '样式', control: 'select', options: [{ label: '实心', value: 'primary' }, { label: '描边', value: 'outline' }] },
@@ -63,7 +69,7 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
 
 export const LAYOUT_TYPES = ['section', 'grid'] as const
 export const CONTENT_TYPES = [
-  'heading', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'slider',
+  'heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'richtext', 'gallery', 'slider',
 ] as const
 
 export function isLayout(type: Block['type']): boolean {
@@ -84,6 +90,7 @@ export function blockSummary(b: Block): string {
     case 'text': return b.title || b.body || '文本'
     case 'image': return b.altText || '图片'
     case 'imageText': return b.title || '图文卡片'
+    case 'iconCard': return b.title || '图标卡片'
     case 'button': return b.label || '按钮'
     case 'gallery': return `图集 · ${b.images.length} 张`
     case 'slider': return `轮播 · ${b.images.length} 张`
@@ -95,9 +102,9 @@ export function blockSummary(b: Block): string {
   }
 }
 
-export const PAGE_BLOCKS: Block['type'][] = ['section', 'heading', 'banner', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'slider']
+export const PAGE_BLOCKS: Block['type'][] = ['section', 'heading', 'banner', 'text', 'image', 'imageText', 'iconCard', 'button', 'richtext', 'gallery', 'slider']
 
 export const CONTAINER_CHILD_TYPES: { section: Block['type'][]; grid: Block['type'][] } = {
-  section: ['heading', 'text', 'image', 'imageText', 'button', 'richtext', 'gallery', 'grid', 'slider'],
-  grid: ['text', 'image', 'imageText', 'button', 'richtext', 'gallery'],
+  section: ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'richtext', 'gallery', 'grid', 'slider'],
+  grid: ['text', 'image', 'imageText', 'iconCard', 'button', 'richtext', 'gallery'],
 }

@@ -86,6 +86,14 @@ export interface SliderBlock extends BlockBase {
   images: string[]
 }
 
+export interface IconCardBlock extends BlockBase {
+  type: 'iconCard'
+  icon: string
+  title?: string
+  desc?: string
+  link?: string
+}
+
 export interface SectionBlock extends BlockBase {
   type: 'section'
   paddingY?: 'none' | 'sm' | 'md' | 'lg'
@@ -103,6 +111,7 @@ export type Block =
   | RichTextBlock
   | GalleryBlock
   | SliderBlock
+  | IconCardBlock
   | SectionBlock
 
 export interface PageDoc {

@@ -324,6 +324,18 @@ export interface Page {
                       blockType: 'gallery';
                     }
                   | {
+                      icon: number | Media;
+                      title?: string | null;
+                      desc?: string | null;
+                      /**
+                       * 站内路由或完整外链
+                       */
+                      link?: string | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'iconCard';
+                    }
+                  | {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
                       children?:
@@ -467,6 +479,18 @@ export interface Page {
                                 blockType: 'gallery';
                               }
                             | {
+                                icon: number | Media;
+                                title?: string | null;
+                                desc?: string | null;
+                                /**
+                                 * 站内路由或完整外链
+                                 */
+                                link?: string | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'iconCard';
+                              }
+                            | {
                                 columns?: number | null;
                                 gap?: ('sm' | 'md' | 'lg') | null;
                                 children?:
@@ -608,6 +632,18 @@ export interface Page {
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'gallery';
+                                        }
+                                      | {
+                                          icon: number | Media;
+                                          title?: string | null;
+                                          desc?: string | null;
+                                          /**
+                                           * 站内路由或完整外链
+                                           */
+                                          link?: string | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'iconCard';
                                         }
                                     )[]
                                   | null;
@@ -821,6 +857,18 @@ export interface Page {
                       blockType: 'gallery';
                     }
                   | {
+                      icon: number | Media;
+                      title?: string | null;
+                      desc?: string | null;
+                      /**
+                       * 站内路由或完整外链
+                       */
+                      link?: string | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'iconCard';
+                    }
+                  | {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
                       children?:
@@ -962,6 +1010,18 @@ export interface Page {
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'gallery';
+                              }
+                            | {
+                                icon: number | Media;
+                                title?: string | null;
+                                desc?: string | null;
+                                /**
+                                 * 站内路由或完整外链
+                                 */
+                                link?: string | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'iconCard';
                               }
                           )[]
                         | null;
@@ -1138,6 +1198,18 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'slider';
+          }
+        | {
+            icon: number | Media;
+            title?: string | null;
+            desc?: string | null;
+            /**
+             * 站内路由或完整外链
+             */
+            link?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'iconCard';
           }
       )[]
     | null;
@@ -1371,6 +1443,16 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
+                    iconCard?:
+                      | T
+                      | {
+                          icon?: T;
+                          title?: T;
+                          desc?: T;
+                          link?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
                     grid?:
                       | T
                       | {
@@ -1464,6 +1546,16 @@ export interface PagesSelect<T extends boolean = true> {
                                       id?: T;
                                       blockName?: T;
                                     };
+                                iconCard?:
+                                  | T
+                                  | {
+                                      icon?: T;
+                                      title?: T;
+                                      desc?: T;
+                                      link?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
                                 gridInner?:
                                   | T
                                   | {
@@ -1554,6 +1646,16 @@ export interface PagesSelect<T extends boolean = true> {
                                                   bg?: T;
                                                   alt?: T;
                                                   padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            iconCard?:
+                                              | T
+                                              | {
+                                                  icon?: T;
+                                                  title?: T;
+                                                  desc?: T;
+                                                  link?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -1702,6 +1804,16 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
+                    iconCard?:
+                      | T
+                      | {
+                          icon?: T;
+                          title?: T;
+                          desc?: T;
+                          link?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
                     gridInner?:
                       | T
                       | {
@@ -1792,6 +1904,16 @@ export interface PagesSelect<T extends boolean = true> {
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                iconCard?:
+                                  | T
+                                  | {
+                                      icon?: T;
+                                      title?: T;
+                                      desc?: T;
+                                      link?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1905,6 +2027,16 @@ export interface PagesSelect<T extends boolean = true> {
                     id?: T;
                   };
               bg?: T;
+              id?: T;
+              blockName?: T;
+            };
+        iconCard?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              desc?: T;
+              link?: T;
               id?: T;
               blockName?: T;
             };

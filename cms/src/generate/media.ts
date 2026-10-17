@@ -13,6 +13,7 @@ export function collectMediaUrls(data: SiteData): Set<string> {
       switch (b.type) {
         case 'image': add(b.media); break
         case 'imageText': add(b.media); break
+        case 'iconCard': add(b.icon); break
         case 'banner': add(b.image); add(b.pattern); break
         case 'gallery': b.images.forEach(add); break
         case 'slider': b.images.forEach(add); break

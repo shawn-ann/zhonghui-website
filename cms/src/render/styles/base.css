@@ -139,17 +139,17 @@ header {
 /* ===== 优势图标网格块（图标+标题+描述） ===== */
 .adv-grid { display: grid; gap: 28px; }
 .adv-card {
-  text-align: center; padding: 32px 20px;
-  background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+  text-align: center; padding: 32px 20px; background: #fff;
+  border: 1px solid var(--border); border-radius: 12px;
   transition: transform .25s, box-shadow .25s;
 }
 .adv-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,41,88,0.14); }
 .adv-card .icon {
   width: 104px; height: 104px; border-radius: 50%; margin: 0 auto 20px;
-  background: #fff; border: 2px solid currentColor; color: var(--accent);
+  background: #fff; border: 2px solid var(--accent);
   display: flex; align-items: center; justify-content: center;
 }
-.adv-card .icon svg { width: 60px; height: 60px; display: block; }
+.adv-card .icon img { width: 60px; height: 60px; display: block; }
 .adv-card h3 { font-size: 19px; color: var(--deep-blue); font-weight: 600; }
 .adv-card p { font-size: 14px; color: var(--gray-blue); margin-top: 10px; line-height: 1.8; }
 

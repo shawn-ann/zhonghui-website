@@ -36,6 +36,12 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
     </div>
   ),
   button: <div style={box}><span style={{ background: '#E60039', color: '#fff', fontSize: 10, padding: '4px 12px', borderRadius: 12 }}>按钮</span></div>,
+  iconCard: (
+    <div style={{ ...box, flexDirection: 'column', gap: 3 }}>
+      <div style={{ width: 18, height: 18, borderRadius: '50%', border: '2px solid #E60039' }} />
+      <div style={{ height: 4, width: 26, background: '#8A0E4B', borderRadius: 2 }} />
+    </div>
+  ),
   richtext: <div style={{ height: 44, padding: 8 }}><div style={{ ...line('55%'), background: '#a44' }} /><div style={line('90%')} /><div style={line('70%')} /></div>,
   gallery: (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3, padding: 6, height: 44 }}>

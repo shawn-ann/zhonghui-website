@@ -93,6 +93,12 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.link !== undefined) out.link = b.link
       if (b.padding && b.padding > 0) out.padding = b.padding
       break
+    case 'iconCard':
+      out.icon = resolveMediaId(b.icon, urlToId, raw?.icon)
+      if (b.title !== undefined) out.title = b.title
+      if (b.desc !== undefined) out.desc = b.desc
+      if (b.link !== undefined) out.link = b.link
+      break
     case 'button':
       out.label = b.label
       out.link = b.link

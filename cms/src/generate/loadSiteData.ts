@@ -29,6 +29,8 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
       return { type: 'image', media: resolveMedia(raw.media), altText: raw.altText || undefined, link: raw.link || undefined, padding: raw.padding || undefined, bg, alt }
     case 'imageText':
       return { type: 'imageText', media: resolveMedia(raw.media), title: raw.title || undefined, desc: raw.desc || undefined, link: raw.link || undefined, padding: raw.padding || undefined, bg, alt }
+    case 'iconCard':
+      return { type: 'iconCard', icon: resolveMedia(raw.icon), title: raw.title || undefined, desc: raw.desc || undefined, link: raw.link || undefined }
     case 'button':
       return { type: 'button', label: String(raw.label ?? ''), link: raw.link || '', style: raw.style === 'outline' ? 'outline' : 'primary', padding: raw.padding || undefined, bg, alt }
     case 'banner':

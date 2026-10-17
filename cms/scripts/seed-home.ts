@@ -51,15 +51,19 @@ const projectItems = [
 ]
 
 const advantages = [
-  { title: '资质齐全', body: '官方认可资质\n合规规范运营\n全流程受监管' },
-  { title: '深耕国际交流', body: '多年专注国际交流\n项目经验丰富\n资源持续积累' },
-  { title: '一站式服务', body: '材料准备代办\n签证全程辅导\n行前贴心跟进' },
-  { title: '全球服务网络', body: '覆盖多个国家\n海外资源丰富\n落地本地支持' },
-  { title: '高签证通过率', body: '资深签证辅导\n材料精准把关\n通过率领先' },
-  { title: '安全保障', body: '全程护航无忧\n海外紧急联络\n权益保障完善' },
-  { title: '专业顾问团队', body: '资深顾问一对一\n熟悉项目全流程\n耐心细致负责' },
-  { title: '口碑见证', body: '学员真实好评\n往届案例可查\n家长放心之选' },
+  { icon: 'badge', title: '资质齐全', body: '官方认可资质\n合规规范运营\n全流程受监管' },
+  { icon: 'globe', title: '深耕国际交流', body: '多年专注国际交流\n项目经验丰富\n资源持续积累' },
+  { icon: 'service', title: '一站式服务', body: '材料准备代办\n签证全程辅导\n行前贴心跟进' },
+  { icon: 'network', title: '全球服务网络', body: '覆盖多个国家\n海外资源丰富\n落地本地支持' },
+  { icon: 'visa', title: '高签证通过率', body: '资深签证辅导\n材料精准把关\n通过率领先' },
+  { icon: 'safety', title: '安全保障', body: '全程护航无忧\n海外紧急联络\n权益保障完善' },
+  { icon: 'team', title: '专业顾问团队', body: '资深顾问一对一\n熟悉项目全流程\n耐心细致负责' },
+  { icon: 'reputation', title: '口碑见证', body: '学员真实好评\n往届案例可查\n家长放心之选' },
 ]
+const advantageIcons = {} as Record<string, number | string>
+for (const a of advantages) {
+  advantageIcons[a.icon] = await upFrom(path.resolve(process.cwd(), `src/static/icons/${a.icon}.svg`), `home-icon-${a.icon}`)
+}
 
 const blocks: any[] = [
   {
@@ -100,7 +104,7 @@ const blocks: any[] = [
         blockType: 'grid',
         columns: 4,
         gap: 'md',
-        children: advantages.map((a) => ({ blockType: 'text', title: a.title, body: a.body, align: 'center' })),
+        children: advantages.map((a) => ({ blockType: 'iconCard', icon: advantageIcons[a.icon], title: a.title, desc: a.body })),
       },
     ],
   },
