@@ -10,7 +10,12 @@ export interface DocumentAssets {
   swiperCss?: string
   swiperJs?: string
   mainJs?: string
+  disableLinks?: boolean
 }
+
+/** 预览页专用：拦截所有 <a> 默认导航，避免跳出预览进入站点/后台。 */
+export const PREVIEW_LOCK_LINKS =
+  "<script>document.addEventListener('click',function(e){var t=e.target;if(t&&t.closest&&t.closest('a'))e.preventDefault()},true)</script>"
 
 function head(page: PageDoc, a: DocumentAssets): string {
   const title = page.seo?.title || page.title
@@ -45,6 +50,7 @@ export function renderDocument(page: PageDoc, assets: DocumentAssets): string {
   <main id="page">${body}</main>
   ${renderFooter()}
   ${scripts(assets)}
+  ${assets.disableLinks ? PREVIEW_LOCK_LINKS : ''}
 </body>
 </html>`
 }

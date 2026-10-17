@@ -19,6 +19,11 @@ describe('renderDocument', () => {
     expect(html).toContain('<footer')
     expect(html).toContain('你好')
   })
+  it('disableLinks injects preview link-lock script', () => {
+    const html = renderDocument(page, { mode: 'external', disableLinks: true })
+    expect(html).toContain("closest('a')")
+    expect(html).toContain('preventDefault')
+  })
   it('inline mode inlines provided css and omits asset links', () => {
     const html = renderDocument(page, { mode: 'inline', css: '.x{}', swiperJs: 'SWIPER', mainJs: 'MAIN' })
     expect(html).toContain('<style>.x{}</style>')
