@@ -15,10 +15,10 @@ describe('renderTop', () => {
     expect(html).toContain('style="background:#FFF1F6;"')
     expect(html).not.toContain('section-alt')
   })
-  it('does not double-wrap banner', () => {
+  it('wraps banner in a section', () => {
     const html = renderTop({ type: 'banner', variant: 'split', title: 'T' })
-    expect(html.startsWith('<section class="banner')).toBe(true)
-    // exactly one section
+    expect(html.startsWith('<section class="section"')).toBe(true)
+    expect(html).toContain('<div class="banner')
     expect(html.match(/<section/g)?.length).toBe(1)
   })
 })

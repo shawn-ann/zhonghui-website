@@ -8,5 +8,6 @@ export function renderButton(b: ButtonBlock): string {
     ? `<a class="btn btn--${style}" href="${esc(href)}" data-field="label">${esc(b.label)}</a>`
     : `<span class="btn btn--${style}" data-field="label">${esc(b.label)}</span>`
   const idAttr = b._id ? ` data-bid="${esc(b._id)}"` : ''
-  return `<div class="container"${idAttr}><div class="button-block">${btn}</div></div>`
+  const pad = b.padding && b.padding > 0 ? ` style="padding:${b.padding}px"` : ''
+  return `<div class="container"${idAttr}><div class="button-block"${pad}>${btn}</div></div>`
 }

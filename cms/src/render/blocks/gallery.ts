@@ -9,5 +9,6 @@ export function renderGallery(b: GalleryBlock): string {
     .map((src) => `<figure class="gallery-item"><img src="${esc(src)}" alt=""></figure>`)
     .join('')
   const idAttr = b._id ? ` data-bid="${esc(b._id)}"` : ''
-  return `<div class="container"${idAttr}><div class="gallery gallery-cols-${cols}">${imgs}</div></div>`
+  const pad = b.padding && b.padding > 0 ? ` style="padding:${b.padding}px"` : ''
+  return `<div class="container"${idAttr}><div class="gallery gallery-cols-${cols}"${pad}>${imgs}</div></div>`
 }

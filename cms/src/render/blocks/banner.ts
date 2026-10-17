@@ -3,7 +3,7 @@ import type { BannerBlock } from '../types'
 
 function bannerShell(cls: string, style: string, inner: string, id?: string): string {
   const bid = id ? ` data-bid="${esc(id)}"` : ''
-  return `<section class="${cls}"${bid} ${style}>${inner}</section>`
+  return `<div class="${cls}"${bid} ${style}>${inner}</div>`
 }
 
 export function renderBanner(b: BannerBlock): string {

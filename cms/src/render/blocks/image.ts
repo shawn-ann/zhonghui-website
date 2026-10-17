@@ -6,6 +6,7 @@ export function renderImage(b: ImageBlock): string {
   const img = `<img src="${esc(src)}" alt="${esc(b.altText || '')}">`
   const href = b.link ? safeUrl(b.link) : ''
   const wrapped = href ? `<a href="${esc(href)}">${img}</a>` : img
+  const pad = b.padding && b.padding > 0 ? ` style="padding:${b.padding}px"` : ''
   const idAttr = b._id ? ` data-bid="${esc(b._id)}"` : ''
-  return `<div class="container"${idAttr}><div class="image-block">${wrapped}</div></div>`
+  return `<div class="container"${idAttr}><div class="image-block"${pad}>${wrapped}</div></div>`
 }

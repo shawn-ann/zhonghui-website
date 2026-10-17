@@ -13,4 +13,8 @@ describe('heading', () => {
   it('omits subtitle when empty', () => {
     expect(renderBlock({ type: 'heading', title: 'T' } as HeadingBlock)).not.toContain('subtitle')
   })
+  it('applies padding only when positive', () => {
+    expect(renderBlock({ type: 'heading', title: 'T', padding: 20 })).toContain('padding:20px')
+    expect(renderBlock({ type: 'heading', title: 'T' })).not.toContain('padding:')
+  })
 })

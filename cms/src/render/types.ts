@@ -21,6 +21,7 @@ export interface HeadingBlock extends BlockBase {
   title: string
   subtitle?: string
   align?: 'center' | 'left'
+  padding?: number
 }
 
 export interface GridBlock extends BlockBase {
@@ -35,6 +36,7 @@ export interface TextBlock extends BlockBase {
   title?: string
   body: string
   align?: 'left' | 'center'
+  padding?: number
 }
 
 export interface ImageBlock extends BlockBase {
@@ -42,6 +44,7 @@ export interface ImageBlock extends BlockBase {
   media: string
   altText?: string
   link?: string
+  padding?: number
 }
 
 export interface ImageTextBlock extends BlockBase {
@@ -50,6 +53,7 @@ export interface ImageTextBlock extends BlockBase {
   title?: string
   desc?: string
   link?: string
+  padding?: number
 }
 
 export interface ButtonBlock extends BlockBase {
@@ -57,6 +61,7 @@ export interface ButtonBlock extends BlockBase {
   label: string
   link: string
   style?: 'primary' | 'outline'
+  padding?: number
 }
 
 export interface RichTextBlock extends BlockBase {
@@ -66,12 +71,14 @@ export interface RichTextBlock extends BlockBase {
    * Trusted editor content only — NEVER assign raw user input here.
    */
   html: string
+  padding?: number
 }
 
 export interface GalleryBlock extends BlockBase {
   type: 'gallery'
   images: string[]
   columns?: number
+  padding?: number
 }
 
 export interface SliderBlock extends BlockBase {
@@ -81,6 +88,11 @@ export interface SliderBlock extends BlockBase {
 
 export interface SectionBlock extends BlockBase {
   type: 'section'
+  paddingTop?: number
+  paddingRight?: number
+  paddingBottom?: number
+  paddingLeft?: number
+  /** @deprecated 旧版预设留白，仅用于过渡期类型兼容，渲染时忽略 */
   padding?: 'none' | 'sm' | 'md' | 'lg'
   children: Block[]
 }
