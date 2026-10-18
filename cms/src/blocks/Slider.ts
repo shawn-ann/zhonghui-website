@@ -1,5 +1,4 @@
 import type { Block } from 'payload'
-import { bgField } from './common'
 
 export const SliderBlock: Block = {
   slug: 'slider',
@@ -12,6 +11,7 @@ export const SliderBlock: Block = {
       minRows: 1,
       fields: [{ name: 'image', type: 'upload', relationTo: 'media', required: true }],
     },
-    bgField(),
+    // 旧字段：轮播不再使用背景。
+    { name: 'bg', type: 'text', admin: { hidden: true } },
   ],
 }

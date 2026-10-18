@@ -13,12 +13,12 @@ export function collectMediaUrls(data: SiteData): Set<string> {
       switch (b.type) {
         case 'image': add(b.media); break
         case 'imageText': add(b.media); break
-        case 'iconCard': add(b.icon); break
+        case 'iconCard': add(b.icon); add(b.bgImage); break
         case 'banner': add(b.image); add(b.pattern); break
         case 'gallery': b.images.forEach(add); break
         case 'slider': b.images.forEach(add); break
-        case 'grid': walk(b.children); break
-        case 'section': walk(b.children); break
+        case 'grid': walk(b.children); add(b.bgImage); break
+        case 'section': walk(b.children); add(b.bgImage); break
         case 'richtext': {
           const matches = b.html.match(/\/api\/media\/file\/[^"'\s)]+/g)
           if (matches) matches.forEach(add)

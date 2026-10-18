@@ -13,6 +13,15 @@ export const altField = (): Field => ({
   defaultValue: false,
 })
 
+/**
+ * 旧字段：内容组件已不再使用背景/浅粉底。
+ * 保留为隐藏列，避免删除列触发数据库迁移。
+ */
+export const legacyBgAltFields = (): Field[] => [
+  { name: 'bg', type: 'text', admin: { hidden: true } },
+  { name: 'alt', type: 'checkbox', defaultValue: false, admin: { hidden: true } },
+]
+
 export const paddingField = (): Field => ({
   name: 'padding',
   type: 'number',

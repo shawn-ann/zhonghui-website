@@ -146,10 +146,16 @@ header {
 .adv-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(26,41,88,0.14); }
 .adv-card .icon {
   width: 104px; height: 104px; border-radius: 50%; margin: 0 auto 20px;
-  background: #fff; border: 2px solid var(--accent);
+  background: transparent; border: 2px solid var(--accent);
   display: flex; align-items: center; justify-content: center;
 }
 .adv-card .icon img { width: 60px; height: 60px; display: block; }
+.adv-card .icon-glyph {
+  width: 60px; height: 60px; display: block;
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+}
 .adv-card h3 { font-size: 19px; color: var(--deep-blue); font-weight: 600; }
 .adv-card p { font-size: 14px; color: var(--gray-blue); margin-top: 10px; line-height: 1.8; }
 
@@ -238,7 +244,7 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .gallery-cols-2 { grid-template-columns: repeat(2,1fr); }
 .gallery-cols-3 { grid-template-columns: repeat(3,1fr); }
 .gallery-cols-4 { grid-template-columns: repeat(4,1fr); }
-.gallery-item img { width:100%; border-radius:10px; display:block; }
+.gallery-item img { width:100%; aspect-ratio:4 / 3; object-fit:cover; border-radius:10px; display:block; }
 .richtext { font-size:16px; color: var(--dark-text); line-height:1.9; }
 .richtext h2 { font-size:28px; color: var(--deep-blue); margin:24px 0 12px; }
 .richtext h3 { font-size:22px; color: var(--deep-blue); margin:20px 0 10px; }

@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import { bgField, altField, linkField, paddingField } from './common'
+import { legacyBgAltFields, linkField, paddingField } from './common'
 
 export const ButtonBlock: Block = {
   slug: 'button',
@@ -16,8 +16,7 @@ export const ButtonBlock: Block = {
         { label: '描边', value: 'outline' },
       ],
     },
-    bgField(),
-    altField(),
+    ...legacyBgAltFields(),
     paddingField(),
   ],
 }

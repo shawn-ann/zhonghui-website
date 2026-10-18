@@ -8,5 +8,8 @@ export const IconCardBlock: Block = {
     { name: 'title', type: 'text' },
     { name: 'desc', type: 'textarea' },
     { name: 'link', type: 'text', admin: { description: '站内路由或完整外链' } },
+    { name: 'bgImage', type: 'text', admin: { description: '卡片背景图片 URL' } },
+    { name: 'bgColor', type: 'text', admin: { description: '卡片背景颜色，如 #FFF1F6' } },
+    { name: 'iconColor', type: 'text', admin: { description: '图标颜色，如 #E60039' } },
   ],
 }

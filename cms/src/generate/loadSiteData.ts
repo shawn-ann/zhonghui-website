@@ -17,8 +17,8 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
         .filter((x): x is Block => x !== null)
       return {
         type: 'section',
-        bg,
-        alt,
+        bgImage: raw.bgImage || undefined,
+        bgColor: raw.bgColor || undefined,
         paddingY: raw.paddingY || 'md',
         children,
       }
@@ -30,7 +30,16 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
     case 'imageText':
       return { type: 'imageText', media: resolveMedia(raw.media), title: raw.title || undefined, desc: raw.desc || undefined, link: raw.link || undefined, padding: raw.padding || undefined, bg, alt }
     case 'iconCard':
-      return { type: 'iconCard', icon: resolveMedia(raw.icon), title: raw.title || undefined, desc: raw.desc || undefined, link: raw.link || undefined }
+      return {
+        type: 'iconCard',
+        icon: resolveMedia(raw.icon),
+        title: raw.title || undefined,
+        desc: raw.desc || undefined,
+        link: raw.link || undefined,
+        bgImage: raw.bgImage || undefined,
+        bgColor: raw.bgColor || undefined,
+        iconColor: raw.iconColor || undefined,
+      }
     case 'button':
       return { type: 'button', label: String(raw.label ?? ''), link: raw.link || '', style: raw.style === 'outline' ? 'outline' : 'primary', padding: raw.padding || undefined, bg, alt }
     case 'banner':
@@ -49,7 +58,14 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
       const children = arr<Record<string, any>>(raw.children)
         .map((child) => mapBlock(child, resolveMedia))
         .filter((x): x is Block => x !== null)
-      return { type: 'grid', columns: raw.columns || 3, gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md', children, bg, alt }
+      return {
+        type: 'grid',
+        columns: raw.columns || 3,
+        gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md',
+        bgImage: raw.bgImage || undefined,
+        bgColor: raw.bgColor || undefined,
+        children,
+      }
     }
     case 'gallery':
       return {

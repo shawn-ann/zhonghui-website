@@ -1,5 +1,4 @@
 import type { Block } from 'payload'
-import { bgField, altField } from './common'
 import { TextBlock } from './Text'
 import { ImageBlock } from './Image'
 import { ImageTextBlock } from './ImageText'
@@ -28,8 +27,11 @@ export function makeGrid(slug: string, label: string, cellComponents: Block[]): 
         ],
       },
       { name: 'children', type: 'blocks', blocks: cellComponents },
-      bgField(),
-      altField(),
+      { name: 'bgImage', type: 'text', admin: { description: '背景图片 URL' } },
+      { name: 'bgColor', type: 'text', admin: { description: '背景颜色，如 #FFF1F6' } },
+      // 旧字段：迁移后不再使用，保留以避免触发删列迁移。
+      { name: 'bg', type: 'text', admin: { hidden: true } },
+      { name: 'alt', type: 'checkbox', defaultValue: false, admin: { hidden: true } },
     ],
   }
 }

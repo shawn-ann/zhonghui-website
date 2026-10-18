@@ -28,6 +28,10 @@ export interface GridBlock extends BlockBase {
   type: 'grid'
   columns: number
   gap?: string
+  /** 背景图片 URL（可与背景色叠加） */
+  bgImage?: string
+  /** 背景颜色（CSS 颜色值） */
+  bgColor?: string
   children: Block[]
 }
 
@@ -92,11 +96,21 @@ export interface IconCardBlock extends BlockBase {
   title?: string
   desc?: string
   link?: string
+  /** 卡片背景图片（可与背景色叠加） */
+  bgImage?: string
+  /** 卡片背景颜色 */
+  bgColor?: string
+  /** 图标颜色；设置后以 mask 方式给 SVG 上色 */
+  iconColor?: string
 }
 
 export interface SectionBlock extends BlockBase {
   type: 'section'
   paddingY?: 'none' | 'sm' | 'md' | 'lg'
+  /** 背景图片 URL（可与背景色叠加） */
+  bgImage?: string
+  /** 背景颜色（CSS 颜色值） */
+  bgColor?: string
   children: Block[]
 }
 

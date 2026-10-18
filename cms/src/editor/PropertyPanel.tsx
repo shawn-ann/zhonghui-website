@@ -3,16 +3,17 @@ import React, { useState } from 'react'
 import { BLOCKS, isLayout, allowedChildTypes } from './blocks'
 import type { Block } from './types'
 import { blockChildren } from './state'
-import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, BgControl, MediaControl } from './controls'
+import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, BgControl, MediaControl, MediaListControl, ColorControl } from './controls'
 import MediaModal from './MediaModal'
 import type { MediaItem } from './api'
 
 export default function PropertyPanel({
-  block, onChange, onPickMedia, onAddChild, onRemoveChild, onMoveChild,
+  block, onChange, onPickMedia, onSelectChild, onAddChild, onRemoveChild, onMoveChild,
 }: {
   block?: Block
   onChange: (key: string, value: unknown) => void
   onPickMedia?: (item: MediaItem) => void
+  onSelectChild?: (id: string) => void
   onAddChild?: (type: Block['type']) => void
   onRemoveChild?: (index: number) => void
   onMoveChild?: (index: number, dir: -1 | 1) => void
@@ -43,7 +44,9 @@ export default function PropertyPanel({
           case 'boolean': return <BooleanControl key={f.key} label={f.label} value={val(f.key) as boolean} onChange={(v) => onChange(f.key, v)} />
           case 'link': return <LinkControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />
           case 'bg': return <BgControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} onPick={() => setMediaFor(f.key)} />
+          case 'color': return <ColorControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />
           case 'media': return <MediaControl key={f.key} label={f.label} value={val(f.key) as string} onPick={() => setMediaFor(f.key)} onChange={(v) => onChange(f.key, v)} />
+          case 'mediaList': return <MediaListControl key={f.key} label={f.label} value={val(f.key) as string[]} onAdd={() => setMediaFor(f.key)} onChange={(v) => onChange(f.key, v)} />
         }
       })}
       {isContainer ? (
@@ -52,7 +55,11 @@ export default function PropertyPanel({
           {children.length === 0 ? <p className="ed-muted">暂无子组件</p> : null}
           {children.map((c, i) => (
             <div key={c._id ?? i} className="ed-child-row">
-              <span className="ed-child-name">{BLOCKS[c.type]?.label ?? c.type}</span>
+              <span
+                className="ed-child-name ed-child-link"
+                title="点击编辑该组件"
+                onClick={() => c._id && onSelectChild?.(c._id)}
+              >{BLOCKS[c.type]?.label ?? c.type}</span>
               <span className="ed-child-actions">
                 <button type="button" title="上移" disabled={i === 0} onClick={() => onMoveChild?.(i, -1)}>↑</button>
                 <button type="button" title="下移" disabled={i === children.length - 1} onClick={() => onMoveChild?.(i, 1)}>↓</button>
@@ -71,7 +78,19 @@ export default function PropertyPanel({
       {mediaFor ? (
         <MediaModal
           onClose={() => setMediaFor(null)}
-          onSelect={(item) => { onPickMedia?.(item); if (item.url) onChange(mediaFor, item.url); setMediaFor(null) }}
+          onSelect={(item) => {
+            onPickMedia?.(item)
+            if (item.url) {
+              const field = meta.fields.find((f) => f.key === mediaFor)
+              if (field?.control === 'mediaList') {
+                const list = (val(mediaFor) as string[] | undefined) ?? []
+                onChange(mediaFor, [...list, item.url])
+              } else {
+                onChange(mediaFor, item.url)
+              }
+            }
+            setMediaFor(null)
+          }}
         />
       ) : null}
     </aside>

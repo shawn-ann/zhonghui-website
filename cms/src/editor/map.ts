@@ -98,6 +98,9 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.title !== undefined) out.title = b.title
       if (b.desc !== undefined) out.desc = b.desc
       if (b.link !== undefined) out.link = b.link
+      if (b.bgImage !== undefined) out.bgImage = b.bgImage
+      if (b.bgColor !== undefined) out.bgColor = b.bgColor
+      if (b.iconColor !== undefined) out.iconColor = b.iconColor
       break
     case 'button':
       out.label = b.label
@@ -111,11 +114,15 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       break
     case 'section':
       out.paddingY = b.paddingY || 'md'
+      if (b.bgImage !== undefined) out.bgImage = b.bgImage
+      if (b.bgColor !== undefined) out.bgColor = b.bgColor
       out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'grid':
       out.columns = b.columns
       if (b.gap !== undefined) out.gap = b.gap
+      if (b.bgImage !== undefined) out.bgImage = b.bgImage
+      if (b.bgColor !== undefined) out.bgColor = b.bgColor
       out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'gallery': {

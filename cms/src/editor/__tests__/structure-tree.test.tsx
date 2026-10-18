@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, within } from '@testing-library/react'
 import StructureTree from '../StructureTree'
 
 const blocks: any[] = [
@@ -33,11 +33,21 @@ describe('StructureTree', () => {
     fireEvent.click(screen.getByText('页面根目录'))
     expect(onSelectRoot).toHaveBeenCalled()
   })
-  it('shows top-level move buttons and calls onMoveTop', () => {
-    const onMoveTop = vi.fn()
+  it('moves top-level sections', () => {
+    const onMove = vi.fn()
     const two: any[] = [...blocks, { type: 'text', _id: 't2', body: 'x' }]
-    render(<StructureTree blocks={two} onSelect={() => {}} onDelete={() => {}} onMoveTop={onMoveTop} />)
-    fireEvent.click(screen.getAllByTitle('下移')[0])
-    expect(onMoveTop).toHaveBeenCalledWith(0, 1)
+    render(<StructureTree blocks={two} onSelect={() => {}} onDelete={() => {}} onMove={onMove} />)
+    const row = screen.getAllByText('项目一览')[0].closest('.ed-tree-row') as HTMLElement
+    fireEvent.click(within(row).getByTitle('下移'))
+    expect(onMove).toHaveBeenCalledWith(undefined, 0, 1)
+  })
+
+  it('moves nested children within their parent', () => {
+    const onMove = vi.fn()
+    render(<StructureTree blocks={blocks} onSelect={() => {}} onDelete={() => {}} onMove={onMove} />)
+    const rows = [...document.querySelectorAll('.ed-tree-row')] as HTMLElement[]
+    const row = rows.find((r) => r.querySelector('.ed-tree-label')?.textContent === '标题')!
+    fireEvent.click(within(row).getByTitle('下移'))
+    expect(onMove).toHaveBeenCalledWith('s1', 0, 1)
   })
 })

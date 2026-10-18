@@ -34,7 +34,7 @@ describe('generateSite', () => {
   })
   it('collects media from section/block bg', () => {
     const d = { pages: [{ title: 't', route: '/', blocks: [
-      { type: 'section', padding: 'md', bg: '/api/media/file/bg.jpg', children: [] },
+      { type: 'section', padding: 'md', bgImage: '/api/media/file/bg.jpg', children: [] },
       { type: 'grid', columns: 2, bg: '/api/media/file/g.jpg', children: [] },
     ] }] } as any
     const urls = [...collectMediaUrls(d)]

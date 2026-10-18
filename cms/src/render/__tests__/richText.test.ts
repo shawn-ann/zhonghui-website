@@ -1,12 +1,13 @@
 import { describe, it, expect } from 'vitest'
-import { renderBlock } from '../blocks'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { blockNode } from '../../site/blocks'
 import { lexicalToHtml, sanitizeHtml } from '../richText'
 import type { RichTextBlock } from '../types'
 
 describe('richtext renderer', () => {
   it('injects pre-converted html', () => {
     const b: RichTextBlock = { type: 'richtext', html: '<p>你好</p><ul><li>项</li></ul>' }
-    const html = renderBlock(b)
+    const html = renderToStaticMarkup(blockNode(b))
     expect(html).toContain('<p>你好</p>')
     expect(html).toContain('<ul><li>项</li></ul>')
     expect(html).toContain('richtext')

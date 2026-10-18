@@ -118,7 +118,13 @@ export default function PageEditor({ id }: { id: number | string }) {
             onSelect={setSelectedId}
             onSelectRoot={() => setSelectedId(undefined)}
             onDelete={deleteBlock}
-            onMoveTop={(i, dir) => update(moveChild(doc.blocks, i, dir))}
+            onMove={(parentId, index, dir) => {
+              if (!parentId) { update(moveChild(doc.blocks, index, dir)); return }
+              const p = findPath(doc.blocks, parentId)
+              const parent = p ? getAtPath(doc.blocks, p) : undefined
+              if (!p || !parent) return
+              update(updateAtPath(doc.blocks, p, withChildren(parent, moveChild(blockChildren(parent), index, dir))))
+            }}
             onAddSection={addSection}
           />
           <Palette />
@@ -146,6 +152,7 @@ export default function PageEditor({ id }: { id: number | string }) {
         <PropertyPanel
           block={selected}
           onPickMedia={onPickMedia}
+          onSelectChild={setSelectedId}
           onChange={(key, value) => {
             if (selectedPath && selected) {
               update(updateAtPath(doc.blocks, selectedPath, { ...selected, [key]: value } as Block))

@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import { bgField, altField, linkField, paddingField } from './common'
+import { legacyBgAltFields, linkField, paddingField } from './common'
 
 export const ImageTextBlock: Block = {
   slug: 'imageText',
@@ -9,8 +9,7 @@ export const ImageTextBlock: Block = {
     { name: 'title', type: 'text' },
     { name: 'desc', type: 'textarea' },
     linkField(),
-    bgField(),
-    altField(),
+    ...legacyBgAltFields(),
     paddingField(),
   ],
 }

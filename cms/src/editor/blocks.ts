@@ -4,7 +4,7 @@ import { newId } from './state'
 export interface FieldDef {
   key: string
   label: string
-  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'link' | 'bg'
+  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'mediaList' | 'link' | 'bg' | 'color'
   options?: { label: string; value: string }[]
 }
 export interface BlockMeta { type: Block['type']; label: string; defaults: () => Block; fields: FieldDef[] }
@@ -23,39 +23,46 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   text: { type: 'text', label: '文本', defaults: () => ({ type: 'text', body: '' }), fields: [
     { key: 'title', label: '标题', control: 'text' }, { key: 'body', label: '正文', control: 'textarea' },
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '左', value: 'left' }, { label: '居中', value: 'center' }] },
-    { key: 'padding', label: '内边距', control: 'number' }, ...common,
+    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   image: { type: 'image', label: '图片', defaults: () => ({ type: 'image', media: '' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'altText', label: '替代文本', control: 'text' },
-    { key: 'link', label: '链接', control: 'link' }, { key: 'padding', label: '内边距', control: 'number' }, ...common,
+    { key: 'link', label: '链接', control: 'link' }, { key: 'padding', label: '内边距', control: 'number' },
   ] },
   imageText: { type: 'imageText', label: '图文卡片', defaults: () => ({ type: 'imageText', media: '' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'title', label: '标题', control: 'text' },
     { key: 'desc', label: '描述', control: 'textarea' }, { key: 'link', label: '链接', control: 'link' },
-    { key: 'padding', label: '内边距', control: 'number' }, ...common,
+    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   iconCard: { type: 'iconCard', label: '图标卡片', defaults: () => ({ type: 'iconCard', icon: '' }), fields: [
     { key: 'icon', label: '图标', control: 'media' },
+    { key: 'iconColor', label: '图标颜色', control: 'color' },
     { key: 'title', label: '标题', control: 'text' },
     { key: 'desc', label: '描述', control: 'textarea' },
     { key: 'link', label: '链接', control: 'link' },
+    { key: 'bgImage', label: '背景图片', control: 'media' },
+    { key: 'bgColor', label: '背景颜色', control: 'color' },
   ] },
   button: { type: 'button', label: '按钮', defaults: () => ({ type: 'button', label: '', link: '' }), fields: [
     { key: 'label', label: '文字', control: 'text' }, { key: 'link', label: '链接', control: 'link' },
     { key: 'style', label: '样式', control: 'select', options: [{ label: '实心', value: 'primary' }, { label: '描边', value: 'outline' }] },
-    { key: 'padding', label: '内边距', control: 'number' }, ...common,
+    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   richtext: { type: 'richtext', label: '富文本', defaults: () => ({ type: 'richtext', html: '' }), fields: [
-    { key: 'padding', label: '内边距', control: 'number' }, ...common,
+    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   gallery: { type: 'gallery', label: '图集', defaults: () => ({ type: 'gallery', images: [] }), fields: [
-    { key: 'columns', label: '列数', control: 'number' }, { key: 'padding', label: '内边距', control: 'number' }, ...common,
+    { key: 'columns', label: '列数', control: 'number' },
+    { key: 'images', label: '图片', control: 'mediaList' },
+    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   slider: { type: 'slider', label: '轮播', defaults: () => ({ type: 'slider', images: [] }), fields: [
-    { key: 'bg', label: '背景', control: 'bg' },
+    { key: 'images', label: '轮播图片', control: 'mediaList' },
   ] },
   grid: { type: 'grid', label: '网格', defaults: () => ({ type: 'grid', columns: 3, gap: 'md', children: [] }), fields: [
-    { key: 'columns', label: '列数', control: 'number' }, { key: 'gap', label: '间距', control: 'select', options: [{ label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] }, ...common,
+    { key: 'columns', label: '列数', control: 'number' }, { key: 'gap', label: '间距', control: 'select', options: [{ label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
+    { key: 'bgImage', label: '背景图片', control: 'media' },
+    { key: 'bgColor', label: '背景颜色', control: 'color' },
   ] },
   heading: { type: 'heading', label: '标题', defaults: () => ({ type: 'heading', title: '标题' }), fields: [
     { key: 'title', label: '标题', control: 'text' }, { key: 'subtitle', label: '副标题', control: 'text' },
@@ -65,7 +72,8 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   section: { type: 'section', label: '分栏', defaults: () => ({ type: 'section', paddingY: 'md', children: [
     { type: 'heading', title: '新分栏', align: 'center', _id: newId() },
   ] }), fields: [
-    { key: 'bg', label: '背景', control: 'bg' },
+    { key: 'bgImage', label: '背景图片', control: 'media' },
+    { key: 'bgColor', label: '背景颜色', control: 'color' },
     { key: 'paddingY', label: '垂直内边距', control: 'select', options: [{ label: '无', value: 'none' }, { label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
   ] },
 }

@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import { bgField, altField, paddingField } from './common'
+import { legacyBgAltFields, paddingField } from './common'
 
 export const TextBlock: Block = {
   slug: 'text',
@@ -16,8 +16,7 @@ export const TextBlock: Block = {
         { label: '居中', value: 'center' },
       ],
     },
-    bgField(),
-    altField(),
+    ...legacyBgAltFields(),
     paddingField(),
   ],
 }

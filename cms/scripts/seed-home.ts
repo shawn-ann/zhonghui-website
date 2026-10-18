@@ -83,7 +83,7 @@ const blocks: any[] = [
   {
     blockType: 'section',
     paddingY: 'md',
-    bg: '/assets/bg2.jpg',
+    bgImage: '/assets/bg2.jpg',
     children: [
       { blockType: 'heading', title: '项目一览', align: 'center' },
       {
@@ -97,7 +97,7 @@ const blocks: any[] = [
   {
     blockType: 'section',
     paddingY: 'md',
-    bg: '#FFF1F6',
+    bgColor: '#FFF1F6',
     children: [
       { blockType: 'heading', title: '中惠优势', align: 'center' },
       {
@@ -111,7 +111,7 @@ const blocks: any[] = [
   {
     blockType: 'section',
     paddingY: 'md',
-    bg: '/assets/yinji-bg.jpg',
+    bgImage: '/assets/yinji-bg.jpg',
     children: [
       { blockType: 'heading', title: '中惠印记', align: 'center' },
       { blockType: 'slider', images: mem.map((id) => ({ image: id })) },

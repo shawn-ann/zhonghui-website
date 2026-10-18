@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import { bgField, altField, paddingField } from './common'
+import { legacyBgAltFields, paddingField } from './common'
 
 export const GalleryBlock: Block = {
   slug: 'gallery',
@@ -13,8 +13,7 @@ export const GalleryBlock: Block = {
       fields: [{ name: 'image', type: 'upload', relationTo: 'media', required: true }],
     },
     { name: 'columns', type: 'number', defaultValue: 3, min: 1, max: 4 },
-    bgField(),
-    altField(),
+    ...legacyBgAltFields(),
     paddingField(),
   ],
 }

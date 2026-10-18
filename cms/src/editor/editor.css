@@ -234,6 +234,49 @@
   background: #fff;
   cursor: pointer;
 }
+.ed-color-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ed-color-row input[type="color"] {
+  width: 40px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+.ed-color-row input[type="text"],
+.ed-color-row input:not([type]) {
+  flex: 1;
+  min-width: 0;
+}
+.ed-media-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ed-media-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ed-media-ops {
+  display: flex;
+  gap: 4px;
+}
+.ed-media-ops button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+.ed-media-ops button:disabled { opacity: .35; cursor: default; }
 .ed-grid-cells {
   margin-top: 12px;
   border-top: 1px solid #eee;
@@ -257,6 +300,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.ed-child-link {
+  cursor: pointer;
+}
+.ed-child-link:hover {
+  color: #E60039;
+  text-decoration: underline;
 }
 .ed-child-actions {
   display: flex;
@@ -340,6 +390,32 @@
   border-radius: 4px;
   background: #fff;
   cursor: pointer;
+}
+.ed-upload-btn {
+  position: relative;
+  display: inline-block;
+  font-size: 13px;
+  padding: 6px 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+.ed-upload-btn input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+.ed-upload-btn.is-busy {
+  opacity: .6;
+  cursor: default;
+}
+.ed-modal-error {
+  margin-left: 10px;
+  font-size: 12px;
+  color: #c62828;
 }
 .ed-media-grid {
   display: grid;

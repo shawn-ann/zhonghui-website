@@ -9,7 +9,7 @@ describe('PropertyPanel', () => {
 
   it('renders Chinese labels for a text block', () => {
     render(<PropertyPanel block={block} onChange={() => {}} />)
-    for (const label of ['标题', '正文', '对齐', '背景', '浅粉底']) {
+    for (const label of ['标题', '正文', '对齐']) {
       expect(screen.getByText(label)).toBeTruthy()
     }
   })
@@ -25,5 +25,15 @@ describe('PropertyPanel', () => {
   it('shows a placeholder when no block is selected', () => {
     render(<PropertyPanel onChange={() => {}} />)
     expect(screen.getByText('未选中区块')).toBeTruthy()
+  })
+
+  it('selects a child when its name is clicked', () => {
+    const onSelectChild = vi.fn()
+    const section: Block = {
+      type: 'section', _id: 's1', children: [{ type: 'heading', _id: 'h1', title: 'A' }],
+    }
+    render(<PropertyPanel block={section} onChange={() => {}} onSelectChild={onSelectChild} />)
+    fireEvent.click(screen.getByTitle('点击编辑该组件'))
+    expect(onSelectChild).toHaveBeenCalledWith('h1')
   })
 })

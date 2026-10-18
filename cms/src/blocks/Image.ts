@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import { bgField, altField, linkField, paddingField } from './common'
+import { legacyBgAltFields, linkField, paddingField } from './common'
 
 export const ImageBlock: Block = {
   slug: 'image',
@@ -8,8 +8,7 @@ export const ImageBlock: Block = {
     { name: 'media', type: 'upload', relationTo: 'media', required: true },
     { name: 'altText', type: 'text' },
     linkField(),
-    bgField(),
-    altField(),
+    ...legacyBgAltFields(),
     paddingField(),
   ],
 }

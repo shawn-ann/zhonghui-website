@@ -6,7 +6,7 @@ import type { Block } from './types'
 
 function Node({
   block, depth, selectedId, onSelect, onDelete, expanded, toggle,
-  topIndex, topCount, onMoveTop,
+  parentId, index, count, onMove,
 }: {
   block: Block
   depth: number
@@ -15,9 +15,10 @@ function Node({
   onDelete: (id: string) => void
   expanded: Set<string>
   toggle: (id: string) => void
-  topIndex?: number
-  topCount?: number
-  onMoveTop?: (index: number, dir: -1 | 1) => void
+  parentId?: string
+  index: number
+  count: number
+  onMove?: (parentId: string | undefined, index: number, dir: -1 | 1) => void
 }) {
   const id = block._id || ''
   const layout = isLayout(block.type)
@@ -25,7 +26,6 @@ function Node({
   const open = expanded.has(id)
   const label = BLOCKS[block.type]?.label ?? block.type
   const summary = (blockSummary(block) || '').slice(0, 12)
-  const isTop = depth === 1
   return (
     <div>
       <div
@@ -39,23 +39,27 @@ function Node({
         <span className="ed-tree-label">{label}</span>
         {summary ? <span className="ed-tree-summary">{summary}</span> : null}
         <span className="ed-tree-actions">
-          {isTop && onMoveTop ? (
+          {onMove ? (
             <>
               <button
-                className="ed-tree-move" title="上移" disabled={(topIndex ?? 0) === 0}
-                onClick={(e) => { e.stopPropagation(); onMoveTop(topIndex ?? 0, -1) }}
+                className="ed-tree-move" title="上移" disabled={index === 0}
+                onClick={(e) => { e.stopPropagation(); onMove(parentId, index, -1) }}
               >↑</button>
               <button
-                className="ed-tree-move" title="下移" disabled={(topIndex ?? 0) === (topCount ?? 1) - 1}
-                onClick={(e) => { e.stopPropagation(); onMoveTop(topIndex ?? 0, 1) }}
+                className="ed-tree-move" title="下移" disabled={index === count - 1}
+                onClick={(e) => { e.stopPropagation(); onMove(parentId, index, 1) }}
               >↓</button>
             </>
           ) : null}
           <button className="ed-tree-del" title="删除" onClick={(e) => { e.stopPropagation(); id && onDelete(id) }}>✕</button>
         </span>
       </div>
-      {layout && open ? children.map((c) => (
-        <Node key={c._id} block={c} depth={depth + 1} selectedId={selectedId} onSelect={onSelect} onDelete={onDelete} expanded={expanded} toggle={toggle} />
+      {layout && open ? children.map((c, i) => (
+        <Node
+          key={c._id} block={c} depth={depth + 1} selectedId={selectedId}
+          onSelect={onSelect} onDelete={onDelete} expanded={expanded} toggle={toggle}
+          parentId={id} index={i} count={children.length} onMove={onMove}
+        />
       )) : null}
     </div>
   )
@@ -70,14 +74,14 @@ function collectIds(blocks: Block[], out: Set<string> = new Set()): Set<string> 
 }
 
 export default function StructureTree({
-  blocks, selectedId, onSelect, onSelectRoot, onDelete, onMoveTop, onAddSection,
+  blocks, selectedId, onSelect, onSelectRoot, onDelete, onMove, onAddSection,
 }: {
   blocks: Block[]
   selectedId?: string
   onSelect: (id: string) => void
   onSelectRoot?: () => void
   onDelete: (id: string) => void
-  onMoveTop?: (index: number, dir: -1 | 1) => void
+  onMove?: (parentId: string | undefined, index: number, dir: -1 | 1) => void
   onAddSection?: () => void
 }) {
   const [expanded, setExpanded] = useState<Set<string>>(() => collectIds(blocks))
@@ -111,7 +115,7 @@ export default function StructureTree({
           key={b._id} block={b} depth={1} selectedId={selectedId}
           onSelect={onSelect} onDelete={onDelete}
           expanded={expanded} toggle={toggle}
-          topIndex={i} topCount={blocks.length} onMoveTop={onMoveTop}
+          parentId={undefined} index={i} count={blocks.length} onMove={onMove}
         />
       ))}
     </div>

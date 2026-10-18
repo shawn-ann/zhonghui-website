@@ -179,8 +179,13 @@ export interface Page {
     | (
         | {
             /**
-             * 背景图路径/颜色/渐变
+             * 背景图片 URL
              */
+            bgImage?: string | null;
+            /**
+             * 背景颜色，如 #FFF1F6
+             */
+            bgColor?: string | null;
             bg?: string | null;
             paddingY?: ('none' | 'sm' | 'md' | 'lg') | null;
             children?:
@@ -201,9 +206,6 @@ export interface Page {
                       title?: string | null;
                       body: string;
                       align?: ('left' | 'center') | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -221,9 +223,6 @@ export interface Page {
                        * 站内路由以 / 开头，或完整外链 https://…
                        */
                       link?: string | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -242,9 +241,6 @@ export interface Page {
                        * 站内路由以 / 开头，或完整外链 https://…
                        */
                       link?: string | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -262,9 +258,6 @@ export interface Page {
                        */
                       link?: string | null;
                       style?: ('primary' | 'outline') | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -291,9 +284,6 @@ export interface Page {
                         };
                         [k: string]: unknown;
                       } | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -310,9 +300,6 @@ export interface Page {
                         id?: string | null;
                       }[];
                       columns?: number | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -331,6 +318,18 @@ export interface Page {
                        * 站内路由或完整外链
                        */
                       link?: string | null;
+                      /**
+                       * 卡片背景图片 URL
+                       */
+                      bgImage?: string | null;
+                      /**
+                       * 卡片背景颜色，如 #FFF1F6
+                       */
+                      bgColor?: string | null;
+                      /**
+                       * 图标颜色，如 #E60039
+                       */
+                      iconColor?: string | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'iconCard';
@@ -356,9 +355,6 @@ export interface Page {
                                 title?: string | null;
                                 body: string;
                                 align?: ('left' | 'center') | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -376,9 +372,6 @@ export interface Page {
                                  * 站内路由以 / 开头，或完整外链 https://…
                                  */
                                 link?: string | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -397,9 +390,6 @@ export interface Page {
                                  * 站内路由以 / 开头，或完整外链 https://…
                                  */
                                 link?: string | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -417,9 +407,6 @@ export interface Page {
                                  */
                                 link?: string | null;
                                 style?: ('primary' | 'outline') | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -446,9 +433,6 @@ export interface Page {
                                   };
                                   [k: string]: unknown;
                                 } | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -465,9 +449,6 @@ export interface Page {
                                   id?: string | null;
                                 }[];
                                 columns?: number | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -486,6 +467,18 @@ export interface Page {
                                  * 站内路由或完整外链
                                  */
                                 link?: string | null;
+                                /**
+                                 * 卡片背景图片 URL
+                                 */
+                                bgImage?: string | null;
+                                /**
+                                 * 卡片背景颜色，如 #FFF1F6
+                                 */
+                                bgColor?: string | null;
+                                /**
+                                 * 图标颜色，如 #E60039
+                                 */
+                                iconColor?: string | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'iconCard';
@@ -511,9 +504,6 @@ export interface Page {
                                           title?: string | null;
                                           body: string;
                                           align?: ('left' | 'center') | null;
-                                          /**
-                                           * 背景图路径/颜色/渐变，留空为白底
-                                           */
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -531,9 +521,6 @@ export interface Page {
                                            * 站内路由以 / 开头，或完整外链 https://…
                                            */
                                           link?: string | null;
-                                          /**
-                                           * 背景图路径/颜色/渐变，留空为白底
-                                           */
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -552,9 +539,6 @@ export interface Page {
                                            * 站内路由以 / 开头，或完整外链 https://…
                                            */
                                           link?: string | null;
-                                          /**
-                                           * 背景图路径/颜色/渐变，留空为白底
-                                           */
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -572,9 +556,6 @@ export interface Page {
                                            */
                                           link?: string | null;
                                           style?: ('primary' | 'outline') | null;
-                                          /**
-                                           * 背景图路径/颜色/渐变，留空为白底
-                                           */
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -601,9 +582,6 @@ export interface Page {
                                             };
                                             [k: string]: unknown;
                                           } | null;
-                                          /**
-                                           * 背景图路径/颜色/渐变，留空为白底
-                                           */
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -620,9 +598,6 @@ export interface Page {
                                             id?: string | null;
                                           }[];
                                           columns?: number | null;
-                                          /**
-                                           * 背景图路径/颜色/渐变，留空为白底
-                                           */
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -641,6 +616,18 @@ export interface Page {
                                            * 站内路由或完整外链
                                            */
                                           link?: string | null;
+                                          /**
+                                           * 卡片背景图片 URL
+                                           */
+                                          bgImage?: string | null;
+                                          /**
+                                           * 卡片背景颜色，如 #FFF1F6
+                                           */
+                                          bgColor?: string | null;
+                                          /**
+                                           * 图标颜色，如 #E60039
+                                           */
+                                          iconColor?: string | null;
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'iconCard';
@@ -648,8 +635,13 @@ export interface Page {
                                     )[]
                                   | null;
                                 /**
-                                 * 背景图路径/颜色/渐变，留空为白底
+                                 * 背景图片 URL
                                  */
+                                bgImage?: string | null;
+                                /**
+                                 * 背景颜色，如 #FFF1F6
+                                 */
+                                bgColor?: string | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 id?: string | null;
@@ -659,8 +651,13 @@ export interface Page {
                           )[]
                         | null;
                       /**
-                       * 背景图路径/颜色/渐变，留空为白底
+                       * 背景图片 URL
                        */
+                      bgImage?: string | null;
+                      /**
+                       * 背景颜色，如 #FFF1F6
+                       */
+                      bgColor?: string | null;
                       bg?: string | null;
                       alt?: boolean | null;
                       id?: string | null;
@@ -672,9 +669,6 @@ export interface Page {
                         image: number | Media;
                         id?: string | null;
                       }[];
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       id?: string | null;
                       blockName?: string | null;
@@ -734,9 +728,6 @@ export interface Page {
                       title?: string | null;
                       body: string;
                       align?: ('left' | 'center') | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -754,9 +745,6 @@ export interface Page {
                        * 站内路由以 / 开头，或完整外链 https://…
                        */
                       link?: string | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -775,9 +763,6 @@ export interface Page {
                        * 站内路由以 / 开头，或完整外链 https://…
                        */
                       link?: string | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -795,9 +780,6 @@ export interface Page {
                        */
                       link?: string | null;
                       style?: ('primary' | 'outline') | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -824,9 +806,6 @@ export interface Page {
                         };
                         [k: string]: unknown;
                       } | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -843,9 +822,6 @@ export interface Page {
                         id?: string | null;
                       }[];
                       columns?: number | null;
-                      /**
-                       * 背景图路径/颜色/渐变，留空为白底
-                       */
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -864,6 +840,18 @@ export interface Page {
                        * 站内路由或完整外链
                        */
                       link?: string | null;
+                      /**
+                       * 卡片背景图片 URL
+                       */
+                      bgImage?: string | null;
+                      /**
+                       * 卡片背景颜色，如 #FFF1F6
+                       */
+                      bgColor?: string | null;
+                      /**
+                       * 图标颜色，如 #E60039
+                       */
+                      iconColor?: string | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'iconCard';
@@ -889,9 +877,6 @@ export interface Page {
                                 title?: string | null;
                                 body: string;
                                 align?: ('left' | 'center') | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -909,9 +894,6 @@ export interface Page {
                                  * 站内路由以 / 开头，或完整外链 https://…
                                  */
                                 link?: string | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -930,9 +912,6 @@ export interface Page {
                                  * 站内路由以 / 开头，或完整外链 https://…
                                  */
                                 link?: string | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -950,9 +929,6 @@ export interface Page {
                                  */
                                 link?: string | null;
                                 style?: ('primary' | 'outline') | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -979,9 +955,6 @@ export interface Page {
                                   };
                                   [k: string]: unknown;
                                 } | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -998,9 +971,6 @@ export interface Page {
                                   id?: string | null;
                                 }[];
                                 columns?: number | null;
-                                /**
-                                 * 背景图路径/颜色/渐变，留空为白底
-                                 */
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -1019,6 +989,18 @@ export interface Page {
                                  * 站内路由或完整外链
                                  */
                                 link?: string | null;
+                                /**
+                                 * 卡片背景图片 URL
+                                 */
+                                bgImage?: string | null;
+                                /**
+                                 * 卡片背景颜色，如 #FFF1F6
+                                 */
+                                bgColor?: string | null;
+                                /**
+                                 * 图标颜色，如 #E60039
+                                 */
+                                iconColor?: string | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'iconCard';
@@ -1026,8 +1008,13 @@ export interface Page {
                           )[]
                         | null;
                       /**
-                       * 背景图路径/颜色/渐变，留空为白底
+                       * 背景图片 URL
                        */
+                      bgImage?: string | null;
+                      /**
+                       * 背景颜色，如 #FFF1F6
+                       */
+                      bgColor?: string | null;
                       bg?: string | null;
                       alt?: boolean | null;
                       id?: string | null;
@@ -1037,8 +1024,13 @@ export interface Page {
                 )[]
               | null;
             /**
-             * 背景图路径/颜色/渐变，留空为白底
+             * 背景图片 URL
              */
+            bgImage?: string | null;
+            /**
+             * 背景颜色，如 #FFF1F6
+             */
+            bgColor?: string | null;
             bg?: string | null;
             alt?: boolean | null;
             id?: string | null;
@@ -1064,9 +1056,6 @@ export interface Page {
             title?: string | null;
             body: string;
             align?: ('left' | 'center') | null;
-            /**
-             * 背景图路径/颜色/渐变，留空为白底
-             */
             bg?: string | null;
             alt?: boolean | null;
             /**
@@ -1084,9 +1073,6 @@ export interface Page {
              * 站内路由以 / 开头，或完整外链 https://…
              */
             link?: string | null;
-            /**
-             * 背景图路径/颜色/渐变，留空为白底
-             */
             bg?: string | null;
             alt?: boolean | null;
             /**
@@ -1105,9 +1091,6 @@ export interface Page {
              * 站内路由以 / 开头，或完整外链 https://…
              */
             link?: string | null;
-            /**
-             * 背景图路径/颜色/渐变，留空为白底
-             */
             bg?: string | null;
             alt?: boolean | null;
             /**
@@ -1125,9 +1108,6 @@ export interface Page {
              */
             link?: string | null;
             style?: ('primary' | 'outline') | null;
-            /**
-             * 背景图路径/颜色/渐变，留空为白底
-             */
             bg?: string | null;
             alt?: boolean | null;
             /**
@@ -1154,9 +1134,6 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
-            /**
-             * 背景图路径/颜色/渐变，留空为白底
-             */
             bg?: string | null;
             alt?: boolean | null;
             /**
@@ -1173,9 +1150,6 @@ export interface Page {
               id?: string | null;
             }[];
             columns?: number | null;
-            /**
-             * 背景图路径/颜色/渐变，留空为白底
-             */
             bg?: string | null;
             alt?: boolean | null;
             /**
@@ -1191,9 +1165,6 @@ export interface Page {
               image: number | Media;
               id?: string | null;
             }[];
-            /**
-             * 背景图路径/颜色/渐变，留空为白底
-             */
             bg?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -1207,6 +1178,18 @@ export interface Page {
              * 站内路由或完整外链
              */
             link?: string | null;
+            /**
+             * 卡片背景图片 URL
+             */
+            bgImage?: string | null;
+            /**
+             * 卡片背景颜色，如 #FFF1F6
+             */
+            bgColor?: string | null;
+            /**
+             * 图标颜色，如 #E60039
+             */
+            iconColor?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'iconCard';
@@ -1353,6 +1336,8 @@ export interface PagesSelect<T extends boolean = true> {
         section?:
           | T
           | {
+              bgImage?: T;
+              bgColor?: T;
               bg?: T;
               paddingY?: T;
               children?:
@@ -1450,6 +1435,9 @@ export interface PagesSelect<T extends boolean = true> {
                           title?: T;
                           desc?: T;
                           link?: T;
+                          bgImage?: T;
+                          bgColor?: T;
+                          iconColor?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1553,6 +1541,9 @@ export interface PagesSelect<T extends boolean = true> {
                                       title?: T;
                                       desc?: T;
                                       link?: T;
+                                      bgImage?: T;
+                                      bgColor?: T;
+                                      iconColor?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -1656,16 +1647,23 @@ export interface PagesSelect<T extends boolean = true> {
                                                   title?: T;
                                                   desc?: T;
                                                   link?: T;
+                                                  bgImage?: T;
+                                                  bgColor?: T;
+                                                  iconColor?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
                                           };
+                                      bgImage?: T;
+                                      bgColor?: T;
                                       bg?: T;
                                       alt?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
                               };
+                          bgImage?: T;
+                          bgColor?: T;
                           bg?: T;
                           alt?: T;
                           id?: T;
@@ -1811,6 +1809,9 @@ export interface PagesSelect<T extends boolean = true> {
                           title?: T;
                           desc?: T;
                           link?: T;
+                          bgImage?: T;
+                          bgColor?: T;
+                          iconColor?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1914,16 +1915,23 @@ export interface PagesSelect<T extends boolean = true> {
                                       title?: T;
                                       desc?: T;
                                       link?: T;
+                                      bgImage?: T;
+                                      bgColor?: T;
+                                      iconColor?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
                               };
+                          bgImage?: T;
+                          bgColor?: T;
                           bg?: T;
                           alt?: T;
                           id?: T;
                           blockName?: T;
                         };
                   };
+              bgImage?: T;
+              bgColor?: T;
               bg?: T;
               alt?: T;
               id?: T;
@@ -2037,6 +2045,9 @@ export interface PagesSelect<T extends boolean = true> {
               title?: T;
               desc?: T;
               link?: T;
+              bgImage?: T;
+              bgColor?: T;
+              iconColor?: T;
               id?: T;
               blockName?: T;
             };
