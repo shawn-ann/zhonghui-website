@@ -3,12 +3,11 @@ import { TextBlock } from './Text'
 import { ImageBlock } from './Image'
 import { ImageTextBlock } from './ImageText'
 import { ButtonBlock } from './Button'
-import { RichTextBlock } from './RichText'
-import { GalleryBlock } from './Gallery'
 import { HeadingBlock } from './Heading'
 import { IconCardBlock } from './IconCard'
 
-export const contentBlocks: Block[] = [HeadingBlock, TextBlock, ImageBlock, ImageTextBlock, ButtonBlock, RichTextBlock, GalleryBlock, IconCardBlock]
+/** 网格允许的卡片/文本组件（编辑器同步使用）。 */
+export const gridChildren: Block[] = [HeadingBlock, TextBlock, ImageBlock, ImageTextBlock, ButtonBlock, IconCardBlock]
 
 export function makeGrid(slug: string, label: string, cellComponents: Block[]): Block {
   return {
@@ -36,5 +35,6 @@ export function makeGrid(slug: string, label: string, cellComponents: Block[]): 
   }
 }
 
-export const GridInner = makeGrid('gridInner', '网格(内层)', contentBlocks)
-export const Grid = makeGrid('grid', '网格', [...contentBlocks, GridInner])
+// 保留内层网格定义以兼容历史数据；编辑器不再提供嵌套网格。
+export const GridInner = makeGrid('gridInner', '网格(内层)', gridChildren)
+export const Grid = makeGrid('grid', '网格', [...gridChildren, GridInner])

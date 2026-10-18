@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { BLOCKS, PAGE_BLOCKS } from './blocks'
+import { BLOCKS } from './blocks'
 import type { Block } from './types'
 
 const box: React.CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'center', height: 44, borderRadius: 4 }
@@ -61,24 +61,30 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
   ),
 }
 
-export default function Palette() {
+export default function AddChildPicker({
+  types, onAdd,
+}: {
+  types: Block['type'][]
+  onAdd: (type: Block['type']) => void
+}) {
+  if (!types.length) return null
   return (
-    <aside className="ed-palette">
-      <div className="ed-label">组件（拖入分栏或网格）</div>
+    <div className="ed-add-picker">
+      <div className="ed-label">添加组件</div>
       <div className="ed-palette-grid">
-        {PAGE_BLOCKS.filter((t) => t !== 'section' && BLOCKS[t]).map((t) => (
+        {types.filter((t) => BLOCKS[t]).map((t) => (
           <button
             key={t}
+            type="button"
             className="ed-palette-item"
-            draggable
-            onDragStart={(e) => e.dataTransfer.setData('text/x-block', t)}
-            title={`拖动添加${BLOCKS[t].label}`}
+            onClick={() => onAdd(t)}
+            title={`添加${BLOCKS[t].label}`}
           >
             <div className="ed-thumb">{THUMBS[t]}</div>
             <div className="ed-thumb-label">{BLOCKS[t].label}</div>
           </button>
         ))}
       </div>
-    </aside>
+    </div>
   )
 }

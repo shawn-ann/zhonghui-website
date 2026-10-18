@@ -86,14 +86,6 @@
   min-height: 0;
   overflow: auto;
   border-top: 0;
-  border-bottom: 1px solid #eee;
-}
-.ed-left .ed-palette {
-  flex: 0 0 auto;
-  border: 0;
-  border-top: 1px solid #eee;
-  border-radius: 0;
-  max-height: 45%;
 }
 
 .ed-loading {
@@ -134,7 +126,7 @@
   border: 1px solid #eee;
   border-radius: 6px;
   background: #fff;
-  cursor: grab;
+  cursor: pointer;
   overflow: hidden;
 }
 .ed-palette-item:hover {
@@ -328,26 +320,8 @@
   opacity: 0.4;
   cursor: default;
 }
-.ed-child-add {
-  display: flex;
-  gap: 6px;
-  margin-top: 8px;
-}
-.ed-child-add select {
-  flex: 1;
-  padding: 6px 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 13px;
-}
-.ed-child-add button {
-  padding: 6px 12px;
-  border: 1px solid #e60039;
-  border-radius: 4px;
-  background: #fff;
-  color: #e60039;
-  cursor: pointer;
-  font-size: 13px;
+.ed-add-picker {
+  margin-top: 12px;
 }
 
 /* Media modal */

@@ -5,6 +5,7 @@ import type { Block } from './types'
 import { blockChildren } from './state'
 import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, BgControl, MediaControl, MediaListControl, ColorControl } from './controls'
 import MediaModal from './MediaModal'
+import AddChildPicker from './AddChildPicker'
 import type { MediaItem } from './api'
 
 export default function PropertyPanel({
@@ -19,7 +20,6 @@ export default function PropertyPanel({
   onMoveChild?: (index: number, dir: -1 | 1) => void
 }) {
   const [mediaFor, setMediaFor] = useState<string | null>(null)
-  const [addType, setAddType] = useState<Block['type'] | ''>('')
   if (!block) return <aside className="ed-props"><div className="ed-label">属性</div><p className="ed-muted">未选中区块</p></aside>
   if ((block as { type: string }).type === '_unknown') {
     return <aside className="ed-props"><div className="ed-label">属性</div><p className="ed-muted">未知区块（透传，保存时原样保留）</p></aside>
@@ -30,7 +30,6 @@ export default function PropertyPanel({
   const isContainer = isLayout(block.type)
   const allowed = isLayout(block.type) ? allowedChildTypes(block.type) : []
   const children = blockChildren(block)
-  const chosen: Block['type'] = addType && allowed.includes(addType) ? addType : allowed[0]
 
   return (
     <aside className="ed-props">
@@ -67,12 +66,7 @@ export default function PropertyPanel({
               </span>
             </div>
           ))}
-          <div className="ed-child-add">
-            <select value={chosen} onChange={(e) => setAddType(e.target.value as Block['type'])}>
-              {allowed.map((t) => <option key={t} value={t}>{BLOCKS[t].label}</option>)}
-            </select>
-            <button type="button" onClick={() => onAddChild?.(chosen)}>添加</button>
-          </div>
+          <AddChildPicker types={allowed} onAdd={(type) => onAddChild?.(type)} />
         </div>
       ) : null}
       {mediaFor ? (

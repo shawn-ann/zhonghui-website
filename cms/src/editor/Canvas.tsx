@@ -2,14 +2,23 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { SiteBody } from '../site/SiteDocument'
-import { resolveDropContainer, resolveDropTarget } from './dropTarget'
-import type { EditorDoc, Block } from './types'
+import type { EditorDoc } from './types'
 
 export const CANVAS_STYLE =
   '.ed-selected{position:relative}' +
   '.ed-selected::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9999;outline:3px solid #1E6FFF;outline-offset:-3px;background:rgba(30,111,255,.06)}' +
   '.ed-hover{outline:2px dashed #1E6FFF;outline-offset:-2px}' +
-  '.ed-drop-zone{outline:3px dashed #1E6FFF !important;outline-offset:-3px}'
+  '.ed-grid-empty-cell{min-height:120px;border:2px dashed #dcc3cf;border-radius:10px;background:#fffafc;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#b79aa6;font-size:12px}' +
+  '.ed-grid-plus{font-size:26px;line-height:1;color:#c9a7b6}' +
+  '.ed-grid-hint{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);font-size:12px;color:var(--gray-blue)}' +
+  '.ed-grid-tip{color:#b79aa6}' +
+  '.ed-empty-block{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:88px;border:2px dashed #dcc3cf;border-radius:10px;background:#fffafc;color:#b79aa6;text-align:center;padding:10px;font-size:12px}' +
+  '.ed-empty-label{font-weight:600;color:#a98594}' +
+  '.ed-empty-tip{font-size:11px;color:#c2aab5}' +
+  '.ed-empty-card{min-height:130px}' +
+  '.ed-empty-wide{min-height:96px}' +
+  '.ed-empty-pill{min-height:38px;border-radius:20px;flex-direction:row;gap:6px}' +
+  '.ed-empty-heading{min-height:56px}'
 
 const WRAP_PAD = 12
 
@@ -23,7 +32,7 @@ const FRAME_SRC = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"
   `<script src="/assets/main.js"></script></body></html>`
 
 export default function Canvas({
-  doc, selectedId, selectedLabel, onSelect, onEditField, onReorder, onAddInto, onDelete, deviceWidth = 1280,
+  doc, selectedId, selectedLabel, onSelect, onEditField, onReorder, onDelete, deviceWidth = 1280,
 }: {
   doc: EditorDoc
   selectedId?: string
@@ -31,7 +40,6 @@ export default function Canvas({
   onSelect: (id: string) => void
   onEditField: (blockId: string, field: string, value: string) => void
   onReorder?: (from: number, to: number) => void
-  onAddInto?: (parentId: string, type: Block['type'], index: number) => void
   onDelete?: (id: string) => void
   deviceWidth?: number
 }) {
@@ -43,8 +51,8 @@ export default function Canvas({
   const [root, setRoot] = useState<HTMLElement | null>(null)
 
   // 事件只绑定一次，通过 ref 读取最新数据与回调。
-  const latest = useRef({ doc, selectedId, onSelect, onEditField, onReorder, onAddInto })
-  latest.current = { doc, selectedId, onSelect, onEditField, onReorder, onAddInto }
+  const latest = useRef({ doc, selectedId, onSelect, onEditField, onReorder })
+  latest.current = { doc, selectedId, onSelect, onEditField, onReorder }
 
   useEffect(() => {
     const wrap = wrapRef.current
@@ -95,11 +103,6 @@ export default function Canvas({
   const handleLoad = () => {
     const d = ref.current?.contentDocument
     if (!d) return
-    const clearDropZones = () => d.querySelectorAll('.ed-drop-zone').forEach((n) => n.classList.remove('ed-drop-zone'))
-    const highlight = (zoneId: string | null) => {
-      clearDropZones()
-      if (zoneId) d.querySelector(`[data-bid="${zoneId}"]`)?.classList.add('ed-drop-zone')
-    }
     const topIndex = (el: Element): number => {
       const main = d.querySelector('main#page')
       if (!main) return -1
@@ -141,39 +144,21 @@ export default function Canvas({
 
     d.addEventListener('dragover', (e) => {
       const dt = (e as DragEvent).dataTransfer
-      if (!dt) return
-      if (dt.types.includes('text/x-block')) {
-        const bid = (e.target as HTMLElement | null)?.closest?.('[data-bid]')?.getAttribute('data-bid')
-        const zoneId = bid ? resolveDropContainer(latest.current.doc.blocks, bid) : null
-        highlight(zoneId)
-        if (zoneId) e.preventDefault()
-      } else if (dt.types.includes('text/x-reorder')) {
-        if ((e.target as HTMLElement | null)?.closest?.('main#page')) e.preventDefault()
-      }
+      if (!dt?.types.includes('text/x-reorder')) return
+      if ((e.target as HTMLElement | null)?.closest?.('main#page')) e.preventDefault()
     })
 
     d.addEventListener('drop', (e) => {
       const dt = (e as DragEvent).dataTransfer
-      if (!dt) return
-      const target = (e.target as HTMLElement | null)?.closest?.('[data-bid]') as HTMLElement | null
-      if (dt.types.includes('text/x-block')) {
-        e.preventDefault()
-        clearDropZones()
-        const bid = target?.getAttribute('data-bid')
-        const type = dt.getData('text/x-block') as Block['type']
-        if (!bid || !type) return
-        const hit = resolveDropTarget(latest.current.doc.blocks, bid, type)
-        if (hit) latest.current.onAddInto?.(hit.parentId, type, hit.index)
-      } else if (dt.types.includes('text/x-reorder')) {
-        if (!target) return
-        e.preventDefault()
-        const to = topIndex(target)
-        const from = Number(dt.getData('text/x-reorder'))
-        if (Number.isFinite(from) && Number.isFinite(to) && from !== to) latest.current.onReorder?.(from, to)
-      }
+      if (!dt?.types.includes('text/x-reorder')) return
+      const target = (e.target as HTMLElement | null)?.closest?.('[data-bid]')
+      if (!target) return
+      e.preventDefault()
+      const to = topIndex(target)
+      const from = Number(dt.getData('text/x-reorder'))
+      if (Number.isFinite(from) && Number.isFinite(to) && from !== to) latest.current.onReorder?.(from, to)
     })
 
-    d.addEventListener('dragend', clearDropZones)
     setRoot(d.getElementById('site-root'))
   }
 
@@ -223,7 +208,7 @@ export default function Canvas({
           onLoad={handleLoad}
           style={{ width: deviceWidth, height: '900px', border: 0, transform: `scale(${scale})`, transformOrigin: 'top left' }}
         />
-        {root ? createPortal(<SiteBody page={doc} />, root) : null}
+        {root ? createPortal(<SiteBody page={doc} editor />, root) : null}
       </div>
       {toolbar ? (
         <div className="ed-block-overlay" style={{ top: toolbar.top, left: toolbar.left }}>

@@ -20,6 +20,11 @@ async function upFrom(absPath: string, alt: string): Promise<number | string> {
   return (doc as any).id
 }
 
+// 系统默认媒体：供编辑器新增组件时使用，不由用户上传。
+for (const name of ['image-1', 'image-2', 'image-3', 'icon']) {
+  await upFrom(path.resolve(process.cwd(), `src/static/defaults/${name}.svg`), `sys-default-${name}`)
+}
+
 const hero = await up('banner-hero.jpg', 'home-hero')
 const pattern = await upFrom(path.resolve(process.cwd(), 'src/static/pattern-box-5.png'), 'home-pattern')
 const proj = {

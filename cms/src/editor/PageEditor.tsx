@@ -1,12 +1,11 @@
 'use client'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import './editor.css'
-import Palette from './Palette'
 import StructureTree from './StructureTree'
 import Canvas from './Canvas'
 import PropertyPanel from './PropertyPanel'
 import TopBar from './TopBar'
-import { BLOCKS } from './blocks'
+import { BLOCKS, makeDefaultBlock, type DefaultMedia } from './blocks'
 import { getPage, savePage, publishPage, listMedia, type MediaItem } from './api'
 import {
   addBlock, ensureIds, moveBlock, newId,
@@ -21,6 +20,7 @@ export default function PageEditor({ id }: { id: number | string }) {
   const [selectedId, setSelectedId] = useState<string>()
   const [dirty, setDirty] = useState(false)
   const urlToId = useRef<Map<string, number | string>>(new Map())
+  const defaults = useRef<DefaultMedia>({})
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const editVersion = useRef(0)
 
@@ -29,6 +29,18 @@ export default function PageEditor({ id }: { id: number | string }) {
     listMedia()
       .then((items) => {
         for (const m of items) if (m.url) urlToId.current.set(m.url, m.id)
+        const sys = items.filter((m) => m.url && m.alt?.startsWith('sys-default-'))
+        const images = sys
+          .filter((m) => m.alt?.startsWith('sys-default-image'))
+          .map((m) => m.url as string)
+        const icon = sys.find((m) => m.alt === 'sys-default-icon')?.url
+        const fallbackImage = items.find((m) => m.url && !/\.svg(\?|$)/i.test(m.url))?.url
+        const fallbackIcon = items.find((m) => m.url && /\.svg(\?|$)/i.test(m.url))?.url
+        defaults.current = {
+          image: images[0] ?? fallbackImage,
+          images,
+          icon: icon ?? fallbackIcon,
+        }
       })
       .catch(() => {})
   }, [id])
@@ -127,7 +139,6 @@ export default function PageEditor({ id }: { id: number | string }) {
             }}
             onAddSection={addSection}
           />
-          <Palette />
         </div>
         <Canvas
           doc={doc}
@@ -140,13 +151,6 @@ export default function PageEditor({ id }: { id: number | string }) {
             if (p && block) update(updateAtPath(doc.blocks, p, { ...block, [field]: value } as Block))
           }}
           onReorder={(from, to) => update(moveBlock(doc.blocks, from, to))}
-          onAddInto={(parentId, type, index) => {
-            const p = findPath(doc.blocks, parentId)
-            if (!p) return
-            const block = { ...BLOCKS[type].defaults(), _id: newId() } as Block
-            update(insertInto(doc.blocks, p, block, index))
-            setSelectedId(block._id)
-          }}
           onDelete={deleteBlock}
         />
         <PropertyPanel
@@ -159,7 +163,10 @@ export default function PageEditor({ id }: { id: number | string }) {
             }
           }}
           onAddChild={(type) => {
-            if (selectedPath) update(insertInto(doc.blocks, selectedPath, BLOCKS[type].defaults()))
+            if (!selectedPath) return
+            const block = { ...makeDefaultBlock(type, defaults.current), _id: newId() } as Block
+            update(insertInto(doc.blocks, selectedPath, block))
+            setSelectedId(block._id)
           }}
           onRemoveChild={(index) => {
             if (selectedPath && selected) update(removeAtPath(doc.blocks, childPath(selectedPath, selected, index)))

@@ -61,6 +61,57 @@ describe('site blocks', () => {
     expect(html).toContain('/g.jpg')
   })
 
+  it('renders grid empty placeholders only in editor mode', () => {
+    const empty: Block = { type: 'grid', _id: 'g1', columns: 3, gap: 'md', children: [] }
+    const editorHtml = render(blockNode(empty, true))
+    expect((editorHtml.match(/ed-grid-empty-cell/g) || []).length).toBe(3)
+    expect(editorHtml).toContain('暂无组件')
+    expect(editorHtml).toContain('从右侧添加组件')
+    expect(editorHtml).not.toContain('ed-grid-add')
+
+    const staticHtml = render(blockNode(empty))
+    expect(staticHtml).not.toContain('ed-grid-empty-cell')
+    expect(staticHtml).not.toContain('ed-grid-hint')
+  })
+
+  it('pads the last row with placeholders', () => {
+    const one = render(blockNode({
+      type: 'grid', _id: 'g1', columns: 3, children: [{ type: 'text', _id: 't1', body: 'x' }],
+    }, true))
+    expect((one.match(/ed-grid-empty-cell/g) || []).length).toBe(2)
+    expect(one).toContain('ed-grid-hint')
+
+    const full = render(blockNode({
+      type: 'grid', _id: 'g2', columns: 2, children: [
+        { type: 'text', _id: 't1', body: 'x' },
+        { type: 'text', _id: 't2', body: 'y' },
+      ],
+    }, true))
+    expect(full).not.toContain('ed-grid-empty-cell')
+  })
+
+  it('renders empty component placeholders only in editor mode', () => {
+    const cases: [Block, string][] = [
+      [{ type: 'text', _id: 't', body: '' }, '文本'],
+      [{ type: 'image', _id: 'i', media: '' }, '图片'],
+      [{ type: 'imageText', _id: 'it', media: '' }, '图文卡片'],
+      [{ type: 'iconCard', _id: 'ic', icon: '' }, '图标卡片'],
+      [{ type: 'button', _id: 'b', label: '', link: '' }, '按钮'],
+      [{ type: 'heading', _id: 'h', title: '' }, '标题'],
+      [{ type: 'gallery', _id: 'g', images: [] }, '图集'],
+      [{ type: 'slider', _id: 's', images: [] }, '轮播'],
+      [{ type: 'banner', _id: 'bn', variant: 'split' }, '横幅'],
+      [{ type: 'richtext', _id: 'r', html: '' }, '富文本'],
+    ]
+    for (const [b, label] of cases) {
+      const editorHtml = render(blockNode(b, true))
+      expect(editorHtml).toContain('ed-empty-block')
+      expect(editorHtml).toContain(`>${label}<`)
+      const staticHtml = render(blockNode(b))
+      expect(staticHtml).not.toContain('ed-empty-block')
+    }
+  })
+
   it('renders icon card line breaks, link wrapper and background', () => {
     const html = render(blockNode({
       type: 'iconCard', _id: 'i1', icon: '/i.svg', title: 'T', desc: 'a\nb', link: '/go/',

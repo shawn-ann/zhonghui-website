@@ -78,10 +78,46 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   ] },
 }
 
+export interface DefaultMedia {
+  image?: string
+  images?: string[]
+  icon?: string
+}
+
+/** 新增组件时的默认内容；媒体由调用方从媒体库提供。 */
+export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}): Block {
+  const base = BLOCKS[type].defaults() as any
+  switch (type) {
+    case 'text':
+      return { ...base, body: '在这里填写正文内容。' }
+    case 'image':
+      return { ...base, media: media.image || '' }
+    case 'imageText':
+      return { ...base, media: media.image || '', title: '图文卡片', desc: '在这里填写描述' }
+    case 'iconCard':
+      return { ...base, icon: media.icon || '', title: '图标卡片', desc: '在这里填写描述' }
+    case 'button':
+      return { ...base, label: '按钮' }
+    case 'richtext':
+      return { ...base, html: '<p>在这里编辑富文本内容。</p>' }
+    case 'gallery':
+    case 'slider': {
+      const first = media.images?.[0] || media.image
+      return { ...base, images: first ? [first] : [] }
+    }
+    case 'banner':
+      return { ...base, title: '横幅标题', sub: '在这里填写副标题' }
+    default:
+      return base
+  }
+}
+
 export const LAYOUT_TYPES = ['section', 'grid'] as const
-export const CONTENT_TYPES = [
-  'heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'richtext', 'gallery', 'slider',
-] as const
+
+/** 分栏：版面级内容。 */
+export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'grid', 'gallery', 'banner', 'slider', 'richtext']
+/** 网格：卡片/文本级内容。 */
+export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button']
 
 export function isLayout(type: Block['type']): boolean {
   return (LAYOUT_TYPES as readonly string[]).includes(type)
@@ -89,8 +125,8 @@ export function isLayout(type: Block['type']): boolean {
 
 /** 依据放置规则返回某容器允许的子组件类型。 */
 export function allowedChildTypes(parent: Block['type']): Block['type'][] {
-  if (parent === 'section') return [...CONTENT_TYPES, 'grid'] as Block['type'][]
-  if (parent === 'grid') return [...CONTENT_TYPES] as Block['type'][]
+  if (parent === 'section') return [...SECTION_CHILD_TYPES]
+  if (parent === 'grid') return [...GRID_CHILD_TYPES]
   return []
 }
 
@@ -117,9 +153,3 @@ export function blockSummary(b: Block): string {
   }
 }
 
-export const PAGE_BLOCKS: Block['type'][] = ['section', 'heading', 'banner', 'text', 'image', 'imageText', 'iconCard', 'button', 'richtext', 'gallery', 'slider']
-
-export const CONTAINER_CHILD_TYPES: { section: Block['type'][]; grid: Block['type'][] } = {
-  section: ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'richtext', 'gallery', 'grid', 'slider'],
-  grid: ['text', 'image', 'imageText', 'iconCard', 'button', 'richtext', 'gallery'],
-}

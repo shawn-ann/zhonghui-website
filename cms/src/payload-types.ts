@@ -203,138 +203,6 @@ export interface Page {
                       blockType: 'heading';
                     }
                   | {
-                      title?: string | null;
-                      body: string;
-                      align?: ('left' | 'center') | null;
-                      bg?: string | null;
-                      alt?: boolean | null;
-                      /**
-                       * 内容内边距(px)，默认0
-                       */
-                      padding?: number | null;
-                      id?: string | null;
-                      blockName?: string | null;
-                      blockType: 'text';
-                    }
-                  | {
-                      media: number | Media;
-                      altText?: string | null;
-                      /**
-                       * 站内路由以 / 开头，或完整外链 https://…
-                       */
-                      link?: string | null;
-                      bg?: string | null;
-                      alt?: boolean | null;
-                      /**
-                       * 内容内边距(px)，默认0
-                       */
-                      padding?: number | null;
-                      id?: string | null;
-                      blockName?: string | null;
-                      blockType: 'image';
-                    }
-                  | {
-                      media: number | Media;
-                      title?: string | null;
-                      desc?: string | null;
-                      /**
-                       * 站内路由以 / 开头，或完整外链 https://…
-                       */
-                      link?: string | null;
-                      bg?: string | null;
-                      alt?: boolean | null;
-                      /**
-                       * 内容内边距(px)，默认0
-                       */
-                      padding?: number | null;
-                      id?: string | null;
-                      blockName?: string | null;
-                      blockType: 'imageText';
-                    }
-                  | {
-                      label: string;
-                      /**
-                       * 站内路由以 / 开头，或完整外链 https://…
-                       */
-                      link?: string | null;
-                      style?: ('primary' | 'outline') | null;
-                      bg?: string | null;
-                      alt?: boolean | null;
-                      /**
-                       * 内容内边距(px)，默认0
-                       */
-                      padding?: number | null;
-                      id?: string | null;
-                      blockName?: string | null;
-                      blockType: 'button';
-                    }
-                  | {
-                      content?: {
-                        root: {
-                          type: string;
-                          children: {
-                            type: any;
-                            version: number;
-                            [k: string]: unknown;
-                          }[];
-                          direction: ('ltr' | 'rtl') | null;
-                          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                          indent: number;
-                          version: number;
-                        };
-                        [k: string]: unknown;
-                      } | null;
-                      bg?: string | null;
-                      alt?: boolean | null;
-                      /**
-                       * 内容内边距(px)，默认0
-                       */
-                      padding?: number | null;
-                      id?: string | null;
-                      blockName?: string | null;
-                      blockType: 'richtext';
-                    }
-                  | {
-                      images: {
-                        image: number | Media;
-                        id?: string | null;
-                      }[];
-                      columns?: number | null;
-                      bg?: string | null;
-                      alt?: boolean | null;
-                      /**
-                       * 内容内边距(px)，默认0
-                       */
-                      padding?: number | null;
-                      id?: string | null;
-                      blockName?: string | null;
-                      blockType: 'gallery';
-                    }
-                  | {
-                      icon: number | Media;
-                      title?: string | null;
-                      desc?: string | null;
-                      /**
-                       * 站内路由或完整外链
-                       */
-                      link?: string | null;
-                      /**
-                       * 卡片背景图片 URL
-                       */
-                      bgImage?: string | null;
-                      /**
-                       * 卡片背景颜色，如 #FFF1F6
-                       */
-                      bgColor?: string | null;
-                      /**
-                       * 图标颜色，如 #E60039
-                       */
-                      iconColor?: string | null;
-                      id?: string | null;
-                      blockName?: string | null;
-                      blockType: 'iconCard';
-                    }
-                  | {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
                       children?:
@@ -416,48 +284,6 @@ export interface Page {
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'button';
-                              }
-                            | {
-                                content?: {
-                                  root: {
-                                    type: string;
-                                    children: {
-                                      type: any;
-                                      version: number;
-                                      [k: string]: unknown;
-                                    }[];
-                                    direction: ('ltr' | 'rtl') | null;
-                                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                                    indent: number;
-                                    version: number;
-                                  };
-                                  [k: string]: unknown;
-                                } | null;
-                                bg?: string | null;
-                                alt?: boolean | null;
-                                /**
-                                 * 内容内边距(px)，默认0
-                                 */
-                                padding?: number | null;
-                                id?: string | null;
-                                blockName?: string | null;
-                                blockType: 'richtext';
-                              }
-                            | {
-                                images: {
-                                  image: number | Media;
-                                  id?: string | null;
-                                }[];
-                                columns?: number | null;
-                                bg?: string | null;
-                                alt?: boolean | null;
-                                /**
-                                 * 内容内边距(px)，默认0
-                                 */
-                                padding?: number | null;
-                                id?: string | null;
-                                blockName?: string | null;
-                                blockType: 'gallery';
                               }
                             | {
                                 icon: number | Media;
@@ -567,48 +393,6 @@ export interface Page {
                                           blockType: 'button';
                                         }
                                       | {
-                                          content?: {
-                                            root: {
-                                              type: string;
-                                              children: {
-                                                type: any;
-                                                version: number;
-                                                [k: string]: unknown;
-                                              }[];
-                                              direction: ('ltr' | 'rtl') | null;
-                                              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                                              indent: number;
-                                              version: number;
-                                            };
-                                            [k: string]: unknown;
-                                          } | null;
-                                          bg?: string | null;
-                                          alt?: boolean | null;
-                                          /**
-                                           * 内容内边距(px)，默认0
-                                           */
-                                          padding?: number | null;
-                                          id?: string | null;
-                                          blockName?: string | null;
-                                          blockType: 'richtext';
-                                        }
-                                      | {
-                                          images: {
-                                            image: number | Media;
-                                            id?: string | null;
-                                          }[];
-                                          columns?: number | null;
-                                          bg?: string | null;
-                                          alt?: boolean | null;
-                                          /**
-                                           * 内容内边距(px)，默认0
-                                           */
-                                          padding?: number | null;
-                                          id?: string | null;
-                                          blockName?: string | null;
-                                          blockType: 'gallery';
-                                        }
-                                      | {
                                           icon: number | Media;
                                           title?: string | null;
                                           desc?: string | null;
@@ -669,10 +453,16 @@ export interface Page {
                         image: number | Media;
                         id?: string | null;
                       }[];
+                      columns?: number | null;
                       bg?: string | null;
+                      alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
                       id?: string | null;
                       blockName?: string | null;
-                      blockType: 'slider';
+                      blockType: 'gallery';
                     }
                   | {
                       variant?: ('split' | 'centered') | null;
@@ -688,6 +478,42 @@ export interface Page {
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'banner';
+                    }
+                  | {
+                      images: {
+                        image: number | Media;
+                        id?: string | null;
+                      }[];
+                      bg?: string | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'slider';
+                    }
+                  | {
+                      content?: {
+                        root: {
+                          type: string;
+                          children: {
+                            type: any;
+                            version: number;
+                            [k: string]: unknown;
+                          }[];
+                          direction: ('ltr' | 'rtl') | null;
+                          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                          indent: number;
+                          version: number;
+                        };
+                        [k: string]: unknown;
+                      } | null;
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'richtext';
                     }
                 )[]
               | null;
@@ -789,48 +615,6 @@ export interface Page {
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'button';
-                    }
-                  | {
-                      content?: {
-                        root: {
-                          type: string;
-                          children: {
-                            type: any;
-                            version: number;
-                            [k: string]: unknown;
-                          }[];
-                          direction: ('ltr' | 'rtl') | null;
-                          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                          indent: number;
-                          version: number;
-                        };
-                        [k: string]: unknown;
-                      } | null;
-                      bg?: string | null;
-                      alt?: boolean | null;
-                      /**
-                       * 内容内边距(px)，默认0
-                       */
-                      padding?: number | null;
-                      id?: string | null;
-                      blockName?: string | null;
-                      blockType: 'richtext';
-                    }
-                  | {
-                      images: {
-                        image: number | Media;
-                        id?: string | null;
-                      }[];
-                      columns?: number | null;
-                      bg?: string | null;
-                      alt?: boolean | null;
-                      /**
-                       * 内容内边距(px)，默认0
-                       */
-                      padding?: number | null;
-                      id?: string | null;
-                      blockName?: string | null;
-                      blockType: 'gallery';
                     }
                   | {
                       icon: number | Media;
@@ -938,48 +722,6 @@ export interface Page {
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'button';
-                              }
-                            | {
-                                content?: {
-                                  root: {
-                                    type: string;
-                                    children: {
-                                      type: any;
-                                      version: number;
-                                      [k: string]: unknown;
-                                    }[];
-                                    direction: ('ltr' | 'rtl') | null;
-                                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                                    indent: number;
-                                    version: number;
-                                  };
-                                  [k: string]: unknown;
-                                } | null;
-                                bg?: string | null;
-                                alt?: boolean | null;
-                                /**
-                                 * 内容内边距(px)，默认0
-                                 */
-                                padding?: number | null;
-                                id?: string | null;
-                                blockName?: string | null;
-                                blockType: 'richtext';
-                              }
-                            | {
-                                images: {
-                                  image: number | Media;
-                                  id?: string | null;
-                                }[];
-                                columns?: number | null;
-                                bg?: string | null;
-                                alt?: boolean | null;
-                                /**
-                                 * 内容内边距(px)，默认0
-                                 */
-                                padding?: number | null;
-                                id?: string | null;
-                                blockName?: string | null;
-                                blockType: 'gallery';
                               }
                             | {
                                 icon: number | Media;
@@ -1353,94 +1095,6 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
-                    text?:
-                      | T
-                      | {
-                          title?: T;
-                          body?: T;
-                          align?: T;
-                          bg?: T;
-                          alt?: T;
-                          padding?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    image?:
-                      | T
-                      | {
-                          media?: T;
-                          altText?: T;
-                          link?: T;
-                          bg?: T;
-                          alt?: T;
-                          padding?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    imageText?:
-                      | T
-                      | {
-                          media?: T;
-                          title?: T;
-                          desc?: T;
-                          link?: T;
-                          bg?: T;
-                          alt?: T;
-                          padding?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    button?:
-                      | T
-                      | {
-                          label?: T;
-                          link?: T;
-                          style?: T;
-                          bg?: T;
-                          alt?: T;
-                          padding?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    richtext?:
-                      | T
-                      | {
-                          content?: T;
-                          bg?: T;
-                          alt?: T;
-                          padding?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    gallery?:
-                      | T
-                      | {
-                          images?:
-                            | T
-                            | {
-                                image?: T;
-                                id?: T;
-                              };
-                          columns?: T;
-                          bg?: T;
-                          alt?: T;
-                          padding?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    iconCard?:
-                      | T
-                      | {
-                          icon?: T;
-                          title?: T;
-                          desc?: T;
-                          link?: T;
-                          bgImage?: T;
-                          bgColor?: T;
-                          iconColor?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
                     grid?:
                       | T
                       | {
@@ -1502,32 +1156,6 @@ export interface PagesSelect<T extends boolean = true> {
                                       label?: T;
                                       link?: T;
                                       style?: T;
-                                      bg?: T;
-                                      alt?: T;
-                                      padding?: T;
-                                      id?: T;
-                                      blockName?: T;
-                                    };
-                                richtext?:
-                                  | T
-                                  | {
-                                      content?: T;
-                                      bg?: T;
-                                      alt?: T;
-                                      padding?: T;
-                                      id?: T;
-                                      blockName?: T;
-                                    };
-                                gallery?:
-                                  | T
-                                  | {
-                                      images?:
-                                        | T
-                                        | {
-                                            image?: T;
-                                            id?: T;
-                                          };
-                                      columns?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
@@ -1614,32 +1242,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                   id?: T;
                                                   blockName?: T;
                                                 };
-                                            richtext?:
-                                              | T
-                                              | {
-                                                  content?: T;
-                                                  bg?: T;
-                                                  alt?: T;
-                                                  padding?: T;
-                                                  id?: T;
-                                                  blockName?: T;
-                                                };
-                                            gallery?:
-                                              | T
-                                              | {
-                                                  images?:
-                                                    | T
-                                                    | {
-                                                        image?: T;
-                                                        id?: T;
-                                                      };
-                                                  columns?: T;
-                                                  bg?: T;
-                                                  alt?: T;
-                                                  padding?: T;
-                                                  id?: T;
-                                                  blockName?: T;
-                                                };
                                             iconCard?:
                                               | T
                                               | {
@@ -1669,7 +1271,7 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
-                    slider?:
+                    gallery?:
                       | T
                       | {
                           images?:
@@ -1678,7 +1280,10 @@ export interface PagesSelect<T extends boolean = true> {
                                 image?: T;
                                 id?: T;
                               };
+                          columns?: T;
                           bg?: T;
+                          alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1692,6 +1297,29 @@ export interface PagesSelect<T extends boolean = true> {
                           pattern?: T;
                           bg?: T;
                           alt?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    slider?:
+                      | T
+                      | {
+                          images?:
+                            | T
+                            | {
+                                image?: T;
+                                id?: T;
+                              };
+                          bg?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    richtext?:
+                      | T
+                      | {
+                          content?: T;
+                          bg?: T;
+                          alt?: T;
+                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -1776,32 +1404,6 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
-                    richtext?:
-                      | T
-                      | {
-                          content?: T;
-                          bg?: T;
-                          alt?: T;
-                          padding?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    gallery?:
-                      | T
-                      | {
-                          images?:
-                            | T
-                            | {
-                                image?: T;
-                                id?: T;
-                              };
-                          columns?: T;
-                          bg?: T;
-                          alt?: T;
-                          padding?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
                     iconCard?:
                       | T
                       | {
@@ -1876,32 +1478,6 @@ export interface PagesSelect<T extends boolean = true> {
                                       label?: T;
                                       link?: T;
                                       style?: T;
-                                      bg?: T;
-                                      alt?: T;
-                                      padding?: T;
-                                      id?: T;
-                                      blockName?: T;
-                                    };
-                                richtext?:
-                                  | T
-                                  | {
-                                      content?: T;
-                                      bg?: T;
-                                      alt?: T;
-                                      padding?: T;
-                                      id?: T;
-                                      blockName?: T;
-                                    };
-                                gallery?:
-                                  | T
-                                  | {
-                                      images?:
-                                        | T
-                                        | {
-                                            image?: T;
-                                            id?: T;
-                                          };
-                                      columns?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;

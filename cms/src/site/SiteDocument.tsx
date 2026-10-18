@@ -18,13 +18,13 @@ export const PREVIEW_LOCK_JS =
   "document.addEventListener('click',function(e){var t=e.target;if(t&&t.closest&&t.closest('a'))e.preventDefault()},true)"
 export const PREVIEW_LOCK_LINKS = `<script>${PREVIEW_LOCK_JS}</script>`
 
-export function SiteBody({ page }: { page: PageDoc }) {
+export function SiteBody({ page, editor = false }: { page: PageDoc; editor?: boolean }) {
   return (
     <>
       <SiteNav activeRoute={page.route} />
       <main id="page">
         {page.blocks.map((b, i) => (
-          <Fragment key={b._id ?? i}><TopBlock b={b} /></Fragment>
+          <Fragment key={b._id ?? i}><TopBlock b={b} editor={editor} /></Fragment>
         ))}
       </main>
       <SiteFooter />
