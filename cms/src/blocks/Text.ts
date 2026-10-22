@@ -7,6 +7,8 @@ export const TextBlock: Block = {
   fields: [
     { name: 'title', type: 'text' },
     { name: 'body', type: 'textarea', required: true },
+    { name: 'titleColor', type: 'text', admin: { description: '标题颜色，留空沿用主题色' } },
+    { name: 'bodyColor', type: 'text', admin: { description: '正文颜色，留空沿用主题色' } },
     {
       name: 'align',
       type: 'select',

@@ -12,6 +12,8 @@ export interface BannerBlock extends BlockBase {
   variant: 'split' | 'centered'
   title?: string
   sub?: string
+  titleColor?: string
+  subColor?: string
   image?: string
   pattern?: string
 }
@@ -20,6 +22,8 @@ export interface HeadingBlock extends BlockBase {
   type: 'heading'
   title: string
   subtitle?: string
+  titleColor?: string
+  subtitleColor?: string
   align?: 'center' | 'left'
   padding?: number
 }
@@ -39,6 +43,8 @@ export interface TextBlock extends BlockBase {
   type: 'text'
   title?: string
   body: string
+  titleColor?: string
+  bodyColor?: string
   align?: 'left' | 'center'
   padding?: number
 }
@@ -56,6 +62,8 @@ export interface ImageTextBlock extends BlockBase {
   media: string
   title?: string
   desc?: string
+  titleColor?: string
+  descColor?: string
   link?: string
   padding?: number
 }
@@ -95,6 +103,8 @@ export interface IconCardBlock extends BlockBase {
   icon: string
   title?: string
   desc?: string
+  titleColor?: string
+  descColor?: string
   link?: string
   /** 卡片背景图片（可与背景色叠加） */
   bgImage?: string
@@ -111,6 +121,10 @@ export interface SectionBlock extends BlockBase {
   bgImage?: string
   /** 背景颜色（CSS 颜色值） */
   bgColor?: string
+  /** 背景渐变（CSS linear-gradient/radial-gradient） */
+  bgGradient?: string
+  /** 背景带高度(px)；0/空为铺满 */
+  bgHeight?: number
   children: Block[]
 }
 

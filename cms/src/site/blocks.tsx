@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, type CSSProperties } from 'react'
 import { safeUrl } from '../render/primitives'
 import type {
   BannerBlock, Block, ButtonBlock, GalleryBlock, GridBlock, HeadingBlock, IconCardBlock,
@@ -8,6 +8,13 @@ import { bgCss, bgImageCss } from './bg'
 
 const PAD: Record<string, number> = { none: 0, sm: 32, md: 72, lg: 96 }
 const padStyle = (padding?: number) => (padding && padding > 0 ? { padding: `${padding}px` } : undefined)
+
+function textColorVars(title?: string, sub?: string): CSSProperties {
+  return {
+    ...(title ? { '--title-color': title } : {}),
+    ...(sub ? { '--sub-color': sub } : {}),
+  } as CSSProperties
+}
 
 function richTextEmpty(html?: string): boolean {
   if (!html) return true
@@ -41,13 +48,32 @@ function lines(text: string) {
 }
 
 export function SectionView({ b, editor = false }: { b: SectionBlock; editor?: boolean }) {
-  const style = {
-    padding: `${PAD[b.paddingY || 'md'] ?? 72}px 0`,
-    ...(b.bgColor ? { backgroundColor: b.bgColor } : {}),
-    ...bgImageCss(b.bgImage),
+  const band = b.bgHeight && b.bgHeight > 0 ? b.bgHeight : 0
+  const gradient = b.bgGradient?.trim()
+  let background: CSSProperties = {}
+  if (band) {
+    const image = gradient
+      || (b.bgImage ? `url('${b.bgImage}')` : '')
+      || (b.bgColor ? `linear-gradient(${b.bgColor}, ${b.bgColor})` : '')
+    if (image) {
+      background = {
+        backgroundImage: image,
+        backgroundSize: `100% ${band}px`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'top center',
+        backgroundColor: '#fff',
+      }
+    }
+  } else if (gradient) {
+    background = { backgroundImage: gradient }
+  } else if (b.bgImage) {
+    background = { ...(b.bgColor ? { backgroundColor: b.bgColor } : {}), ...bgImageCss(b.bgImage) }
+  } else if (b.bgColor) {
+    background = { backgroundColor: b.bgColor }
   }
+  const style = { padding: `${PAD[b.paddingY || 'md'] ?? 72}px 0`, ...background }
   return (
-    <section className={`section${b.bgImage ? ' on-image' : ''}`} data-bid={b._id} style={style}>
+    <section className={`section${!band && b.bgImage && !gradient ? ' on-image' : ''}`} data-bid={b._id} style={style}>
       {(b.children || []).map((c, i) => (
         <Fragment key={c._id ?? i}>{blockNode(c, editor)}</Fragment>
       ))}
@@ -100,7 +126,7 @@ export function BannerView({ b, editor = false }: { b: BannerBlock; editor?: boo
     return (
       <div
         className={`banner banner--centered ${b.alt ? 'section-alt' : ''}`}
-        style={bgCss(b.image) ?? bgCss(b.bg)}
+        style={{ ...(bgCss(b.image) ?? bgCss(b.bg)), ...textColorVars(b.titleColor, b.subColor) }}
       >
         <div className="container cover" data-bid={b._id}>
           {b.title ? <h1 data-field="title">{b.title}</h1> : null}
@@ -112,7 +138,10 @@ export function BannerView({ b, editor = false }: { b: BannerBlock; editor?: boo
   const img = safeUrl(b.image)
   const pattern = b.pattern ? safeUrl(b.pattern) : ''
   return (
-    <div className={`banner banner--split ${b.alt ? 'section-alt' : ''}`} style={bgCss(b.bg)}>
+    <div
+      className={`banner banner--split ${b.alt ? 'section-alt' : ''}`}
+      style={{ ...bgCss(b.bg), ...textColorVars(b.titleColor, b.subColor) }}
+    >
       <div className="container banner-grid" data-bid={b._id}>
         <div className="banner-text">
           {b.title ? <h1 data-field="title">{b.title}</h1> : null}
@@ -134,7 +163,7 @@ export function HeadingView({ b, editor = false }: { b: HeadingBlock; editor?: b
     return <EmptyEditorBlock b={b} label="标题" tip="在右侧填写标题" variant="heading" />
   }
   return (
-    <div className="container" data-bid={b._id}>
+    <div className="container" data-bid={b._id} style={textColorVars(b.titleColor, b.subtitleColor)}>
       <div className="section-heading" style={{ textAlign: b.align === 'left' ? 'left' : 'center', ...padStyle(b.padding) }}>
         {b.title ? <h2>{b.title}</h2> : null}
         {b.subtitle ? <p className="subtitle">{b.subtitle}</p> : null}
@@ -148,7 +177,7 @@ export function TextView({ b, editor = false }: { b: TextBlock; editor?: boolean
     return <EmptyEditorBlock b={b} label="文本" tip="在右侧填写正文" />
   }
   return (
-    <div className="container" data-bid={b._id}>
+    <div className="container" data-bid={b._id} style={textColorVars(b.titleColor, b.bodyColor)}>
       <div className="text-block" style={{ textAlign: b.align === 'center' ? 'center' : 'left', ...padStyle(b.padding) }}>
         {b.title ? <h2 data-field="title">{b.title}</h2> : null}
         <p data-field="body">{b.body}</p>
@@ -189,7 +218,7 @@ export function ImageTextView({ b, editor = false }: { b: ImageTextBlock; editor
     </div>
   )
   return (
-    <div className="container" data-bid={b._id}>
+    <div className="container" data-bid={b._id} style={textColorVars(b.titleColor, b.descColor)}>
       {href ? <a className="it-link" href={href}>{card}</a> : card}
     </div>
   )
@@ -225,7 +254,11 @@ export function IconCardView({ b, editor = false }: { b: IconCardBlock; editor?:
       {b.desc ? <p data-field="desc">{lines(b.desc)}</p> : null}
     </div>
   )
-  return <div className="container">{href ? <a href={href} style={{ color: 'inherit' }}>{card}</a> : card}</div>
+  return (
+    <div className="container" style={textColorVars(b.titleColor, b.descColor)}>
+      {href ? <a href={href} style={{ color: 'inherit' }}>{card}</a> : card}
+    </div>
+  )
 }
 
 export function ButtonView({ b, editor = false }: { b: ButtonBlock; editor?: boolean }) {

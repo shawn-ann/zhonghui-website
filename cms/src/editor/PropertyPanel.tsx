@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { BLOCKS, isLayout, allowedChildTypes } from './blocks'
 import type { Block } from './types'
 import { blockChildren } from './state'
-import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, BgControl, MediaControl, MediaListControl, ColorControl } from './controls'
+import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, BgControl, MediaControl, MediaListControl, ColorControl, TextColorControl, GradientControl } from './controls'
 import MediaModal from './MediaModal'
 import AddChildPicker from './AddChildPicker'
 import type { MediaItem } from './api'
@@ -44,6 +44,8 @@ export default function PropertyPanel({
           case 'link': return <LinkControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />
           case 'bg': return <BgControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} onPick={() => setMediaFor(f.key)} />
           case 'color': return <ColorControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />
+          case 'textColor': return <TextColorControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />
+          case 'gradient': return <GradientControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />
           case 'media': return <MediaControl key={f.key} label={f.label} value={val(f.key) as string} onPick={() => setMediaFor(f.key)} onChange={(v) => onChange(f.key, v)} />
           case 'mediaList': return <MediaListControl key={f.key} label={f.label} value={val(f.key) as string[]} onAdd={() => setMediaFor(f.key)} onChange={(v) => onChange(f.key, v)} />
         }

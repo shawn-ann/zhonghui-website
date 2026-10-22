@@ -8,6 +8,8 @@ export const ImageTextBlock: Block = {
     { name: 'media', type: 'upload', relationTo: 'media', required: true },
     { name: 'title', type: 'text' },
     { name: 'desc', type: 'textarea' },
+    { name: 'titleColor', type: 'text', admin: { description: '标题颜色，留空沿用主题色' } },
+    { name: 'descColor', type: 'text', admin: { description: '描述颜色，留空沿用主题色' } },
     linkField(),
     ...legacyBgAltFields(),
     paddingField(),

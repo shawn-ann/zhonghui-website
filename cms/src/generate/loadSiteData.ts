@@ -10,7 +10,17 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
   const alt = !!raw.alt
   switch (raw.blockType) {
     case 'heading':
-      return { type: 'heading', title: String(raw.title ?? ''), subtitle: raw.subtitle || undefined, align: raw.align === 'left' ? 'left' : 'center', padding: raw.padding || undefined, bg, alt }
+      return {
+        type: 'heading',
+        title: String(raw.title ?? ''),
+        subtitle: raw.subtitle || undefined,
+        titleColor: raw.titleColor || undefined,
+        subtitleColor: raw.subtitleColor || undefined,
+        align: raw.align === 'left' ? 'left' : 'center',
+        padding: raw.padding || undefined,
+        bg,
+        alt,
+      }
     case 'section': {
       const children = arr<Record<string, any>>(raw.children)
         .map((c) => mapBlock(c, resolveMedia))
@@ -19,16 +29,39 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
         type: 'section',
         bgImage: raw.bgImage || undefined,
         bgColor: raw.bgColor || undefined,
+        bgGradient: raw.bgGradient || undefined,
+        bgHeight: raw.bgHeight > 0 ? Number(raw.bgHeight) : undefined,
         paddingY: raw.paddingY || 'md',
         children,
       }
     }
     case 'text':
-      return { type: 'text', title: raw.title || undefined, body: String(raw.body ?? ''), align: raw.align === 'center' ? 'center' : 'left', padding: raw.padding || undefined, bg, alt }
+      return {
+        type: 'text',
+        title: raw.title || undefined,
+        body: String(raw.body ?? ''),
+        titleColor: raw.titleColor || undefined,
+        bodyColor: raw.bodyColor || undefined,
+        align: raw.align === 'center' ? 'center' : 'left',
+        padding: raw.padding || undefined,
+        bg,
+        alt,
+      }
     case 'image':
       return { type: 'image', media: resolveMedia(raw.media), altText: raw.altText || undefined, link: raw.link || undefined, padding: raw.padding || undefined, bg, alt }
     case 'imageText':
-      return { type: 'imageText', media: resolveMedia(raw.media), title: raw.title || undefined, desc: raw.desc || undefined, link: raw.link || undefined, padding: raw.padding || undefined, bg, alt }
+      return {
+        type: 'imageText',
+        media: resolveMedia(raw.media),
+        title: raw.title || undefined,
+        desc: raw.desc || undefined,
+        titleColor: raw.titleColor || undefined,
+        descColor: raw.descColor || undefined,
+        link: raw.link || undefined,
+        padding: raw.padding || undefined,
+        bg,
+        alt,
+      }
     case 'iconCard':
       return {
         type: 'iconCard',
@@ -39,6 +72,8 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
         bgImage: raw.bgImage || undefined,
         bgColor: raw.bgColor || undefined,
         iconColor: raw.iconColor || undefined,
+        titleColor: raw.titleColor || undefined,
+        descColor: raw.descColor || undefined,
       }
     case 'button':
       return { type: 'button', label: String(raw.label ?? ''), link: raw.link || '', style: raw.style === 'outline' ? 'outline' : 'primary', padding: raw.padding || undefined, bg, alt }
@@ -48,6 +83,8 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
         variant: raw.variant === 'centered' ? 'centered' : 'split',
         title: raw.title || undefined,
         sub: raw.sub || undefined,
+        titleColor: raw.titleColor || undefined,
+        subColor: raw.subColor || undefined,
         image: raw.image ? resolveMedia(raw.image) : undefined,
         pattern: raw.pattern ? resolveMedia(raw.pattern) : undefined,
         bg,

@@ -64,6 +64,8 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
     case 'heading':
       out.title = b.title
       if (b.subtitle !== undefined) out.subtitle = b.subtitle
+      if (b.titleColor !== undefined) out.titleColor = b.titleColor
+      if (b.subtitleColor !== undefined) out.subtitleColor = b.subtitleColor
       out.align = b.align ?? 'center'
       if ((b as any).padding > 0) out.padding = (b as any).padding
       break
@@ -71,12 +73,16 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.variant = b.variant
       if (b.title !== undefined) out.title = b.title
       if (b.sub !== undefined) out.sub = b.sub
+      if (b.titleColor !== undefined) out.titleColor = b.titleColor
+      if (b.subColor !== undefined) out.subColor = b.subColor
       out.image = resolveMediaId(b.image, urlToId, raw?.image)
       out.pattern = resolveMediaId(b.pattern, urlToId, raw?.pattern)
       break
     case 'text':
       if (b.title !== undefined) out.title = b.title
       out.body = b.body
+      if (b.titleColor !== undefined) out.titleColor = b.titleColor
+      if (b.bodyColor !== undefined) out.bodyColor = b.bodyColor
       out.align = b.align ?? 'left'
       if (b.padding && b.padding > 0) out.padding = b.padding
       break
@@ -90,6 +96,8 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.media = resolveMediaId(b.media, urlToId, raw?.media)
       if (b.title !== undefined) out.title = b.title
       if (b.desc !== undefined) out.desc = b.desc
+      if (b.titleColor !== undefined) out.titleColor = b.titleColor
+      if (b.descColor !== undefined) out.descColor = b.descColor
       if (b.link !== undefined) out.link = b.link
       if (b.padding && b.padding > 0) out.padding = b.padding
       break
@@ -97,6 +105,8 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.icon = resolveMediaId(b.icon, urlToId, raw?.icon)
       if (b.title !== undefined) out.title = b.title
       if (b.desc !== undefined) out.desc = b.desc
+      if (b.titleColor !== undefined) out.titleColor = b.titleColor
+      if (b.descColor !== undefined) out.descColor = b.descColor
       if (b.link !== undefined) out.link = b.link
       if (b.bgImage !== undefined) out.bgImage = b.bgImage
       if (b.bgColor !== undefined) out.bgColor = b.bgColor
@@ -116,6 +126,8 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.paddingY = b.paddingY || 'md'
       if (b.bgImage !== undefined) out.bgImage = b.bgImage
       if (b.bgColor !== undefined) out.bgColor = b.bgColor
+      if (b.bgGradient !== undefined) out.bgGradient = b.bgGradient
+      if (b.bgHeight !== undefined) out.bgHeight = b.bgHeight
       out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'grid':

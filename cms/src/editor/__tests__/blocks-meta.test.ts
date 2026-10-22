@@ -18,14 +18,25 @@ describe('component categories', () => {
   })
   it('applies default content and media when adding blocks', () => {
     const media = { image: '/img.jpg', images: ['/a.jpg', '/b.jpg'], icon: '/i.svg' }
-    expect(makeDefaultBlock('text')).toMatchObject({ body: '在这里填写正文内容。' })
+    expect(makeDefaultBlock('text')).toMatchObject({
+      body: '在这里填写正文内容。', titleColor: '#8A0E4B', bodyColor: '#000000',
+    })
     expect(makeDefaultBlock('image', media)).toMatchObject({ media: '/img.jpg' })
-    expect(makeDefaultBlock('imageText', media)).toMatchObject({ media: '/img.jpg', title: '图文卡片' })
-    expect(makeDefaultBlock('iconCard', media)).toMatchObject({ icon: '/i.svg', title: '图标卡片' })
+    expect(makeDefaultBlock('imageText', media)).toMatchObject({
+      media: '/img.jpg', title: '图文卡片', titleColor: '#8A0E4B', descColor: '#000000',
+    })
+    expect(makeDefaultBlock('iconCard', media)).toMatchObject({
+      icon: '/i.svg', title: '图标卡片', titleColor: '#8A0E4B', descColor: '#000000',
+    })
     expect(makeDefaultBlock('button')).toMatchObject({ label: '按钮' })
     expect(makeDefaultBlock('gallery', media)).toMatchObject({ images: ['/a.jpg'] })
     expect(makeDefaultBlock('slider', media)).toMatchObject({ images: ['/a.jpg'] })
-    expect(makeDefaultBlock('banner')).toMatchObject({ title: '横幅标题' })
+    expect(makeDefaultBlock('banner')).toMatchObject({
+      title: '横幅标题', titleColor: '#8A0E4B', subColor: '#000000',
+    })
+    expect(makeDefaultBlock('heading')).toMatchObject({
+      titleColor: '#8A0E4B', subtitleColor: '#000000',
+    })
     expect(makeDefaultBlock('richtext')).toMatchObject({ html: expect.stringContaining('富文本内容') })
   })
 

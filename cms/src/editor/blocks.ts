@@ -4,7 +4,7 @@ import { newId } from './state'
 export interface FieldDef {
   key: string
   label: string
-  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'mediaList' | 'link' | 'bg' | 'color'
+  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'mediaList' | 'link' | 'bg' | 'color' | 'textColor' | 'gradient'
   options?: { label: string; value: string }[]
 }
 export interface BlockMeta { type: Block['type']; label: string; defaults: () => Block; fields: FieldDef[] }
@@ -17,11 +17,15 @@ const common: FieldDef[] = [
 export const BLOCKS: Record<Block['type'], BlockMeta> = {
   banner: { type: 'banner', label: '横幅', defaults: () => ({ type: 'banner', variant: 'split' }), fields: [
     { key: 'title', label: '标题', control: 'text' }, { key: 'sub', label: '副标题', control: 'text' },
+    { key: 'titleColor', label: '标题颜色', control: 'textColor' },
+    { key: 'subColor', label: '副标题颜色', control: 'textColor' },
     { key: 'variant', label: '布局变体', control: 'select', options: [{ label: '左右', value: 'split' }, { label: '整图', value: 'centered' }] },
     { key: 'image', label: '配图', control: 'media' }, { key: 'pattern', label: '装饰图', control: 'media' }, ...common,
   ] },
   text: { type: 'text', label: '文本', defaults: () => ({ type: 'text', body: '' }), fields: [
     { key: 'title', label: '标题', control: 'text' }, { key: 'body', label: '正文', control: 'textarea' },
+    { key: 'titleColor', label: '标题颜色', control: 'textColor' },
+    { key: 'bodyColor', label: '正文颜色', control: 'textColor' },
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '左', value: 'left' }, { label: '居中', value: 'center' }] },
     { key: 'padding', label: '内边距', control: 'number' },
   ] },
@@ -32,6 +36,8 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   imageText: { type: 'imageText', label: '图文卡片', defaults: () => ({ type: 'imageText', media: '' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'title', label: '标题', control: 'text' },
     { key: 'desc', label: '描述', control: 'textarea' }, { key: 'link', label: '链接', control: 'link' },
+    { key: 'titleColor', label: '标题颜色', control: 'textColor' },
+    { key: 'descColor', label: '描述颜色', control: 'textColor' },
     { key: 'padding', label: '内边距', control: 'number' },
   ] },
   iconCard: { type: 'iconCard', label: '图标卡片', defaults: () => ({ type: 'iconCard', icon: '' }), fields: [
@@ -39,6 +45,8 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'iconColor', label: '图标颜色', control: 'color' },
     { key: 'title', label: '标题', control: 'text' },
     { key: 'desc', label: '描述', control: 'textarea' },
+    { key: 'titleColor', label: '标题颜色', control: 'textColor' },
+    { key: 'descColor', label: '描述颜色', control: 'textColor' },
     { key: 'link', label: '链接', control: 'link' },
     { key: 'bgImage', label: '背景图片', control: 'media' },
     { key: 'bgColor', label: '背景颜色', control: 'color' },
@@ -66,6 +74,8 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   ] },
   heading: { type: 'heading', label: '标题', defaults: () => ({ type: 'heading', title: '标题' }), fields: [
     { key: 'title', label: '标题', control: 'text' }, { key: 'subtitle', label: '副标题', control: 'text' },
+    { key: 'titleColor', label: '标题颜色', control: 'textColor' },
+    { key: 'subtitleColor', label: '副标题颜色', control: 'textColor' },
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '居中', value: 'center' }, { label: '左对齐', value: 'left' }] },
     { key: 'padding', label: '内边距', control: 'number' },
   ] },
@@ -74,6 +84,8 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   ] }), fields: [
     { key: 'bgImage', label: '背景图片', control: 'media' },
     { key: 'bgColor', label: '背景颜色', control: 'color' },
+    { key: 'bgGradient', label: '背景渐变', control: 'gradient' },
+    { key: 'bgHeight', label: '背景高度(px)', control: 'number' },
     { key: 'paddingY', label: '垂直内边距', control: 'select', options: [{ label: '无', value: 'none' }, { label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
   ] },
 }
@@ -89,13 +101,27 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
   const base = BLOCKS[type].defaults() as any
   switch (type) {
     case 'text':
-      return { ...base, body: '在这里填写正文内容。' }
+      return { ...base, body: '在这里填写正文内容。', titleColor: '#8A0E4B', bodyColor: '#000000' }
     case 'image':
       return { ...base, media: media.image || '' }
     case 'imageText':
-      return { ...base, media: media.image || '', title: '图文卡片', desc: '在这里填写描述' }
+      return {
+        ...base,
+        media: media.image || '',
+        title: '图文卡片',
+        desc: '在这里填写描述',
+        titleColor: '#8A0E4B',
+        descColor: '#000000',
+      }
     case 'iconCard':
-      return { ...base, icon: media.icon || '', title: '图标卡片', desc: '在这里填写描述' }
+      return {
+        ...base,
+        icon: media.icon || '',
+        title: '图标卡片',
+        desc: '在这里填写描述',
+        titleColor: '#8A0E4B',
+        descColor: '#000000',
+      }
     case 'button':
       return { ...base, label: '按钮' }
     case 'richtext':
@@ -106,7 +132,15 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
       return { ...base, images: first ? [first] : [] }
     }
     case 'banner':
-      return { ...base, title: '横幅标题', sub: '在这里填写副标题' }
+      return {
+        ...base,
+        title: '横幅标题',
+        sub: '在这里填写副标题',
+        titleColor: '#8A0E4B',
+        subColor: '#000000',
+      }
+    case 'heading':
+      return { ...base, titleColor: '#8A0E4B', subtitleColor: '#000000' }
     default:
       return base
   }

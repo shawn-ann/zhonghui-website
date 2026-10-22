@@ -186,6 +186,14 @@ export interface Page {
              * 背景颜色，如 #FFF1F6
              */
             bgColor?: string | null;
+            /**
+             * CSS 渐变，如 linear-gradient(...)
+             */
+            bgGradient?: string | null;
+            /**
+             * 背景带高度(px)，0/留空为铺满
+             */
+            bgHeight?: number | null;
             bg?: string | null;
             paddingY?: ('none' | 'sm' | 'md' | 'lg') | null;
             children?:
@@ -193,6 +201,14 @@ export interface Page {
                   | {
                       title: string;
                       subtitle?: string | null;
+                      /**
+                       * 标题颜色，留空沿用主题色
+                       */
+                      titleColor?: string | null;
+                      /**
+                       * 副标题颜色，留空沿用主题色
+                       */
+                      subtitleColor?: string | null;
                       align?: ('center' | 'left') | null;
                       /**
                        * 内容内边距(px)，默认0
@@ -210,6 +226,14 @@ export interface Page {
                             | {
                                 title: string;
                                 subtitle?: string | null;
+                                /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 副标题颜色，留空沿用主题色
+                                 */
+                                subtitleColor?: string | null;
                                 align?: ('center' | 'left') | null;
                                 /**
                                  * 内容内边距(px)，默认0
@@ -222,6 +246,14 @@ export interface Page {
                             | {
                                 title?: string | null;
                                 body: string;
+                                /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 正文颜色，留空沿用主题色
+                                 */
+                                bodyColor?: string | null;
                                 align?: ('left' | 'center') | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
@@ -254,6 +286,14 @@ export interface Page {
                                 media: number | Media;
                                 title?: string | null;
                                 desc?: string | null;
+                                /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 描述颜色，留空沿用主题色
+                                 */
+                                descColor?: string | null;
                                 /**
                                  * 站内路由以 / 开头，或完整外链 https://…
                                  */
@@ -290,6 +330,14 @@ export interface Page {
                                 title?: string | null;
                                 desc?: string | null;
                                 /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 描述颜色，留空沿用主题色
+                                 */
+                                descColor?: string | null;
+                                /**
                                  * 站内路由或完整外链
                                  */
                                 link?: string | null;
@@ -317,6 +365,14 @@ export interface Page {
                                       | {
                                           title: string;
                                           subtitle?: string | null;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 副标题颜色，留空沿用主题色
+                                           */
+                                          subtitleColor?: string | null;
                                           align?: ('center' | 'left') | null;
                                           /**
                                            * 内容内边距(px)，默认0
@@ -329,6 +385,14 @@ export interface Page {
                                       | {
                                           title?: string | null;
                                           body: string;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 正文颜色，留空沿用主题色
+                                           */
+                                          bodyColor?: string | null;
                                           align?: ('left' | 'center') | null;
                                           bg?: string | null;
                                           alt?: boolean | null;
@@ -361,6 +425,14 @@ export interface Page {
                                           media: number | Media;
                                           title?: string | null;
                                           desc?: string | null;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 描述颜色，留空沿用主题色
+                                           */
+                                          descColor?: string | null;
                                           /**
                                            * 站内路由以 / 开头，或完整外链 https://…
                                            */
@@ -396,6 +468,14 @@ export interface Page {
                                           icon: number | Media;
                                           title?: string | null;
                                           desc?: string | null;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 描述颜色，留空沿用主题色
+                                           */
+                                          descColor?: string | null;
                                           /**
                                            * 站内路由或完整外链
                                            */
@@ -468,6 +548,14 @@ export interface Page {
                       variant?: ('split' | 'centered') | null;
                       title?: string | null;
                       sub?: string | null;
+                      /**
+                       * 标题颜色，留空沿用主题色
+                       */
+                      titleColor?: string | null;
+                      /**
+                       * 副标题颜色，留空沿用主题色
+                       */
+                      subColor?: string | null;
                       image?: (number | null) | Media;
                       pattern?: (number | null) | Media;
                       /**
@@ -524,6 +612,14 @@ export interface Page {
         | {
             title: string;
             subtitle?: string | null;
+            /**
+             * 标题颜色，留空沿用主题色
+             */
+            titleColor?: string | null;
+            /**
+             * 副标题颜色，留空沿用主题色
+             */
+            subtitleColor?: string | null;
             align?: ('center' | 'left') | null;
             /**
              * 内容内边距(px)，默认0
@@ -541,6 +637,14 @@ export interface Page {
                   | {
                       title: string;
                       subtitle?: string | null;
+                      /**
+                       * 标题颜色，留空沿用主题色
+                       */
+                      titleColor?: string | null;
+                      /**
+                       * 副标题颜色，留空沿用主题色
+                       */
+                      subtitleColor?: string | null;
                       align?: ('center' | 'left') | null;
                       /**
                        * 内容内边距(px)，默认0
@@ -553,6 +657,14 @@ export interface Page {
                   | {
                       title?: string | null;
                       body: string;
+                      /**
+                       * 标题颜色，留空沿用主题色
+                       */
+                      titleColor?: string | null;
+                      /**
+                       * 正文颜色，留空沿用主题色
+                       */
+                      bodyColor?: string | null;
                       align?: ('left' | 'center') | null;
                       bg?: string | null;
                       alt?: boolean | null;
@@ -585,6 +697,14 @@ export interface Page {
                       media: number | Media;
                       title?: string | null;
                       desc?: string | null;
+                      /**
+                       * 标题颜色，留空沿用主题色
+                       */
+                      titleColor?: string | null;
+                      /**
+                       * 描述颜色，留空沿用主题色
+                       */
+                      descColor?: string | null;
                       /**
                        * 站内路由以 / 开头，或完整外链 https://…
                        */
@@ -621,6 +741,14 @@ export interface Page {
                       title?: string | null;
                       desc?: string | null;
                       /**
+                       * 标题颜色，留空沿用主题色
+                       */
+                      titleColor?: string | null;
+                      /**
+                       * 描述颜色，留空沿用主题色
+                       */
+                      descColor?: string | null;
+                      /**
                        * 站内路由或完整外链
                        */
                       link?: string | null;
@@ -648,6 +776,14 @@ export interface Page {
                             | {
                                 title: string;
                                 subtitle?: string | null;
+                                /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 副标题颜色，留空沿用主题色
+                                 */
+                                subtitleColor?: string | null;
                                 align?: ('center' | 'left') | null;
                                 /**
                                  * 内容内边距(px)，默认0
@@ -660,6 +796,14 @@ export interface Page {
                             | {
                                 title?: string | null;
                                 body: string;
+                                /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 正文颜色，留空沿用主题色
+                                 */
+                                bodyColor?: string | null;
                                 align?: ('left' | 'center') | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
@@ -692,6 +836,14 @@ export interface Page {
                                 media: number | Media;
                                 title?: string | null;
                                 desc?: string | null;
+                                /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 描述颜色，留空沿用主题色
+                                 */
+                                descColor?: string | null;
                                 /**
                                  * 站内路由以 / 开头，或完整外链 https://…
                                  */
@@ -727,6 +879,14 @@ export interface Page {
                                 icon: number | Media;
                                 title?: string | null;
                                 desc?: string | null;
+                                /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 描述颜色，留空沿用主题色
+                                 */
+                                descColor?: string | null;
                                 /**
                                  * 站内路由或完整外链
                                  */
@@ -783,6 +943,14 @@ export interface Page {
             variant?: ('split' | 'centered') | null;
             title?: string | null;
             sub?: string | null;
+            /**
+             * 标题颜色，留空沿用主题色
+             */
+            titleColor?: string | null;
+            /**
+             * 副标题颜色，留空沿用主题色
+             */
+            subColor?: string | null;
             image?: (number | null) | Media;
             pattern?: (number | null) | Media;
             /**
@@ -797,6 +965,14 @@ export interface Page {
         | {
             title?: string | null;
             body: string;
+            /**
+             * 标题颜色，留空沿用主题色
+             */
+            titleColor?: string | null;
+            /**
+             * 正文颜色，留空沿用主题色
+             */
+            bodyColor?: string | null;
             align?: ('left' | 'center') | null;
             bg?: string | null;
             alt?: boolean | null;
@@ -829,6 +1005,14 @@ export interface Page {
             media: number | Media;
             title?: string | null;
             desc?: string | null;
+            /**
+             * 标题颜色，留空沿用主题色
+             */
+            titleColor?: string | null;
+            /**
+             * 描述颜色，留空沿用主题色
+             */
+            descColor?: string | null;
             /**
              * 站内路由以 / 开头，或完整外链 https://…
              */
@@ -916,6 +1100,14 @@ export interface Page {
             icon: number | Media;
             title?: string | null;
             desc?: string | null;
+            /**
+             * 标题颜色，留空沿用主题色
+             */
+            titleColor?: string | null;
+            /**
+             * 描述颜色，留空沿用主题色
+             */
+            descColor?: string | null;
             /**
              * 站内路由或完整外链
              */
@@ -1080,6 +1272,8 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               bgImage?: T;
               bgColor?: T;
+              bgGradient?: T;
+              bgHeight?: T;
               bg?: T;
               paddingY?: T;
               children?:
@@ -1090,6 +1284,8 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           title?: T;
                           subtitle?: T;
+                          titleColor?: T;
+                          subtitleColor?: T;
                           align?: T;
                           padding?: T;
                           id?: T;
@@ -1108,6 +1304,8 @@ export interface PagesSelect<T extends boolean = true> {
                                   | {
                                       title?: T;
                                       subtitle?: T;
+                                      titleColor?: T;
+                                      subtitleColor?: T;
                                       align?: T;
                                       padding?: T;
                                       id?: T;
@@ -1118,6 +1316,8 @@ export interface PagesSelect<T extends boolean = true> {
                                   | {
                                       title?: T;
                                       body?: T;
+                                      titleColor?: T;
+                                      bodyColor?: T;
                                       align?: T;
                                       bg?: T;
                                       alt?: T;
@@ -1143,6 +1343,8 @@ export interface PagesSelect<T extends boolean = true> {
                                       media?: T;
                                       title?: T;
                                       desc?: T;
+                                      titleColor?: T;
+                                      descColor?: T;
                                       link?: T;
                                       bg?: T;
                                       alt?: T;
@@ -1168,6 +1370,8 @@ export interface PagesSelect<T extends boolean = true> {
                                       icon?: T;
                                       title?: T;
                                       desc?: T;
+                                      titleColor?: T;
+                                      descColor?: T;
                                       link?: T;
                                       bgImage?: T;
                                       bgColor?: T;
@@ -1188,6 +1392,8 @@ export interface PagesSelect<T extends boolean = true> {
                                               | {
                                                   title?: T;
                                                   subtitle?: T;
+                                                  titleColor?: T;
+                                                  subtitleColor?: T;
                                                   align?: T;
                                                   padding?: T;
                                                   id?: T;
@@ -1198,6 +1404,8 @@ export interface PagesSelect<T extends boolean = true> {
                                               | {
                                                   title?: T;
                                                   body?: T;
+                                                  titleColor?: T;
+                                                  bodyColor?: T;
                                                   align?: T;
                                                   bg?: T;
                                                   alt?: T;
@@ -1223,6 +1431,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                   media?: T;
                                                   title?: T;
                                                   desc?: T;
+                                                  titleColor?: T;
+                                                  descColor?: T;
                                                   link?: T;
                                                   bg?: T;
                                                   alt?: T;
@@ -1248,6 +1458,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                   icon?: T;
                                                   title?: T;
                                                   desc?: T;
+                                                  titleColor?: T;
+                                                  descColor?: T;
                                                   link?: T;
                                                   bgImage?: T;
                                                   bgColor?: T;
@@ -1293,6 +1505,8 @@ export interface PagesSelect<T extends boolean = true> {
                           variant?: T;
                           title?: T;
                           sub?: T;
+                          titleColor?: T;
+                          subColor?: T;
                           image?: T;
                           pattern?: T;
                           bg?: T;
@@ -1332,6 +1546,8 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               title?: T;
               subtitle?: T;
+              titleColor?: T;
+              subtitleColor?: T;
               align?: T;
               padding?: T;
               id?: T;
@@ -1350,6 +1566,8 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           title?: T;
                           subtitle?: T;
+                          titleColor?: T;
+                          subtitleColor?: T;
                           align?: T;
                           padding?: T;
                           id?: T;
@@ -1360,6 +1578,8 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           title?: T;
                           body?: T;
+                          titleColor?: T;
+                          bodyColor?: T;
                           align?: T;
                           bg?: T;
                           alt?: T;
@@ -1385,6 +1605,8 @@ export interface PagesSelect<T extends boolean = true> {
                           media?: T;
                           title?: T;
                           desc?: T;
+                          titleColor?: T;
+                          descColor?: T;
                           link?: T;
                           bg?: T;
                           alt?: T;
@@ -1410,6 +1632,8 @@ export interface PagesSelect<T extends boolean = true> {
                           icon?: T;
                           title?: T;
                           desc?: T;
+                          titleColor?: T;
+                          descColor?: T;
                           link?: T;
                           bgImage?: T;
                           bgColor?: T;
@@ -1430,6 +1654,8 @@ export interface PagesSelect<T extends boolean = true> {
                                   | {
                                       title?: T;
                                       subtitle?: T;
+                                      titleColor?: T;
+                                      subtitleColor?: T;
                                       align?: T;
                                       padding?: T;
                                       id?: T;
@@ -1440,6 +1666,8 @@ export interface PagesSelect<T extends boolean = true> {
                                   | {
                                       title?: T;
                                       body?: T;
+                                      titleColor?: T;
+                                      bodyColor?: T;
                                       align?: T;
                                       bg?: T;
                                       alt?: T;
@@ -1465,6 +1693,8 @@ export interface PagesSelect<T extends boolean = true> {
                                       media?: T;
                                       title?: T;
                                       desc?: T;
+                                      titleColor?: T;
+                                      descColor?: T;
                                       link?: T;
                                       bg?: T;
                                       alt?: T;
@@ -1490,6 +1720,8 @@ export interface PagesSelect<T extends boolean = true> {
                                       icon?: T;
                                       title?: T;
                                       desc?: T;
+                                      titleColor?: T;
+                                      descColor?: T;
                                       link?: T;
                                       bgImage?: T;
                                       bgColor?: T;
@@ -1519,6 +1751,8 @@ export interface PagesSelect<T extends boolean = true> {
               variant?: T;
               title?: T;
               sub?: T;
+              titleColor?: T;
+              subColor?: T;
               image?: T;
               pattern?: T;
               bg?: T;
@@ -1531,6 +1765,8 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               title?: T;
               body?: T;
+              titleColor?: T;
+              bodyColor?: T;
               align?: T;
               bg?: T;
               alt?: T;
@@ -1556,6 +1792,8 @@ export interface PagesSelect<T extends boolean = true> {
               media?: T;
               title?: T;
               desc?: T;
+              titleColor?: T;
+              descColor?: T;
               link?: T;
               bg?: T;
               alt?: T;
@@ -1620,6 +1858,8 @@ export interface PagesSelect<T extends boolean = true> {
               icon?: T;
               title?: T;
               desc?: T;
+              titleColor?: T;
+              descColor?: T;
               link?: T;
               bgImage?: T;
               bgColor?: T;

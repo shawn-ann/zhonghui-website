@@ -88,7 +88,8 @@ const blocks: any[] = [
   {
     blockType: 'section',
     paddingY: 'md',
-    bgImage: '/assets/bg2.jpg',
+    bgGradient: 'linear-gradient(90deg, #FC0401 0%, #F5534E 50%, #F4585E 62%, #FC1972 100%)',
+    bgHeight: 304,
     children: [
       { blockType: 'heading', title: '项目一览', align: 'center' },
       {

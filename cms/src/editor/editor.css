@@ -245,6 +245,32 @@
   flex: 1;
   min-width: 0;
 }
+.ed-gradient-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ed-gradient-row select {
+  flex: 1;
+  min-width: 0;
+}
+.ed-gradient-preview {
+  width: 46px;
+  height: 28px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex: none;
+}
+.ed-ctl-clear {
+  margin-top: 4px;
+  align-self: flex-start;
+  font-size: 12px;
+  padding: 4px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
 .ed-media-list {
   display: flex;
   flex-direction: column;

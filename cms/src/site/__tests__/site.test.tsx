@@ -32,6 +32,63 @@ describe('site blocks', () => {
     expect(section).toContain('background-color:#FFF1F6')
   })
 
+  it('applies custom text colors through CSS variables', () => {
+    const heading = render(blockNode({
+      type: 'heading', _id: 'h', title: 'T', subtitle: 'S',
+      titleColor: '#FFFFFF', subtitleColor: '#8A0E4B',
+    })!)
+    expect(heading).toContain('--title-color:#FFFFFF')
+    expect(heading).toContain('--sub-color:#8A0E4B')
+
+    const text = render(blockNode({
+      type: 'text', _id: 't', body: 'body', titleColor: '#FFFFFF', bodyColor: '#333333',
+    })!)
+    expect(text).toContain('--title-color:#FFFFFF')
+    expect(text).toContain('--sub-color:#333333')
+
+    const banner = render(blockNode({
+      type: 'banner', _id: 'b', variant: 'split', title: 'T', sub: 'S',
+      titleColor: '#FFFFFF', subColor: '#FAFAFA',
+    })!)
+    expect(banner).toContain('--title-color:#FFFFFF')
+    expect(banner).toContain('--sub-color:#FAFAFA')
+
+    const card = render(blockNode({
+      type: 'imageText', _id: 'it', media: '/a.jpg', title: 'T', desc: 'D',
+      titleColor: '#FFFFFF', descColor: '#EEEEEE',
+    })!)
+    expect(card).toContain('--title-color:#FFFFFF')
+    expect(card).toContain('--sub-color:#EEEEEE')
+
+    const icon = render(blockNode({
+      type: 'iconCard', _id: 'ic', icon: '/i.svg', title: 'T', desc: 'D',
+      titleColor: '#FFFFFF', descColor: '#DDDDDD',
+    })!)
+    expect(icon).toContain('--title-color:#FFFFFF')
+    expect(icon).toContain('--sub-color:#DDDDDD')
+  })
+
+  it('renders a gradient background band with fixed height', () => {
+    const html = render(blockNode({
+      type: 'section', _id: 's1', paddingY: 'md', bgHeight: 304,
+      bgGradient: 'linear-gradient(90deg, #FC0401 0%, #FC1972 100%)', children: [],
+    })!)
+    expect(html).toContain('linear-gradient(90deg, #FC0401 0%, #FC1972 100%)')
+    expect(html).toContain('background-size:100% 304px')
+    expect(html).toContain('background-repeat:no-repeat')
+    expect(html).toContain('background-position:top center')
+    expect(html).toContain('background-color:#fff')
+    expect(html).not.toContain('on-image')
+  })
+
+  it('renders a full gradient without height', () => {
+    const html = render(blockNode({
+      type: 'section', _id: 's2', bgGradient: 'linear-gradient(90deg,#f00,#00f)', children: [],
+    })!)
+    expect(html).toContain('linear-gradient(90deg,#f00,#00f)')
+    expect(html).not.toContain('background-size:100%')
+  })
+
   it('renders banner variants', () => {
     const split = render(blockNode({
       type: 'banner', _id: 'b1', variant: 'split', title: '标题', sub: '副标题',

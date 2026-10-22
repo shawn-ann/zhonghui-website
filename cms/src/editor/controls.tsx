@@ -49,13 +49,30 @@ export function BgControl({ label, value, onChange, onPick }: Base & V<string> &
     </div>
   )
 }
+function hexOf(v: string): string {
+  if (/^#[0-9a-f]{6}$/i.test(v)) return v
+  if (/^#[0-9a-f]{3}$/i.test(v)) return `#${v[1]}${v[1]}${v[2]}${v[2]}${v[3]}${v[3]}`
+  return '#ffffff'
+}
+
+export function TextColorControl({ label, value, onChange }: Base & V<string>) {
+  const v = value ?? ''
+  const hex = hexOf(v)
+  return (
+    <div className="ed-ctl">
+      <span>{label}</span>
+      <div className="ed-color-row">
+        <input type="color" value={hex} onChange={(e) => onChange(e.target.value)} />
+        <input placeholder="留空沿用主题色" value={v} onChange={(e) => onChange(e.target.value)} />
+      </div>
+      {v ? <button type="button" className="ed-ctl-clear" onClick={() => onChange('')}>恢复默认</button> : null}
+    </div>
+  )
+}
+
 export function ColorControl({ label, value, onChange }: Base & V<string>) {
   const v = value ?? ''
-  const hex = /^#[0-9a-f]{6}$/i.test(v)
-    ? v
-    : /^#[0-9a-f]{3}$/i.test(v)
-      ? `#${v[1]}${v[1]}${v[2]}${v[2]}${v[3]}${v[3]}`
-      : '#ffffff'
+  const hex = hexOf(v)
   return (
     <div className="ed-ctl">
       <span>{label}</span>
@@ -67,6 +84,33 @@ export function ColorControl({ label, value, onChange }: Base & V<string>) {
           onChange={(e) => onChange(e.target.value)}
         />
       </div>
+    </div>
+  )
+}
+
+const GRADIENT_PRESETS = [
+  { label: '红渐变', value: 'linear-gradient(90deg, #FC0401 0%, #F5534E 50%, #F4585E 62%, #FC1972 100%)' },
+]
+
+export function GradientControl({ label, value, onChange }: Base & V<string>) {
+  const v = value ?? ''
+  const preset = GRADIENT_PRESETS.find((p) => p.value === v)?.value ?? ''
+  return (
+    <div className="ed-ctl">
+      <span>{label}</span>
+      <div className="ed-gradient-row">
+        <select value={preset} onChange={(e) => { if (e.target.value) onChange(e.target.value) }}>
+          <option value="">选择预设…</option>
+          {GRADIENT_PRESETS.map((p) => <option key={p.label} value={p.value}>{p.label}</option>)}
+        </select>
+        <span className="ed-gradient-preview" style={{ background: v || '#fff' }} />
+      </div>
+      <input
+        placeholder="linear-gradient(90deg, #FC0401 0%, #FC1972 100%)"
+        value={v}
+        onChange={(e) => onChange(e.target.value)}
+      />
+      {v ? <button type="button" className="ed-ctl-clear" onClick={() => onChange('')}>清除渐变</button> : null}
     </div>
   )
 }
