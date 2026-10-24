@@ -3,16 +3,16 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { zh } from '@payloadcms/translations/languages/zh'
 import path from 'path'
 import { buildConfig } from 'payload'
-import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { Menu } from './globals/Menu'
+import { SiteSettings } from './globals/SiteSettings'
 import { getBuildStatus, startBuild } from './build/manager'
 
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const srcDir = path.resolve(process.cwd(), 'src')
 
 const secret = process.env.PAYLOAD_SECRET
 const databaseUrl = process.env.DATABASE_URL
@@ -23,7 +23,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: {
-      baseDir: path.resolve(dirname),
+      baseDir: srcDir,
     },
     meta: {
       titleSuffix: ' · 中惠文化管理后台',
@@ -31,6 +31,8 @@ export default buildConfig({
       icons: [{ rel: 'icon', type: 'image/jpeg', url: '/favicon.jpg' }],
     },
     components: {
+      Nav: '/components/admin/AdminNav',
+      header: ['/components/admin/AdminMobileBar'],
       graphics: {
         Logo: '/components/Logo',
         Icon: '/components/Icon',
@@ -42,6 +44,7 @@ export default buildConfig({
     fallbackLanguage: 'zh',
   },
   collections: [Users, Media, Pages],
+  globals: [Menu, SiteSettings],
   endpoints: [
     {
       path: '/rebuild',
@@ -49,7 +52,7 @@ export default buildConfig({
       handler: async (req) => {
         const { user } = await req.payload.auth({ headers: req.headers })
         if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
-        return Response.json(getBuildStatus())
+        return Response.json(await getBuildStatus())
       },
     },
     {
@@ -58,7 +61,7 @@ export default buildConfig({
       handler: async (req) => {
         const { user } = await req.payload.auth({ headers: req.headers })
         if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
-        const result = startBuild()
+        const result = await startBuild()
         return Response.json(result.status, { status: result.started ? 202 : 409 })
       },
     },
@@ -66,7 +69,7 @@ export default buildConfig({
   editor: lexicalEditor(),
   secret,
   typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
+    outputFile: path.resolve(srcDir, 'payload-types.ts'),
   },
   db: postgresAdapter({
     pool: {

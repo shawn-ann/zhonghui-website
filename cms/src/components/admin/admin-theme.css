@@ -35,26 +35,23 @@ html.admin-shell body {
 
 /* Hide Payload chrome and reserve the sidebar column. */
 html.admin-shell .app-header,
+html.admin-shell .nav-toggler,
 html.admin-shell .template-default > .nav .nav__header {
   display: none !important;
 }
 
 html.admin-shell .template-default {
+  display: block;
   min-height: 100vh;
 }
 
-html.admin-shell .template-default > .nav,
-html.admin-shell .template-default > aside.nav {
+html.admin-shell .template-default > .zc-sidebar {
   position: fixed !important;
   inset: 0 auto 0 0;
   z-index: 50;
-  width: 224px !important;
-  max-width: 224px;
+  width: 224px;
   height: 100vh;
-  padding: 0 !important;
-  border: 0;
   background: var(--zc-sidebar);
-  transform: none !important;
   transition: width .18s ease;
 }
 
@@ -64,10 +61,8 @@ html.admin-shell .template-default__wrap {
   transition: margin-left .18s ease;
 }
 
-html.admin-shell.zc-sidebar-collapsed .template-default > .nav,
-html.admin-shell.zc-sidebar-collapsed .template-default > aside.nav {
-  width: 64px !important;
-  max-width: 64px;
+html.admin-shell.zc-sidebar-collapsed .template-default > .zc-sidebar {
+  width: 64px;
 }
 
 html.admin-shell.zc-sidebar-collapsed .template-default__wrap {
@@ -245,16 +240,13 @@ html.admin-shell .zc-mobilebar {
 html.admin-shell .zc-mobilebar__spacer { flex: 1; }
 
 @media (max-width: 899px) {
-  html.admin-shell .template-default > .nav,
-  html.admin-shell .template-default > aside.nav {
-    width: 238px !important;
-    max-width: 238px;
-    transform: translateX(-100%) !important;
+  html.admin-shell .template-default > .zc-sidebar {
+    width: 238px;
+    transform: translateX(-100%);
     transition: transform .22s ease;
   }
-  html.admin-shell.zc-nav-open .template-default > .nav,
-  html.admin-shell.zc-nav-open .template-default > aside.nav {
-    transform: translateX(0) !important;
+  html.admin-shell.zc-nav-open .template-default > .zc-sidebar {
+    transform: translateX(0);
   }
   html.admin-shell .template-default__wrap,
   html.admin-shell.zc-sidebar-collapsed .template-default__wrap {
@@ -265,4 +257,240 @@ html.admin-shell .zc-mobilebar__spacer { flex: 1; }
   .zc-page { padding: 20px 20px 36px; }
   .zc-page-head { flex-direction: column; align-items: stretch; gap: 14px; }
   .zc-page-actions { justify-content: flex-start; }
+}
+html.admin-shell .nav {
+  color: var(--zc-sidebar-text);
+}
+
+.zc-sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+  color: var(--zc-sidebar-text);
+  font-size: 13px;
+}
+
+.zc-brand-row {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 14px 0 18px;
+  flex: none;
+}
+
+.zc-brand { display: flex; align-items: center; flex: 1; min-width: 0; }
+.zc-brand-logo { display: block; height: 27px; width: auto; }
+.zc-brand-mark {
+  display: none;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--zc-accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.zc-collapse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--zc-sidebar-soft);
+  cursor: pointer;
+}
+.zc-collapse:hover { background: var(--zc-sidebar-hover); color: #fff; }
+
+.zc-nav { flex: 1; overflow-y: auto; padding: 4px 10px 14px; }
+.zc-nav-group { margin-bottom: 18px; }
+.zc-nav-label {
+  margin-bottom: 6px;
+  padding: 0 10px;
+  color: var(--zc-sidebar-soft);
+  font-size: 10px;
+  letter-spacing: .12em;
+  white-space: nowrap;
+}
+
+.zc-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  margin-bottom: 3px;
+  padding: 0 10px;
+  border-radius: 6px;
+  color: var(--zc-sidebar-text);
+  white-space: nowrap;
+}
+.zc-nav-item:hover { background: var(--zc-sidebar-hover); color: #fff; }
+.zc-nav-item.is-active { background: var(--zc-sidebar-active); color: #fff; font-weight: 600; }
+.zc-nav-item.is-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--zc-accent);
+}
+.zc-nav-item svg { flex: none; opacity: .8; }
+.zc-nav-item.is-active svg { opacity: 1; }
+
+.zc-sidebar-foot { flex: none; padding: 10px; border-top: 1px solid rgba(255,255,255,.06); }
+
+.zc-foot-link,
+.zc-account,
+.zc-foot-collapse {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 38px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--zc-sidebar-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.zc-foot-link:hover,
+.zc-account:hover,
+.zc-foot-collapse:hover { background: var(--zc-sidebar-hover); color: #fff; }
+
+.zc-account { height: 46px; margin-top: 4px; }
+.zc-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #8a5a70, #c2185b);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+}
+.zc-account-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.zc-account-chev { margin-left: auto; opacity: .6; }
+
+.zc-account-wrap { position: relative; }
+.zc-account-pop {
+  position: absolute;
+  left: 0;
+  bottom: 52px;
+  z-index: 80;
+  width: 196px;
+  padding: 6px;
+  border: 1px solid var(--zc-border);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: var(--zc-shadow-pop);
+}
+.zc-account-who { padding: 9px 10px; margin-bottom: 5px; border-bottom: 1px solid #f5eef1; color: var(--zc-text); }
+.zc-account-who b { display: block; font-size: 12px; }
+.zc-account-who span { color: var(--zc-soft); font-size: 11px; }
+.zc-account-pop a,
+.zc-account-pop button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 32px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 5px;
+  background: none;
+  color: var(--zc-muted);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.zc-account-pop a:hover,
+.zc-account-pop button:hover { background: #faf5f7; color: var(--zc-primary); }
+.zc-account-pop button:last-child:hover { color: var(--zc-danger); }
+
+html.admin-shell.zc-sidebar-collapsed .zc-brand { justify-content: center; flex: 0 0 auto; }
+html.admin-shell.zc-sidebar-collapsed .zc-brand-logo { display: none; }
+html.admin-shell.zc-sidebar-collapsed .zc-brand-mark { display: inline-flex; }
+html.admin-shell.zc-sidebar-collapsed .zc-collapse { display: none; }
+html.admin-shell.zc-sidebar-collapsed .zc-nav { padding: 4px 8px 14px; }
+html.admin-shell.zc-sidebar-collapsed .zc-nav-label {
+  height: 1px;
+  margin: 10px 6px;
+  padding: 0;
+  background: rgba(255,255,255,.07);
+  overflow: hidden;
+  color: transparent;
+}
+html.admin-shell.zc-sidebar-collapsed .zc-nav-item { justify-content: center; padding: 0; }
+html.admin-shell.zc-sidebar-collapsed .zc-nav-text,
+html.admin-shell.zc-sidebar-collapsed .zc-account-name,
+html.admin-shell.zc-sidebar-collapsed .zc-account-chev { display: none; }
+html.admin-shell.zc-sidebar-collapsed .zc-sidebar-foot { padding: 10px 8px; }
+html.admin-shell.zc-sidebar-collapsed .zc-foot-link,
+html.admin-shell.zc-sidebar-collapsed .zc-account { justify-content: center; padding: 0; }
+html.admin-shell.zc-sidebar-collapsed .zc-account { height: 38px; }
+html.admin-shell.zc-sidebar-collapsed .zc-foot-collapse { justify-content: center; padding: 0; }
+html.admin-shell.zc-sidebar-collapsed .zc-foot-collapse .zc-nav-text { display: none; }
+html.admin-shell.zc-sidebar-collapsed .zc-foot-collapse svg { transform: rotate(180deg); }
+
+html.admin-shell .zc-mobilebar__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--zc-muted);
+  cursor: pointer;
+}
+html.admin-shell .zc-mobilebar__logo { height: 22px; filter: brightness(.35) saturate(2); }
+html.admin-shell .zc-mobilebar .zc-avatar { text-decoration: none; }
+
+html.admin-shell .zc-scrim { display: none; }
+
+@media (max-width: 899px) {
+  html.admin-shell .zc-sidebar { width: 238px; }
+  html.admin-shell .zc-collapse { display: none; }
+  html.admin-shell .zc-brand-logo { display: block; }
+  html.admin-shell .zc-brand-mark { display: none; }
+  html.admin-shell .zc-nav-label {
+    height: auto;
+    margin: 0 0 6px;
+    padding: 0 10px;
+    background: none;
+    color: var(--zc-sidebar-soft);
+  }
+  html.admin-shell .zc-nav-item { justify-content: flex-start; padding: 0 10px; }
+  html.admin-shell .zc-nav-text,
+  html.admin-shell .zc-account-name,
+  html.admin-shell .zc-account-chev { display: inline; }
+  html.admin-shell .zc-foot-link,
+  html.admin-shell .zc-account { justify-content: flex-start; padding: 0 10px; }
+  html.admin-shell .zc-foot-collapse { display: none; }
+  html.admin-shell.zc-nav-open .zc-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    border: 0;
+    background: rgba(25, 16, 21, .42);
+    backdrop-filter: blur(2px);
+  }
 }
