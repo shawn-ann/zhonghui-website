@@ -9,6 +9,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { getBuildStatus, startBuild } from './build/manager'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -41,6 +42,27 @@ export default buildConfig({
     fallbackLanguage: 'zh',
   },
   collections: [Users, Media, Pages],
+  endpoints: [
+    {
+      path: '/rebuild',
+      method: 'get',
+      handler: async (req) => {
+        const { user } = await req.payload.auth({ headers: req.headers })
+        if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
+        return Response.json(getBuildStatus())
+      },
+    },
+    {
+      path: '/rebuild',
+      method: 'post',
+      handler: async (req) => {
+        const { user } = await req.payload.auth({ headers: req.headers })
+        if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
+        const result = startBuild()
+        return Response.json(result.status, { status: result.started ? 202 : 409 })
+      },
+    },
+  ],
   editor: lexicalEditor(),
   secret,
   typescript: {

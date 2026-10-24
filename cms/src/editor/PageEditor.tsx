@@ -6,7 +6,7 @@ import Canvas from './Canvas'
 import PropertyPanel from './PropertyPanel'
 import TopBar from './TopBar'
 import { BLOCKS, makeDefaultBlock, type DefaultMedia } from './blocks'
-import { getPage, savePage, publishPage, listMedia, listPages, type MediaItem, type PageSummary } from './api'
+import { getPage, savePage, publishPage, listMedia, listPages, getBuildStatus, triggerRebuild, type MediaItem, type PageSummary, type BuildStatus } from './api'
 import {
   addBlock, ensureIds, moveBlock, newId,
   findPath, getAtPath, updateAtPath, removeAtPath, insertInto,
@@ -20,6 +20,9 @@ export default function PageEditor({ id }: { id: number | string }) {
   const [selectedId, setSelectedId] = useState<string>()
   const [dirty, setDirty] = useState(false)
   const [pages, setPages] = useState<PageSummary[]>([])
+  const [build, setBuild] = useState<BuildStatus>()
+  const [publishing, setPublishing] = useState(false)
+  const pollTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const urlToId = useRef<Map<string, number | string>>(new Map())
   const defaults = useRef<DefaultMedia>({})
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -48,6 +51,25 @@ export default function PageEditor({ id }: { id: number | string }) {
   }, [id])
 
   useEffect(() => () => clearTimeout(timer.current), [])
+
+  const pollBuild = useCallback(() => {
+    const tick = async () => {
+      try {
+        const s = await getBuildStatus()
+        setBuild(s)
+        if (s.status === 'building') pollTimer.current = setTimeout(tick, 1000)
+      } catch { /* keep last status */ }
+    }
+    clearTimeout(pollTimer.current)
+    pollTimer.current = setTimeout(tick, 1000)
+  }, [])
+
+  useEffect(() => {
+    getBuildStatus()
+      .then((s) => { setBuild(s); if (s.status === 'building') pollBuild() })
+      .catch(() => {})
+    return () => clearTimeout(pollTimer.current)
+  }, [pollBuild])
 
   const persist = useCallback(
     (d: EditorDoc, version?: number) =>
@@ -104,13 +126,29 @@ export default function PageEditor({ id }: { id: number | string }) {
   }
 
   const publishNow = () => {
+    if (publishing || build?.status === 'building') return
+    setPublishing(true)
     clearTimeout(timer.current)
     publishPage(id, {
       title: doc.title,
       route: doc.route,
       seo: doc.seo,
       blocks: editorToPayloadBlocks(doc.blocks, urlToId.current),
-    }).then(() => setDoc((d) => (d ? { ...d, _status: 'published' } : d)))
+    })
+      .then(async () => {
+        setDoc((d) => (d ? { ...d, _status: 'published' } : d))
+        try {
+          const s = await triggerRebuild()
+          setBuild(s)
+          if (s.status === 'building') pollBuild()
+        } catch (e) {
+          setBuild({ status: 'error', error: e instanceof Error ? e.message : '触发构建失败' })
+        }
+      })
+      .catch((e) => {
+        setBuild({ status: 'error', error: e instanceof Error ? e.message : '发布失败' })
+      })
+      .finally(() => setPublishing(false))
   }
 
   return (
@@ -120,6 +158,8 @@ export default function PageEditor({ id }: { id: number | string }) {
         title={doc.title}
         status={doc._status}
         dirty={dirty}
+        build={build}
+        publishing={publishing}
         onPreview={() => window.open(`/preview/pages/${id}`, '_blank')}
         onSave={saveNow}
         onPublish={publishNow}

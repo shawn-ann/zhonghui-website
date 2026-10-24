@@ -51,3 +51,7 @@ node_modules/
 
 # static site output
 dist/
+releases/
+
+dist.legacy-*
+/dist

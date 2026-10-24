@@ -22,6 +22,27 @@ export async function listMedia(): Promise<MediaItem[]> {
   const data = await j(await fetch('/api/media?limit=100&depth=0', { credentials: 'include' }))
   return data.docs as MediaItem[]
 }
+export interface BuildStatus {
+  status: 'idle' | 'building' | 'success' | 'error'
+  startedAt?: string
+  finishedAt?: string
+  exitCode?: number | null
+  error?: string
+  logTail?: string
+}
+export async function getBuildStatus(): Promise<BuildStatus> {
+  const res = await fetch('/api/rebuild', { credentials: 'include' })
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+  return res.json()
+}
+export async function triggerRebuild(): Promise<BuildStatus> {
+  const res = await fetch('/api/rebuild', { method: 'POST', credentials: 'include' })
+  const data = await res.json().catch(() => null)
+  if (res.status === 401) throw new Error('未登录')
+  if (res.status !== 202 && res.status !== 409) throw new Error(data?.error || `Request failed: ${res.status}`)
+  return data as BuildStatus
+}
+
 export interface PageSummary { id: number | string; title: string; route: string }
 export async function listPages(): Promise<PageSummary[]> {
   const data = await j(await fetch('/api/pages?limit=200&depth=0', { credentials: 'include' }))
