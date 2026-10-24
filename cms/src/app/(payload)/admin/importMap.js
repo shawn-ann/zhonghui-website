@@ -29,6 +29,7 @@ import { default as default_231477f0faa4368be46fd47ffb9da4d9 } from '../../../co
 import { default as default_c0916642ff7e70edd316d60eb4b2ddc4 } from '../../../components/admin/AdminMobileBar'
 import { default as default_a02a4abfb5c9da17149cbadc8057c129 } from '../../../components/Icon'
 import { default as default_919492c8e60179286a0f183c0a5b652e } from '../../../components/Logo'
+import { default as default_ece04e350fec6f57c4af84d53a7af84d } from '../../../components/admin/DashboardRedirect'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -64,5 +65,6 @@ export const importMap = {
   "/components/admin/AdminMobileBar#default": default_c0916642ff7e70edd316d60eb4b2ddc4,
   "/components/Icon#default": default_a02a4abfb5c9da17149cbadc8057c129,
   "/components/Logo#default": default_919492c8e60179286a0f183c0a5b652e,
+  "/components/admin/DashboardRedirect#default": default_ece04e350fec6f57c4af84d53a7af84d,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

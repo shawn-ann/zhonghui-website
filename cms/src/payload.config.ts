@@ -33,6 +33,9 @@ export default buildConfig({
     components: {
       Nav: '/components/admin/AdminNav',
       header: ['/components/admin/AdminMobileBar'],
+      views: {
+        dashboard: { Component: '/components/admin/DashboardRedirect' },
+      },
       graphics: {
         Logo: '/components/Logo',
         Icon: '/components/Icon',
