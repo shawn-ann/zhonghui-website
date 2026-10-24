@@ -6,7 +6,7 @@ import Canvas from './Canvas'
 import PropertyPanel from './PropertyPanel'
 import TopBar from './TopBar'
 import { BLOCKS, makeDefaultBlock, type DefaultMedia } from './blocks'
-import { getPage, savePage, publishPage, listMedia, type MediaItem } from './api'
+import { getPage, savePage, publishPage, listMedia, listPages, type MediaItem, type PageSummary } from './api'
 import {
   addBlock, ensureIds, moveBlock, newId,
   findPath, getAtPath, updateAtPath, removeAtPath, insertInto,
@@ -19,6 +19,7 @@ export default function PageEditor({ id }: { id: number | string }) {
   const [doc, setDoc] = useState<EditorDoc | null>(null)
   const [selectedId, setSelectedId] = useState<string>()
   const [dirty, setDirty] = useState(false)
+  const [pages, setPages] = useState<PageSummary[]>([])
   const urlToId = useRef<Map<string, number | string>>(new Map())
   const defaults = useRef<DefaultMedia>({})
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -26,6 +27,7 @@ export default function PageEditor({ id }: { id: number | string }) {
 
   useEffect(() => {
     getPage(id).then((d) => setDoc({ ...d, blocks: ensureIds(d.blocks) }))
+    listPages().then(setPages).catch(() => {})
     listMedia()
       .then((items) => {
         for (const m of items) if (m.url) urlToId.current.set(m.url, m.id)
@@ -155,6 +157,12 @@ export default function PageEditor({ id }: { id: number | string }) {
         />
         <PropertyPanel
           block={selected}
+          pages={pages}
+          onPatch={(values) => {
+            if (selectedPath && selected) {
+              update(updateAtPath(doc.blocks, selectedPath, { ...selected, ...values } as Block))
+            }
+          }}
           onPickMedia={onPickMedia}
           onSelectChild={setSelectedId}
           onChange={(key, value) => {

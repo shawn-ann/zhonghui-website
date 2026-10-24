@@ -3,16 +3,19 @@ import React, { useState } from 'react'
 import { BLOCKS, isLayout, allowedChildTypes } from './blocks'
 import type { Block } from './types'
 import { blockChildren } from './state'
-import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, BgControl, MediaControl, MediaListControl, ColorControl, TextColorControl, GradientControl } from './controls'
+import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, PageLinkControl, BgControl, MediaControl, MediaListControl, ColorControl, TextColorControl, GradientControl } from './controls'
+import type { PageSummary } from './api'
 import MediaModal from './MediaModal'
 import AddChildPicker from './AddChildPicker'
 import type { MediaItem } from './api'
 
 export default function PropertyPanel({
-  block, onChange, onPickMedia, onSelectChild, onAddChild, onRemoveChild, onMoveChild,
+  block, onChange, onPatch, pages, onPickMedia, onSelectChild, onAddChild, onRemoveChild, onMoveChild,
 }: {
   block?: Block
   onChange: (key: string, value: unknown) => void
+  onPatch?: (values: Record<string, unknown>) => void
+  pages?: PageSummary[]
   onPickMedia?: (item: MediaItem) => void
   onSelectChild?: (id: string) => void
   onAddChild?: (type: Block['type']) => void
@@ -42,6 +45,18 @@ export default function PropertyPanel({
           case 'select': return <SelectControl key={f.key} label={f.label} value={val(f.key) as string} options={f.options ?? []} onChange={(v) => onChange(f.key, v)} />
           case 'boolean': return <BooleanControl key={f.key} label={f.label} value={val(f.key) as boolean} onChange={(v) => onChange(f.key, v)} />
           case 'link': return <LinkControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />
+          case 'pageLink': return (
+            <PageLinkControl
+              key={f.key}
+              label={f.label}
+              linkType={val('linkType') as 'none' | 'internal' | 'external' | undefined}
+              internalPageId={val('internalPageId') as string | number | undefined}
+              internalRoute={val('internalRoute') as string | undefined}
+              externalUrl={val('externalUrl') as string | undefined}
+              pages={pages ?? []}
+              onPatch={(values) => onPatch?.(values)}
+            />
+          )
           case 'bg': return <BgControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} onPick={() => setMediaFor(f.key)} />
           case 'color': return <ColorControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />
           case 'textColor': return <TextColorControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />

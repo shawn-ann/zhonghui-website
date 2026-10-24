@@ -22,6 +22,14 @@ export async function listMedia(): Promise<MediaItem[]> {
   const data = await j(await fetch('/api/media?limit=100&depth=0', { credentials: 'include' }))
   return data.docs as MediaItem[]
 }
+export interface PageSummary { id: number | string; title: string; route: string }
+export async function listPages(): Promise<PageSummary[]> {
+  const data = await j(await fetch('/api/pages?limit=200&depth=0', { credentials: 'include' }))
+  return (data.docs as any[])
+    .filter((d) => d._status === 'published')
+    .map((d) => ({ id: d.id, title: d.title || '', route: d.route || '' }))
+}
+
 export async function uploadMedia(file: File): Promise<MediaItem> {
   const form = new FormData()
   form.append('file', file)

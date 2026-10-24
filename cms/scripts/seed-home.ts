@@ -123,6 +123,41 @@ const blocks: any[] = [
       { blockType: 'slider', images: mem.map((id) => ({ image: id })) },
     ],
   },
+  {
+    blockType: 'section',
+    paddingY: 'md',
+    bgColor: '#FFF1F6',
+    children: [
+      { blockType: 'heading', title: '学生分享', align: 'center' },
+      {
+        blockType: 'grid',
+        columns: 2,
+        gap: 'md',
+        children: [
+          {
+            blockType: 'imageText',
+            media: proj.uk,
+            title: '小曹同学的赴美之旅',
+            desc: '从材料筹备、签证办理到异国的日常，全程尽享细致周全的一站式专属服务。',
+            linkType: 'external',
+            externalUrl: '/cases/',
+            titleColor: '#8A0E4B',
+            descColor: '#7C6B73',
+          },
+          {
+            blockType: 'imageText',
+            media: proj.iccp,
+            title: '小丁同学的逆袭故事',
+            desc: '英语不占优势的他，靠每天的坚持与反复模拟，最终一签过签、如愿赴美。',
+            linkType: 'external',
+            externalUrl: '/cases/',
+            titleColor: '#8A0E4B',
+            descColor: '#7C6B73',
+          },
+        ],
+      },
+    ],
+  },
 ]
 
 await payload.delete({ collection: 'pages', where: { route: { equals: '/' } } }).catch(() => {})
@@ -137,6 +172,6 @@ await payload.create({
     blocks,
   },
 })
-console.log('homepage configured (banner+pattern + 项目一览 + 中惠优势 + 中惠印记 sections)')
+console.log('homepage configured (banner + 项目一览 + 中惠优势 + 中惠印记 + 学生分享 sections)')
 await payload.destroy()
 process.exit(0)

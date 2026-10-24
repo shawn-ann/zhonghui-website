@@ -4,7 +4,7 @@ import { newId } from './state'
 export interface FieldDef {
   key: string
   label: string
-  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'mediaList' | 'link' | 'bg' | 'color' | 'textColor' | 'gradient'
+  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'mediaList' | 'link' | 'pageLink' | 'bg' | 'color' | 'textColor' | 'gradient'
   options?: { label: string; value: string }[]
 }
 export interface BlockMeta { type: Block['type']; label: string; defaults: () => Block; fields: FieldDef[] }
@@ -35,7 +35,7 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   ] },
   imageText: { type: 'imageText', label: '图文卡片', defaults: () => ({ type: 'imageText', media: '' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'title', label: '标题', control: 'text' },
-    { key: 'desc', label: '描述', control: 'textarea' }, { key: 'link', label: '链接', control: 'link' },
+    { key: 'desc', label: '描述', control: 'textarea' }, { key: 'link', label: '链接', control: 'pageLink' },
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },
     { key: 'descColor', label: '描述颜色', control: 'textColor' },
     { key: 'padding', label: '内边距', control: 'number' },
@@ -47,7 +47,7 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'desc', label: '描述', control: 'textarea' },
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },
     { key: 'descColor', label: '描述颜色', control: 'textColor' },
-    { key: 'link', label: '链接', control: 'link' },
+    { key: 'link', label: '链接', control: 'pageLink' },
     { key: 'bgImage', label: '背景图片', control: 'media' },
     { key: 'bgColor', label: '背景颜色', control: 'color' },
   ] },

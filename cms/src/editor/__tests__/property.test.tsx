@@ -37,6 +37,26 @@ describe('PropertyPanel', () => {
     expect(onSelectChild).toHaveBeenCalledWith('h1')
   })
 
+  it('configures internal and external links', () => {
+    const onPatch = vi.fn()
+    const block: Block = {
+      type: 'imageText', _id: 'i1', media: '',
+      linkType: 'internal', internalPageId: 3, internalRoute: '/about/',
+    }
+    render(
+      <PropertyPanel
+        block={block}
+        onChange={() => {}}
+        onPatch={onPatch}
+        pages={[{ id: 3, title: '关于中惠', route: '/about/' }]}
+      />,
+    )
+    expect(screen.getByText('链接')).toBeTruthy()
+    expect(screen.getByText('关于中惠（/about/）')).toBeTruthy()
+    fireEvent.change(screen.getAllByRole('combobox')[0], { target: { value: 'external' } })
+    expect(onPatch).toHaveBeenCalledWith(expect.objectContaining({ linkType: 'external' }))
+  })
+
   it('offers section-appropriate components', () => {
     const onAddChild = vi.fn()
     const section: Block = { type: 'section', _id: 's1', children: [] }

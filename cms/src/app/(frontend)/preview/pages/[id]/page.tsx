@@ -13,7 +13,12 @@ async function loadPreview(id: string) {
   const { user } = await payload.auth({ headers: await headers() })
   if (!user) return null
   try {
-    return await payload.findByID({ collection: 'pages', id, draft: true })
+    const doc = await payload.findByID({ collection: 'pages', id, draft: true })
+    const pages = await payload.find({ collection: 'pages', limit: 1000, depth: 0, draft: true })
+    const routes = new Map<string, string>(
+      pages.docs.map((d: any) => [String(d.id), String(d.route ?? '')]),
+    )
+    return { doc, routes }
   } catch {
     return null
   }
@@ -21,19 +26,19 @@ async function loadPreview(id: string) {
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const doc: any = await loadPreview(id)
-  if (!doc) return {}
-  return { title: doc.seo?.title || doc.title, description: doc.seo?.description }
+  const data: any = await loadPreview(id)
+  if (!data?.doc) return {}
+  return { title: data.doc.seo?.title || data.doc.title, description: data.doc.seo?.description }
 }
 
 export default async function PreviewPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const doc: any = await loadPreview(id)
-  if (!doc) notFound()
+  const data: any = await loadPreview(id)
+  if (!data?.doc) notFound()
 
   return (
     <>
-      <SiteBody page={mapPageDoc(doc, resolveMedia)} />
+      <SiteBody page={mapPageDoc(data.doc, resolveMedia, data.routes)} />
       <SiteScripts lockLinks />
     </>
   )

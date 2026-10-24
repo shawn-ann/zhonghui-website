@@ -53,6 +53,29 @@ describe('mapPageDoc robustness', () => {
 const resolve = (m: unknown) => (m && typeof m === 'object' && 'url' in (m as any) ? (m as any).url : '')
 
 describe('mapBlock', () => {
+  it('resolves external, internal and legacy links', () => {
+    const external = mapBlock({
+      blockType: 'imageText', media: { url: '/a.jpg' },
+      linkType: 'external', externalUrl: 'https://example.com/x',
+    }, resolve) as any
+    expect(external).toMatchObject({ link: 'https://example.com/x', linkType: 'external' })
+
+    const internal = mapBlock({
+      blockType: 'iconCard', icon: { url: '/i.svg' },
+      linkType: 'internal', internalPage: { id: 3, route: '/about/' },
+    }, resolve) as any
+    expect(internal).toMatchObject({ link: '/about/', internalPageId: 3, internalRoute: '/about/' })
+
+    const byId = mapPageDoc({
+      title: 't', route: '/',
+      blocks: [{ blockType: 'imageText', media: { url: '/a.jpg' }, linkType: 'internal', internalPage: 9 }],
+    } as any, resolve, new Map([['9', '/cases/']]))
+    expect((byId.blocks[0] as any).link).toBe('/cases/')
+
+    const legacy = mapBlock({ blockType: 'imageText', media: { url: '/a.jpg' }, link: '/legacy/' }, resolve) as any
+    expect(legacy).toMatchObject({ link: '/legacy/', linkType: 'external', externalUrl: '/legacy/' })
+  })
+
   it('maps grid recursively with inner components', () => {
     const raw = { blockType: 'grid', columns: 2, children: [{ blockType: 'text', body: 'hi' }] }
     const b = mapBlock(raw, resolve) as any

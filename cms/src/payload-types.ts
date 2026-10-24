@@ -294,9 +294,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
@@ -337,9 +343,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由或完整外链
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 /**
                                  * 卡片背景图片 URL
@@ -433,9 +445,15 @@ export interface Page {
                                            * 描述颜色，留空沿用主题色
                                            */
                                           descColor?: string | null;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
                                           /**
-                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           * 静态生成时解析为该页面的路由
                                            */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
                                           link?: string | null;
                                           bg?: string | null;
                                           alt?: boolean | null;
@@ -476,9 +494,15 @@ export interface Page {
                                            * 描述颜色，留空沿用主题色
                                            */
                                           descColor?: string | null;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
                                           /**
-                                           * 站内路由或完整外链
+                                           * 静态生成时解析为该页面的路由
                                            */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
                                           link?: string | null;
                                           /**
                                            * 卡片背景图片 URL
@@ -705,9 +729,15 @@ export interface Page {
                        * 描述颜色，留空沿用主题色
                        */
                       descColor?: string | null;
+                      linkType?: ('none' | 'internal' | 'external') | null;
                       /**
-                       * 站内路由以 / 开头，或完整外链 https://…
+                       * 静态生成时解析为该页面的路由
                        */
+                      internalPage?: (number | null) | Page;
+                      /**
+                       * https://… / mailto: / tel:
+                       */
+                      externalUrl?: string | null;
                       link?: string | null;
                       bg?: string | null;
                       alt?: boolean | null;
@@ -748,9 +778,15 @@ export interface Page {
                        * 描述颜色，留空沿用主题色
                        */
                       descColor?: string | null;
+                      linkType?: ('none' | 'internal' | 'external') | null;
                       /**
-                       * 站内路由或完整外链
+                       * 静态生成时解析为该页面的路由
                        */
+                      internalPage?: (number | null) | Page;
+                      /**
+                       * https://… / mailto: / tel:
+                       */
+                      externalUrl?: string | null;
                       link?: string | null;
                       /**
                        * 卡片背景图片 URL
@@ -844,9 +880,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
@@ -887,9 +929,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由或完整外链
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 /**
                                  * 卡片背景图片 URL
@@ -1013,9 +1061,15 @@ export interface Page {
              * 描述颜色，留空沿用主题色
              */
             descColor?: string | null;
+            linkType?: ('none' | 'internal' | 'external') | null;
             /**
-             * 站内路由以 / 开头，或完整外链 https://…
+             * 静态生成时解析为该页面的路由
              */
+            internalPage?: (number | null) | Page;
+            /**
+             * https://… / mailto: / tel:
+             */
+            externalUrl?: string | null;
             link?: string | null;
             bg?: string | null;
             alt?: boolean | null;
@@ -1108,9 +1162,15 @@ export interface Page {
              * 描述颜色，留空沿用主题色
              */
             descColor?: string | null;
+            linkType?: ('none' | 'internal' | 'external') | null;
             /**
-             * 站内路由或完整外链
+             * 静态生成时解析为该页面的路由
              */
+            internalPage?: (number | null) | Page;
+            /**
+             * https://… / mailto: / tel:
+             */
+            externalUrl?: string | null;
             link?: string | null;
             /**
              * 卡片背景图片 URL
@@ -1345,6 +1405,9 @@ export interface PagesSelect<T extends boolean = true> {
                                       desc?: T;
                                       titleColor?: T;
                                       descColor?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       bg?: T;
                                       alt?: T;
@@ -1372,6 +1435,9 @@ export interface PagesSelect<T extends boolean = true> {
                                       desc?: T;
                                       titleColor?: T;
                                       descColor?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       bgImage?: T;
                                       bgColor?: T;
@@ -1433,6 +1499,9 @@ export interface PagesSelect<T extends boolean = true> {
                                                   desc?: T;
                                                   titleColor?: T;
                                                   descColor?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
                                                   link?: T;
                                                   bg?: T;
                                                   alt?: T;
@@ -1460,6 +1529,9 @@ export interface PagesSelect<T extends boolean = true> {
                                                   desc?: T;
                                                   titleColor?: T;
                                                   descColor?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
                                                   link?: T;
                                                   bgImage?: T;
                                                   bgColor?: T;
@@ -1607,6 +1679,9 @@ export interface PagesSelect<T extends boolean = true> {
                           desc?: T;
                           titleColor?: T;
                           descColor?: T;
+                          linkType?: T;
+                          internalPage?: T;
+                          externalUrl?: T;
                           link?: T;
                           bg?: T;
                           alt?: T;
@@ -1634,6 +1709,9 @@ export interface PagesSelect<T extends boolean = true> {
                           desc?: T;
                           titleColor?: T;
                           descColor?: T;
+                          linkType?: T;
+                          internalPage?: T;
+                          externalUrl?: T;
                           link?: T;
                           bgImage?: T;
                           bgColor?: T;
@@ -1695,6 +1773,9 @@ export interface PagesSelect<T extends boolean = true> {
                                       desc?: T;
                                       titleColor?: T;
                                       descColor?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       bg?: T;
                                       alt?: T;
@@ -1722,6 +1803,9 @@ export interface PagesSelect<T extends boolean = true> {
                                       desc?: T;
                                       titleColor?: T;
                                       descColor?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       bgImage?: T;
                                       bgColor?: T;
@@ -1794,6 +1878,9 @@ export interface PagesSelect<T extends boolean = true> {
               desc?: T;
               titleColor?: T;
               descColor?: T;
+              linkType?: T;
+              internalPage?: T;
+              externalUrl?: T;
               link?: T;
               bg?: T;
               alt?: T;
@@ -1860,6 +1947,9 @@ export interface PagesSelect<T extends boolean = true> {
               desc?: T;
               titleColor?: T;
               descColor?: T;
+              linkType?: T;
+              internalPage?: T;
+              externalUrl?: T;
               link?: T;
               bgImage?: T;
               bgColor?: T;

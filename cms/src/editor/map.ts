@@ -53,6 +53,23 @@ function resolveMediaId(value: unknown, urlToId: Map<string, MediaId>, fallback?
   return null
 }
 
+function writeLink(out: any, b: Block) {
+  const link = b as {
+    link?: string
+    linkType?: 'none' | 'internal' | 'external'
+    internalPageId?: string | number
+    externalUrl?: string
+  }
+  if (link.linkType !== undefined) {
+    out.linkType = link.linkType
+    out.internalPage = link.internalPageId ?? null
+    out.externalUrl = link.externalUrl ?? null
+    out.link = null
+  } else if (link.link !== undefined) {
+    out.link = link.link
+  }
+}
+
 function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
   const raw = (b as any)._raw
   if ((b as { type: string }).type === '_unknown') return raw
@@ -98,7 +115,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.desc !== undefined) out.desc = b.desc
       if (b.titleColor !== undefined) out.titleColor = b.titleColor
       if (b.descColor !== undefined) out.descColor = b.descColor
-      if (b.link !== undefined) out.link = b.link
+      writeLink(out, b)
       if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'iconCard':
@@ -107,7 +124,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.desc !== undefined) out.desc = b.desc
       if (b.titleColor !== undefined) out.titleColor = b.titleColor
       if (b.descColor !== undefined) out.descColor = b.descColor
-      if (b.link !== undefined) out.link = b.link
+      writeLink(out, b)
       if (b.bgImage !== undefined) out.bgImage = b.bgImage
       if (b.bgColor !== undefined) out.bgColor = b.bgColor
       if (b.iconColor !== undefined) out.iconColor = b.iconColor

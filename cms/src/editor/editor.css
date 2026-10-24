@@ -245,6 +245,11 @@
   flex: 1;
   min-width: 0;
 }
+.ed-link-preview {
+  font-size: 11px;
+  color: #9a8c93;
+  word-break: break-all;
+}
 .ed-gradient-row {
   display: flex;
   align-items: center;

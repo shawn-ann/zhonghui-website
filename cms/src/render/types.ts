@@ -65,6 +65,10 @@ export interface ImageTextBlock extends BlockBase {
   titleColor?: string
   descColor?: string
   link?: string
+  linkType?: 'none' | 'internal' | 'external'
+  internalPageId?: string | number
+  internalRoute?: string
+  externalUrl?: string
   padding?: number
 }
 
@@ -106,6 +110,10 @@ export interface IconCardBlock extends BlockBase {
   titleColor?: string
   descColor?: string
   link?: string
+  linkType?: 'none' | 'internal' | 'external'
+  internalPageId?: string | number
+  internalRoute?: string
+  externalUrl?: string
   /** 卡片背景图片（可与背景色叠加） */
   bgImage?: string
   /** 卡片背景颜色 */

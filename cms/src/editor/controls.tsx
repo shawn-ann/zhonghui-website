@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import type { PageSummary } from './api'
 
 interface Base { label: string }
 type V<T> = { value?: T; onChange: (v: T) => void }
@@ -111,6 +112,71 @@ export function GradientControl({ label, value, onChange }: Base & V<string>) {
         onChange={(e) => onChange(e.target.value)}
       />
       {v ? <button type="button" className="ed-ctl-clear" onClick={() => onChange('')}>清除渐变</button> : null}
+    </div>
+  )
+}
+
+export function PageLinkControl({
+  label, linkType, internalPageId, internalRoute, externalUrl, pages, onPatch,
+}: {
+  label: string
+  linkType?: 'none' | 'internal' | 'external'
+  internalPageId?: string | number
+  internalRoute?: string
+  externalUrl?: string
+  pages: PageSummary[]
+  onPatch: (values: Record<string, unknown>) => void
+}) {
+  const type = linkType ?? 'none'
+  const id = internalPageId != null ? String(internalPageId) : ''
+  const current = pages.find((p) => String(p.id) === id)
+  const route = current?.route || internalRoute || ''
+  const href = type === 'internal' ? route : type === 'external' ? (externalUrl ?? '') : ''
+  const changeType = (next: string) => {
+    onPatch({
+      linkType: next,
+      link: next === 'internal' ? route : next === 'external' ? (externalUrl ?? '') : '',
+    })
+  }
+  return (
+    <div className="ed-ctl">
+      <span>{label}</span>
+      <select value={type} onChange={(e) => changeType(e.target.value)}>
+        <option value="none">无链接</option>
+        <option value="internal">内部页面</option>
+        <option value="external">外部链接</option>
+      </select>
+      {type === 'internal' ? (
+        pages.length ? (
+          <select
+            value={id}
+            onChange={(e) => {
+              const page = pages.find((p) => String(p.id) === e.target.value)
+              onPatch({
+                internalPageId: page?.id ?? null,
+                internalRoute: page?.route ?? '',
+                link: page?.route ?? '',
+              })
+            }}
+          >
+            <option value="">选择页面…</option>
+            {pages.map((p) => (
+              <option key={p.id} value={String(p.id)}>{p.title}（{p.route}）</option>
+            ))}
+            {id && !current ? <option value={id}>当前页面（{internalRoute || '未知'}）</option> : null}
+          </select>
+        ) : (
+          <p className="ed-muted">暂无已发布页面{internalRoute ? `（当前：${internalRoute}）` : ''}</p>
+        )
+      ) : null}
+      {type === 'external' ? (
+        <input
+          placeholder="https://… / mailto: / tel:"
+          value={externalUrl ?? ''}
+          onChange={(e) => onPatch({ externalUrl: e.target.value, link: e.target.value })}
+        />
+      ) : null}
+      <small className="ed-link-preview">跳转：{href || '未设置'}</small>
     </div>
   )
 }

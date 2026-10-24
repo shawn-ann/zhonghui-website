@@ -2,10 +2,27 @@ import { lexicalToHtml } from '../render/richText'
 import type { Block, PageDoc, SiteData } from '../render/types'
 
 type MediaResolver = (media: unknown) => string
+type PageRoutes = Map<string, string>
 
 const arr = <T>(v: unknown): T[] => (Array.isArray(v) ? (v as T[]) : [])
 
-export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver): Block | null {
+function resolveBlockLink(raw: Record<string, any>, routes?: PageRoutes) {
+  const rel = raw.internalPage
+  const relObj = rel && typeof rel === 'object' ? rel : null
+  const internalPageId = relObj?.id ?? (rel != null ? rel : undefined)
+  const internalRoute = relObj?.route
+    ?? (internalPageId != null ? routes?.get(String(internalPageId)) : undefined)
+  const linkType: 'none' | 'internal' | 'external' = raw.linkType || (raw.link ? 'external' : 'none')
+  const externalUrl = raw.externalUrl || (raw.linkType ? undefined : raw.link) || undefined
+  const link = linkType === 'internal'
+    ? (internalRoute || undefined)
+    : linkType === 'external'
+      ? externalUrl
+      : undefined
+  return { link, linkType, internalPageId, internalRoute, externalUrl }
+}
+
+export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, routes?: PageRoutes): Block | null {
   const bg = raw.bg || undefined
   const alt = !!raw.alt
   switch (raw.blockType) {
@@ -23,7 +40,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
       }
     case 'section': {
       const children = arr<Record<string, any>>(raw.children)
-        .map((c) => mapBlock(c, resolveMedia))
+        .map((c) => mapBlock(c, resolveMedia, routes))
         .filter((x): x is Block => x !== null)
       return {
         type: 'section',
@@ -57,7 +74,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
         desc: raw.desc || undefined,
         titleColor: raw.titleColor || undefined,
         descColor: raw.descColor || undefined,
-        link: raw.link || undefined,
+        ...resolveBlockLink(raw, routes),
         padding: raw.padding || undefined,
         bg,
         alt,
@@ -68,7 +85,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
         icon: resolveMedia(raw.icon),
         title: raw.title || undefined,
         desc: raw.desc || undefined,
-        link: raw.link || undefined,
+        ...resolveBlockLink(raw, routes),
         bgImage: raw.bgImage || undefined,
         bgColor: raw.bgColor || undefined,
         iconColor: raw.iconColor || undefined,
@@ -93,7 +110,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
     case 'grid':
     case 'gridInner': {
       const children = arr<Record<string, any>>(raw.children)
-        .map((child) => mapBlock(child, resolveMedia))
+        .map((child) => mapBlock(child, resolveMedia, routes))
         .filter((x): x is Block => x !== null)
       return {
         type: 'grid',
@@ -122,12 +139,12 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver):
   }
 }
 
-export function mapPageDoc(raw: Record<string, any>, resolveMedia: MediaResolver): PageDoc {
+export function mapPageDoc(raw: Record<string, any>, resolveMedia: MediaResolver, routes?: PageRoutes): PageDoc {
   return {
     title: String(raw.title ?? ''),
     route: String(raw.route ?? ''),
     blocks: arr<Record<string, any>>(raw.blocks)
-      .map((b) => mapBlock(b, resolveMedia))
+      .map((b) => mapBlock(b, resolveMedia, routes))
       .filter((x): x is Block => x !== null),
     seo: raw.seo ? { title: raw.seo.title || undefined, description: raw.seo.description || undefined } : undefined,
   }
@@ -145,5 +162,6 @@ export async function loadSiteData(payload: { find: (args: any) => Promise<{ doc
     limit: 1000,
     depth: 1,
   })
-  return { pages: res.docs.map((d) => mapPageDoc(d, resolveMedia)) }
+  const routes = new Map<string, string>(res.docs.map((d) => [String(d.id), String(d.route ?? '')]))
+  return { pages: res.docs.map((d) => mapPageDoc(d, resolveMedia, routes)) }
 }

@@ -23,6 +23,18 @@ describe('editorToPayloadBlocks', () => {
     expect(back[1].content).toEqual({ root: { children: [] } }) // richtext preserved via _raw
   })
 
+  it('serializes internal and external page links', () => {
+    const internal: any = [{ type: 'imageText', media: '', _id: 'i1', linkType: 'internal', internalPageId: 5, internalRoute: '/about/', link: '/about/' }]
+    expect(editorToPayloadBlocks(internal, new Map())[0]).toMatchObject({
+      linkType: 'internal', internalPage: 5, externalUrl: null, link: null,
+    })
+
+    const external: any = [{ type: 'iconCard', icon: '', _id: 'i2', linkType: 'external', externalUrl: 'https://x.test', link: 'https://x.test' }]
+    expect(editorToPayloadBlocks(external, new Map())[0]).toMatchObject({
+      linkType: 'external', externalUrl: 'https://x.test', internalPage: null, link: null,
+    })
+  })
+
   it('maps a registered upload url to its media id', () => {
     const ed: any = [{ type: 'image', media: '/assets/media/a.jpg', _id: 'i1' }]
     const urlToId = new Map<string, number>([['/assets/media/a.jpg', 42]])
