@@ -54,6 +54,26 @@ export default function AdminNav() {
   }, [pathname])
 
   useEffect(() => {
+    const onDocumentClick = (event: MouseEvent) => {
+      if (!document.documentElement.classList.contains('zc-nav-open')) return
+      const sidebar = document.querySelector('.zc-sidebar')
+      if (sidebar && !sidebar.contains(event.target as Node)) closeMobile()
+    }
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeMobile()
+        setAccountOpen(false)
+      }
+    }
+    document.addEventListener('click', onDocumentClick)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('click', onDocumentClick)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [])
+
+  useEffect(() => {
     if (!accountOpen) return
     const close = (e: MouseEvent) => {
       if (!accountRef.current?.contains(e.target as Node)) setAccountOpen(false)
@@ -84,8 +104,6 @@ export default function AdminNav() {
 
   return (
     <div className={`zc-sidebar${collapsed ? ' is-collapsed' : ''}`}>
-      <button className="zc-scrim" aria-label="关闭导航" onClick={closeMobile} type="button" />
-
       <div className="zc-brand-row">
         <Link className="zc-brand" href={`${adminRoute}/collections/pages`} onClick={closeMobile}>
           <img alt="中惠文化" className="zc-brand-logo" src="/brand/admin-logo.png" />

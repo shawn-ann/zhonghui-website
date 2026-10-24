@@ -466,8 +466,6 @@ html.admin-shell .zc-mobilebar__button {
 html.admin-shell .zc-mobilebar__logo { height: 22px; filter: brightness(.35) saturate(2); }
 html.admin-shell .zc-mobilebar .zc-avatar { text-decoration: none; }
 
-html.admin-shell .zc-scrim { display: none; }
-
 @media (max-width: 899px) {
   html.admin-shell .zc-sidebar { width: 238px; }
   html.admin-shell .zc-collapse { display: none; }
@@ -487,12 +485,11 @@ html.admin-shell .zc-scrim { display: none; }
   html.admin-shell .zc-foot-link,
   html.admin-shell .zc-account { justify-content: flex-start; padding: 0 10px; }
   html.admin-shell .zc-foot-collapse { display: none; }
-  html.admin-shell.zc-nav-open .zc-scrim {
-    display: block;
+  html.admin-shell.zc-nav-open .template-default__wrap::after {
+    content: '';
     position: fixed;
     inset: 0;
     z-index: 40;
-    border: 0;
     background: rgba(25, 16, 21, .42);
     backdrop-filter: blur(2px);
   }
