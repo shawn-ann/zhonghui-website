@@ -494,3 +494,39 @@ html.admin-shell .zc-scrim { display: none; }
     backdrop-filter: blur(2px);
   }
 }
+
+/* Default Payload document headers: keep native actions, hide developer links. */
+html.admin-shell .doc-header a[href*="/api"],
+html.admin-shell .doc-header a[href*="/versions"] {
+  display: none !important;
+}
+
+html.admin-shell .doc-header {
+  margin: 26px 32px 0;
+  max-width: 1360px;
+  border-bottom: 1px solid var(--zc-border);
+  background: transparent;
+}
+
+html.admin-shell .doc-header__header { padding-bottom: 18px; }
+html.admin-shell .doc-header h1 { font-size: 24px; letter-spacing: -.01em; }
+
+html.admin-shell .collection-list,
+html.admin-shell .list-header,
+html.admin-shell .table {
+  --theme-elevation-0: #ffffff;
+}
+
+html.admin-shell .table {
+  border: 1px solid var(--zc-border);
+  border-radius: var(--zc-radius-card);
+  overflow: hidden;
+}
+
+html.admin-shell .table thead th {
+  background: #fbf9fa;
+  color: var(--zc-muted);
+  font-size: 11px;
+}
+
+html.admin-shell .table tbody tr:hover { background: #fdf8fa; }

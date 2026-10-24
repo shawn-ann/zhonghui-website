@@ -6,3 +6,20 @@ html.ed-route .app-header,
 html.ed-route .doc-header {
   display: none !important;
 }
+
+/* Login keeps the default layout; only align surfaces and primary action. */
+html:not(.admin-shell) .login {
+  background: #f7f5f6;
+}
+
+html:not(.admin-shell) .login__form {
+  border: 1px solid #ede4e8;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 18px 50px rgba(60, 30, 45, .08);
+}
+
+html:not(.admin-shell) .login .btn--style-primary {
+  background: #c2185b;
+  border-color: #c2185b;
+}
