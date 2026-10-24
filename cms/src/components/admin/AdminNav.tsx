@@ -56,6 +56,7 @@ export default function AdminNav() {
   useEffect(() => {
     const onDocumentClick = (event: MouseEvent) => {
       if (!document.documentElement.classList.contains('zc-nav-open')) return
+      if ((event.target as Element).closest('.zc-mobilebar__button')) return
       const sidebar = document.querySelector('.zc-sidebar')
       if (sidebar && !sidebar.contains(event.target as Node)) closeMobile()
     }
