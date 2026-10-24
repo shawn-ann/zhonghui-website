@@ -11,6 +11,7 @@ import { importMap } from './admin/importMap.js'
 import RouteSync from '@/components/RouteSync'
 import { adminHtmlClasses } from '@/lib/adminRoute'
 import './custom.scss'
+import '@/components/admin/admin-theme.css'
 
 type Args = {
   children: React.ReactNode
