@@ -56,9 +56,10 @@ html.admin-shell .template-default > .zc-sidebar {
 }
 
 html.admin-shell .template-default__wrap {
+  width: calc(100% - 224px);
   margin-left: 224px;
   min-height: 100vh;
-  transition: margin-left .18s ease;
+  transition: width .18s ease, margin-left .18s ease;
 }
 
 html.admin-shell.zc-sidebar-collapsed .template-default > .zc-sidebar {
@@ -66,6 +67,7 @@ html.admin-shell.zc-sidebar-collapsed .template-default > .zc-sidebar {
 }
 
 html.admin-shell.zc-sidebar-collapsed .template-default__wrap {
+  width: calc(100% - 64px);
   margin-left: 64px;
 }
 
@@ -250,6 +252,7 @@ html.admin-shell .zc-mobilebar__spacer { flex: 1; }
   }
   html.admin-shell .template-default__wrap,
   html.admin-shell.zc-sidebar-collapsed .template-default__wrap {
+    width: 100%;
     margin-left: 0;
     padding-top: 52px;
   }
