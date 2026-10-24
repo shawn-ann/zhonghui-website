@@ -260,7 +260,7 @@ export default function MenuEditorView() {
         description="修改会自动保存；保存后请在页面列表点「重建站点」使静态站生效。"
         actions={
           <>
-            <span className={`me-save is-${saveState}`}>
+            <span className={`me-save is-${saveState}`} hidden={saveState === 'idle'}>
               {saveState === 'saving' ? '保存中…' : null}
               {saveState === 'saved' ? `已自动保存${savedAt ? ` · ${savedAt}` : ''}` : null}
               {saveState === 'error' ? (

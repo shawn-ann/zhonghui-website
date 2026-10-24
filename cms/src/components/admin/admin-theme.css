@@ -504,6 +504,9 @@ html.admin-shell .doc-header a[href*="/versions"] {
   display: none !important;
 }
 
+html.admin-shell .list-header { padding-top: 26px; }
+html.admin-shell .collection-list { padding-bottom: 26px; }
+
 html.admin-shell .doc-header {
   margin: 26px 32px 0;
   max-width: 1360px;
