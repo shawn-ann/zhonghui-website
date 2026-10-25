@@ -13,10 +13,39 @@ html:not(.admin-shell) .login {
 }
 
 html:not(.admin-shell) .login__form {
+  width: min(480px, calc(100vw - 40px));
+  padding: 32px;
   border: 1px solid #ede4e8;
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 18px 50px rgba(60, 30, 45, .08);
+}
+
+html:not(.admin-shell) .login__form .field-type {
+  margin-bottom: 18px;
+}
+
+html:not(.admin-shell) .login__form input {
+  border-color: #e2d5db;
+  border-radius: 6px;
+  background: #fff;
+}
+
+html:not(.admin-shell) .login__form input:focus {
+  border-color: #c2185b;
+  box-shadow: 0 0 0 3px rgba(194, 24, 91, .12);
+  outline: none;
+}
+
+html:not(.admin-shell) .login__form input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #fff inset;
+  -webkit-text-fill-color: #332b2f;
+  caret-color: #332b2f;
+}
+
+html:not(.admin-shell) .login__form .form-submit .btn {
+  height: 40px;
+  border-radius: 6px;
 }
 
 html:not(.admin-shell) .login .btn--style-primary {
