@@ -183,15 +183,6 @@ export default function AdminNav() {
           ) : null}
         </div>
 
-        <button
-          className="zc-foot-collapse"
-          onClick={toggleCollapse}
-          title={collapsed ? '展开侧栏' : '收起侧栏'}
-          type="button"
-        >
-          <AdminIcon name={collapsed ? 'chevronRight' : 'chevronLeft'} />
-          <span className="zc-nav-text">{collapsed ? '展开侧栏' : '收起侧栏'}</span>
-        </button>
       </div>
     </div>
   )

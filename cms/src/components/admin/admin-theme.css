@@ -426,10 +426,12 @@ html.admin-shell .nav {
 .zc-account-pop button:hover { background: #faf5f7; color: var(--zc-primary); }
 .zc-account-pop button:last-child:hover { color: var(--zc-danger); }
 
-html.admin-shell.zc-sidebar-collapsed .zc-brand { justify-content: center; flex: 0 0 auto; }
+html.admin-shell.zc-sidebar-collapsed .zc-brand-row { gap: 4px; padding: 0 5px; }
+html.admin-shell.zc-sidebar-collapsed .zc-brand { justify-content: flex-start; flex: 0 0 26px; }
+html.admin-shell.zc-sidebar-collapsed .zc-brand-mark { width: 26px; height: 26px; }
 html.admin-shell.zc-sidebar-collapsed .zc-brand-logo { display: none; }
 html.admin-shell.zc-sidebar-collapsed .zc-brand-mark { display: inline-flex; }
-html.admin-shell.zc-sidebar-collapsed .zc-collapse { display: none; }
+html.admin-shell.zc-sidebar-collapsed .zc-collapse { display: inline-flex; width: 24px; height: 24px; }
 html.admin-shell.zc-sidebar-collapsed .zc-nav { padding: 4px 8px 14px; }
 html.admin-shell.zc-sidebar-collapsed .zc-nav-label {
   height: 1px;
@@ -447,9 +449,6 @@ html.admin-shell.zc-sidebar-collapsed .zc-sidebar-foot { padding: 10px 8px; }
 html.admin-shell.zc-sidebar-collapsed .zc-foot-link,
 html.admin-shell.zc-sidebar-collapsed .zc-account { justify-content: center; padding: 0; }
 html.admin-shell.zc-sidebar-collapsed .zc-account { height: 38px; }
-html.admin-shell.zc-sidebar-collapsed .zc-foot-collapse { justify-content: center; padding: 0; }
-html.admin-shell.zc-sidebar-collapsed .zc-foot-collapse .zc-nav-text { display: none; }
-html.admin-shell.zc-sidebar-collapsed .zc-foot-collapse svg { transform: rotate(180deg); }
 
 html.admin-shell .zc-mobilebar__button {
   display: inline-flex;
@@ -484,8 +483,7 @@ html.admin-shell .zc-mobilebar .zc-avatar { text-decoration: none; }
   html.admin-shell .zc-account-chev { display: inline; }
   html.admin-shell .zc-foot-link,
   html.admin-shell .zc-account { justify-content: flex-start; padding: 0 10px; }
-  html.admin-shell .zc-foot-collapse { display: none; }
-  html.admin-shell.zc-nav-open .template-default__wrap::after {
+    html.admin-shell.zc-nav-open .template-default__wrap::after {
     content: '';
     position: fixed;
     inset: 0;
