@@ -16,9 +16,14 @@ services:
       timeout: 5s
       retries: 20
 
-  cms:
-    build: ../cms
+  builder:
+    build:
+      context: ../cms
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.zhonghui.com}
+    image: zhonghui-cms
     restart: unless-stopped
+    command: node generator/builder.mjs
     depends_on:
       postgres:
         condition: service_healthy
@@ -27,6 +32,30 @@ services:
       PAYLOAD_SECRET: ${PAYLOAD_SECRET:?set PAYLOAD_SECRET in .env}
       SITE_RELEASES_DIR: /app/releases
       SITE_KEEP_RELEASES: "5"
+      NODE_ENV: production
+    volumes:
+      - cms-media:/app/media
+      - site-releases:/app/releases
+
+  cms:
+    build:
+      context: ../cms
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.zhonghui.com}
+    image: zhonghui-cms
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      builder:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-zhonghui}:${POSTGRES_PASSWORD:-zhonghui_pw}@postgres:5432/${POSTGRES_DB:-zhonghui_cms}
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:?set PAYLOAD_SECRET in .env}
+      SITE_RELEASES_DIR: /app/releases
+      SITE_KEEP_RELEASES: "5"
+      BUILDER_URL: http://builder:4000
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.zhonghui.com}
     volumes:
       - cms-media:/app/media
       - site-releases:/app/releases

@@ -12,6 +12,8 @@ services:
       SITE_RELEASES_DIR: /app/releases
       SITE_KEEP_RELEASES: "5"
       NEXT_TELEMETRY_DISABLED: "1"
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://www.localhost:8080}
+      BUILDER_URL: http://builder:4000
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -20,6 +22,26 @@ services:
       - cms-next:/app/.next
     ports:
       - "3001:3000"
+
+  builder:
+    image: node:22-bookworm-slim
+    working_dir: /app
+    command: sh -c "until [ -d node_modules/payload ] && [ -f generator/builder.mjs ]; do sleep 2; done; NODE_ENV=production node generator/builder.mjs"
+    restart: unless-stopped
+    depends_on:
+      - cms
+    environment:
+      DATABASE_URL: postgres://zhonghui:zhonghui_pw@host.docker.internal:5432/zhonghui_cms
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:-dev-secret-change-me}
+      SITE_RELEASES_DIR: /app/releases
+      SITE_KEEP_RELEASES: "5"
+      NODE_ENV: production
+      BUILDER_PORT: "4000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ../cms:/app
+      - cms-node-modules:/app/node_modules
 
   nginx:
     image: nginx:1.27-alpine

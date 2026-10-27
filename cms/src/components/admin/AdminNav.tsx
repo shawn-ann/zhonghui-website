@@ -34,6 +34,7 @@ export default function AdminNav() {
   const accountRef = useRef<HTMLDivElement>(null)
 
   const adminRoute = config.routes.admin || '/admin'
+  const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || '/'
   const email = user?.email || ''
   const name = (user as { name?: string } | null)?.name || '管理员'
   const initial = name.slice(0, 1).toUpperCase()
@@ -148,7 +149,7 @@ export default function AdminNav() {
       </nav>
 
       <div className="zc-sidebar-foot">
-        <a className="zc-foot-link" href="/" rel="noreferrer" target="_blank" title="查看网站">
+        <a className="zc-foot-link" href={publicSiteUrl} rel="noreferrer" target="_blank" title="查看网站">
           <AdminIcon name="external" />
           <span className="zc-nav-text">查看网站</span>
         </a>

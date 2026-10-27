@@ -42,6 +42,7 @@ cms/
   src/generate/cli.ts       静态构建入口
   src/generate/release.ts   release 目录 + 原子软链
   src/build/manager.ts      构建触发/状态/日志/锁
+  src/build/worker.ts       常驻构建服务（单次初始化 Payload）
   media/                    后台媒体文件（持久化）
   releases/                 每次构建的静态产物（持久化）
     <timestamp>/
@@ -65,7 +66,7 @@ deploy/
 
 1. 保存并发布 Payload 数据（写入 Postgres）。
 2. 前端调用 `POST /api/rebuild`（需要登录）。
-3. CMS 容器内启动 `tsx src/generate/cli.ts`。
+3. CMS 通过 `BUILDER_URL` 请求常驻 `builder` 服务；builder 复用已初始化的 Payload。
 4. 生成到 `releases/<timestamp>/`。
 5. 成功后原子切换：
    - `releases/current -> ./<timestamp>`
@@ -78,8 +79,44 @@ deploy/
 - `GET /api/rebuild`：`idle / building / success / error`
 - 状态文件：`releases/.build-status.json`
 - 日志：`releases/.build.log`
-- 后台顶栏显示：构建中 / 构建成功 · 时间 / 构建失败 · 原因
+- 后台按钮显示：发布中… / 构建中…；成功后按钮旁显示构建成功时间
 - 构建中禁止重复发布；保留最近 5 个 release（`SITE_KEEP_RELEASES`）。
+
+### 站点配置生效
+
+菜单、站点设置（Logo/页脚/版权/语言）保存后不会自动上线。
+在「页面」列表点击「重建站点」，或调用 `POST /api/rebuild`，生成新的 release 后生效。
+
+### 构建性能
+
+页面渲染本身只有几十毫秒，耗时主要在 Payload 初始化和每次新进程加载模块。
+
+已做的优化：
+
+- 构建进程强制 `NODE_ENV=production`，跳过 dev 模式 schema 检查。
+- 生成器用 esbuild 预编译为 `generator/generate.mjs`，运行时直接 `node` 执行，避免 tsx 冷启动。
+- 常驻 `builder` 服务启动时初始化一次 Payload，并监听 `:4000`；发布时只做「读数据 + 渲染 + 切换 release」。
+- 构建管理器设置 `BUILDER_URL` 时走 builder，否则本地回退到预编译生成器/tsx。
+- Dockerfile 在镜像构建时执行 `npm run build:generator`。
+- 构建日志包含 `payload-init`、`load-data`、`build-release` 耗时。
+
+本地实测（Docker Desktop）：
+
+- 首次构建约 25–30s（文件缓存冷）。
+- 后续构建约 10–12s。
+- 其中 Payload 初始化 0.3–0.6s、读取数据 0.5–1.3s、渲染+写文件+媒体约 2s；其余为 Node 加载模块。
+
+生产环境（Linux 本地磁盘 + `next start` + 同网络 Postgres）预计更快。
+
+本地修改了生成器/worker/渲染代码后，需要重新执行：
+
+```bash
+cd cms
+npm run build:generator
+docker compose -f deploy/docker-compose.local.yml restart builder
+```
+
+正式镜像重新构建时会自动执行该步骤。
 
 ---
 
@@ -98,6 +135,8 @@ docker compose -f docker-compose.local.yml up -d
 - 复用宿主机现有 Postgres（`host.docker.internal:5432`），保留现有页面与账号。
 - 媒体和 releases 直接绑定到宿主机 `cms/`，构建结果可直接检查。
 - 首次启动会在命名卷中执行 `npm ci`（约 1–2 分钟）。
+- `builder` 服务复用同一源码/node_modules，启动时预热 Payload。
+- 本地 Compose 依赖 `generator/builder.mjs`；首次使用或修改 worker 后先在 `cms` 执行 `npm run build:generator`。
 - Nginx 监听 8080。
 
 访问：
@@ -173,9 +212,10 @@ PAYLOAD_SECRET=请替换为随机长字符串
 POSTGRES_USER=zhonghui
 POSTGRES_PASSWORD=请替换
 POSTGRES_DB=zhonghui_cms
+NEXT_PUBLIC_SITE_URL=https://www.zhonghui.com
 ```
 
-`PAYLOAD_SECRET` 必须与首次初始化时一致，否则后台会话失效。
+`PAYLOAD_SECRET` 必须与首次初始化时一致，否则后台会话失效。`NEXT_PUBLIC_SITE_URL` 用于后台「查看网站」链接，必须指向前台域名。
 
 ### 5.3 启动
 
