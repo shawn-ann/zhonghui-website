@@ -32,6 +32,7 @@ export interface GridBlock extends BlockBase {
   type: 'grid'
   columns: number
   gap?: string
+  columnRatio?: 'equal' | 'leftNarrow' | 'leftWide'
   /** 背景图片 URL（可与背景色叠加） */
   bgImage?: string
   /** 背景颜色（CSS 颜色值） */
@@ -47,6 +48,9 @@ export interface TextBlock extends BlockBase {
   bodyColor?: string
   align?: 'left' | 'center'
   padding?: number
+  fontSize?: number
+  fontWeight?: '400' | '600' | '700'
+  maxWidth?: number
 }
 
 export interface ImageBlock extends BlockBase {
@@ -61,6 +65,8 @@ export interface ImageTextBlock extends BlockBase {
   type: 'imageText'
   media: string
   title?: string
+  subtitle?: string
+  subtitleColor?: string
   desc?: string
   titleColor?: string
   descColor?: string
@@ -122,6 +128,25 @@ export interface IconCardBlock extends BlockBase {
   iconColor?: string
 }
 
+export interface InfoListBlock extends BlockBase {
+  type: 'infoList'
+  items: { label?: string; desc: string }[]
+  showDots: boolean
+}
+
+export interface IconListBlock extends BlockBase {
+  type: 'iconList'
+  items: { icon: string; title: string; desc?: string }[]
+  iconPosition: 'left' | 'right' | 'alternate'
+  iconColor?: string
+}
+
+export interface HscrollBlock extends BlockBase {
+  type: 'hscroll'
+  timeline: boolean
+  children: Block[]
+}
+
 export interface SectionBlock extends BlockBase {
   type: 'section'
   paddingY?: 'none' | 'sm' | 'md' | 'lg'
@@ -148,15 +173,46 @@ export type Block =
   | GalleryBlock
   | SliderBlock
   | IconCardBlock
+  | InfoListBlock
+  | IconListBlock
+  | HscrollBlock
   | SectionBlock
 
 export interface PageDoc {
   title: string
   route: string
   blocks: Block[]
-  seo?: { title?: string; description?: string }
+}
+
+export interface MenuNode {
+  label: string
+  link: string
+  children?: MenuNode[]
+}
+
+export interface FooterQr {
+  label: string
+  image?: string
+}
+
+export interface SiteSettings {
+  logo: string
+  footerLogo: string
+  footerInfo: { label: string; text: string }[]
+  footerQr: FooterQr[]
+  footerContact?: { label: string; link: string }
+  copyright: string
+  langCurrentLabel: string
+  langOtherLabel: string
+  langOtherUrl?: string
+}
+
+export interface SiteConfig {
+  menu: MenuNode[]
+  settings: SiteSettings
 }
 
 export interface SiteData {
   pages: PageDoc[]
+  site?: SiteConfig
 }

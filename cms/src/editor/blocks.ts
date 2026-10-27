@@ -1,11 +1,19 @@
 import type { Block } from './types'
 import { newId } from './state'
 
+export interface RepeaterItemField {
+  key: string
+  label: string
+  control: 'text' | 'textarea' | 'media'
+}
+
 export interface FieldDef {
   key: string
   label: string
-  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'mediaList' | 'link' | 'pageLink' | 'bg' | 'color' | 'textColor' | 'gradient'
+  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'mediaList' | 'link' | 'pageLink' | 'bg' | 'color' | 'textColor' | 'gradient' | 'repeater'
   options?: { label: string; value: string }[]
+  itemFields?: RepeaterItemField[]
+  addLabel?: string
 }
 export interface BlockMeta { type: Block['type']; label: string; defaults: () => Block; fields: FieldDef[] }
 
@@ -27,6 +35,9 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },
     { key: 'bodyColor', label: '正文颜色', control: 'textColor' },
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '左', value: 'left' }, { label: '居中', value: 'center' }] },
+    { key: 'fontSize', label: '正文字号', control: 'number' },
+    { key: 'fontWeight', label: '正文字重', control: 'select', options: [{ label: '常规', value: '400' }, { label: '中等', value: '600' }, { label: '粗体', value: '700' }] },
+    { key: 'maxWidth', label: '最大宽度', control: 'number' },
     { key: 'padding', label: '内边距', control: 'number' },
   ] },
   image: { type: 'image', label: '图片', defaults: () => ({ type: 'image', media: '' }), fields: [
@@ -35,6 +46,8 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   ] },
   imageText: { type: 'imageText', label: '图文卡片', defaults: () => ({ type: 'imageText', media: '' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'title', label: '标题', control: 'text' },
+    { key: 'subtitle', label: '副标题', control: 'text' },
+    { key: 'subtitleColor', label: '副标题颜色', control: 'textColor' },
     { key: 'desc', label: '描述', control: 'textarea' }, { key: 'link', label: '链接', control: 'pageLink' },
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },
     { key: 'descColor', label: '描述颜色', control: 'textColor' },
@@ -67,8 +80,9 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   slider: { type: 'slider', label: '轮播', defaults: () => ({ type: 'slider', images: [] }), fields: [
     { key: 'images', label: '轮播图片', control: 'mediaList' },
   ] },
-  grid: { type: 'grid', label: '网格', defaults: () => ({ type: 'grid', columns: 3, gap: 'md', children: [] }), fields: [
+  grid: { type: 'grid', label: '网格', defaults: () => ({ type: 'grid', columns: 3, gap: 'md', columnRatio: 'equal', children: [] }), fields: [
     { key: 'columns', label: '列数', control: 'number' }, { key: 'gap', label: '间距', control: 'select', options: [{ label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
+    { key: 'columnRatio', label: '列宽比例', control: 'select', options: [{ label: '等宽', value: 'equal' }, { label: '左窄右宽', value: 'leftNarrow' }, { label: '左宽右窄', value: 'leftWide' }] },
     { key: 'bgImage', label: '背景图片', control: 'media' },
     { key: 'bgColor', label: '背景颜色', control: 'color' },
   ] },
@@ -78,6 +92,25 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'subtitleColor', label: '副标题颜色', control: 'textColor' },
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '居中', value: 'center' }, { label: '左对齐', value: 'left' }] },
     { key: 'padding', label: '内边距', control: 'number' },
+  ] },
+  infoList: { type: 'infoList', label: '信息列表', defaults: () => ({ type: 'infoList', showDots: true, items: [{ label: '标签', desc: '说明' }] }), fields: [
+    { key: 'items', label: '条目', control: 'repeater', addLabel: '添加条目', itemFields: [
+      { key: 'label', label: '标签（可选）', control: 'text' },
+      { key: 'desc', label: '说明', control: 'textarea' },
+    ] },
+    { key: 'showDots', label: '显示圆点', control: 'boolean' },
+  ] },
+  iconList: { type: 'iconList', label: '图标列表', defaults: () => ({ type: 'iconList', iconPosition: 'left', items: [{ icon: '', title: '标题', desc: '说明' }] }), fields: [
+    { key: 'items', label: '条目', control: 'repeater', addLabel: '添加条目', itemFields: [
+      { key: 'icon', label: '图标', control: 'media' },
+      { key: 'title', label: '标题', control: 'text' },
+      { key: 'desc', label: '说明', control: 'textarea' },
+    ] },
+    { key: 'iconPosition', label: '图标位置', control: 'select', options: [{ label: '居左', value: 'left' }, { label: '居右', value: 'right' }, { label: '左右交替', value: 'alternate' }] },
+    { key: 'iconColor', label: '图标颜色', control: 'color' },
+  ] },
+  hscroll: { type: 'hscroll', label: '横向滚动', defaults: () => ({ type: 'hscroll', timeline: false, children: [] }), fields: [
+    { key: 'timeline', label: '时间轴连接线', control: 'boolean' },
   ] },
   section: { type: 'section', label: '分栏', defaults: () => ({ type: 'section', paddingY: 'md', children: [
     { type: 'heading', title: '新分栏', align: 'center', _id: newId() },
@@ -146,10 +179,10 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
   }
 }
 
-export const LAYOUT_TYPES = ['section', 'grid'] as const
+export const LAYOUT_TYPES = ['section', 'grid', 'hscroll'] as const
 
 /** 分栏：版面级内容。 */
-export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'grid', 'gallery', 'banner', 'slider', 'richtext']
+export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'iconList', 'hscroll']
 /** 网格：卡片/文本级内容。 */
 export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button']
 
@@ -161,6 +194,7 @@ export function isLayout(type: Block['type']): boolean {
 export function allowedChildTypes(parent: Block['type']): Block['type'][] {
   if (parent === 'section') return [...SECTION_CHILD_TYPES]
   if (parent === 'grid') return [...GRID_CHILD_TYPES]
+  if (parent === 'hscroll') return ['imageText']
   return []
 }
 
@@ -183,6 +217,9 @@ export function blockSummary(b: Block): string {
     }
     case 'banner': return b.title || '横幅'
     case 'richtext': return '富文本'
+    case 'infoList': return `信息列表 · ${b.items.length} 条`
+    case 'iconList': return `图标列表 · ${b.items.length} 条`
+    case 'hscroll': return `横向滚动 · ${b.children?.length || 0} 张`
     default: return (b as { type: string }).type
   }
 }

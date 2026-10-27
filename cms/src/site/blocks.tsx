@@ -2,7 +2,8 @@ import { Fragment, type CSSProperties } from 'react'
 import { safeUrl } from '../render/primitives'
 import type {
   BannerBlock, Block, ButtonBlock, GalleryBlock, GridBlock, HeadingBlock, IconCardBlock,
-  ImageBlock, ImageTextBlock, RichTextBlock, SectionBlock, SliderBlock, TextBlock,
+  IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, HscrollBlock, RichTextBlock,
+  SectionBlock, SliderBlock, TextBlock,
 } from '../render/types'
 import { bgCss, bgImageCss } from './bg'
 
@@ -84,6 +85,12 @@ export function SectionView({ b, editor = false }: { b: SectionBlock; editor?: b
 export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean }) {
   const cols = Math.min(4, Math.max(1, b.columns || 3))
   const gap = b.gap && /^(sm|md|lg)$/.test(b.gap) ? b.gap : 'md'
+  const ratioStyle =
+    cols === 2 && b.columnRatio === 'leftNarrow'
+      ? { gridTemplateColumns: '0.9fr 1.4fr' }
+      : cols === 2 && b.columnRatio === 'leftWide'
+        ? { gridTemplateColumns: '1.4fr 0.9fr' }
+        : undefined
   const style = {
     ...(b.bgColor ? { backgroundColor: b.bgColor } : {}),
     ...bgImageCss(b.bgImage),
@@ -97,7 +104,7 @@ export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean
       : (cols - (children.length % cols)) % cols
   return (
     <div className="container" data-bid={b._id} style={style}>
-      <div className={`grid grid-cols-${cols} grid-gap-${gap}`}>
+      <div className={`grid grid-cols-${cols} grid-gap-${gap}`} style={ratioStyle}>
         {children.map((c, i) => (
           <div className="grid-cell" key={c._id ?? i}>{blockNode(c, editor)}</div>
         ))}
@@ -176,9 +183,16 @@ export function TextView({ b, editor = false }: { b: TextBlock; editor?: boolean
   if (editor && !b.title && !b.body) {
     return <EmptyEditorBlock b={b} label="文本" tip="在右侧填写正文" />
   }
+  const textStyle = {
+    textAlign: b.align === 'center' ? 'center' as const : 'left' as const,
+    ...(b.fontSize ? { fontSize: `${b.fontSize}px` } : {}),
+    ...(b.fontWeight ? { fontWeight: b.fontWeight } : {}),
+    ...(b.maxWidth ? { maxWidth: `${b.maxWidth}px`, margin: '0 auto' } : {}),
+    ...padStyle(b.padding),
+  }
   return (
     <div className="container" data-bid={b._id} style={textColorVars(b.titleColor, b.bodyColor)}>
-      <div className="text-block" style={{ textAlign: b.align === 'center' ? 'center' : 'left', ...padStyle(b.padding) }}>
+      <div className="text-block" style={textStyle}>
         {b.title ? <h2 data-field="title">{b.title}</h2> : null}
         <p data-field="body">{b.body}</p>
       </div>
@@ -213,6 +227,11 @@ export function ImageTextView({ b, editor = false }: { b: ImageTextBlock; editor
       {src ? <div className="it-img"><img src={src} alt={b.title || ''} /></div> : null}
       <div className="it-body">
         {b.title ? <h3 data-field="title">{b.title}</h3> : null}
+        {b.subtitle ? (
+          <div className="it-subtitle" data-field="subtitle" style={b.subtitleColor ? { color: b.subtitleColor } : undefined}>
+            {b.subtitle}
+          </div>
+        ) : null}
         {b.desc ? <p data-field="desc">{b.desc}</p> : null}
       </div>
     </div>
@@ -306,11 +325,92 @@ export function GalleryView({ b, editor = false }: { b: GalleryBlock; editor?: b
   )
 }
 
+export function InfoListView({ b }: { b: InfoListBlock }) {
+  return (
+    <div className="container" data-bid={b._id}>
+      <div className="info-list">
+        {(b.items || []).map((item, i) => (
+          <div className={`info-item${b.showDots === false ? ' no-dot' : ''}`} key={i}>
+            {b.showDots === false ? null : <span className="info-dot" />}
+            <div className="info-content">
+              {item.label ? <b className="info-label">{item.label}</b> : null}
+              <span className="info-desc">{item.desc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export function IconListView({ b }: { b: IconListBlock }) {
+  const pos = b.iconPosition || 'left'
+  return (
+    <div className="container" data-bid={b._id}>
+      <div className={`icon-list-block icon-position-${pos}`}>
+        {(b.items || []).map((item, i) => {
+          const right = pos === 'right' || (pos === 'alternate' && i % 2 === 1)
+          const icon = safeUrl(item.icon)
+          return (
+            <div className={`icon-list-row${right ? ' is-right' : ''}`} key={i}>
+              <div className="icon-list-node" aria-hidden="true">
+                {icon ? (
+                  b.iconColor ? (
+                    <span
+                      className="icon-list-glyph"
+                      style={{
+                        backgroundColor: b.iconColor,
+                        WebkitMaskImage: `url('${icon}')`,
+                        maskImage: `url('${icon}')`,
+                      }}
+                    />
+                  ) : <img src={icon} alt="" />
+                ) : null}
+              </div>
+              <div className="icon-list-body">
+                {item.title ? <h3>{item.title}</h3> : null}
+                {item.desc ? <p>{item.desc}</p> : null}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+export function HscrollView({ b, editor = false }: { b: HscrollBlock; editor?: boolean }) {
+  const children = b.children || []
+  return (
+    <div className="container" data-bid={b._id}>
+      {editor && children.length === 0 ? (
+        <div className="ed-empty-block ed-empty-wide">
+          <span className="ed-empty-label">横向滚动</span>
+          <span className="ed-empty-tip">添加图文卡片</span>
+        </div>
+      ) : (
+        <div className={`hscroll${b.timeline ? ' timeline' : ''}`}>
+          <div className="hscroll-viewport" tabIndex={0} aria-label="横向滚动，按住拖动查看更多">
+            <div className="hscroll-inner">
+              {children.map((child, i) => (
+                <div className="hscroll-item" key={child._id ?? i}>{blockNode(child, editor)}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export function blockNode(b: Block, editor = false): React.ReactNode {
   switch (b.type) {
     case 'section': return <SectionView b={b} editor={editor} />
     case 'grid': return <GridView b={b} editor={editor} />
     case 'banner': return <BannerView b={b} editor={editor} />
+    case 'infoList': return <InfoListView b={b} />
+    case 'iconList': return <IconListView b={b} />
+    case 'hscroll': return <HscrollView b={b} editor={editor} />
     case 'heading': return <HeadingView b={b} editor={editor} />
     case 'text': return <TextView b={b} editor={editor} />
     case 'image': return <ImageView b={b} editor={editor} />

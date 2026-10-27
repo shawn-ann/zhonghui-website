@@ -7,6 +7,8 @@ export const ImageTextBlock: Block = {
   fields: [
     { name: 'media', type: 'upload', relationTo: 'media', required: true },
     { name: 'title', type: 'text' },
+    { name: 'subtitle', type: 'text', label: '副标题（可选）' },
+    { name: 'subtitleColor', type: 'text', admin: { description: '副标题颜色，留空沿用主题色' } },
     { name: 'desc', type: 'textarea' },
     { name: 'titleColor', type: 'text', admin: { description: '标题颜色，留空沿用主题色' } },
     { name: 'descColor', type: 'text', admin: { description: '描述颜色，留空沿用主题色' } },

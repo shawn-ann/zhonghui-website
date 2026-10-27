@@ -5,12 +5,7 @@ import { newId } from './state'
 function withIds(rawBlock: any, mapped: Block): Block {
   const id = rawBlock?.id != null ? String(rawBlock.id) : newId()
   const b = { ...mapped, _id: id, _raw: rawBlock }
-  if (b.type === 'section' && Array.isArray(rawBlock?.children) && Array.isArray((b as any).children)) {
-    ;(b as any).children = (b as any).children.map((child: Block, i: number) =>
-      withIds(rawBlock.children[i], child),
-    )
-  }
-  if (b.type === 'grid' && Array.isArray(rawBlock?.children) && Array.isArray((b as any).children)) {
+  if ((b.type === 'section' || b.type === 'grid' || b.type === 'hscroll') && Array.isArray(rawBlock?.children) && Array.isArray((b as any).children)) {
     ;(b as any).children = (b as any).children.map((child: Block, i: number) =>
       withIds(rawBlock.children[i], child),
     )
@@ -30,7 +25,6 @@ export function docToEditorDoc(raw: any): EditorDoc {
     id: raw.id,
     title: raw.title,
     route: raw.route,
-    seo: raw.seo,
     blocks,
     _status: raw._status,
   }
@@ -101,6 +95,9 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.titleColor !== undefined) out.titleColor = b.titleColor
       if (b.bodyColor !== undefined) out.bodyColor = b.bodyColor
       out.align = b.align ?? 'left'
+      if (b.fontSize !== undefined) out.fontSize = b.fontSize
+      if (b.fontWeight !== undefined) out.fontWeight = b.fontWeight
+      if (b.maxWidth !== undefined) out.maxWidth = b.maxWidth
       if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'image':
@@ -112,6 +109,8 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
     case 'imageText':
       out.media = resolveMediaId(b.media, urlToId, raw?.media)
       if (b.title !== undefined) out.title = b.title
+      if (b.subtitle !== undefined) out.subtitle = b.subtitle
+      if (b.subtitleColor !== undefined) out.subtitleColor = b.subtitleColor
       if (b.desc !== undefined) out.desc = b.desc
       if (b.titleColor !== undefined) out.titleColor = b.titleColor
       if (b.descColor !== undefined) out.descColor = b.descColor
@@ -150,8 +149,26 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
     case 'grid':
       out.columns = b.columns
       if (b.gap !== undefined) out.gap = b.gap
+      if (b.columnRatio !== undefined) out.columnRatio = b.columnRatio
       if (b.bgImage !== undefined) out.bgImage = b.bgImage
       if (b.bgColor !== undefined) out.bgColor = b.bgColor
+      out.children = editorToPayloadBlocks(b.children || [], urlToId)
+      break
+    case 'infoList':
+      out.items = (b.items || []).map((i) => ({ label: i.label || '', desc: i.desc || '' }))
+      out.showDots = b.showDots !== false
+      break
+    case 'iconList':
+      out.items = (b.items || []).map((i, index) => ({
+        icon: resolveMediaId(i.icon, urlToId, raw?.items?.[index]?.icon),
+        title: i.title,
+        desc: i.desc || '',
+      })).filter((i) => i.icon != null)
+      out.iconPosition = b.iconPosition || 'left'
+      if (b.iconColor !== undefined) out.iconColor = b.iconColor
+      break
+    case 'hscroll':
+      out.timeline = b.timeline === true
       out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'gallery': {

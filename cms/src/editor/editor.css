@@ -511,3 +511,17 @@
 .ed-tree-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
 .ed-tree-add { height: 30px; font-size: 11px; border: 1px solid var(--zc-primary, #c2185b); color: var(--zc-primary, #c2185b); background: #fff; border-radius: 6px; padding: 0 10px; cursor: pointer; }
 .ed-tree-add:hover { background: var(--zc-primary, #c2185b); color: #fff; }
+
+.rep { margin-bottom: 14px; }
+.rep-item { border: 1px solid #eee7ea; border-radius: 7px; padding: 9px; margin-bottom: 8px; background: #fdfbfc; }
+.rep-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; color: #8a7c83; font-size: 11px; }
+.rep-actions { display: flex; gap: 4px; }
+.rep-actions button, .rep-media button { border: 1px solid #e2d5db; background: #fff; color: #5a4a52; border-radius: 4px; padding: 2px 7px; font-size: 11px; cursor: pointer; }
+.rep-actions button:disabled { opacity: .35; cursor: default; }
+.rep-actions .rep-danger, .rep-media .rep-danger { color: #b42318; }
+.rep-field { display: flex; flex-direction: column; gap: 3px; margin-bottom: 6px; color: #7c6b73; font-size: 11px; }
+.rep-field input, .rep-field textarea { width: 100%; border: 1px solid #e2d5db; border-radius: 5px; padding: 6px 8px; font: inherit; font-size: 12px; }
+.rep-media { display: flex; align-items: center; gap: 6px; }
+.rep-media img { width: 40px; height: 32px; object-fit: contain; border: 1px solid #eee; border-radius: 4px; }
+.rep-media span { font-size: 11px; color: #a08b95; }
+.rep-add { border: 0; background: none; color: #c2185b; font-size: 12px; padding: 4px 0; cursor: pointer; }

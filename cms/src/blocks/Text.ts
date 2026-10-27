@@ -18,6 +18,17 @@ export const TextBlock: Block = {
         { label: '居中', value: 'center' },
       ],
     },
+    { name: 'fontSize', type: 'number', min: 0, label: '正文字号(px)' },
+    {
+      name: 'fontWeight',
+      type: 'select',
+      options: [
+        { label: '常规', value: '400' },
+        { label: '中等', value: '600' },
+        { label: '粗体', value: '700' },
+      ],
+    },
+    { name: 'maxWidth', type: 'number', min: 0, label: '最大宽度(px)' },
     ...legacyBgAltFields(),
     paddingField(),
   ],

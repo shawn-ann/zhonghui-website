@@ -25,6 +25,16 @@ export function makeGrid(slug: string, label: string, cellComponents: Block[]): 
           { label: '宽松', value: 'lg' },
         ],
       },
+      {
+        name: 'columnRatio',
+        type: 'select',
+        defaultValue: 'equal',
+        options: [
+          { label: '等宽', value: 'equal' },
+          { label: '左窄右宽', value: 'leftNarrow' },
+          { label: '左宽右窄', value: 'leftWide' },
+        ],
+      },
       { name: 'children', type: 'blocks', blocks: cellComponents },
       { name: 'bgImage', type: 'text', admin: { description: '背景图片 URL' } },
       { name: 'bgColor', type: 'text', admin: { description: '背景颜色，如 #FFF1F6' } },

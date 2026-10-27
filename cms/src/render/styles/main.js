@@ -34,7 +34,47 @@
     })
   }
 
-  function init() { initSliders(); initNav() }
+  function initHScroll() {
+    document.querySelectorAll('.hscroll-viewport').forEach(function (viewport) {
+      if (viewport.__hscrollReady) return
+      viewport.__hscrollReady = true
+      var down = false
+      var startX = 0
+      var startScroll = 0
+
+      viewport.addEventListener('mousedown', function (e) {
+        down = true
+        startX = e.pageX
+        startScroll = viewport.scrollLeft
+        viewport.classList.add('is-dragging')
+        e.preventDefault()
+      })
+      window.addEventListener('mousemove', function (e) {
+        if (!down) return
+        viewport.scrollLeft = startScroll - (e.pageX - startX)
+      })
+      function end() {
+        if (!down) return
+        down = false
+        viewport.classList.remove('is-dragging')
+      }
+      window.addEventListener('mouseup', end)
+      window.addEventListener('blur', end)
+
+      viewport.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') {
+          viewport.scrollBy({ left: 280, behavior: 'smooth' })
+          e.preventDefault()
+        }
+        if (e.key === 'ArrowLeft') {
+          viewport.scrollBy({ left: -280, behavior: 'smooth' })
+          e.preventDefault()
+        }
+      })
+    })
+  }
+
+  function init() { initSliders(); initNav(); initHScroll() }
   window.__zhSiteInit = init
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init)
   else init()

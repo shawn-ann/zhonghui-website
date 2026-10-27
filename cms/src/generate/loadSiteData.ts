@@ -1,5 +1,6 @@
 import { lexicalToHtml } from '../render/richText'
 import type { Block, PageDoc, SiteData } from '../render/types'
+import { buildSiteConfig } from '../site/config'
 
 type MediaResolver = (media: unknown) => string
 type PageRoutes = Map<string, string>
@@ -61,6 +62,9 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         bodyColor: raw.bodyColor || undefined,
         align: raw.align === 'center' ? 'center' : 'left',
         padding: raw.padding || undefined,
+        fontSize: raw.fontSize > 0 ? Number(raw.fontSize) : undefined,
+        fontWeight: ['400', '600', '700'].includes(raw.fontWeight) ? raw.fontWeight : undefined,
+        maxWidth: raw.maxWidth > 0 ? Number(raw.maxWidth) : undefined,
         bg,
         alt,
       }
@@ -71,6 +75,8 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         type: 'imageText',
         media: resolveMedia(raw.media),
         title: raw.title || undefined,
+        subtitle: raw.subtitle || undefined,
+        subtitleColor: raw.subtitleColor || undefined,
         desc: raw.desc || undefined,
         titleColor: raw.titleColor || undefined,
         descColor: raw.descColor || undefined,
@@ -116,11 +122,40 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         type: 'grid',
         columns: raw.columns || 3,
         gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md',
+        columnRatio: ['equal', 'leftNarrow', 'leftWide'].includes(raw.columnRatio) ? raw.columnRatio : 'equal',
         bgImage: raw.bgImage || undefined,
         bgColor: raw.bgColor || undefined,
         children,
       }
     }
+    case 'infoList':
+      return {
+        type: 'infoList',
+        items: arr<Record<string, any>>(raw.items).map((i) => ({
+          label: i.label || undefined,
+          desc: String(i.desc ?? ''),
+        })),
+        showDots: raw.showDots !== false,
+      }
+    case 'iconList':
+      return {
+        type: 'iconList',
+        items: arr<Record<string, any>>(raw.items).map((i) => ({
+          icon: resolveMedia(i.icon),
+          title: String(i.title ?? ''),
+          desc: i.desc || undefined,
+        })),
+        iconPosition: ['left', 'right', 'alternate'].includes(raw.iconPosition) ? raw.iconPosition : 'left',
+        iconColor: raw.iconColor || undefined,
+      }
+    case 'hscroll':
+      return {
+        type: 'hscroll',
+        timeline: raw.timeline === true,
+        children: arr<Record<string, any>>(raw.children)
+          .map((child) => mapBlock(child, resolveMedia, routes))
+          .filter((x): x is Block => x !== null),
+      }
     case 'gallery':
       return {
         type: 'gallery',
@@ -146,7 +181,6 @@ export function mapPageDoc(raw: Record<string, any>, resolveMedia: MediaResolver
     blocks: arr<Record<string, any>>(raw.blocks)
       .map((b) => mapBlock(b, resolveMedia, routes))
       .filter((x): x is Block => x !== null),
-    seo: raw.seo ? { title: raw.seo.title || undefined, description: raw.seo.description || undefined } : undefined,
   }
 }
 
@@ -155,7 +189,10 @@ export function resolveMedia(m: unknown): string {
   return ''
 }
 
-export async function loadSiteData(payload: { find: (args: any) => Promise<{ docs: any[] }> }): Promise<SiteData> {
+export async function loadSiteData(payload: {
+  find: (args: any) => Promise<{ docs: any[] }>
+  findGlobal?: (args: any) => Promise<any>
+}): Promise<SiteData> {
   const res = await payload.find({
     collection: 'pages',
     where: { _status: { equals: 'published' } },
@@ -163,5 +200,16 @@ export async function loadSiteData(payload: { find: (args: any) => Promise<{ doc
     depth: 1,
   })
   const routes = new Map<string, string>(res.docs.map((d) => [String(d.id), String(d.route ?? '')]))
-  return { pages: res.docs.map((d) => mapPageDoc(d, resolveMedia, routes)) }
+  let menuRaw: any = null
+  let settingsRaw: any = null
+  if (payload.findGlobal) {
+    ;[menuRaw, settingsRaw] = await Promise.all([
+      payload.findGlobal({ slug: 'menu', depth: 1 }).catch(() => null),
+      payload.findGlobal({ slug: 'site-settings', depth: 1 }).catch(() => null),
+    ])
+  }
+  return {
+    pages: res.docs.map((d) => mapPageDoc(d, resolveMedia, routes)),
+    site: buildSiteConfig(menuRaw, settingsRaw, routes),
+  }
 }

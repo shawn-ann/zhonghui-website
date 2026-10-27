@@ -7,6 +7,7 @@ import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanCont
 import type { PageSummary } from './api'
 import MediaModal from './MediaModal'
 import AddChildPicker from './AddChildPicker'
+import RepeaterControl from './RepeaterControl'
 import type { MediaItem } from './api'
 
 export default function PropertyPanel({
@@ -63,6 +64,14 @@ export default function PropertyPanel({
           case 'gradient': return <GradientControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />
           case 'media': return <MediaControl key={f.key} label={f.label} value={val(f.key) as string} onPick={() => setMediaFor(f.key)} onChange={(v) => onChange(f.key, v)} />
           case 'mediaList': return <MediaListControl key={f.key} label={f.label} value={val(f.key) as string[]} onAdd={() => setMediaFor(f.key)} onChange={(v) => onChange(f.key, v)} />
+          case 'repeater': return (
+            <RepeaterControl
+              key={f.key}
+              field={f}
+              value={val(f.key) as Record<string, unknown>[] | undefined}
+              onChange={(v) => onChange(f.key, v)}
+            />
+          )
         }
       })}
       {isContainer ? (

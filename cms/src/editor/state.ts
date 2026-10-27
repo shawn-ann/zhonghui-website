@@ -39,7 +39,7 @@ export function updateBlockField(blocks: Block[], index: number, key: string, va
 export type Path = number[]
 
 function isContainer(b: Block): boolean {
-  return b.type === 'section' || b.type === 'grid'
+  return b.type === 'section' || b.type === 'grid' || b.type === 'hscroll'
 }
 
 function childrenOf(b: Block): Block[] {

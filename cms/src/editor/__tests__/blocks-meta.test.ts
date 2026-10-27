@@ -5,11 +5,13 @@ describe('component categories', () => {
   it('classifies layout vs content', () => {
     expect(isLayout('section')).toBe(true)
     expect(isLayout('grid')).toBe(true)
+    expect(isLayout('hscroll')).toBe(true)
     expect(isLayout('image')).toBe(false)
   })
   it('allowed children: section = layout blocks; grid = cards/text', () => {
-    expect(allowedChildTypes('section')).toEqual(['heading', 'grid', 'gallery', 'banner', 'slider', 'richtext'])
+    expect(allowedChildTypes('section')).toEqual(['heading', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'iconList', 'hscroll'])
     expect(allowedChildTypes('grid')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button'])
+    expect(allowedChildTypes('hscroll')).toEqual(['imageText'])
     expect(allowedChildTypes('image')).toEqual([])
   })
   it('summary for text/heading', () => {
