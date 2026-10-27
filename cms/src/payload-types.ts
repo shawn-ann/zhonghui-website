@@ -89,8 +89,14 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    menu: Menu;
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    menu: MenuSelect<false> | MenuSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -133,8 +139,6 @@ export interface User {
   salt?: string | null;
   hash?: string | null;
   resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
   sessions?:
     | {
         id: string;
@@ -221,6 +225,7 @@ export interface Page {
                   | {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
+                      columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
                       children?:
                         | (
                             | {
@@ -255,6 +260,9 @@ export interface Page {
                                  */
                                 bodyColor?: string | null;
                                 align?: ('left' | 'center') | null;
+                                fontSize?: number | null;
+                                fontWeight?: ('400' | '600' | '700') | null;
+                                maxWidth?: number | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -285,6 +293,11 @@ export interface Page {
                             | {
                                 media: number | Media;
                                 title?: string | null;
+                                subtitle?: string | null;
+                                /**
+                                 * 副标题颜色，留空沿用主题色
+                                 */
+                                subtitleColor?: string | null;
                                 desc?: string | null;
                                 /**
                                  * 标题颜色，留空沿用主题色
@@ -372,6 +385,7 @@ export interface Page {
                             | {
                                 columns?: number | null;
                                 gap?: ('sm' | 'md' | 'lg') | null;
+                                columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
                                 children?:
                                   | (
                                       | {
@@ -406,6 +420,9 @@ export interface Page {
                                            */
                                           bodyColor?: string | null;
                                           align?: ('left' | 'center') | null;
+                                          fontSize?: number | null;
+                                          fontWeight?: ('400' | '600' | '700') | null;
+                                          maxWidth?: number | null;
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -436,6 +453,11 @@ export interface Page {
                                       | {
                                           media: number | Media;
                                           title?: string | null;
+                                          subtitle?: string | null;
+                                          /**
+                                           * 副标题颜色，留空沿用主题色
+                                           */
+                                          subtitleColor?: string | null;
                                           desc?: string | null;
                                           /**
                                            * 标题颜色，留空沿用主题色
@@ -627,6 +649,75 @@ export interface Page {
                       blockName?: string | null;
                       blockType: 'richtext';
                     }
+                  | {
+                      items: {
+                        label?: string | null;
+                        desc: string;
+                        id?: string | null;
+                      }[];
+                      showDots?: boolean | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'infoList';
+                    }
+                  | {
+                      items: {
+                        icon: number | Media;
+                        title: string;
+                        desc?: string | null;
+                        id?: string | null;
+                      }[];
+                      iconPosition?: ('left' | 'right' | 'alternate') | null;
+                      iconColor?: string | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'iconList';
+                    }
+                  | {
+                      timeline?: boolean | null;
+                      children?:
+                        | {
+                            media: number | Media;
+                            title?: string | null;
+                            subtitle?: string | null;
+                            /**
+                             * 副标题颜色，留空沿用主题色
+                             */
+                            subtitleColor?: string | null;
+                            desc?: string | null;
+                            /**
+                             * 标题颜色，留空沿用主题色
+                             */
+                            titleColor?: string | null;
+                            /**
+                             * 描述颜色，留空沿用主题色
+                             */
+                            descColor?: string | null;
+                            linkType?: ('none' | 'internal' | 'external') | null;
+                            /**
+                             * 静态生成时解析为该页面的路由
+                             */
+                            internalPage?: (number | null) | Page;
+                            /**
+                             * https://… / mailto: / tel:
+                             */
+                            externalUrl?: string | null;
+                            link?: string | null;
+                            bg?: string | null;
+                            alt?: boolean | null;
+                            /**
+                             * 内容内边距(px)，默认0
+                             */
+                            padding?: number | null;
+                            id?: string | null;
+                            blockName?: string | null;
+                            blockType: 'imageText';
+                          }[]
+                        | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'hscroll';
+                    }
                 )[]
               | null;
             id?: string | null;
@@ -656,6 +747,7 @@ export interface Page {
         | {
             columns?: number | null;
             gap?: ('sm' | 'md' | 'lg') | null;
+            columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
             children?:
               | (
                   | {
@@ -690,6 +782,9 @@ export interface Page {
                        */
                       bodyColor?: string | null;
                       align?: ('left' | 'center') | null;
+                      fontSize?: number | null;
+                      fontWeight?: ('400' | '600' | '700') | null;
+                      maxWidth?: number | null;
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -720,6 +815,11 @@ export interface Page {
                   | {
                       media: number | Media;
                       title?: string | null;
+                      subtitle?: string | null;
+                      /**
+                       * 副标题颜色，留空沿用主题色
+                       */
+                      subtitleColor?: string | null;
                       desc?: string | null;
                       /**
                        * 标题颜色，留空沿用主题色
@@ -807,6 +907,7 @@ export interface Page {
                   | {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
+                      columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
                       children?:
                         | (
                             | {
@@ -841,6 +942,9 @@ export interface Page {
                                  */
                                 bodyColor?: string | null;
                                 align?: ('left' | 'center') | null;
+                                fontSize?: number | null;
+                                fontWeight?: ('400' | '600' | '700') | null;
+                                maxWidth?: number | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -871,6 +975,11 @@ export interface Page {
                             | {
                                 media: number | Media;
                                 title?: string | null;
+                                subtitle?: string | null;
+                                /**
+                                 * 副标题颜色，留空沿用主题色
+                                 */
+                                subtitleColor?: string | null;
                                 desc?: string | null;
                                 /**
                                  * 标题颜色，留空沿用主题色
@@ -1022,6 +1131,9 @@ export interface Page {
              */
             bodyColor?: string | null;
             align?: ('left' | 'center') | null;
+            fontSize?: number | null;
+            fontWeight?: ('400' | '600' | '700') | null;
+            maxWidth?: number | null;
             bg?: string | null;
             alt?: boolean | null;
             /**
@@ -1052,6 +1164,11 @@ export interface Page {
         | {
             media: number | Media;
             title?: string | null;
+            subtitle?: string | null;
+            /**
+             * 副标题颜色，留空沿用主题色
+             */
+            subtitleColor?: string | null;
             desc?: string | null;
             /**
              * 标题颜色，留空沿用主题色
@@ -1188,12 +1305,77 @@ export interface Page {
             blockName?: string | null;
             blockType: 'iconCard';
           }
+        | {
+            items: {
+              label?: string | null;
+              desc: string;
+              id?: string | null;
+            }[];
+            showDots?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'infoList';
+          }
+        | {
+            items: {
+              icon: number | Media;
+              title: string;
+              desc?: string | null;
+              id?: string | null;
+            }[];
+            iconPosition?: ('left' | 'right' | 'alternate') | null;
+            iconColor?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'iconList';
+          }
+        | {
+            timeline?: boolean | null;
+            children?:
+              | {
+                  media: number | Media;
+                  title?: string | null;
+                  subtitle?: string | null;
+                  /**
+                   * 副标题颜色，留空沿用主题色
+                   */
+                  subtitleColor?: string | null;
+                  desc?: string | null;
+                  /**
+                   * 标题颜色，留空沿用主题色
+                   */
+                  titleColor?: string | null;
+                  /**
+                   * 描述颜色，留空沿用主题色
+                   */
+                  descColor?: string | null;
+                  linkType?: ('none' | 'internal' | 'external') | null;
+                  /**
+                   * 静态生成时解析为该页面的路由
+                   */
+                  internalPage?: (number | null) | Page;
+                  /**
+                   * https://… / mailto: / tel:
+                   */
+                  externalUrl?: string | null;
+                  link?: string | null;
+                  bg?: string | null;
+                  alt?: boolean | null;
+                  /**
+                   * 内容内边距(px)，默认0
+                   */
+                  padding?: number | null;
+                  id?: string | null;
+                  blockName?: string | null;
+                  blockType: 'imageText';
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hscroll';
+          }
       )[]
     | null;
-  seo?: {
-    title?: string | null;
-    description?: string | null;
-  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1289,8 +1471,6 @@ export interface UsersSelect<T extends boolean = true> {
   salt?: T;
   hash?: T;
   resetPasswordRequestedAt?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
   sessions?:
     | T
     | {
@@ -1356,6 +1536,7 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           columns?: T;
                           gap?: T;
+                          columnRatio?: T;
                           children?:
                             | T
                             | {
@@ -1379,6 +1560,9 @@ export interface PagesSelect<T extends boolean = true> {
                                       titleColor?: T;
                                       bodyColor?: T;
                                       align?: T;
+                                      fontSize?: T;
+                                      fontWeight?: T;
+                                      maxWidth?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
@@ -1402,6 +1586,8 @@ export interface PagesSelect<T extends boolean = true> {
                                   | {
                                       media?: T;
                                       title?: T;
+                                      subtitle?: T;
+                                      subtitleColor?: T;
                                       desc?: T;
                                       titleColor?: T;
                                       descColor?: T;
@@ -1450,6 +1636,7 @@ export interface PagesSelect<T extends boolean = true> {
                                   | {
                                       columns?: T;
                                       gap?: T;
+                                      columnRatio?: T;
                                       children?:
                                         | T
                                         | {
@@ -1473,6 +1660,9 @@ export interface PagesSelect<T extends boolean = true> {
                                                   titleColor?: T;
                                                   bodyColor?: T;
                                                   align?: T;
+                                                  fontSize?: T;
+                                                  fontWeight?: T;
+                                                  maxWidth?: T;
                                                   bg?: T;
                                                   alt?: T;
                                                   padding?: T;
@@ -1496,6 +1686,8 @@ export interface PagesSelect<T extends boolean = true> {
                                               | {
                                                   media?: T;
                                                   title?: T;
+                                                  subtitle?: T;
+                                                  subtitleColor?: T;
                                                   desc?: T;
                                                   titleColor?: T;
                                                   descColor?: T;
@@ -1609,6 +1801,67 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
+                    infoList?:
+                      | T
+                      | {
+                          items?:
+                            | T
+                            | {
+                                label?: T;
+                                desc?: T;
+                                id?: T;
+                              };
+                          showDots?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    iconList?:
+                      | T
+                      | {
+                          items?:
+                            | T
+                            | {
+                                icon?: T;
+                                title?: T;
+                                desc?: T;
+                                id?: T;
+                              };
+                          iconPosition?: T;
+                          iconColor?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    hscroll?:
+                      | T
+                      | {
+                          timeline?: T;
+                          children?:
+                            | T
+                            | {
+                                imageText?:
+                                  | T
+                                  | {
+                                      media?: T;
+                                      title?: T;
+                                      subtitle?: T;
+                                      subtitleColor?: T;
+                                      desc?: T;
+                                      titleColor?: T;
+                                      descColor?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
+                                      link?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      padding?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
                   };
               id?: T;
               blockName?: T;
@@ -1630,6 +1883,7 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               columns?: T;
               gap?: T;
+              columnRatio?: T;
               children?:
                 | T
                 | {
@@ -1653,6 +1907,9 @@ export interface PagesSelect<T extends boolean = true> {
                           titleColor?: T;
                           bodyColor?: T;
                           align?: T;
+                          fontSize?: T;
+                          fontWeight?: T;
+                          maxWidth?: T;
                           bg?: T;
                           alt?: T;
                           padding?: T;
@@ -1676,6 +1933,8 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           media?: T;
                           title?: T;
+                          subtitle?: T;
+                          subtitleColor?: T;
                           desc?: T;
                           titleColor?: T;
                           descColor?: T;
@@ -1724,6 +1983,7 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           columns?: T;
                           gap?: T;
+                          columnRatio?: T;
                           children?:
                             | T
                             | {
@@ -1747,6 +2007,9 @@ export interface PagesSelect<T extends boolean = true> {
                                       titleColor?: T;
                                       bodyColor?: T;
                                       align?: T;
+                                      fontSize?: T;
+                                      fontWeight?: T;
+                                      maxWidth?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
@@ -1770,6 +2033,8 @@ export interface PagesSelect<T extends boolean = true> {
                                   | {
                                       media?: T;
                                       title?: T;
+                                      subtitle?: T;
+                                      subtitleColor?: T;
                                       desc?: T;
                                       titleColor?: T;
                                       descColor?: T;
@@ -1852,6 +2117,9 @@ export interface PagesSelect<T extends boolean = true> {
               titleColor?: T;
               bodyColor?: T;
               align?: T;
+              fontSize?: T;
+              fontWeight?: T;
+              maxWidth?: T;
               bg?: T;
               alt?: T;
               padding?: T;
@@ -1875,6 +2143,8 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               media?: T;
               title?: T;
+              subtitle?: T;
+              subtitleColor?: T;
               desc?: T;
               titleColor?: T;
               descColor?: T;
@@ -1957,12 +2227,67 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-      };
-  seo?:
-    | T
-    | {
-        title?: T;
-        description?: T;
+        infoList?:
+          | T
+          | {
+              items?:
+                | T
+                | {
+                    label?: T;
+                    desc?: T;
+                    id?: T;
+                  };
+              showDots?: T;
+              id?: T;
+              blockName?: T;
+            };
+        iconList?:
+          | T
+          | {
+              items?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    desc?: T;
+                    id?: T;
+                  };
+              iconPosition?: T;
+              iconColor?: T;
+              id?: T;
+              blockName?: T;
+            };
+        hscroll?:
+          | T
+          | {
+              timeline?: T;
+              children?:
+                | T
+                | {
+                    imageText?:
+                      | T
+                      | {
+                          media?: T;
+                          title?: T;
+                          subtitle?: T;
+                          subtitleColor?: T;
+                          desc?: T;
+                          titleColor?: T;
+                          descColor?: T;
+                          linkType?: T;
+                          internalPage?: T;
+                          externalUrl?: T;
+                          link?: T;
+                          bg?: T;
+                          alt?: T;
+                          padding?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -2007,6 +2332,114 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu".
+ */
+export interface Menu {
+  id: number;
+  items?:
+    | {
+        label: string;
+        page: number | Page;
+        children?:
+          | {
+              label: string;
+              page: number | Page;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  logo?: (number | null) | Media;
+  footerLogo?: (number | null) | Media;
+  footerInfo?:
+    | {
+        label?: string | null;
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  footerQr?:
+    | {
+        label?: string | null;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  footerContactLabel?: string | null;
+  footerContactPage?: (number | null) | Page;
+  copyright?: string | null;
+  langCurrentLabel?: string | null;
+  langOtherLabel?: string | null;
+  langOtherUrl?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu_select".
+ */
+export interface MenuSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        label?: T;
+        page?: T;
+        children?:
+          | T
+          | {
+              label?: T;
+              page?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  logo?: T;
+  footerLogo?: T;
+  footerInfo?:
+    | T
+    | {
+        label?: T;
+        text?: T;
+        id?: T;
+      };
+  footerQr?:
+    | T
+    | {
+        label?: T;
+        image?: T;
+        id?: T;
+      };
+  footerContactLabel?: T;
+  footerContactPage?: T;
+  copyright?: T;
+  langCurrentLabel?: T;
+  langOtherLabel?: T;
+  langOtherUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

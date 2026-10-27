@@ -5,7 +5,6 @@ describe('mapPageDoc', () => {
   it('maps a payload page + blocks to PageDoc', () => {
     const raw = {
       title: '首页', route: '/',
-      seo: { title: 'T', description: 'D' },
       blocks: [
         { blockType: 'text', title: 'a', body: 'b', align: 'center', bg: null, alt: false },
         { blockType: 'image', media: { url: '/media/x.jpg' }, altText: 'x', bg: null, alt: false },
@@ -94,6 +93,28 @@ describe('mapBlock', () => {
     expect(b.type).toBe('richtext')
     expect(typeof b.html).toBe('string')
   })
+  it('maps info list, icon list and hscroll recursively', () => {
+    const info = mapBlock({
+      blockType: 'infoList', showDots: false,
+      items: [{ label: '食宿', desc: '免费' }, { desc: '无标签' }],
+    }, resolve) as any
+    expect(info).toMatchObject({ type: 'infoList', showDots: false })
+    expect(info.items).toEqual([{ label: '食宿', desc: '免费' }, { label: undefined, desc: '无标签' }])
+
+    const icons = mapBlock({
+      blockType: 'iconList', iconPosition: 'alternate',
+      items: [{ icon: { url: '/i.svg' }, title: '步骤', desc: '说明' }],
+    }, resolve) as any
+    expect(icons.items[0].icon).toBe('/i.svg')
+
+    const rail = mapBlock({
+      blockType: 'hscroll', timeline: true,
+      children: [{ blockType: 'imageText', media: { url: '/a.jpg' }, title: '2002' }],
+    }, resolve) as any
+    expect(rail).toMatchObject({ type: 'hscroll', timeline: true })
+    expect(rail.children[0]).toMatchObject({ type: 'imageText', media: '/a.jpg', title: '2002' })
+  })
+
   it('returns null for unknown blockType', () => {
     expect(mapBlock({ blockType: 'nope' }, resolve)).toBeNull()
   })
