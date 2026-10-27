@@ -17,16 +17,19 @@ export default function RepeaterControl({
 }) {
   const items = Array.isArray(value) ? value : []
   const [mediaTarget, setMediaTarget] = useState<{ index: number; key: string } | null>(null)
+  const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   const update = (next: Value) => onChange(next)
   const setField = (index: number, key: string, next: unknown) => {
     update(items.map((item, i) => (i === index ? { ...item, [key]: next } : item)))
   }
-  const add = () =>
+  const add = () => {
     update([
       ...items,
       Object.fromEntries((field.itemFields || []).map((f) => [f.key, ''])),
     ])
+    setOpenIndex(items.length)
+  }
   const remove = (index: number) => update(items.filter((_, i) => i !== index))
   const move = (index: number, dir: -1 | 1) => {
     const to = index + dir
@@ -76,19 +79,21 @@ export default function RepeaterControl({
       {items.map((_, index) => (
         <div className="rep-item" key={index}>
           <div className="rep-head">
-            <span>#{index + 1}</span>
+            <button type="button" className="rep-toggle" onClick={() => setOpenIndex(openIndex === index ? null : index)}>
+              {openIndex === index ? '▾' : '▸'} #{index + 1}
+            </button>
             <span className="rep-actions">
               <button type="button" disabled={index === 0} title={`上移条目 ${index + 1}`} onClick={() => move(index, -1)}>↑</button>
               <button type="button" disabled={index === items.length - 1} title={`下移条目 ${index + 1}`} onClick={() => move(index, 1)}>↓</button>
               <button type="button" className="rep-danger" title={`删除条目 ${index + 1}`} onClick={() => remove(index)}>删除</button>
             </span>
           </div>
-          {(field.itemFields || []).map((f) => (
+          {openIndex === index ? (field.itemFields || []).map((f) => (
             <label className="rep-field" key={f.key}>
               <span>{f.label}</span>
               {renderField(f, index)}
             </label>
-          ))}
+          )) : null}
         </div>
       ))}
       <button type="button" className="rep-add" onClick={add}>{field.addLabel || '添加条目'}</button>

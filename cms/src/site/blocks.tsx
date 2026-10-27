@@ -333,7 +333,7 @@ export function InfoListView({ b }: { b: InfoListBlock }) {
           <div className={`info-item${b.showDots === false ? ' no-dot' : ''}`} key={i}>
             {b.showDots === false ? null : <span className="info-dot" />}
             <div className="info-content">
-              {item.label ? <b className="info-label">{item.label}</b> : null}
+              {item.label ? <b className="info-label">{item.label}：</b> : null}
               <span className="info-desc">{item.desc}</span>
             </div>
           </div>

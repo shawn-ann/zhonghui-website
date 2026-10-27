@@ -525,3 +525,4 @@
 .rep-media img { width: 40px; height: 32px; object-fit: contain; border: 1px solid #eee; border-radius: 4px; }
 .rep-media span { font-size: 11px; color: #a08b95; }
 .rep-add { border: 0; background: none; color: #c2185b; font-size: 12px; padding: 4px 0; cursor: pointer; }
+.rep-toggle { border: 0; background: none; padding: 0; color: #7c6b73; font: inherit; font-size: 11px; cursor: pointer; }
