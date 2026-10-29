@@ -51,6 +51,7 @@ export interface TextBlock extends BlockBase {
   fontSize?: number
   fontWeight?: '400' | '600' | '700'
   maxWidth?: number
+  marginTop?: number
 }
 
 export interface ImageBlock extends BlockBase {
@@ -150,6 +151,9 @@ export interface HscrollBlock extends BlockBase {
 export interface StackBlock extends BlockBase {
   type: 'stack'
   gap: 'sm' | 'md' | 'lg'
+  bgImage?: string
+  bgColor?: string
+  padding?: number
   children: Block[]
 }
 

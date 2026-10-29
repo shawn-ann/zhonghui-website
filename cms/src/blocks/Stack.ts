@@ -20,6 +20,9 @@ export const StackBlock: Block = {
         { label: '宽松', value: 'lg' },
       ],
     },
+    { name: 'bgImage', type: 'upload', relationTo: 'media', label: '背景图片' },
+    { name: 'bgColor', type: 'text', label: '背景颜色' },
+    { name: 'padding', type: 'number', min: 0, defaultValue: 0, label: '内边距(px)' },
     {
       name: 'children',
       type: 'blocks',

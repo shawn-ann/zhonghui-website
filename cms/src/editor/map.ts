@@ -98,6 +98,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.fontSize !== undefined) out.fontSize = b.fontSize
       if (b.fontWeight !== undefined) out.fontWeight = b.fontWeight
       if (b.maxWidth !== undefined) out.maxWidth = b.maxWidth
+      if (b.marginTop !== undefined) out.marginTop = b.marginTop
       if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'image':
@@ -173,6 +174,9 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       break
     case 'stack':
       out.gap = b.gap || 'md'
+      if (b.bgImage !== undefined) out.bgImage = resolveMediaId(b.bgImage, urlToId, raw?.bgImage)
+      if (b.bgColor !== undefined) out.bgColor = b.bgColor
+      if (b.padding !== undefined) out.padding = b.padding
       out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'gallery': {

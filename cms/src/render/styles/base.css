@@ -357,7 +357,7 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 }
 
 /* Vertical stack inside a grid cell */
-.stack { display: flex; flex-direction: column; min-width: 0; }
+.stack { display: flex; flex-direction: column; min-width: 0; border-radius: 12px; }
 .stack-gap-sm { gap: 8px; }
 .stack-gap-md { gap: 16px; }
 .stack-gap-lg { gap: 28px; }

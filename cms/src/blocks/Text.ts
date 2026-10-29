@@ -29,6 +29,7 @@ export const TextBlock: Block = {
       ],
     },
     { name: 'maxWidth', type: 'number', min: 0, label: '最大宽度(px)' },
+    { name: 'marginTop', type: 'number', min: 0, label: '上间距(px)' },
     ...legacyBgAltFields(),
     paddingField(),
   ],

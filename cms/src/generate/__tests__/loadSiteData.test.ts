@@ -108,10 +108,10 @@ describe('mapBlock', () => {
     expect(icons.items[0].icon).toBe('/i.svg')
 
     const stack = mapBlock({
-      blockType: 'stack', gap: 'lg',
+      blockType: 'stack', gap: 'lg', bgColor: '#FFF1F6', padding: 20,
       children: [{ blockType: 'text', body: 'A' }, { blockType: 'text', body: 'B' }],
     }, resolve) as any
-    expect(stack).toMatchObject({ type: 'stack', gap: 'lg' })
+    expect(stack).toMatchObject({ type: 'stack', gap: 'lg', bgColor: '#FFF1F6', padding: 20 })
     expect(stack.children).toHaveLength(2)
 
     const rail = mapBlock({

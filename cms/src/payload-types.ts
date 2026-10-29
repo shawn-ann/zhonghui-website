@@ -263,6 +263,7 @@ export interface Page {
                                 fontSize?: number | null;
                                 fontWeight?: ('400' | '600' | '700') | null;
                                 maxWidth?: number | null;
+                                marginTop?: number | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -384,6 +385,9 @@ export interface Page {
                               }
                             | {
                                 gap?: ('sm' | 'md' | 'lg') | null;
+                                bgImage?: (number | null) | Media;
+                                bgColor?: string | null;
+                                padding?: number | null;
                                 children?:
                                   | (
                                       | {
@@ -421,6 +425,7 @@ export interface Page {
                                           fontSize?: number | null;
                                           fontWeight?: ('400' | '600' | '700') | null;
                                           maxWidth?: number | null;
+                                          marginTop?: number | null;
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -587,6 +592,7 @@ export interface Page {
                                           fontSize?: number | null;
                                           fontWeight?: ('400' | '600' | '700') | null;
                                           maxWidth?: number | null;
+                                          marginTop?: number | null;
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -708,6 +714,9 @@ export interface Page {
                                         }
                                       | {
                                           gap?: ('sm' | 'md' | 'lg') | null;
+                                          bgImage?: (number | null) | Media;
+                                          bgColor?: string | null;
+                                          padding?: number | null;
                                           children?:
                                             | (
                                                 | {
@@ -745,6 +754,7 @@ export interface Page {
                                                     fontSize?: number | null;
                                                     fontWeight?: ('400' | '600' | '700') | null;
                                                     maxWidth?: number | null;
+                                                    marginTop?: number | null;
                                                     bg?: string | null;
                                                     alt?: boolean | null;
                                                     /**
@@ -1113,6 +1123,7 @@ export interface Page {
                       fontSize?: number | null;
                       fontWeight?: ('400' | '600' | '700') | null;
                       maxWidth?: number | null;
+                      marginTop?: number | null;
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -1234,6 +1245,9 @@ export interface Page {
                     }
                   | {
                       gap?: ('sm' | 'md' | 'lg') | null;
+                      bgImage?: (number | null) | Media;
+                      bgColor?: string | null;
+                      padding?: number | null;
                       children?:
                         | (
                             | {
@@ -1271,6 +1285,7 @@ export interface Page {
                                 fontSize?: number | null;
                                 fontWeight?: ('400' | '600' | '700') | null;
                                 maxWidth?: number | null;
+                                marginTop?: number | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -1437,6 +1452,7 @@ export interface Page {
                                 fontSize?: number | null;
                                 fontWeight?: ('400' | '600' | '700') | null;
                                 maxWidth?: number | null;
+                                marginTop?: number | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -1558,6 +1574,9 @@ export interface Page {
                               }
                             | {
                                 gap?: ('sm' | 'md' | 'lg') | null;
+                                bgImage?: (number | null) | Media;
+                                bgColor?: string | null;
+                                padding?: number | null;
                                 children?:
                                   | (
                                       | {
@@ -1595,6 +1614,7 @@ export interface Page {
                                           fontSize?: number | null;
                                           fontWeight?: ('400' | '600' | '700') | null;
                                           maxWidth?: number | null;
+                                          marginTop?: number | null;
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -1790,6 +1810,7 @@ export interface Page {
             fontSize?: number | null;
             fontWeight?: ('400' | '600' | '700') | null;
             maxWidth?: number | null;
+            marginTop?: number | null;
             bg?: string | null;
             alt?: boolean | null;
             /**
@@ -2032,6 +2053,9 @@ export interface Page {
           }
         | {
             gap?: ('sm' | 'md' | 'lg') | null;
+            bgImage?: (number | null) | Media;
+            bgColor?: string | null;
+            padding?: number | null;
             children?:
               | (
                   | {
@@ -2069,6 +2093,7 @@ export interface Page {
                       fontSize?: number | null;
                       fontWeight?: ('400' | '600' | '700') | null;
                       maxWidth?: number | null;
+                      marginTop?: number | null;
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -2383,6 +2408,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       fontSize?: T;
                                       fontWeight?: T;
                                       maxWidth?: T;
+                                      marginTop?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
@@ -2455,6 +2481,9 @@ export interface PagesSelect<T extends boolean = true> {
                                   | T
                                   | {
                                       gap?: T;
+                                      bgImage?: T;
+                                      bgColor?: T;
+                                      padding?: T;
                                       children?:
                                         | T
                                         | {
@@ -2481,6 +2510,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   fontSize?: T;
                                                   fontWeight?: T;
                                                   maxWidth?: T;
+                                                  marginTop?: T;
                                                   bg?: T;
                                                   alt?: T;
                                                   padding?: T;
@@ -2585,6 +2615,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   fontSize?: T;
                                                   fontWeight?: T;
                                                   maxWidth?: T;
+                                                  marginTop?: T;
                                                   bg?: T;
                                                   alt?: T;
                                                   padding?: T;
@@ -2657,6 +2688,9 @@ export interface PagesSelect<T extends boolean = true> {
                                               | T
                                               | {
                                                   gap?: T;
+                                                  bgImage?: T;
+                                                  bgColor?: T;
+                                                  padding?: T;
                                                   children?:
                                                     | T
                                                     | {
@@ -2683,6 +2717,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               fontSize?: T;
                                                               fontWeight?: T;
                                                               maxWidth?: T;
+                                                              marginTop?: T;
                                                               bg?: T;
                                                               alt?: T;
                                                               padding?: T;
@@ -2934,6 +2969,7 @@ export interface PagesSelect<T extends boolean = true> {
                           fontSize?: T;
                           fontWeight?: T;
                           maxWidth?: T;
+                          marginTop?: T;
                           bg?: T;
                           alt?: T;
                           padding?: T;
@@ -3006,6 +3042,9 @@ export interface PagesSelect<T extends boolean = true> {
                       | T
                       | {
                           gap?: T;
+                          bgImage?: T;
+                          bgColor?: T;
+                          padding?: T;
                           children?:
                             | T
                             | {
@@ -3032,6 +3071,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       fontSize?: T;
                                       fontWeight?: T;
                                       maxWidth?: T;
+                                      marginTop?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
@@ -3136,6 +3176,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       fontSize?: T;
                                       fontWeight?: T;
                                       maxWidth?: T;
+                                      marginTop?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
@@ -3208,6 +3249,9 @@ export interface PagesSelect<T extends boolean = true> {
                                   | T
                                   | {
                                       gap?: T;
+                                      bgImage?: T;
+                                      bgColor?: T;
+                                      padding?: T;
                                       children?:
                                         | T
                                         | {
@@ -3234,6 +3278,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   fontSize?: T;
                                                   fontWeight?: T;
                                                   maxWidth?: T;
+                                                  marginTop?: T;
                                                   bg?: T;
                                                   alt?: T;
                                                   padding?: T;
@@ -3348,6 +3393,7 @@ export interface PagesSelect<T extends boolean = true> {
               fontSize?: T;
               fontWeight?: T;
               maxWidth?: T;
+              marginTop?: T;
               bg?: T;
               alt?: T;
               padding?: T;
@@ -3520,6 +3566,9 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               gap?: T;
+              bgImage?: T;
+              bgColor?: T;
+              padding?: T;
               children?:
                 | T
                 | {
@@ -3546,6 +3595,7 @@ export interface PagesSelect<T extends boolean = true> {
                           fontSize?: T;
                           fontWeight?: T;
                           maxWidth?: T;
+                          marginTop?: T;
                           bg?: T;
                           alt?: T;
                           padding?: T;

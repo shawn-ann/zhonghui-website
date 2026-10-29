@@ -187,7 +187,8 @@ export function TextView({ b, editor = false }: { b: TextBlock; editor?: boolean
     textAlign: b.align === 'center' ? 'center' as const : 'left' as const,
     ...(b.fontSize ? { fontSize: `${b.fontSize}px` } : {}),
     ...(b.fontWeight ? { fontWeight: b.fontWeight } : {}),
-    ...(b.maxWidth ? { maxWidth: `${b.maxWidth}px`, margin: '0 auto' } : {}),
+    ...(b.maxWidth ? { maxWidth: `${b.maxWidth}px`, marginLeft: 'auto', marginRight: 'auto' } : {}),
+    ...(b.marginTop ? { marginTop: `${b.marginTop}px` } : {}),
     ...padStyle(b.padding),
   }
   return (
@@ -381,8 +382,13 @@ export function IconListView({ b }: { b: IconListBlock }) {
 
 export function StackView({ b, editor = false }: { b: StackBlock; editor?: boolean }) {
   const children = b.children || []
+  const style = {
+    ...(b.bgColor ? { backgroundColor: b.bgColor } : {}),
+    ...bgImageCss(b.bgImage),
+    ...(b.padding ? { padding: `${b.padding}px` } : {}),
+  }
   return (
-    <div className={`stack stack-gap-${b.gap || 'md'}`} data-bid={b._id}>
+    <div className={`stack stack-gap-${b.gap || 'md'}`} data-bid={b._id} style={style}>
       {editor && children.length === 0 ? (
         <div className="ed-empty-block"><span className="ed-empty-label">纵向容器</span><span className="ed-empty-tip">添加内容</span></div>
       ) : children.map((child, i) => (

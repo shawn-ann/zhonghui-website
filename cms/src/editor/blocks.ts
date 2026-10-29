@@ -38,6 +38,7 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'fontSize', label: '正文字号', control: 'number' },
     { key: 'fontWeight', label: '正文字重', control: 'select', options: [{ label: '常规', value: '400' }, { label: '中等', value: '600' }, { label: '粗体', value: '700' }] },
     { key: 'maxWidth', label: '最大宽度', control: 'number' },
+    { key: 'marginTop', label: '上间距', control: 'number' },
     { key: 'padding', label: '内边距', control: 'number' },
   ] },
   image: { type: 'image', label: '图片', defaults: () => ({ type: 'image', media: '' }), fields: [
@@ -114,6 +115,9 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   ] },
   stack: { type: 'stack', label: '纵向容器', defaults: () => ({ type: 'stack', gap: 'md', children: [] }), fields: [
     { key: 'gap', label: '垂直间距', control: 'select', options: [{ label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
+    { key: 'bgImage', label: '背景图片', control: 'media' },
+    { key: 'bgColor', label: '背景颜色', control: 'color' },
+    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   section: { type: 'section', label: '分栏', defaults: () => ({ type: 'section', paddingY: 'md', children: [
     { type: 'heading', title: '新分栏', align: 'center', _id: newId() },

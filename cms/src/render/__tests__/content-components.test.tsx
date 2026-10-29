@@ -14,12 +14,14 @@ describe('content component extensions', () => {
       fontSize: 16,
       fontWeight: '600',
       maxWidth: 760,
+      marginTop: 14,
       align: 'center',
     }
     const html = render(b)
     expect(html).toContain('font-size:16px')
     expect(html).toContain('font-weight:600')
     expect(html).toContain('max-width:760px')
+    expect(html).toContain('margin-top:14px')
   })
 
   it('renders grid column ratio for two columns', () => {
@@ -81,11 +83,13 @@ describe('content component extensions', () => {
 
   it('renders a vertical stack inside a grid cell', () => {
     const stack: StackBlock = {
-      type: 'stack', _id: 's', gap: 'md',
+      type: 'stack', _id: 's', gap: 'md', bgColor: '#FFF1F6', padding: 20,
       children: [{ type: 'text', body: 'A' }, { type: 'text', body: 'B' }],
     }
     const html = render(stack)
     expect(html).toContain('stack-gap-md')
+    expect(html).toContain('background-color:#FFF1F6')
+    expect(html).toContain('padding:20px')
     expect(html.match(/stack-item/g)).toHaveLength(2)
   })
 })

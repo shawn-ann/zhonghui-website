@@ -140,6 +140,9 @@ timeline: boolean // 默认 false，是否显示连接线
 
 ```ts
 gap: 'sm' | 'md' | 'lg'
+bgImage?: string
+bgColor?: string
+padding?: number
 ```
 
 **子组件**
@@ -150,6 +153,7 @@ gap: 'sm' | 'md' | 'lg'
 **渲染**
 
 - `display:flex; flex-direction:column`；间距按 `gap`。
+- 支持背景图片、背景色、内边距和 12px 圆角。
 - 内部组件的 `.container` 重置为满宽、无额外 padding。
 - 只允许放在 `grid` 单元格内。
 
@@ -175,9 +179,11 @@ columnRatio: 'equal' | 'leftNarrow' | 'leftWide'
 fontSize?: number     // px，0/留空使用主题默认
 fontWeight?: '400' | '600' | '700'
 maxWidth?: number     // px，0/留空不限制
+marginTop?: number    // px，段落/分组上间距
 ```
 
 - 字号、字重作用于正文。
+- 新内容采用“单段文本块”：只填正文，用字号/字重/颜色区分层级；`title` 字段保留兼容历史数据，新布局不再使用。
 - `maxWidth` 作用于整个文本块，配合居中实现窄版陈述。
 - 不增加列表模式：师资列表改用 `infoList`。
 - 理念区由两个连续文本实现：正文 + 高亮句（高亮句设置字重 600/700、品牌色、相同最大宽度）。
@@ -250,13 +256,13 @@ interface RepeaterFieldDef {
 | 顺序 | 分栏背景 | 内容 |
 |---|---|---|
 | 1 | 默认 | `banner` |
-| 2 | 浅粉/白底 | `heading` 公司介绍 + `grid`（2 列，左窄右宽：图片 + `stack`（3 个文本）） |
+| 2 | 浅粉/白底 | `heading` 公司介绍 + `grid`（2 列，左窄右宽：图片 + `stack`（6 个单段文本）） |
 | 3 | 默认 | `heading` 中惠历程 + `hscroll`（timeline=true，内部 14 个图文卡片） |
 | 4 | 浅粉 | `heading` 中惠理念 + 两个连续 `text`（正文 + 高亮句） |
 | 5 | 默认 | `heading` 创始团队 + `grid`（3 列：3 个图文卡片，副标题为职位） + `heading` 专业师资团队 + `infoList`（无圆点） |
 | 6 | 浅粉 | `heading` 核心优势 + `iconList`（alternate） |
 
-说明：公司介绍右列使用 `stack` 纵向容器，连续放置公司名称/介绍、行业地位与规模、核心业务。
+说明：公司介绍右列使用 `stack` 纵向容器；公司名称、介绍正文、两个小标题及说明均为单段 `text`，通过字号、字重、颜色和上间距形成层级。
 
 ### 7.2 美国互惠生
 

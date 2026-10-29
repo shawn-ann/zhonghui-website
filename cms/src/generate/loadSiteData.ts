@@ -65,6 +65,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         fontSize: raw.fontSize > 0 ? Number(raw.fontSize) : undefined,
         fontWeight: ['400', '600', '700'].includes(raw.fontWeight) ? raw.fontWeight : undefined,
         maxWidth: raw.maxWidth > 0 ? Number(raw.maxWidth) : undefined,
+        marginTop: raw.marginTop > 0 ? Number(raw.marginTop) : undefined,
         bg,
         alt,
       }
@@ -152,6 +153,9 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
       return {
         type: 'stack',
         gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md',
+        bgImage: raw.bgImage ? resolveMedia(raw.bgImage) : undefined,
+        bgColor: raw.bgColor || undefined,
+        padding: raw.padding > 0 ? Number(raw.padding) : undefined,
         children: arr<Record<string, any>>(raw.children)
           .map((child) => mapBlock(child, resolveMedia, routes))
           .filter((x): x is Block => x !== null),
