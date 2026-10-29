@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { blockNode } from '../../site/blocks'
-import type { GridBlock, HscrollBlock, IconListBlock, ImageTextBlock, InfoListBlock, TextBlock } from '../types'
+import type { GridBlock, HscrollBlock, IconListBlock, ImageTextBlock, InfoListBlock, StackBlock, TextBlock } from '../types'
 
 const render = (b: any) => renderToStaticMarkup(blockNode(b)!)
 
@@ -77,5 +77,15 @@ describe('content component extensions', () => {
     const html = render(rail)
     expect(html).toContain('hscroll-inner')
     expect(html).toContain('timeline')
+  })
+
+  it('renders a vertical stack inside a grid cell', () => {
+    const stack: StackBlock = {
+      type: 'stack', _id: 's', gap: 'md',
+      children: [{ type: 'text', body: 'A' }, { type: 'text', body: 'B' }],
+    }
+    const html = render(stack)
+    expect(html).toContain('stack-gap-md')
+    expect(html.match(/stack-item/g)).toHaveLength(2)
   })
 })

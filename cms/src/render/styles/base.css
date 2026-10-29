@@ -355,3 +355,11 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   .info-list { padding: 18px; }
   .info-item { font-size: 14px; }
 }
+
+/* Vertical stack inside a grid cell */
+.stack { display: flex; flex-direction: column; min-width: 0; }
+.stack-gap-sm { gap: 8px; }
+.stack-gap-md { gap: 16px; }
+.stack-gap-lg { gap: 28px; }
+.stack-item { min-width: 0; }
+.stack-item > .container { width: 100%; max-width: none; margin: 0; padding: 0; }

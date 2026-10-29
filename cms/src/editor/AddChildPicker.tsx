@@ -75,6 +75,13 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
       <div style={{ flex: 1, background: '#f0e3ea', borderRadius: 3 }} /><div style={{ flex: 1, background: '#f0e3ea', borderRadius: 3 }} /><div style={{ flex: 1, background: '#f0e3ea', borderRadius: 3 }} />
     </div>
   ),
+  stack: (
+    <div style={{ height: 44, display: 'flex', flexDirection: 'column', gap: 4, padding: 7 }}>
+      <div style={{ height: 7, background: '#f0e3ea', borderRadius: 2 }} />
+      <div style={{ height: 7, background: '#f0e3ea', borderRadius: 2 }} />
+      <div style={{ height: 7, background: '#f0e3ea', borderRadius: 2 }} />
+    </div>
+  ),
 }
 
 export default function AddChildPicker({

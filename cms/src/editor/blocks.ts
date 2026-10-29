@@ -112,6 +112,9 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   hscroll: { type: 'hscroll', label: '横向滚动', defaults: () => ({ type: 'hscroll', timeline: false, children: [] }), fields: [
     { key: 'timeline', label: '时间轴连接线', control: 'boolean' },
   ] },
+  stack: { type: 'stack', label: '纵向容器', defaults: () => ({ type: 'stack', gap: 'md', children: [] }), fields: [
+    { key: 'gap', label: '垂直间距', control: 'select', options: [{ label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
+  ] },
   section: { type: 'section', label: '分栏', defaults: () => ({ type: 'section', paddingY: 'md', children: [
     { type: 'heading', title: '新分栏', align: 'center', _id: newId() },
   ] }), fields: [
@@ -179,12 +182,12 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
   }
 }
 
-export const LAYOUT_TYPES = ['section', 'grid', 'hscroll'] as const
+export const LAYOUT_TYPES = ['section', 'grid', 'hscroll', 'stack'] as const
 
 /** 分栏：版面级内容。 */
 export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'iconList', 'hscroll']
 /** 网格：卡片/文本级内容。 */
-export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button']
+export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack']
 
 export function isLayout(type: Block['type']): boolean {
   return (LAYOUT_TYPES as readonly string[]).includes(type)
@@ -195,6 +198,7 @@ export function allowedChildTypes(parent: Block['type']): Block['type'][] {
   if (parent === 'section') return [...SECTION_CHILD_TYPES]
   if (parent === 'grid') return [...GRID_CHILD_TYPES]
   if (parent === 'hscroll') return ['imageText']
+  if (parent === 'stack') return ['heading', 'text', 'image', 'imageText', 'iconCard', 'button']
   return []
 }
 
@@ -220,6 +224,7 @@ export function blockSummary(b: Block): string {
     case 'infoList': return `信息列表 · ${b.items.length} 条`
     case 'iconList': return `图标列表 · ${b.items.length} 条`
     case 'hscroll': return `横向滚动 · ${b.children?.length || 0} 张`
+    case 'stack': return `纵向容器 · ${b.children?.length || 0} 项`
     default: return (b as { type: string }).type
   }
 }

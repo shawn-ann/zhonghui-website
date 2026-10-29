@@ -107,6 +107,13 @@ describe('mapBlock', () => {
     }, resolve) as any
     expect(icons.items[0].icon).toBe('/i.svg')
 
+    const stack = mapBlock({
+      blockType: 'stack', gap: 'lg',
+      children: [{ blockType: 'text', body: 'A' }, { blockType: 'text', body: 'B' }],
+    }, resolve) as any
+    expect(stack).toMatchObject({ type: 'stack', gap: 'lg' })
+    expect(stack.children).toHaveLength(2)
+
     const rail = mapBlock({
       blockType: 'hscroll', timeline: true,
       children: [{ blockType: 'imageText', media: { url: '/a.jpg' }, title: '2002' }],

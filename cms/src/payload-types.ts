@@ -383,6 +383,170 @@ export interface Page {
                                 blockType: 'iconCard';
                               }
                             | {
+                                gap?: ('sm' | 'md' | 'lg') | null;
+                                children?:
+                                  | (
+                                      | {
+                                          title: string;
+                                          subtitle?: string | null;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 副标题颜色，留空沿用主题色
+                                           */
+                                          subtitleColor?: string | null;
+                                          align?: ('center' | 'left') | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'heading';
+                                        }
+                                      | {
+                                          title?: string | null;
+                                          body: string;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 正文颜色，留空沿用主题色
+                                           */
+                                          bodyColor?: string | null;
+                                          align?: ('left' | 'center') | null;
+                                          fontSize?: number | null;
+                                          fontWeight?: ('400' | '600' | '700') | null;
+                                          maxWidth?: number | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'text';
+                                        }
+                                      | {
+                                          media: number | Media;
+                                          altText?: string | null;
+                                          /**
+                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           */
+                                          link?: string | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'image';
+                                        }
+                                      | {
+                                          media: number | Media;
+                                          title?: string | null;
+                                          subtitle?: string | null;
+                                          /**
+                                           * 副标题颜色，留空沿用主题色
+                                           */
+                                          subtitleColor?: string | null;
+                                          desc?: string | null;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 描述颜色，留空沿用主题色
+                                           */
+                                          descColor?: string | null;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          /**
+                                           * 静态生成时解析为该页面的路由
+                                           */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
+                                          link?: string | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'imageText';
+                                        }
+                                      | {
+                                          icon: number | Media;
+                                          title?: string | null;
+                                          desc?: string | null;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 描述颜色，留空沿用主题色
+                                           */
+                                          descColor?: string | null;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          /**
+                                           * 静态生成时解析为该页面的路由
+                                           */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
+                                          link?: string | null;
+                                          /**
+                                           * 卡片背景图片 URL
+                                           */
+                                          bgImage?: string | null;
+                                          /**
+                                           * 卡片背景颜色，如 #FFF1F6
+                                           */
+                                          bgColor?: string | null;
+                                          /**
+                                           * 图标颜色，如 #E60039
+                                           */
+                                          iconColor?: string | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'iconCard';
+                                        }
+                                      | {
+                                          label: string;
+                                          /**
+                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           */
+                                          link?: string | null;
+                                          style?: ('primary' | 'outline') | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'button';
+                                        }
+                                    )[]
+                                  | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'stack';
+                              }
+                            | {
                                 columns?: number | null;
                                 gap?: ('sm' | 'md' | 'lg') | null;
                                 columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
@@ -541,6 +705,170 @@ export interface Page {
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'iconCard';
+                                        }
+                                      | {
+                                          gap?: ('sm' | 'md' | 'lg') | null;
+                                          children?:
+                                            | (
+                                                | {
+                                                    title: string;
+                                                    subtitle?: string | null;
+                                                    /**
+                                                     * 标题颜色，留空沿用主题色
+                                                     */
+                                                    titleColor?: string | null;
+                                                    /**
+                                                     * 副标题颜色，留空沿用主题色
+                                                     */
+                                                    subtitleColor?: string | null;
+                                                    align?: ('center' | 'left') | null;
+                                                    /**
+                                                     * 内容内边距(px)，默认0
+                                                     */
+                                                    padding?: number | null;
+                                                    id?: string | null;
+                                                    blockName?: string | null;
+                                                    blockType: 'heading';
+                                                  }
+                                                | {
+                                                    title?: string | null;
+                                                    body: string;
+                                                    /**
+                                                     * 标题颜色，留空沿用主题色
+                                                     */
+                                                    titleColor?: string | null;
+                                                    /**
+                                                     * 正文颜色，留空沿用主题色
+                                                     */
+                                                    bodyColor?: string | null;
+                                                    align?: ('left' | 'center') | null;
+                                                    fontSize?: number | null;
+                                                    fontWeight?: ('400' | '600' | '700') | null;
+                                                    maxWidth?: number | null;
+                                                    bg?: string | null;
+                                                    alt?: boolean | null;
+                                                    /**
+                                                     * 内容内边距(px)，默认0
+                                                     */
+                                                    padding?: number | null;
+                                                    id?: string | null;
+                                                    blockName?: string | null;
+                                                    blockType: 'text';
+                                                  }
+                                                | {
+                                                    media: number | Media;
+                                                    altText?: string | null;
+                                                    /**
+                                                     * 站内路由以 / 开头，或完整外链 https://…
+                                                     */
+                                                    link?: string | null;
+                                                    bg?: string | null;
+                                                    alt?: boolean | null;
+                                                    /**
+                                                     * 内容内边距(px)，默认0
+                                                     */
+                                                    padding?: number | null;
+                                                    id?: string | null;
+                                                    blockName?: string | null;
+                                                    blockType: 'image';
+                                                  }
+                                                | {
+                                                    media: number | Media;
+                                                    title?: string | null;
+                                                    subtitle?: string | null;
+                                                    /**
+                                                     * 副标题颜色，留空沿用主题色
+                                                     */
+                                                    subtitleColor?: string | null;
+                                                    desc?: string | null;
+                                                    /**
+                                                     * 标题颜色，留空沿用主题色
+                                                     */
+                                                    titleColor?: string | null;
+                                                    /**
+                                                     * 描述颜色，留空沿用主题色
+                                                     */
+                                                    descColor?: string | null;
+                                                    linkType?: ('none' | 'internal' | 'external') | null;
+                                                    /**
+                                                     * 静态生成时解析为该页面的路由
+                                                     */
+                                                    internalPage?: (number | null) | Page;
+                                                    /**
+                                                     * https://… / mailto: / tel:
+                                                     */
+                                                    externalUrl?: string | null;
+                                                    link?: string | null;
+                                                    bg?: string | null;
+                                                    alt?: boolean | null;
+                                                    /**
+                                                     * 内容内边距(px)，默认0
+                                                     */
+                                                    padding?: number | null;
+                                                    id?: string | null;
+                                                    blockName?: string | null;
+                                                    blockType: 'imageText';
+                                                  }
+                                                | {
+                                                    icon: number | Media;
+                                                    title?: string | null;
+                                                    desc?: string | null;
+                                                    /**
+                                                     * 标题颜色，留空沿用主题色
+                                                     */
+                                                    titleColor?: string | null;
+                                                    /**
+                                                     * 描述颜色，留空沿用主题色
+                                                     */
+                                                    descColor?: string | null;
+                                                    linkType?: ('none' | 'internal' | 'external') | null;
+                                                    /**
+                                                     * 静态生成时解析为该页面的路由
+                                                     */
+                                                    internalPage?: (number | null) | Page;
+                                                    /**
+                                                     * https://… / mailto: / tel:
+                                                     */
+                                                    externalUrl?: string | null;
+                                                    link?: string | null;
+                                                    /**
+                                                     * 卡片背景图片 URL
+                                                     */
+                                                    bgImage?: string | null;
+                                                    /**
+                                                     * 卡片背景颜色，如 #FFF1F6
+                                                     */
+                                                    bgColor?: string | null;
+                                                    /**
+                                                     * 图标颜色，如 #E60039
+                                                     */
+                                                    iconColor?: string | null;
+                                                    id?: string | null;
+                                                    blockName?: string | null;
+                                                    blockType: 'iconCard';
+                                                  }
+                                                | {
+                                                    label: string;
+                                                    /**
+                                                     * 站内路由以 / 开头，或完整外链 https://…
+                                                     */
+                                                    link?: string | null;
+                                                    style?: ('primary' | 'outline') | null;
+                                                    bg?: string | null;
+                                                    alt?: boolean | null;
+                                                    /**
+                                                     * 内容内边距(px)，默认0
+                                                     */
+                                                    padding?: number | null;
+                                                    id?: string | null;
+                                                    blockName?: string | null;
+                                                    blockType: 'button';
+                                                  }
+                                              )[]
+                                            | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'stack';
                                         }
                                     )[]
                                   | null;
@@ -905,6 +1233,170 @@ export interface Page {
                       blockType: 'iconCard';
                     }
                   | {
+                      gap?: ('sm' | 'md' | 'lg') | null;
+                      children?:
+                        | (
+                            | {
+                                title: string;
+                                subtitle?: string | null;
+                                /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 副标题颜色，留空沿用主题色
+                                 */
+                                subtitleColor?: string | null;
+                                align?: ('center' | 'left') | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'heading';
+                              }
+                            | {
+                                title?: string | null;
+                                body: string;
+                                /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 正文颜色，留空沿用主题色
+                                 */
+                                bodyColor?: string | null;
+                                align?: ('left' | 'center') | null;
+                                fontSize?: number | null;
+                                fontWeight?: ('400' | '600' | '700') | null;
+                                maxWidth?: number | null;
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'text';
+                              }
+                            | {
+                                media: number | Media;
+                                altText?: string | null;
+                                /**
+                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 */
+                                link?: string | null;
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'image';
+                              }
+                            | {
+                                media: number | Media;
+                                title?: string | null;
+                                subtitle?: string | null;
+                                /**
+                                 * 副标题颜色，留空沿用主题色
+                                 */
+                                subtitleColor?: string | null;
+                                desc?: string | null;
+                                /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 描述颜色，留空沿用主题色
+                                 */
+                                descColor?: string | null;
+                                linkType?: ('none' | 'internal' | 'external') | null;
+                                /**
+                                 * 静态生成时解析为该页面的路由
+                                 */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
+                                link?: string | null;
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'imageText';
+                              }
+                            | {
+                                icon: number | Media;
+                                title?: string | null;
+                                desc?: string | null;
+                                /**
+                                 * 标题颜色，留空沿用主题色
+                                 */
+                                titleColor?: string | null;
+                                /**
+                                 * 描述颜色，留空沿用主题色
+                                 */
+                                descColor?: string | null;
+                                linkType?: ('none' | 'internal' | 'external') | null;
+                                /**
+                                 * 静态生成时解析为该页面的路由
+                                 */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
+                                link?: string | null;
+                                /**
+                                 * 卡片背景图片 URL
+                                 */
+                                bgImage?: string | null;
+                                /**
+                                 * 卡片背景颜色，如 #FFF1F6
+                                 */
+                                bgColor?: string | null;
+                                /**
+                                 * 图标颜色，如 #E60039
+                                 */
+                                iconColor?: string | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'iconCard';
+                              }
+                            | {
+                                label: string;
+                                /**
+                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 */
+                                link?: string | null;
+                                style?: ('primary' | 'outline') | null;
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'button';
+                              }
+                          )[]
+                        | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'stack';
+                    }
+                  | {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
                       columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
@@ -1063,6 +1555,170 @@ export interface Page {
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'iconCard';
+                              }
+                            | {
+                                gap?: ('sm' | 'md' | 'lg') | null;
+                                children?:
+                                  | (
+                                      | {
+                                          title: string;
+                                          subtitle?: string | null;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 副标题颜色，留空沿用主题色
+                                           */
+                                          subtitleColor?: string | null;
+                                          align?: ('center' | 'left') | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'heading';
+                                        }
+                                      | {
+                                          title?: string | null;
+                                          body: string;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 正文颜色，留空沿用主题色
+                                           */
+                                          bodyColor?: string | null;
+                                          align?: ('left' | 'center') | null;
+                                          fontSize?: number | null;
+                                          fontWeight?: ('400' | '600' | '700') | null;
+                                          maxWidth?: number | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'text';
+                                        }
+                                      | {
+                                          media: number | Media;
+                                          altText?: string | null;
+                                          /**
+                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           */
+                                          link?: string | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'image';
+                                        }
+                                      | {
+                                          media: number | Media;
+                                          title?: string | null;
+                                          subtitle?: string | null;
+                                          /**
+                                           * 副标题颜色，留空沿用主题色
+                                           */
+                                          subtitleColor?: string | null;
+                                          desc?: string | null;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 描述颜色，留空沿用主题色
+                                           */
+                                          descColor?: string | null;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          /**
+                                           * 静态生成时解析为该页面的路由
+                                           */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
+                                          link?: string | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'imageText';
+                                        }
+                                      | {
+                                          icon: number | Media;
+                                          title?: string | null;
+                                          desc?: string | null;
+                                          /**
+                                           * 标题颜色，留空沿用主题色
+                                           */
+                                          titleColor?: string | null;
+                                          /**
+                                           * 描述颜色，留空沿用主题色
+                                           */
+                                          descColor?: string | null;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          /**
+                                           * 静态生成时解析为该页面的路由
+                                           */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
+                                          link?: string | null;
+                                          /**
+                                           * 卡片背景图片 URL
+                                           */
+                                          bgImage?: string | null;
+                                          /**
+                                           * 卡片背景颜色，如 #FFF1F6
+                                           */
+                                          bgColor?: string | null;
+                                          /**
+                                           * 图标颜色，如 #E60039
+                                           */
+                                          iconColor?: string | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'iconCard';
+                                        }
+                                      | {
+                                          label: string;
+                                          /**
+                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           */
+                                          link?: string | null;
+                                          style?: ('primary' | 'outline') | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'button';
+                                        }
+                                    )[]
+                                  | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'stack';
                               }
                           )[]
                         | null;
@@ -1374,6 +2030,170 @@ export interface Page {
             blockName?: string | null;
             blockType: 'hscroll';
           }
+        | {
+            gap?: ('sm' | 'md' | 'lg') | null;
+            children?:
+              | (
+                  | {
+                      title: string;
+                      subtitle?: string | null;
+                      /**
+                       * 标题颜色，留空沿用主题色
+                       */
+                      titleColor?: string | null;
+                      /**
+                       * 副标题颜色，留空沿用主题色
+                       */
+                      subtitleColor?: string | null;
+                      align?: ('center' | 'left') | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'heading';
+                    }
+                  | {
+                      title?: string | null;
+                      body: string;
+                      /**
+                       * 标题颜色，留空沿用主题色
+                       */
+                      titleColor?: string | null;
+                      /**
+                       * 正文颜色，留空沿用主题色
+                       */
+                      bodyColor?: string | null;
+                      align?: ('left' | 'center') | null;
+                      fontSize?: number | null;
+                      fontWeight?: ('400' | '600' | '700') | null;
+                      maxWidth?: number | null;
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'text';
+                    }
+                  | {
+                      media: number | Media;
+                      altText?: string | null;
+                      /**
+                       * 站内路由以 / 开头，或完整外链 https://…
+                       */
+                      link?: string | null;
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'image';
+                    }
+                  | {
+                      media: number | Media;
+                      title?: string | null;
+                      subtitle?: string | null;
+                      /**
+                       * 副标题颜色，留空沿用主题色
+                       */
+                      subtitleColor?: string | null;
+                      desc?: string | null;
+                      /**
+                       * 标题颜色，留空沿用主题色
+                       */
+                      titleColor?: string | null;
+                      /**
+                       * 描述颜色，留空沿用主题色
+                       */
+                      descColor?: string | null;
+                      linkType?: ('none' | 'internal' | 'external') | null;
+                      /**
+                       * 静态生成时解析为该页面的路由
+                       */
+                      internalPage?: (number | null) | Page;
+                      /**
+                       * https://… / mailto: / tel:
+                       */
+                      externalUrl?: string | null;
+                      link?: string | null;
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'imageText';
+                    }
+                  | {
+                      icon: number | Media;
+                      title?: string | null;
+                      desc?: string | null;
+                      /**
+                       * 标题颜色，留空沿用主题色
+                       */
+                      titleColor?: string | null;
+                      /**
+                       * 描述颜色，留空沿用主题色
+                       */
+                      descColor?: string | null;
+                      linkType?: ('none' | 'internal' | 'external') | null;
+                      /**
+                       * 静态生成时解析为该页面的路由
+                       */
+                      internalPage?: (number | null) | Page;
+                      /**
+                       * https://… / mailto: / tel:
+                       */
+                      externalUrl?: string | null;
+                      link?: string | null;
+                      /**
+                       * 卡片背景图片 URL
+                       */
+                      bgImage?: string | null;
+                      /**
+                       * 卡片背景颜色，如 #FFF1F6
+                       */
+                      bgColor?: string | null;
+                      /**
+                       * 图标颜色，如 #E60039
+                       */
+                      iconColor?: string | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'iconCard';
+                    }
+                  | {
+                      label: string;
+                      /**
+                       * 站内路由以 / 开头，或完整外链 https://…
+                       */
+                      link?: string | null;
+                      style?: ('primary' | 'outline') | null;
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'button';
+                    }
+                )[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'stack';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -1631,6 +2451,108 @@ export interface PagesSelect<T extends boolean = true> {
                                       id?: T;
                                       blockName?: T;
                                     };
+                                stack?:
+                                  | T
+                                  | {
+                                      gap?: T;
+                                      children?:
+                                        | T
+                                        | {
+                                            heading?:
+                                              | T
+                                              | {
+                                                  title?: T;
+                                                  subtitle?: T;
+                                                  titleColor?: T;
+                                                  subtitleColor?: T;
+                                                  align?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            text?:
+                                              | T
+                                              | {
+                                                  title?: T;
+                                                  body?: T;
+                                                  titleColor?: T;
+                                                  bodyColor?: T;
+                                                  align?: T;
+                                                  fontSize?: T;
+                                                  fontWeight?: T;
+                                                  maxWidth?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            image?:
+                                              | T
+                                              | {
+                                                  media?: T;
+                                                  altText?: T;
+                                                  link?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            imageText?:
+                                              | T
+                                              | {
+                                                  media?: T;
+                                                  title?: T;
+                                                  subtitle?: T;
+                                                  subtitleColor?: T;
+                                                  desc?: T;
+                                                  titleColor?: T;
+                                                  descColor?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
+                                                  link?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            iconCard?:
+                                              | T
+                                              | {
+                                                  icon?: T;
+                                                  title?: T;
+                                                  desc?: T;
+                                                  titleColor?: T;
+                                                  descColor?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
+                                                  link?: T;
+                                                  bgImage?: T;
+                                                  bgColor?: T;
+                                                  iconColor?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            button?:
+                                              | T
+                                              | {
+                                                  label?: T;
+                                                  link?: T;
+                                                  style?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                          };
+                                      id?: T;
+                                      blockName?: T;
+                                    };
                                 gridInner?:
                                   | T
                                   | {
@@ -1728,6 +2650,108 @@ export interface PagesSelect<T extends boolean = true> {
                                                   bgImage?: T;
                                                   bgColor?: T;
                                                   iconColor?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            stack?:
+                                              | T
+                                              | {
+                                                  gap?: T;
+                                                  children?:
+                                                    | T
+                                                    | {
+                                                        heading?:
+                                                          | T
+                                                          | {
+                                                              title?: T;
+                                                              subtitle?: T;
+                                                              titleColor?: T;
+                                                              subtitleColor?: T;
+                                                              align?: T;
+                                                              padding?: T;
+                                                              id?: T;
+                                                              blockName?: T;
+                                                            };
+                                                        text?:
+                                                          | T
+                                                          | {
+                                                              title?: T;
+                                                              body?: T;
+                                                              titleColor?: T;
+                                                              bodyColor?: T;
+                                                              align?: T;
+                                                              fontSize?: T;
+                                                              fontWeight?: T;
+                                                              maxWidth?: T;
+                                                              bg?: T;
+                                                              alt?: T;
+                                                              padding?: T;
+                                                              id?: T;
+                                                              blockName?: T;
+                                                            };
+                                                        image?:
+                                                          | T
+                                                          | {
+                                                              media?: T;
+                                                              altText?: T;
+                                                              link?: T;
+                                                              bg?: T;
+                                                              alt?: T;
+                                                              padding?: T;
+                                                              id?: T;
+                                                              blockName?: T;
+                                                            };
+                                                        imageText?:
+                                                          | T
+                                                          | {
+                                                              media?: T;
+                                                              title?: T;
+                                                              subtitle?: T;
+                                                              subtitleColor?: T;
+                                                              desc?: T;
+                                                              titleColor?: T;
+                                                              descColor?: T;
+                                                              linkType?: T;
+                                                              internalPage?: T;
+                                                              externalUrl?: T;
+                                                              link?: T;
+                                                              bg?: T;
+                                                              alt?: T;
+                                                              padding?: T;
+                                                              id?: T;
+                                                              blockName?: T;
+                                                            };
+                                                        iconCard?:
+                                                          | T
+                                                          | {
+                                                              icon?: T;
+                                                              title?: T;
+                                                              desc?: T;
+                                                              titleColor?: T;
+                                                              descColor?: T;
+                                                              linkType?: T;
+                                                              internalPage?: T;
+                                                              externalUrl?: T;
+                                                              link?: T;
+                                                              bgImage?: T;
+                                                              bgColor?: T;
+                                                              iconColor?: T;
+                                                              id?: T;
+                                                              blockName?: T;
+                                                            };
+                                                        button?:
+                                                          | T
+                                                          | {
+                                                              label?: T;
+                                                              link?: T;
+                                                              style?: T;
+                                                              bg?: T;
+                                                              alt?: T;
+                                                              padding?: T;
+                                                              id?: T;
+                                                              blockName?: T;
+                                                            };
+                                                      };
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -1978,6 +3002,108 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
+                    stack?:
+                      | T
+                      | {
+                          gap?: T;
+                          children?:
+                            | T
+                            | {
+                                heading?:
+                                  | T
+                                  | {
+                                      title?: T;
+                                      subtitle?: T;
+                                      titleColor?: T;
+                                      subtitleColor?: T;
+                                      align?: T;
+                                      padding?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                text?:
+                                  | T
+                                  | {
+                                      title?: T;
+                                      body?: T;
+                                      titleColor?: T;
+                                      bodyColor?: T;
+                                      align?: T;
+                                      fontSize?: T;
+                                      fontWeight?: T;
+                                      maxWidth?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      padding?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                image?:
+                                  | T
+                                  | {
+                                      media?: T;
+                                      altText?: T;
+                                      link?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      padding?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                imageText?:
+                                  | T
+                                  | {
+                                      media?: T;
+                                      title?: T;
+                                      subtitle?: T;
+                                      subtitleColor?: T;
+                                      desc?: T;
+                                      titleColor?: T;
+                                      descColor?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
+                                      link?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      padding?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                iconCard?:
+                                  | T
+                                  | {
+                                      icon?: T;
+                                      title?: T;
+                                      desc?: T;
+                                      titleColor?: T;
+                                      descColor?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
+                                      link?: T;
+                                      bgImage?: T;
+                                      bgColor?: T;
+                                      iconColor?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                button?:
+                                  | T
+                                  | {
+                                      label?: T;
+                                      link?: T;
+                                      style?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      padding?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
                     gridInner?:
                       | T
                       | {
@@ -2075,6 +3201,108 @@ export interface PagesSelect<T extends boolean = true> {
                                       bgImage?: T;
                                       bgColor?: T;
                                       iconColor?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                stack?:
+                                  | T
+                                  | {
+                                      gap?: T;
+                                      children?:
+                                        | T
+                                        | {
+                                            heading?:
+                                              | T
+                                              | {
+                                                  title?: T;
+                                                  subtitle?: T;
+                                                  titleColor?: T;
+                                                  subtitleColor?: T;
+                                                  align?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            text?:
+                                              | T
+                                              | {
+                                                  title?: T;
+                                                  body?: T;
+                                                  titleColor?: T;
+                                                  bodyColor?: T;
+                                                  align?: T;
+                                                  fontSize?: T;
+                                                  fontWeight?: T;
+                                                  maxWidth?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            image?:
+                                              | T
+                                              | {
+                                                  media?: T;
+                                                  altText?: T;
+                                                  link?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            imageText?:
+                                              | T
+                                              | {
+                                                  media?: T;
+                                                  title?: T;
+                                                  subtitle?: T;
+                                                  subtitleColor?: T;
+                                                  desc?: T;
+                                                  titleColor?: T;
+                                                  descColor?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
+                                                  link?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            iconCard?:
+                                              | T
+                                              | {
+                                                  icon?: T;
+                                                  title?: T;
+                                                  desc?: T;
+                                                  titleColor?: T;
+                                                  descColor?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
+                                                  link?: T;
+                                                  bgImage?: T;
+                                                  bgColor?: T;
+                                                  iconColor?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            button?:
+                                              | T
+                                              | {
+                                                  label?: T;
+                                                  link?: T;
+                                                  style?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                          };
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -2278,6 +3506,108 @@ export interface PagesSelect<T extends boolean = true> {
                           internalPage?: T;
                           externalUrl?: T;
                           link?: T;
+                          bg?: T;
+                          alt?: T;
+                          padding?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        stack?:
+          | T
+          | {
+              gap?: T;
+              children?:
+                | T
+                | {
+                    heading?:
+                      | T
+                      | {
+                          title?: T;
+                          subtitle?: T;
+                          titleColor?: T;
+                          subtitleColor?: T;
+                          align?: T;
+                          padding?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    text?:
+                      | T
+                      | {
+                          title?: T;
+                          body?: T;
+                          titleColor?: T;
+                          bodyColor?: T;
+                          align?: T;
+                          fontSize?: T;
+                          fontWeight?: T;
+                          maxWidth?: T;
+                          bg?: T;
+                          alt?: T;
+                          padding?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    image?:
+                      | T
+                      | {
+                          media?: T;
+                          altText?: T;
+                          link?: T;
+                          bg?: T;
+                          alt?: T;
+                          padding?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    imageText?:
+                      | T
+                      | {
+                          media?: T;
+                          title?: T;
+                          subtitle?: T;
+                          subtitleColor?: T;
+                          desc?: T;
+                          titleColor?: T;
+                          descColor?: T;
+                          linkType?: T;
+                          internalPage?: T;
+                          externalUrl?: T;
+                          link?: T;
+                          bg?: T;
+                          alt?: T;
+                          padding?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    iconCard?:
+                      | T
+                      | {
+                          icon?: T;
+                          title?: T;
+                          desc?: T;
+                          titleColor?: T;
+                          descColor?: T;
+                          linkType?: T;
+                          internalPage?: T;
+                          externalUrl?: T;
+                          link?: T;
+                          bgImage?: T;
+                          bgColor?: T;
+                          iconColor?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    button?:
+                      | T
+                      | {
+                          label?: T;
+                          link?: T;
+                          style?: T;
                           bg?: T;
                           alt?: T;
                           padding?: T;

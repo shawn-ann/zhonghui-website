@@ -3,7 +3,7 @@ import { safeUrl } from '../render/primitives'
 import type {
   BannerBlock, Block, ButtonBlock, GalleryBlock, GridBlock, HeadingBlock, IconCardBlock,
   IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, HscrollBlock, RichTextBlock,
-  SectionBlock, SliderBlock, TextBlock,
+  SectionBlock, SliderBlock, StackBlock, TextBlock,
 } from '../render/types'
 import { bgCss, bgImageCss } from './bg'
 
@@ -379,6 +379,19 @@ export function IconListView({ b }: { b: IconListBlock }) {
   )
 }
 
+export function StackView({ b, editor = false }: { b: StackBlock; editor?: boolean }) {
+  const children = b.children || []
+  return (
+    <div className={`stack stack-gap-${b.gap || 'md'}`} data-bid={b._id}>
+      {editor && children.length === 0 ? (
+        <div className="ed-empty-block"><span className="ed-empty-label">纵向容器</span><span className="ed-empty-tip">添加内容</span></div>
+      ) : children.map((child, i) => (
+        <div className="stack-item" key={child._id ?? i}>{blockNode(child, editor)}</div>
+      ))}
+    </div>
+  )
+}
+
 export function HscrollView({ b, editor = false }: { b: HscrollBlock; editor?: boolean }) {
   const children = b.children || []
   return (
@@ -411,6 +424,7 @@ export function blockNode(b: Block, editor = false): React.ReactNode {
     case 'infoList': return <InfoListView b={b} />
     case 'iconList': return <IconListView b={b} />
     case 'hscroll': return <HscrollView b={b} editor={editor} />
+    case 'stack': return <StackView b={b} editor={editor} />
     case 'heading': return <HeadingView b={b} editor={editor} />
     case 'text': return <TextView b={b} editor={editor} />
     case 'image': return <ImageView b={b} editor={editor} />

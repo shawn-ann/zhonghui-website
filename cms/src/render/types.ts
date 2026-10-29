@@ -147,6 +147,12 @@ export interface HscrollBlock extends BlockBase {
   children: Block[]
 }
 
+export interface StackBlock extends BlockBase {
+  type: 'stack'
+  gap: 'sm' | 'md' | 'lg'
+  children: Block[]
+}
+
 export interface SectionBlock extends BlockBase {
   type: 'section'
   paddingY?: 'none' | 'sm' | 'md' | 'lg'
@@ -176,6 +182,7 @@ export type Block =
   | InfoListBlock
   | IconListBlock
   | HscrollBlock
+  | StackBlock
   | SectionBlock
 
 export interface PageDoc {

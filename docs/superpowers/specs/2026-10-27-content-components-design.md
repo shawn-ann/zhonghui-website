@@ -50,6 +50,7 @@
 | 信息列表 | `infoList` | 新增内容组件 | 项目待遇、项目要求、师资列表 |
 | 图标列表 | `iconList` | 新增内容组件 | 核心优势、申请流程 |
 | 横向滚动 | `hscroll` | 新增布局容器 | 中惠历程 |
+| 纵向容器 | `stack` | 新增布局容器 | 公司介绍右列 |
 | 网格 | `grid` | 扩展现有 | 公司介绍、创始团队 |
 | 文本 | `text` | 扩展现有 | 中惠理念 |
 | 图文卡片 | `imageText` | 扩展现有 | 创始团队、横向滚动子项 |
@@ -129,7 +130,30 @@ timeline: boolean // 默认 false，是否显示连接线
 - 卡片容器重置 `imageText` 外层 `.container` 的宽度和 padding。
 - 移动端卡片宽度缩小，仍保持横向滚动。
 
-### 5.4 网格 `grid` 扩展
+### 5.4 纵向容器 `stack`
+
+**定位**
+
+布局容器，用于在一个网格单元格内纵向连续排列多个组件。网格负责列，`stack` 负责列内流。
+
+**字段**
+
+```ts
+gap: 'sm' | 'md' | 'lg'
+```
+
+**子组件**
+
+- 标题、文本、图片、图文卡片、图标卡片、按钮
+- 不允许再嵌套布局容器
+
+**渲染**
+
+- `display:flex; flex-direction:column`；间距按 `gap`。
+- 内部组件的 `.container` 重置为满宽、无额外 padding。
+- 只允许放在 `grid` 单元格内。
+
+### 5.5 网格 `grid` 扩展
 
 **新增字段**
 
@@ -143,7 +167,7 @@ columnRatio: 'equal' | 'leftNarrow' | 'leftWide'
 - `leftWide`：左宽右窄，约 `1.4fr 0.9fr`。
 - 其它列数忽略该字段。
 
-### 5.5 文本 `text` 扩展
+### 5.6 文本 `text` 扩展
 
 **新增字段**
 
@@ -158,7 +182,7 @@ maxWidth?: number     // px，0/留空不限制
 - 不增加列表模式：师资列表改用 `infoList`。
 - 理念区由两个连续文本实现：正文 + 高亮句（高亮句设置字重 600/700、品牌色、相同最大宽度）。
 
-### 5.6 图文卡片 `imageText` 扩展
+### 5.7 图文卡片 `imageText` 扩展
 
 **新增字段**
 
@@ -214,6 +238,8 @@ interface RepeaterFieldDef {
 - `LAYOUT_TYPES = ['section', 'grid', 'hscroll']`
 - `SECTION_CHILD_TYPES` 增加 `hscroll`
 - `allowedChildTypes('hscroll') = ['imageText']`
+- `allowedChildTypes('stack') = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button']`
+- `GRID_CHILD_TYPES` 增加 `stack`
 - `isLayout`、`blockChildren`、路径查找/更新/删除/插入、`withIds`、`mapBlock` 都支持 `hscroll.children`。
 - 结构树展示：分栏 → 横向滚动 → 图文卡片。
 
@@ -224,13 +250,13 @@ interface RepeaterFieldDef {
 | 顺序 | 分栏背景 | 内容 |
 |---|---|---|
 | 1 | 默认 | `banner` |
-| 2 | 浅粉/白底 | `heading` 公司介绍 + `grid`（2 列，左窄右宽：图片 + 文本） + `grid`（2 列：行业地位与规模 + 核心业务） |
+| 2 | 浅粉/白底 | `heading` 公司介绍 + `grid`（2 列，左窄右宽：图片 + `stack`（3 个文本）） |
 | 3 | 默认 | `heading` 中惠历程 + `hscroll`（timeline=true，内部 14 个图文卡片） |
 | 4 | 浅粉 | `heading` 中惠理念 + 两个连续 `text`（正文 + 高亮句） |
 | 5 | 默认 | `heading` 创始团队 + `grid`（3 列：3 个图文卡片，副标题为职位） + `heading` 专业师资团队 + `infoList`（无圆点） |
 | 6 | 浅粉 | `heading` 核心优势 + `iconList`（alternate） |
 
-说明：公司介绍的副块放在第二行网格，不嵌套在右列，这是复用现有网格组件后的结构取舍。
+说明：公司介绍右列使用 `stack` 纵向容器，连续放置公司名称/介绍、行业地位与规模、核心业务。
 
 ### 7.2 美国互惠生
 
@@ -276,7 +302,8 @@ interface RepeaterFieldDef {
 - `cms/src/generate/loadSiteData.ts`：`mapBlock` 映射
 - `cms/src/editor/blocks.ts`：编辑器元数据、默认值、子组件约束、摘要
 - `cms/src/editor/AddChildPicker.tsx`：缩略图与名称
-- `cms/src/editor/PropertyPanel.tsx`、`controls.tsx`：重复项控件
+- `cms/src/editor/PropertyPanel.tsx`、`RepeaterControl.tsx`：重复项控件
+- `cms/src/blocks/Stack.ts`：纵向容器
 - `cms/src/editor/map.ts`：序列化
 - `cms/src/editor/types.ts`：布局类型
 - `cms/src/editor/state.ts`：嵌套容器路径
@@ -299,6 +326,7 @@ interface RepeaterFieldDef {
 ### 编辑器
 
 - 信息列表、图标列表可增删/排序条目，编辑图片。
+- 可创建 `分栏 → 网格 → 纵向容器 → 文本 ×N` 结构，结构树、选中、删除、排序正常。
 - 可创建 `分栏 → 横向滚动 → 图文卡片` 结构，结构树、选中、删除、排序正常。
 - 保存后重新打开，条目和嵌套结构不丢失。
 

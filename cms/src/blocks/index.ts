@@ -14,6 +14,7 @@ import { makeSection } from './Section'
 import { InfoListBlock } from './InfoList'
 import { IconListBlock } from './IconList'
 import { HscrollBlock } from './Hscroll'
+import { StackBlock } from './Stack'
 
 export const sectionChildren: Block[] = [HeadingBlock, Grid, GalleryBlock, BannerBlock, SliderBlock, RichTextBlock, InfoListBlock, IconListBlock, HscrollBlock]
 
@@ -35,4 +36,5 @@ export const pageBlocks: Block[] = [
   InfoListBlock,
   IconListBlock,
   HscrollBlock,
+  StackBlock,
 ]

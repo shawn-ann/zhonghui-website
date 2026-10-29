@@ -5,7 +5,7 @@ import { newId } from './state'
 function withIds(rawBlock: any, mapped: Block): Block {
   const id = rawBlock?.id != null ? String(rawBlock.id) : newId()
   const b = { ...mapped, _id: id, _raw: rawBlock }
-  if ((b.type === 'section' || b.type === 'grid' || b.type === 'hscroll') && Array.isArray(rawBlock?.children) && Array.isArray((b as any).children)) {
+  if ((b.type === 'section' || b.type === 'grid' || b.type === 'hscroll' || b.type === 'stack') && Array.isArray(rawBlock?.children) && Array.isArray((b as any).children)) {
     ;(b as any).children = (b as any).children.map((child: Block, i: number) =>
       withIds(rawBlock.children[i], child),
     )
@@ -169,6 +169,10 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       break
     case 'hscroll':
       out.timeline = b.timeline === true
+      out.children = editorToPayloadBlocks(b.children || [], urlToId)
+      break
+    case 'stack':
+      out.gap = b.gap || 'md'
       out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'gallery': {

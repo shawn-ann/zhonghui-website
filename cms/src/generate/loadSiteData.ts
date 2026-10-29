@@ -148,6 +148,14 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         iconPosition: ['left', 'right', 'alternate'].includes(raw.iconPosition) ? raw.iconPosition : 'left',
         iconColor: raw.iconColor || undefined,
       }
+    case 'stack':
+      return {
+        type: 'stack',
+        gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md',
+        children: arr<Record<string, any>>(raw.children)
+          .map((child) => mapBlock(child, resolveMedia, routes))
+          .filter((x): x is Block => x !== null),
+      }
     case 'hscroll':
       return {
         type: 'hscroll',

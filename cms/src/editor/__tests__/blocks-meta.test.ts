@@ -10,8 +10,9 @@ describe('component categories', () => {
   })
   it('allowed children: section = layout blocks; grid = cards/text', () => {
     expect(allowedChildTypes('section')).toEqual(['heading', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'iconList', 'hscroll'])
-    expect(allowedChildTypes('grid')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button'])
+    expect(allowedChildTypes('grid')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack'])
     expect(allowedChildTypes('hscroll')).toEqual(['imageText'])
+    expect(allowedChildTypes('stack')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button'])
     expect(allowedChildTypes('image')).toEqual([])
   })
   it('summary for text/heading', () => {

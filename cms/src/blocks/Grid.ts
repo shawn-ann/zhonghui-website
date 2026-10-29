@@ -5,9 +5,10 @@ import { ImageTextBlock } from './ImageText'
 import { ButtonBlock } from './Button'
 import { HeadingBlock } from './Heading'
 import { IconCardBlock } from './IconCard'
+import { StackBlock } from './Stack'
 
 /** 网格允许的卡片/文本组件（编辑器同步使用）。 */
-export const gridChildren: Block[] = [HeadingBlock, TextBlock, ImageBlock, ImageTextBlock, ButtonBlock, IconCardBlock]
+export const gridChildren: Block[] = [HeadingBlock, TextBlock, ImageBlock, ImageTextBlock, ButtonBlock, IconCardBlock, StackBlock]
 
 export function makeGrid(slug: string, label: string, cellComponents: Block[]): Block {
   return {
