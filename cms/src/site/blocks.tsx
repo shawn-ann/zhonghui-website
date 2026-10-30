@@ -7,7 +7,7 @@ import type {
 } from '../render/types'
 import { bgCss, bgImageCss } from './bg'
 
-const PAD: Record<string, number> = { none: 0, sm: 32, md: 72, lg: 96 }
+const PAD: Record<string, number> = { none: 0, sm: 32, md: 72, lg: 96, xl: 128, '2xl': 160 }
 const padStyle = (padding?: number) => (padding && padding > 0 ? { padding: `${padding}px` } : undefined)
 
 function textColorVars(title?: string, sub?: string): CSSProperties {
@@ -72,7 +72,8 @@ export function SectionView({ b, editor = false }: { b: SectionBlock; editor?: b
   } else if (b.bgColor) {
     background = { backgroundColor: b.bgColor }
   }
-  const style = { padding: `${PAD[b.paddingY || 'md'] ?? 72}px 0`, ...background }
+  const pad = b.paddingCustom && b.paddingCustom > 0 ? b.paddingCustom : PAD[b.paddingY || 'md'] ?? 72
+  const style = { padding: `${pad}px 0`, ...background }
   return (
     <section className={`section${!band && b.bgImage && !gradient ? ' on-image' : ''}`} data-bid={b._id} style={style}>
       {(b.children || []).map((c, i) => (

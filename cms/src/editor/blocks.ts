@@ -130,7 +130,8 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'bgColor', label: '背景颜色', control: 'color' },
     { key: 'bgGradient', label: '背景渐变', control: 'gradient' },
     { key: 'bgHeight', label: '背景高度(px)', control: 'number' },
-    { key: 'paddingY', label: '垂直内边距', control: 'select', options: [{ label: '无', value: 'none' }, { label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
+    { key: 'paddingY', label: '垂直内边距', control: 'select', options: [{ label: '无', value: 'none' }, { label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }, { label: '超宽松', value: 'xl' }, { label: '超大', value: '2xl' }] },
+    { key: 'paddingCustom', label: '自定义上下内边距', control: 'number' },
   ] },
 }
 

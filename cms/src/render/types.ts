@@ -162,7 +162,9 @@ export interface StackBlock extends BlockBase {
 
 export interface SectionBlock extends BlockBase {
   type: 'section'
-  paddingY?: 'none' | 'sm' | 'md' | 'lg'
+  paddingY?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+  /** 自定义上下内边距(px)，大于0时覆盖 paddingY */
+  paddingCustom?: number
   /** 背景图片 URL（可与背景色叠加） */
   bgImage?: string
   /** 背景颜色（CSS 颜色值） */

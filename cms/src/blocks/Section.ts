@@ -14,7 +14,9 @@ export function makeSection(childrenBlocks: Block[]): Block {
       { name: 'paddingY', type: 'select', defaultValue: 'md', label: '垂直内边距', options: [
         { label: '无', value: 'none' }, { label: '紧凑', value: 'sm' },
         { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' },
+        { label: '超宽松', value: 'xl' }, { label: '超大', value: '2xl' },
       ] },
+      { name: 'paddingCustom', type: 'number', min: 0, label: '自定义上下内边距(px)', admin: { description: '大于 0 时覆盖上方预设' } },
       { name: 'children', type: 'blocks', blocks: childrenBlocks },
     ],
   }

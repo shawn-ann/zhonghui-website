@@ -221,7 +221,7 @@ const aboutBlocks: any[] = [
     heading('中惠理念'),
     text('在中惠，我们始终相信，文化交流没有唯一的标准答案。每位同学的兴趣和目标不同：有人适合通过带薪实习提升职场能力，有人希望在营地生活中锻炼综合能力，还有人想通过互惠生深度体验美国家庭生活。不同项目面向不同需求，我们的使命是帮每一位同学找到最适合自己的交流方式。', { fontSize: 16, maxWidth: 760 }),
     text('专业，不是局限，而是选择适合的路。', { fontSize: 16, fontWeight: '600', bodyColor: '#8A0E4B', maxWidth: 760 }),
-  ], { bgColor: '#FFF1F6' }),
+  ], { bgColor: '#FFF1F6', paddingY: '2xl' }),
   section([
     heading('创始团队'),
     {
@@ -272,7 +272,7 @@ const aboutBlocks: any[] = [
       iconColor: '#E60039',
       items: advantages.map(([name, title, desc]) => ({ icon: advantageIcons[name], title, desc })),
     },
-  ], { bgColor: '#FFF1F6' }),
+  ], { bgColor: '#FFF1F6', paddingY: '2xl' }),
 ]
 
 const aupairHero = aboutHero
@@ -308,7 +308,7 @@ const aupairBlocks: any[] = [
       showDots: true,
       items: requirements.map(([label, desc]) => ({ label, desc })),
     },
-  ], { bgColor: '#FFF1F6' }),
+  ], { bgColor: '#FFF1F6', paddingY: '2xl' }),
   section([
     heading('申请流程'),
     {
@@ -317,7 +317,7 @@ const aupairBlocks: any[] = [
       iconColor: '#E60039',
       items: applySteps.map(([name, title, desc]) => ({ icon: stepIcons[name], title, desc })),
     },
-  ], { bgColor: '#FFF1F6' }),
+  ], { bgColor: '#FFF1F6', paddingY: '2xl' }),
 ]
 
 async function ensurePage(route: string, title: string, blocks: any[]) {

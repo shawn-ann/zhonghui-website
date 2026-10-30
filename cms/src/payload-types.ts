@@ -199,7 +199,11 @@ export interface Page {
              */
             bgHeight?: number | null;
             bg?: string | null;
-            paddingY?: ('none' | 'sm' | 'md' | 'lg') | null;
+            paddingY?: ('none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl') | null;
+            /**
+             * 大于 0 时覆盖上方预设
+             */
+            paddingCustom?: number | null;
             children?:
               | (
                   | {
@@ -221,6 +225,32 @@ export interface Page {
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'heading';
+                    }
+                  | {
+                      title?: string | null;
+                      body: string;
+                      /**
+                       * 标题颜色，留空沿用主题色
+                       */
+                      titleColor?: string | null;
+                      /**
+                       * 正文颜色，留空沿用主题色
+                       */
+                      bodyColor?: string | null;
+                      align?: ('left' | 'center') | null;
+                      fontSize?: number | null;
+                      fontWeight?: ('400' | '600' | '700') | null;
+                      maxWidth?: number | null;
+                      marginTop?: number | null;
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'text';
                     }
                   | {
                       columns?: number | null;
@@ -2385,6 +2415,7 @@ export interface PagesSelect<T extends boolean = true> {
               bgHeight?: T;
               bg?: T;
               paddingY?: T;
+              paddingCustom?: T;
               children?:
                 | T
                 | {
@@ -2396,6 +2427,24 @@ export interface PagesSelect<T extends boolean = true> {
                           titleColor?: T;
                           subtitleColor?: T;
                           align?: T;
+                          padding?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    text?:
+                      | T
+                      | {
+                          title?: T;
+                          body?: T;
+                          titleColor?: T;
+                          bodyColor?: T;
+                          align?: T;
+                          fontSize?: T;
+                          fontWeight?: T;
+                          maxWidth?: T;
+                          marginTop?: T;
+                          bg?: T;
+                          alt?: T;
                           padding?: T;
                           id?: T;
                           blockName?: T;

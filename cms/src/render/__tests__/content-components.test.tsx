@@ -24,6 +24,13 @@ describe('content component extensions', () => {
     expect(html).toContain('margin-top:14px')
   })
 
+  it('supports large and custom section padding', () => {
+    const large = render({ type: 'section', _id: 's1', paddingY: '2xl', children: [] })
+    expect(large).toContain('padding:160px 0')
+    const custom = render({ type: 'section', _id: 's2', paddingY: 'md', paddingCustom: 120, children: [] })
+    expect(custom).toContain('padding:120px 0')
+  })
+
   it('renders text line breaks', () => {
     const html = render({ type: 'text', _id: 'tb', body: '第一行\n第二行' })
     expect(html).toContain('第一行<br/>第二行')

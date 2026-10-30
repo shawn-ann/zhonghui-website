@@ -157,7 +157,13 @@ padding?: number
 - 内部组件的 `.container` 重置为满宽、无额外 padding。
 - 只允许放在 `grid` 单元格内。
 
-### 5.5 网格 `grid` 扩展
+### 5.5 分栏 `section` 间距扩展
+
+- 垂直内边距预设增加 `xl`（128px）、`2xl`（160px）。
+- 新增 `paddingCustom`：大于 0 时覆盖预设，支持任意上下内边距。
+- 中惠理念使用 `2xl`，增加留白以匹配参考页的疏朗布局。
+
+### 5.6 网格 `grid` 扩展
 
 **新增字段**
 
@@ -173,7 +179,7 @@ alignItems: 'stretch' | 'start' | 'center' | 'end'
 - `leftWide`：左宽右窄，约 `1.4fr 0.9fr`。
 - 其它列数忽略该字段。
 
-### 5.6 文本 `text` 扩展
+### 5.7 文本 `text` 扩展
 
 **新增字段**
 
@@ -191,7 +197,7 @@ marginTop?: number    // px，段落/分组上间距
 - 不增加列表模式：师资列表改用 `infoList`。
 - 理念区由两个连续文本实现：正文 + 高亮句（高亮句设置字重 600/700、品牌色、相同最大宽度）。
 
-### 5.7 图片 `image` 扩展
+### 5.8 图片 `image` 扩展
 
 ```ts
 aspectRatio: 'auto' | '1:1' | '4:3' | '3:4' | '16:9'
@@ -202,7 +208,7 @@ fit: 'cover' | 'contain'
 - 参考 WordPress Media & Text 的裁剪/填充思路，避免为每张图片写死像素高度。
 - 公司介绍图片使用 `4:3` + `cover`。
 
-### 5.8 图文卡片 `imageText` 扩展
+### 5.9 图文卡片 `imageText` 扩展
 
 **新增字段**
 
@@ -272,7 +278,7 @@ interface RepeaterFieldDef {
 | 1 | 默认 | `banner` |
 | 2 | 背景图 `bg2.jpg`，铺满整个分栏（bgHeight=0） | `heading` 公司介绍（白字） + `grid`（2 列，左窄右宽，顶部对齐：图片 4:3 + `stack`（白底、内边距 20、6 个单段文本）） |
 | 3 | 默认 | `heading` 中惠历程 + `hscroll`（timeline=true，内部 14 个图文卡片） |
-| 4 | 浅粉 | `heading` 中惠理念 + 两个连续 `text`（正文 + 高亮句） |
+| 4 | 浅粉，`paddingY=2xl` | `heading` 中惠理念 + 两个连续 `text`（正文 + 高亮句） |
 | 5 | 默认 | `heading` 创始团队 + `grid`（3 列：3 个图文卡片，副标题为职位） + `heading` 专业师资团队 + `infoList`（无圆点） |
 | 6 | 浅粉 | `heading` 核心优势 + `iconList`（alternate） |
 

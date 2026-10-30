@@ -50,6 +50,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         bgGradient: raw.bgGradient || undefined,
         bgHeight: raw.bgHeight > 0 ? Number(raw.bgHeight) : undefined,
         paddingY: raw.paddingY || 'md',
+        paddingCustom: raw.paddingCustom > 0 ? Number(raw.paddingCustom) : undefined,
         children,
       }
     }
