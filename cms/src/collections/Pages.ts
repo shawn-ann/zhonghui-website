@@ -10,6 +10,7 @@ export const Pages: CollectionConfig = {
     defaultColumns: ['title', 'route', '_status'],
     components: {
       views: {
+        list: { Component: '/components/PagesListView' },
         edit: {
           default: { Component: '/components/PageEditorView' },
         },
@@ -28,13 +29,5 @@ export const Pages: CollectionConfig = {
         typeof val === 'string' && val.startsWith('/') ? true : 'route 必须以 / 开头',
     },
     { name: 'blocks', type: 'blocks', blocks: pageBlocks },
-    {
-      name: 'seo',
-      type: 'group',
-      fields: [
-        { name: 'title', type: 'text' },
-        { name: 'description', type: 'textarea' },
-      ],
-    },
   ],
 }

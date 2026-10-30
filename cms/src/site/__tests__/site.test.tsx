@@ -5,6 +5,7 @@ import { blockNode, TopBlock } from '../blocks'
 import { SiteNav } from '../nav'
 import { SiteFooter } from '../footer'
 import { SiteDocument } from '../SiteDocument'
+import { DEFAULT_SETTINGS } from '../config'
 
 const render = (node: React.ReactNode) => renderToStaticMarkup(node)
 
@@ -206,15 +207,34 @@ describe('site blocks', () => {
 
 describe('site chrome', () => {
   it('marks the active nav route and renders dropdowns', () => {
-    const html = render(<SiteNav activeRoute="/about/" />)
+    const menu = [
+      { label: '首页', link: '/' },
+      { label: '关于中惠', link: '/about/' },
+      { label: '赴美J1交流项目', link: '/project-iccp/', children: [{ label: 'SWT 赴美带薪实习', link: '/project-swt/' }] },
+    ]
+    const html = render(<SiteNav activeRoute="/about/" menu={menu} settings={DEFAULT_SETTINGS} />)
     expect(html).toContain('class="active">关于中惠')
     expect(html).toContain('SWT 赴美带薪实习')
   })
 
   it('renders footer info', () => {
-    const html = render(<SiteFooter />)
+    const html = render(<SiteFooter settings={DEFAULT_SETTINGS} />)
     expect(html).toContain('010-64159286')
     expect(html).toContain('info@zhonghui.com')
+  })
+
+  it('renders any number of QR codes', () => {
+    const html = render(<SiteFooter settings={{
+      ...DEFAULT_SETTINGS,
+      footerQr: [{ label: '公众号' }, { label: '咨询微信' }, { label: '视频号' }, { label: '小红书' }],
+    }} />)
+    expect(html.match(/class="qr-item"/g)).toHaveLength(4)
+  })
+
+  it('hides the copyright text and QR box when empty', () => {
+    const html = render(<SiteFooter settings={{ ...DEFAULT_SETTINGS, copyright: '', footerQr: [] }} />)
+    expect(html).not.toContain('footer-copy')
+    expect(html).not.toContain('qr-box')
   })
 })
 
@@ -222,8 +242,7 @@ describe('SiteDocument', () => {
   const page: PageDoc = {
     title: '首页',
     route: '/',
-    seo: { title: '中惠文化' },
-    blocks: [{ type: 'text', body: 'hi' }],
+      blocks: [{ type: 'text', body: 'hi' }],
   }
 
   it('external mode links assets and scripts', () => {

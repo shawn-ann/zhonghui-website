@@ -29,6 +29,13 @@ export function collectMediaUrls(data: SiteData): Set<string> {
     }
   }
   data.pages.forEach((p) => walk(p.blocks))
+  const settings = data.site?.settings
+  if (settings) {
+    const add = (u?: string) => { if (u && u.startsWith(MEDIA_URL_PREFIX)) set.add(u) }
+    add(settings.logo)
+    add(settings.footerLogo)
+    settings.footerQr.forEach((q) => add(q.image))
+  }
   return set
 }
 

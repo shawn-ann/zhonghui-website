@@ -2,6 +2,13 @@
 
 完整文档见 [`docs/deployment.md`](../docs/deployment.md)。本文为快速速查。
 
+本地 Compose 依赖预编译的 `cms/generator/builder.mjs`；首次或修改构建代码后执行：
+
+```bash
+cd ../cms && npm run build:generator && cd ../deploy
+docker compose -f docker-compose.local.yml restart builder
+```
+
 ## 结构
 
 ```

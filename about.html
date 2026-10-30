@@ -104,6 +104,32 @@
     .philosophy .highlight { font-size: 16px; color: var(--deep-blue); font-weight: 600; margin-top: 20px; }
     .philosophy-section { min-height: 460px; display: flex; flex-direction: column; justify-content: center; }
 
+    /* ===== 中惠历程：横向拖拽卡片 ===== */
+    .milestones-viewport {
+      overflow-x: auto; overflow-y: hidden; cursor: grab;
+      scrollbar-width: none; -ms-overflow-style: none;
+      scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      padding: 4px 4px 18px;
+    }
+    .milestones-viewport::-webkit-scrollbar { display: none; }
+    .milestones-viewport.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+    .milestones-viewport:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 8px; }
+    .milestones-inner { position: relative; display: flex; align-items: stretch; gap: 24px; width: max-content; }
+    .milestones-inner::before {
+      content: ""; position: absolute; left: 0; right: 0; top: 290px; height: 2px;
+      background: linear-gradient(90deg, var(--accent), #F3D6E2); z-index: 0;
+    }
+    .milestone-card {
+      position: relative; z-index: 1; flex: 0 0 268px; display: flex; flex-direction: column;
+      background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+      box-shadow: 0 6px 18px rgba(138,14,75,0.08); scroll-snap-align: start;
+    }
+    .milestone-photo { height: 285px; background-size: cover; background-position: center; background-repeat: no-repeat; }
+    .milestone-body { flex: 1; min-height: 209px; padding: 16px 20px 18px; }
+    .milestone-year { font-size: 26px; font-weight: 700; color: var(--deep-blue); line-height: 1.2; }
+    .milestone-desc { margin-top: 10px; font-size: 13px; color: var(--gray-blue); line-height: 1.7; }
+
     /* ===== 中惠团队 ===== */
     .founder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
     .founder-card {
@@ -132,25 +158,23 @@
     }
     .team-box li:last-child { border-bottom: none; }
 
-    /* ===== 核心优势 ===== */
-    .adv-grid { display: grid; grid-template-columns: 1fr; gap: 22px; }
-    .adv-card {
-      background: var(--white); border-radius: 12px; border: 1px solid var(--border);
-      padding: 28px 30px; display: grid; grid-template-columns: 64px 1fr; gap: 20px;
-      align-items: start; transition: transform .25s, box-shadow .25s;
+    /* ===== 核心优势：iconList ===== */
+    .icon-list { display: grid; gap: 16px; }
+    .icon-list-item {
+      display: grid; grid-template-columns: 64px 1fr; gap: 20px; align-items: center;
+      background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+      padding: 18px 24px; box-shadow: 0 5px 14px rgba(138,14,75,0.05);
     }
-    .adv-card:nth-child(even) { grid-template-columns: 1fr 64px; }
-    .adv-card:nth-child(even) .adv-num { order: 2; justify-self: end; }
-    .adv-card:nth-child(even) .adv-body { order: 1; }
-    .adv-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(138,14,75,0.12); }
-    .adv-num {
-      width: 60px; height: 60px; border-radius: 50%; margin: 0 auto;
-      background: var(--light-blue); color: var(--deep-blue);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; font-weight: 700;
+    .icon-list-item--right { grid-template-columns: 1fr 64px; }
+    .icon-list-item--right .icon-list-node { order: 2; justify-self: end; }
+    .icon-list-item--right .icon-list-body { order: 1; }
+    .icon-list-node {
+      width: 60px; height: 60px; border-radius: 50%; background: var(--light-blue);
+      color: var(--accent); display: flex; align-items: center; justify-content: center;
     }
-    .adv-body h3 { font-size: 19px; color: var(--deep-blue); margin-bottom: 8px; }
-    .adv-body p { font-size: 14.5px; color: var(--gray-blue); }
+    .icon-list-node svg { width: 28px; height: 28px; display: block; }
+    .icon-list-body h3 { font-size: 17px; font-weight: 600; color: var(--deep-blue); line-height: 1.4; }
+    .icon-list-body p { font-size: 13.5px; color: var(--gray-blue); margin-top: 3px; line-height: 1.65; }
 
     /* ===== 页脚（三分构图） ===== */
     footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
@@ -186,6 +210,20 @@
       .banner-media { min-height: 0; }
       .banner-photo { position: static; width: 100%; margin-top: 24px; }
       .banner-pattern { display: none; }
+
+      .milestone-card { flex-basis: 260px; }
+      .milestone-photo { height: 280px; }
+      .milestones-inner::before { top: 285px; }
+      .milestone-body { min-height: 0; padding: 16px 18px 20px; }
+      .milestone-year { font-size: 23px; }
+
+      .icon-list { gap: 12px; }
+      .icon-list-item { grid-template-columns: 52px 1fr; gap: 14px; padding: 14px 16px; }
+      .icon-list-item--right { grid-template-columns: 1fr 52px; }
+      .icon-list-node { width: 48px; height: 48px; }
+      .icon-list-node svg { width: 23px; height: 23px; }
+      .icon-list-body h3 { font-size: 15px; }
+      .icon-list-body p { font-size: 12px; }
     }
   </style>
 </head>
@@ -201,6 +239,63 @@
      pageConfig 模拟后端返回值。真实后端就绪后，仅需替换数据源。
      可配置：块数量/顺序、内容、数量（创始人、优势）、样式等。
      ========================================================= */
+
+  // 中惠历程（内容取自 chinaaupairs.com 历史资料图，按年份正序展示）
+  const milestonesData = [
+    { year: "2002", image: "img/founder-1.jpg", events: [
+      "第一个德国互惠生签证成功获得并前往德国",
+      "中惠公司的创始人之一与德国公司合作，最早把国际互惠生项目引入中国，成为中国互惠项目的开创者"
+    ] },
+    { year: "2003", image: "img/memory-1.png", events: [
+      "开始更多的中国学生赴德国参加互惠生项目"
+    ] },
+    { year: "2005", image: "img/memory-2.jpg", events: [
+      "法国互惠生协会访问本中心，正式开始了法国互惠生业务的办理"
+    ] },
+    { year: "2006", image: "img/memory-5.jpg", events: [
+      "正式与美国 CHI 协会合作",
+      "第一个法国互惠生成功获得签证，前往法国开始互惠生活"
+    ] },
+    { year: "2007", image: "img/memory-3.jpg", events: [
+      "第一个比利时互惠生成功拿到签证，前往比利时"
+    ] },
+    { year: "2008", image: "img/founder-2.jpg", events: [
+      "大连中惠正式成立"
+    ] },
+    { year: "2009", image: "img/memory-6.jpg", events: [
+      "中惠与挪威公司正式合作"
+    ] },
+    { year: "2010", image: "img/company.jpg", events: [
+      "北京中惠文化交流有限公司成立",
+      "中惠成为 IAPA 会员",
+      "中惠第一个挪威互惠生获得签证，前往挪威开始互惠生活"
+    ] },
+    { year: "2011", image: "img/memory-7.jpg", events: [
+      "武老师、吕老师去法国拜访法国合作公司及中惠法国互惠生",
+      "武老师第一次参加 IAPA 在布鲁塞尔举办的世界大会"
+    ] },
+    { year: "2012", image: "img/memory-9.jpg", events: [
+      "中惠沈阳办公室成立，入住沈阳大学园国际文化交流中心",
+      "中惠刘老师、武老师前往纽约拜访美国合作 IE 公司和美国互惠家庭及学生"
+    ] },
+    { year: "2013", image: "img/about-hero.jpg", events: [
+      "中惠长春办公室成立",
+      "中惠武老师参加美国 IE 公司在芝加哥举办年会"
+    ] },
+    { year: "2014", image: "img/memory-10.jpg", events: [
+      "中惠成为美国 ASSE 公司大陆唯一合作伙伴",
+      "中惠微信公众平台建立"
+    ] },
+    { year: "2015", image: "img/memory-4.jpg", events: [
+      "中惠美国合作公司 IE 负责人 Michael 来中惠北京、沈阳、大连办公室拜访",
+      "中惠美国合作公司 CHI 负责人来北京办公室拜访并商谈 STEP 项目",
+      "中惠武老师在华盛顿参加美国合作公司 ASSE 的公司年会"
+    ] },
+    { year: "2016", image: "img/memory-8.png", events: [
+      "中惠小迪老师陪同学生参加美国 IE 和 EUR 的纽约互惠生培训",
+      "中惠成为美国 AuPairCare 公司大陆唯一合作伙伴，中惠现有美国 6 家合作协会"
+    ] }
+  ];
 
   const pageConfig = {
     title: "关于中惠",
@@ -262,7 +357,12 @@
         },
         options: { bg: "img/bg2.jpg" } },
 
-      // ③ 中惠理念块（富文本简洁）
+      // ③ 中惠历程：横向拖拽卡片
+      { type: "milestones", id: "milestones",
+        data: { title: "中惠历程", items: milestonesData },
+        options: {} },
+
+      // ④ 中惠理念块（富文本简洁）
       { type: "philosophy",
         data: {
           title: "中惠理念",
@@ -271,7 +371,7 @@
         },
         options: {} },
 
-      // ④ 中惠团队块：创始人卡片（可配数量）+ 师资列表
+      // ⑤ 中惠团队块：创始人卡片（可配数量）+ 师资列表
       { type: "team", id: "team",
         data: {
           foundersTitle: "创始团队",
@@ -295,25 +395,35 @@
         },
         options: { bg: "img/yinji-bg.jpg" } },
 
-      // ⑤ 核心优势块：优势卡片（可增删数量）
-      { type: "advantages", id: "advantage",
+      // ⑥ 核心优势块：iconList（图标 + 文字，左右交替）
+      { type: "iconList", id: "advantage",
         data: {
           title: "核心优势 · 为什么选择中惠",
           items: [
-            { title: "资质权威，多年深耕沉淀", desc: "成立于2002年，是中国早期加入国际互惠生协会（IAPA）的机构之一，长期开展互惠生、SWT、ITP、ICCP四大核心项目，累计为数千名中国青年搭建国际桥梁。" },
-            { title: "对接美国官方授权机构，海量正规岗位资源", desc: "与美国多家官方机构及欧洲40余家合作伙伴长期战略合作，岗位覆盖酒店、餐饮、商科、IT、工程等多个方向，申请人可按专业与意向灵活挑选。" },
-            { title: "项目齐全，一站式满足多元需求", desc: "一站式办理四大类J1国际文化交流项目，为不同背景、不同诉求的申请人提供匹配选择，真正做到\"一站式\"服务。" },
-            { title: "依托成熟资源网络，匹配流程标准化", desc: "凭借成熟的匹配体系与资源网络，多年保持稳定的岗位匹配与签证过签成果，整体匹配周期符合行业常规标准。" },
-            { title: "全程护航，一对一贴心陪伴", desc: "从咨询、评估、材料、匹配、面试、签证到行前培训与赴美后跟进，专属顾问全程一对一跟进。" },
-            { title: "真实案例见证", desc: "每年都有来自全国各地的学员通过中惠远赴海外，在真实家庭或国际化企业中积累经验，提升英语、收获深刻跨越文化交流阅历。" }
+            { icon: "badge", title: "资质权威，多年深耕沉淀", desc: "成立于2002年，是中国早期加入国际互惠生协会（IAPA）的机构之一，长期开展互惠生、SWT、ITP、ICCP四大核心项目，累计为数千名中国青年搭建国际桥梁。" },
+            { icon: "globe", title: "对接美国官方授权机构，海量正规岗位资源", desc: "与美国多家官方机构及欧洲40余家合作伙伴长期战略合作，岗位覆盖酒店、餐饮、商科、IT、工程等多个方向，申请人可按专业与意向灵活挑选。" },
+            { icon: "layers", title: "项目齐全，一站式满足多元需求", desc: "一站式办理四大类J1国际文化交流项目，为不同背景、不同诉求的申请人提供匹配选择，真正做到\"一站式\"服务。" },
+            { icon: "network", title: "依托成熟资源网络，匹配流程标准化", desc: "凭借成熟的匹配体系与资源网络，多年保持稳定的岗位匹配与签证过签成果，整体匹配周期符合行业常规标准。" },
+            { icon: "safety", title: "全程护航，一对一贴心陪伴", desc: "从咨询、评估、材料、匹配、面试、签证到行前培训与赴美后跟进，专属顾问全程一对一跟进。" },
+            { icon: "star", title: "真实案例见证", desc: "每年都有来自全国各地的学员通过中惠远赴海外，在真实家庭或国际化企业中积累经验，提升英语、收获深刻跨越文化交流阅历。" }
           ]
         },
-        options: {} }
+        options: { alt: true, iconPosition: "alternate" } }
     ]
   };
 
   // ---------------- 渲染器 ----------------
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+  const iconListIcons = {
+    badge:   '<circle cx="12" cy="9" r="5.5"/><path d="M8.6 13.8 7 22l5-2.8 5 2.8-1.6-8.2"/>',
+    globe:   '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/>',
+    layers:  '<path d="m12 3 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/>',
+    network: '<circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M12 7.2 6.4 16M12 7.2 17.6 16M7.2 18h9.6"/>',
+    safety:  '<path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3z"/><path d="m9 12 2 2 4-4"/>',
+    star:    '<path d="m12 3 2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8L6.6 19.6l1-6L3.3 9.4l6-.9L12 3z"/>'
+  };
+  const iconListSvg = key => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${iconListIcons[key] || ""}</svg>`;
 
   const renderers = {
     banner(b) {
@@ -360,6 +470,22 @@
         <div class="columns-row">${cols}</div>
       </div></section>`;
     },
+    milestones(b) {
+      const d = b.data;
+      const cards = (d.items || []).map(m => `<article class="milestone-card">
+        <div class="milestone-photo" style="background-image:url('${esc(m.image)}');" aria-hidden="true"></div>
+        <div class="milestone-body">
+          <h3 class="milestone-year">${esc(m.year)}</h3>
+          <p class="milestone-desc">${(m.events || []).map(esc).join("；")}${(m.events || []).length ? "。" : ""}</p>
+        </div>
+      </article>`).join("");
+      return `<section class="section milestones-section" id="${b.id || "milestones"}"><div class="container">
+        <div class="section-title"><h2>${esc(d.title)}</h2></div>
+        <div class="milestones-viewport" tabindex="0" aria-label="中惠历程，按住并左右拖拽查看">
+          <div class="milestones-inner">${cards}</div>
+        </div>
+      </div></section>`;
+    },
     philosophy(b) {
       const d = b.data;
       return `<section class="section section-alt philosophy-section"><div class="container">
@@ -388,16 +514,21 @@
         ${d.teamTitle ? `<div class="team-box"><h3>${esc(d.teamTitle)}</h3><ul>${teamList}</ul></div>` : ""}
       </div></section>`;
     },
-    advantages(b) {
-      const d = b.data;
-      const cards = (d.items || []).map((a, i) => {
-        const no = String(i + 1).padStart(2, "0");
-        return `<div class="adv-card"><div class="adv-num">${no}</div>
-          <div class="adv-body"><h3>${esc(a.title)}</h3><p>${esc(a.desc)}</p></div></div>`;
+    "iconList"(b) {
+      const d = b.data, bg = b.options.bg;
+      const secStyle = bg ? `style="background-image:url('${esc(bg)}');background-size:cover;background-position:center;"` : "";
+      const cls = `section${b.options.alt ? " section-alt" : ""}${bg ? " on-image" : ""}`;
+      const pos = ["left", "right", "alternate"].includes(b.options.iconPosition) ? b.options.iconPosition : "alternate";
+      const items = (d.items || []).map((it, i) => {
+        const side = pos === "alternate" ? (i % 2 === 0 ? "left" : "right") : pos;
+        return `<div class="icon-list-item icon-list-item--${side}">
+          <div class="icon-list-node">${iconListSvg(it.icon)}</div>
+          <div class="icon-list-body"><h3>${esc(it.title)}</h3>${it.desc ? `<p>${esc(it.desc)}</p>` : ""}</div>
+        </div>`;
       }).join("");
-      return `<section class="section section-alt" id="${b.id || "advantage"}"><div class="container">
-        <div class="section-title"><h2>${esc(d.title)}</h2></div>
-        <div class="adv-grid">${cards}</div>
+      return `<section class="${cls}" id="${b.id || ""}" ${secStyle}><div class="container">
+        <div class="section-title${bg ? " title-on-image" : ""}"><h2>${esc(d.title)}</h2></div>
+        <div class="icon-list">${items}</div>
       </div></section>`;
     }
   };
@@ -440,6 +571,40 @@
   renderNav(pageConfig.nav);
   renderBlocks(pageConfig.blocks);
   renderFooter(pageConfig.footer);
+
+  // 中惠历程：鼠标拖拽横向滚动 + 键盘方向键
+  (function initMilestonesDrag() {
+    const viewport = document.querySelector('.milestones-viewport');
+    if (!viewport) return;
+    let down = false, startX = 0, startScroll = 0;
+    viewport.addEventListener('mousedown', e => {
+      down = true;
+      startX = e.pageX;
+      startScroll = viewport.scrollLeft;
+      viewport.classList.add('dragging');
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', e => {
+      if (!down) return;
+      viewport.scrollLeft = startScroll - (e.pageX - startX);
+    });
+    const end = () => {
+      if (!down) return;
+      down = false;
+      viewport.classList.remove('dragging');
+    };
+    window.addEventListener('mouseup', end);
+    window.addEventListener('blur', end);
+    viewport.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') {
+        viewport.scrollBy({ left: 314, behavior: 'smooth' });
+        e.preventDefault();
+      } else if (e.key === 'ArrowLeft') {
+        viewport.scrollBy({ left: -314, behavior: 'smooth' });
+        e.preventDefault();
+      }
+    });
+  })();
   </script>
 </body>
 </html>

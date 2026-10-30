@@ -161,17 +161,40 @@ const blocks: any[] = [
 ]
 
 await payload.delete({ collection: 'pages', where: { route: { equals: '/' } } }).catch(() => {})
-await payload.create({
+const home = await payload.create({
   collection: 'pages',
   draft: false,
   data: {
     title: '首页',
     route: '/',
     _status: 'published',
-    seo: { title: '中惠文化 — 你的国际文化交流可靠伙伴', description: '覆盖美国、欧洲、英国、澳洲的文化交流、工作与留学项目' },
     blocks,
   },
 })
+await payload.updateGlobal({
+  slug: 'menu',
+  data: { items: [{ label: '首页', page: home.id }] },
+})
+
+await payload.updateGlobal({
+  slug: 'site-settings',
+  data: {
+    footerInfo: [
+      { label: '📍 地址：', text: '北京东城区绿景馨园东区12号楼' },
+      { label: '📞 电话：', text: '010-64159286' },
+      { label: '✉ 邮箱：', text: 'info@zhonghui.com' },
+      { label: '🌐 中文官网：', text: 'www.chinaaupairs.com' },
+      { label: '🌐 英文官网：', text: 'www.aupaircn.com' },
+    ],
+    footerQr: [{ label: '公众号' }, { label: '咨询微信' }, { label: '视频号' }],
+    footerContactLabel: '联系我们',
+    copyright: 'Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号',
+    langCurrentLabel: '中文',
+    langOtherLabel: 'EN',
+    langOtherUrl: 'https://example-en.invalid/',
+  },
+})
+
 console.log('homepage configured (banner + 项目一览 + 中惠优势 + 中惠印记 + 学生分享 sections)')
 await payload.destroy()
 process.exit(0)

@@ -1,14 +1,12 @@
 import fs from 'fs'
 import path from 'path'
-import { fileURLToPath } from 'url'
 import { loadSiteData } from './loadSiteData'
 import { generateSite } from './buildSite'
 import { writeSite } from './writeSite'
 import { collectMediaUrls, copyMedia } from './media'
 import type { SiteData } from '../render/types'
 
-const dirname = path.dirname(fileURLToPath(import.meta.url))
-const cmsDir = path.resolve(dirname, '../..')
+const cmsDir = process.cwd()
 
 function timestamp(): string {
   const d = new Date()

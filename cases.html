@@ -84,6 +84,11 @@
     .section-title h2 { font-size: 30px; color: var(--deep-blue); font-weight: 700; }
     .title-on-image h2 { color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
 
+    /* 顶部渐变带：高度到第一行卡片中点，其余白底 */
+    .case-band { background-size: 100% 277px; }
+    @media (max-width: 1199px) { .case-band { background-size: 100% calc(127.25px + 12.5vw); } }
+    @media (max-width: 600px) { .case-band { background-size: 100% calc(123.5px + 25vw); } }
+
     /* ===== 案例宫格（内容集合块） ===== */
     .case-grid { display: grid; gap: 18px; }
     .case-card {
@@ -111,7 +116,7 @@
     .pagination button:hover { background: #FFF1F6; }
     .pagination button.active { background: #E60039; color: #fff; border-color: #E60039; }
     .pagination button:disabled { opacity: .45; cursor: not-allowed; }
-    .page-info { text-align: center; color: #fff; font-size: 13px; margin-top: 14px; text-shadow: 0 1px 6px rgba(0,0,0,0.35); }
+    .page-info { text-align: center; color: var(--gray-blue); font-size: 13px; margin-top: 14px; }
 
     /* ===== 页脚 ===== */
     footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
@@ -240,7 +245,7 @@
           cols: 4, rows: 3,    // 每页 4列 × 3排 = 12 条
           pageSize: 12
         },
-        options: { bg: "img/yinji-bg.jpg" } }
+        options: { band: true, bg: "linear-gradient(90deg, #FC0401 0%, #F5534E 50%, #F4585E 62%, #FC1972 100%)" } }
     ]
   };
 
@@ -264,8 +269,12 @@
     },
     "content-collection"(b) {
       const bg = b.options.bg;
-      const secStyle = bg ? `style="background-image:url('${esc(bg)}');background-size:cover;background-position:center;"` : "";
-      return `<section class="section" ${secStyle}><div class="container">
+      const band = b.options.band;
+      const bgCss = bg && /gradient/i.test(bg) ? bg : (bg ? `url('${esc(bg)}')` : "");
+      const secStyle = bg
+        ? `style="background-image:${bgCss};${band ? "background-repeat:no-repeat;background-position:top center;background-color:var(--white);" : "background-size:cover;background-position:center;"}"`
+        : "";
+      return `<section class="section${band ? " case-band" : ""}" ${secStyle}><div class="container">
         <div class="section-title${bg ? " title-on-image" : ""}"><h2>${esc(b.data.title)}</h2></div>
         <div id="case-container"></div>
       </div></section>`;

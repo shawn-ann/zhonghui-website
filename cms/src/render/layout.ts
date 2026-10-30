@@ -1,10 +1,10 @@
 import { renderDocument } from './document'
-import type { PageDoc } from './types'
+import type { PageDoc, SiteConfig } from './types'
 
 /**
  * 静态生成使用的整页渲染（外部引用 /assets/*）。
  * 委托给同构入口 renderDocument，避免模板重复。
  */
-export function renderPage(page: PageDoc): string {
-  return renderDocument(page, { mode: 'external' })
+export function renderPage(page: PageDoc, site?: SiteConfig): string {
+  return renderDocument(page, { mode: 'external' }, site)
 }

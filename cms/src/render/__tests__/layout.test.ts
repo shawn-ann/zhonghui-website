@@ -5,7 +5,6 @@ import type { PageDoc } from '../types'
 const page: PageDoc = {
   title: '关于',
   route: '/about/',
-  seo: { title: '关于中惠', description: '简介' },
   blocks: [{ type: 'text', body: '你好' }],
 }
 
@@ -13,7 +12,7 @@ describe('renderPage', () => {
   it('produces a full html document with nav + footer', () => {
     const html = renderPage(page)
     expect(html.startsWith('<!DOCTYPE html>')).toBe(true)
-    expect(html).toContain('<title>关于中惠</title>')
+    expect(html).toContain('<title>关于</title>')
     expect(html).toContain('assets/style.css')
     expect(html).toContain('<header')
     expect(html).toContain('<footer')

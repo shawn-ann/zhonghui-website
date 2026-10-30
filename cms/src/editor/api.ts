@@ -1,5 +1,7 @@
 import type { EditorDoc } from './types'
 import { docToEditorDoc } from './map'
+import { buildSiteConfig } from '../site/config'
+import type { SiteConfig } from '../render/types'
 
 const json = { 'content-type': 'application/json' }
 async function j(res: Response) {
@@ -41,6 +43,14 @@ export async function triggerRebuild(): Promise<BuildStatus> {
   if (res.status === 401) throw new Error('未登录')
   if (res.status !== 202 && res.status !== 409) throw new Error(data?.error || `Request failed: ${res.status}`)
   return data as BuildStatus
+}
+
+export async function getSiteConfig(): Promise<SiteConfig> {
+  const get = (slug: string) => fetch(`/api/globals/${slug}?depth=1`, { credentials: 'include' })
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null)
+  const [menu, settings] = await Promise.all([get('menu'), get('site-settings')])
+  return buildSiteConfig(menu, settings)
 }
 
 export interface PageSummary { id: number | string; title: string; route: string }

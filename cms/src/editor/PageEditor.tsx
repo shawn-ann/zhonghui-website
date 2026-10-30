@@ -6,7 +6,7 @@ import Canvas from './Canvas'
 import PropertyPanel from './PropertyPanel'
 import TopBar from './TopBar'
 import { BLOCKS, makeDefaultBlock, type DefaultMedia } from './blocks'
-import { getPage, savePage, publishPage, listMedia, listPages, getBuildStatus, triggerRebuild, type MediaItem, type PageSummary, type BuildStatus } from './api'
+import { getPage, savePage, publishPage, listMedia, listPages, getSiteConfig, getBuildStatus, triggerRebuild, type MediaItem, type PageSummary, type BuildStatus } from './api'
 import {
   addBlock, ensureIds, moveBlock, newId,
   findPath, getAtPath, updateAtPath, removeAtPath, insertInto,
@@ -14,15 +14,20 @@ import {
 } from './state'
 import { editorToPayloadBlocks } from './map'
 import type { EditorDoc, Block } from './types'
+import type { SiteConfig } from '../render/types'
 
 export default function PageEditor({ id }: { id: number | string }) {
   const [doc, setDoc] = useState<EditorDoc | null>(null)
   const [selectedId, setSelectedId] = useState<string>()
   const [dirty, setDirty] = useState(false)
   const [pages, setPages] = useState<PageSummary[]>([])
+  const [site, setSite] = useState<SiteConfig>()
   const [build, setBuild] = useState<BuildStatus>()
   const [publishing, setPublishing] = useState(false)
+  const [toast, setToast] = useState<{ kind: 'success' | 'error'; text: string } | null>(null)
+  const buildRef = useRef<BuildStatus | undefined>(undefined)
   const pollTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const urlToId = useRef<Map<string, number | string>>(new Map())
   const defaults = useRef<DefaultMedia>({})
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -31,6 +36,7 @@ export default function PageEditor({ id }: { id: number | string }) {
   useEffect(() => {
     getPage(id).then((d) => setDoc({ ...d, blocks: ensureIds(d.blocks) }))
     listPages().then(setPages).catch(() => {})
+    getSiteConfig().then(setSite).catch(() => {})
     listMedia()
       .then((items) => {
         for (const m of items) if (m.url) urlToId.current.set(m.url, m.id)
@@ -50,23 +56,46 @@ export default function PageEditor({ id }: { id: number | string }) {
       .catch(() => {})
   }, [id])
 
-  useEffect(() => () => clearTimeout(timer.current), [])
+  useEffect(() => () => {
+    clearTimeout(timer.current)
+    clearTimeout(toastTimer.current)
+  }, [])
+
+  const notify = useCallback((kind: 'success' | 'error', text: string) => {
+    setToast({ kind, text })
+    clearTimeout(toastTimer.current)
+    toastTimer.current = setTimeout(() => setToast(null), 3500)
+  }, [])
+
+  const applyBuild = useCallback((s: BuildStatus) => {
+    const prev = buildRef.current
+    if (prev?.status === 'building' && s.status === 'success') notify('success', '发布成功')
+    else if (prev?.status === 'building' && s.status === 'error') {
+      notify('error', s.error ? `发布失败：${s.error}` : '发布失败')
+    }
+    buildRef.current = s
+    setBuild(s)
+  }, [notify])
 
   const pollBuild = useCallback(() => {
     const tick = async () => {
       try {
         const s = await getBuildStatus()
-        setBuild(s)
+        applyBuild(s)
         if (s.status === 'building') pollTimer.current = setTimeout(tick, 1000)
       } catch { /* keep last status */ }
     }
     clearTimeout(pollTimer.current)
     pollTimer.current = setTimeout(tick, 1000)
-  }, [])
+  }, [applyBuild])
 
   useEffect(() => {
     getBuildStatus()
-      .then((s) => { setBuild(s); if (s.status === 'building') pollBuild() })
+      .then((s) => {
+        buildRef.current = s
+        setBuild(s)
+        if (s.status === 'building') pollBuild()
+      })
       .catch(() => {})
     return () => clearTimeout(pollTimer.current)
   }, [pollBuild])
@@ -76,7 +105,6 @@ export default function PageEditor({ id }: { id: number | string }) {
       savePage(id, {
         title: d.title,
         route: d.route,
-        seo: d.seo,
         blocks: editorToPayloadBlocks(d.blocks, urlToId.current),
       }).then(() => {
         if (version === undefined || version === editVersion.current) setDirty(false)
@@ -92,7 +120,7 @@ export default function PageEditor({ id }: { id: number | string }) {
         const version = ++editVersion.current
         setDirty(true)
         clearTimeout(timer.current)
-        timer.current = setTimeout(() => persist(next, version), 800)
+        timer.current = setTimeout(() => { void persist(next, version).catch(() => {}) }, 800)
         return next
       })
     },
@@ -123,6 +151,8 @@ export default function PageEditor({ id }: { id: number | string }) {
   const saveNow = () => {
     clearTimeout(timer.current)
     persist(doc, editVersion.current)
+      .then(() => notify('success', '保存成功'))
+      .catch((e) => notify('error', `保存失败：${e instanceof Error ? e.message : '未知错误'}`))
   }
 
   const publishNow = () => {
@@ -132,27 +162,39 @@ export default function PageEditor({ id }: { id: number | string }) {
     publishPage(id, {
       title: doc.title,
       route: doc.route,
-      seo: doc.seo,
       blocks: editorToPayloadBlocks(doc.blocks, urlToId.current),
     })
       .then(async () => {
         setDoc((d) => (d ? { ...d, _status: 'published' } : d))
         try {
           const s = await triggerRebuild()
-          setBuild(s)
+          applyBuild(s)
           if (s.status === 'building') pollBuild()
         } catch (e) {
-          setBuild({ status: 'error', error: e instanceof Error ? e.message : '触发构建失败' })
+          const error = e instanceof Error ? e.message : '触发构建失败'
+          const failed: BuildStatus = { status: 'error', error }
+          buildRef.current = failed
+          setBuild(failed)
+          notify('error', `发布失败：${error}`)
         }
       })
       .catch((e) => {
-        setBuild({ status: 'error', error: e instanceof Error ? e.message : '发布失败' })
+        const error = e instanceof Error ? e.message : '发布失败'
+        const failed: BuildStatus = { status: 'error', error }
+        buildRef.current = failed
+        setBuild(failed)
+        notify('error', `发布失败：${error}`)
       })
       .finally(() => setPublishing(false))
   }
 
   return (
     <div className="ed-root">
+      {toast ? (
+        <div className={`ed-toast is-${toast.kind}`} role="status" aria-live="polite">
+          {toast.text}
+        </div>
+      ) : null}
       <TopBar
         id={id}
         title={doc.title}
@@ -193,6 +235,7 @@ export default function PageEditor({ id }: { id: number | string }) {
             if (p && block) update(updateAtPath(doc.blocks, p, { ...block, [field]: value } as Block))
           }}
           onReorder={(from, to) => update(moveBlock(doc.blocks, from, to))}
+          site={site}
           onDelete={deleteBlock}
         />
         <PropertyPanel

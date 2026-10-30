@@ -30,7 +30,7 @@ export default function MediaModal({ onClose, onSelect }: { onClose: () => void;
         <div className="ed-modal-head"><b>选择图片</b><button type="button" onClick={onClose}>✕</button></div>
         <div className="ed-modal-actions">
           <label className={`ed-upload-btn${busy ? ' is-busy' : ''}`}>
-            {busy ? '上传中…' : '上传'}
+            <span>{busy ? '上传中…' : '上传'}</span>
             <input
               ref={fileRef}
               type="file"

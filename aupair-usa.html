@@ -92,12 +92,23 @@
     .spec-item b { color: var(--deep-blue); }
     .spec-item span { color: var(--dark-text); }
 
-    /* ===== 申请流程：编号面板（参照 project-swt 流程） ===== */
-    .process-single { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 26px 30px; }
-    .stage { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px dashed var(--border); }
-    .stage:last-child { border-bottom: none; }
-    .stage .no { flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--light-blue); color: var(--deep-blue); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
-    .stage .name { font-size: 15px; font-weight: 600; color: var(--deep-blue); }
+    /* ===== 申请流程：iconList ===== */
+    .icon-list { display: grid; gap: 16px; }
+    .icon-list-item {
+      display: grid; grid-template-columns: 64px 1fr; gap: 20px; align-items: center;
+      background: #fff; border: 1px solid var(--border); border-radius: 12px;
+      padding: 18px 24px; box-shadow: 0 5px 14px rgba(138,14,75,0.05);
+    }
+    .icon-list-item--right { grid-template-columns: 1fr 64px; }
+    .icon-list-item--right .icon-list-node { order: 2; justify-self: end; }
+    .icon-list-item--right .icon-list-body { order: 1; }
+    .icon-list-node {
+      width: 60px; height: 60px; border-radius: 50%; background: var(--light-blue);
+      color: var(--accent); display: flex; align-items: center; justify-content: center;
+    }
+    .icon-list-node svg { width: 28px; height: 28px; display: block; }
+    .icon-list-body h3 { font-size: 17px; font-weight: 600; color: var(--deep-blue); line-height: 1.4; }
+    .icon-list-body p { font-size: 13.5px; color: var(--gray-blue); margin-top: 3px; line-height: 1.65; }
 
     /* ===== 页脚 ===== */
     footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
@@ -119,6 +130,14 @@
       .banner-media { min-height: 0; }
       .banner-photo { position: static; width: 100%; margin-top: 24px; }
       .banner-pattern { display: none; }
+
+      .icon-list { gap: 12px; }
+      .icon-list-item { grid-template-columns: 52px 1fr; gap: 14px; padding: 14px 16px; }
+      .icon-list-item--right { grid-template-columns: 1fr 52px; }
+      .icon-list-node { width: 48px; height: 48px; }
+      .icon-list-node svg { width: 23px; height: 23px; }
+      .icon-list-body h3 { font-size: 15px; }
+      .icon-list-body p { font-size: 12px; }
     }
   </style>
 </head>
@@ -133,6 +152,19 @@
      CMS 配置化内容模型 —— 美国互惠生页
      pageConfig 模拟后端返回值。真实后端就绪后，仅需替换数据源。
      ========================================================= */
+
+  // 申请流程步骤（iconList 统一数据模型）
+  const applySteps = [
+    { icon: "compass",  title: "了解项目",             desc: "顾问介绍项目内容与匹配预期" },
+    { icon: "mic",      title: "英语测试",             desc: "评估英语口语与沟通水平" },
+    { icon: "contract", title: "交报名费并签订合同",   desc: "确认服务内容与双方权责" },
+    { icon: "folder",   title: "准备材料",             desc: "证件、照片、推荐信等材料" },
+    { icon: "home",     title: "匹配家庭",             desc: "根据需求筛选合适的家庭" },
+    { icon: "check",    title: "成功匹配家庭并交尾款", desc: "完成家庭确认并支付尾款" },
+    { icon: "passport", title: "准备面签",             desc: "材料复核与面签培训" },
+    { icon: "stamp",    title: "拿到签证",             desc: "行前指导与行程安排" },
+    { icon: "plane",    title: "出国",                 desc: "落地接机与后续跟进" }
+  ];
 
   const pageConfig = {
     title: "美国互惠生",
@@ -213,16 +245,29 @@
           ] },
         options: { alt: true } },
 
-      // ④ 申请流程 APPLY
-      { type: "steps",
-        data: { title: "申请流程",
-          steps: [ "了解项目", "英语测试", "交报名费并签订合同", "准备材料", "匹配家庭", "成功匹配家庭并交尾款", "准备面签", "拿到签证", "出国" ] },
-        options: { bg: "img/yinji-bg.jpg" } }
+      // ④ 申请流程：iconList（浅粉底、图标居左）
+      { type: "iconList",
+        data: { title: "申请流程", items: applySteps },
+        options: { alt: true, iconPosition: "left" } }
     ]
   };
 
   // ---------------- 渲染器 ----------------
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+  // 申请流程图标（内联 SVG，stroke=currentColor）
+  const applyIcons = {
+    compass:  '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2z"/>',
+    mic:      '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"/>',
+    contract: '<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/>',
+    folder:   '<path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z"/><path d="M3 10h18"/>',
+    home:     '<path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-8z"/><path d="M9 21v-6h6v6"/>',
+    check:    '<circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/>',
+    passport: '<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M9 17h6"/>',
+    stamp:    '<path d="M5 21h14M7 18h10v-2a3 3 0 0 0-2-2.8V10a3 3 0 0 0-6 0v3.2A3 3 0 0 0 7 16z"/>',
+    plane:    '<path d="m3 11 18-8-8 18-2-8-8-2z"/>'
+  };
+  const iconSvg = key => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${applyIcons[key] || ""}</svg>`;
 
   const renderers = {
     banner(b) {
@@ -251,16 +296,21 @@
         <div class="spec-list">${items}</div>
       </div></section>`;
     },
-    "steps"(b) {
-      const d = b.data;
-      const bg = b.options.bg;
+    "iconList"(b) {
+      const d = b.data, bg = b.options.bg;
       const secStyle = bg ? `style="background-image:url('${esc(bg)}');background-size:cover;background-position:center;"` : "";
-      const stages = (d.steps || []).map((s, i) =>
-        `<div class="stage"><span class="no">${i + 1}</span><span class="name">${esc(s)}</span></div>`).join("");
-      const cls = bg ? "section on-image" : (b.options.alt ? "section section-alt" : "section");
-      return `<section class="${cls}" ${secStyle}><div class="container">
+      const cls = `section${b.options.alt ? " section-alt" : ""}${bg ? " on-image" : ""}`;
+      const pos = ["left", "right", "alternate"].includes(b.options.iconPosition) ? b.options.iconPosition : "alternate";
+      const items = (d.items || []).map((it, i) => {
+        const side = pos === "alternate" ? (i % 2 === 0 ? "left" : "right") : pos;
+        return `<div class="icon-list-item icon-list-item--${side}">
+          <div class="icon-list-node">${iconSvg(it.icon)}</div>
+          <div class="icon-list-body"><h3>${esc(it.title)}</h3>${it.desc ? `<p>${esc(it.desc)}</p>` : ""}</div>
+        </div>`;
+      }).join("");
+      return `<section class="${cls}" id="${b.id || ""}" ${secStyle}><div class="container">
         <div class="section-title${bg ? " title-on-image" : ""}"><h2>${esc(d.title)}</h2></div>
-        <div class="process-single">${stages}</div>
+        <div class="icon-list">${items}</div>
       </div></section>`;
     }
   };

@@ -1,6 +1,7 @@
-import { NAV_ITEMS, LANG_LINK, LOGO_SRC, hrefOf, type MenuItem } from './assets'
+import { hrefOf } from './assets'
+import type { MenuNode, SiteSettings } from '../render/types'
 
-function NavItem({ item, activeRoute }: { item: MenuItem; activeRoute: string }) {
+function NavItem({ item, activeRoute }: { item: MenuNode; activeRoute: string }) {
   const active = item.link === activeRoute
   return (
     <li>
@@ -11,7 +12,7 @@ function NavItem({ item, activeRoute }: { item: MenuItem; activeRoute: string })
       {item.children?.length ? (
         <div className="dropdown">
           {item.children.map((c) => (
-            <a key={c.label} href={hrefOf(c.link)}>{c.label}</a>
+            <a key={`${c.label}-${c.link}`} href={hrefOf(c.link)}>{c.label}</a>
           ))}
         </div>
       ) : null}
@@ -19,20 +20,28 @@ function NavItem({ item, activeRoute }: { item: MenuItem; activeRoute: string })
   )
 }
 
-export function SiteNav({ activeRoute = '' }: { activeRoute?: string }) {
+export function SiteNav({
+  activeRoute = '',
+  menu = [],
+  settings,
+}: {
+  activeRoute?: string
+  menu?: MenuNode[]
+  settings: SiteSettings
+}) {
   return (
     <header>
       <div className="container nav">
-        <a className="logo" href="/"><img src={LOGO_SRC} alt="中惠文化" /></a>
+        <a className="logo" href="/"><img src={settings.logo} alt="中惠文化" /></a>
         <button className="nav-toggle" type="button" aria-label="菜单" aria-expanded="false">☰</button>
         <div className="nav-right">
           <ul className="nav-menu">
-            {NAV_ITEMS.map((m) => <NavItem key={m.label} item={m} activeRoute={activeRoute} />)}
+            {menu.map((m) => <NavItem key={`${m.label}-${m.link}`} item={m} activeRoute={activeRoute} />)}
           </ul>
           <div className="nav-lang">
-            <a className="active" href="#">中文</a>
+            <a className="active" href="#">{settings.langCurrentLabel}</a>
             <span className="sep">|</span>
-            <a href={hrefOf(LANG_LINK)}>EN</a>
+            <a href={hrefOf(settings.langOtherUrl)}>{settings.langOtherLabel}</a>
           </div>
         </div>
       </div>

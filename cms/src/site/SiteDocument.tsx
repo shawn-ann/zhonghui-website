@@ -1,5 +1,6 @@
 import { Fragment } from 'react'
-import type { PageDoc } from '../render/types'
+import type { PageDoc, SiteConfig } from '../render/types'
+import { DEFAULT_SITE_CONFIG } from './config'
 import { TopBlock } from './blocks'
 import { SiteNav } from './nav'
 import { SiteFooter } from './footer'
@@ -18,23 +19,22 @@ export const PREVIEW_LOCK_JS =
   "document.addEventListener('click',function(e){var t=e.target;if(t&&t.closest&&t.closest('a'))e.preventDefault()},true)"
 export const PREVIEW_LOCK_LINKS = `<script>${PREVIEW_LOCK_JS}</script>`
 
-export function SiteBody({ page, editor = false }: { page: PageDoc; editor?: boolean }) {
+export function SiteBody({ page, site = DEFAULT_SITE_CONFIG, editor = false }: { page: PageDoc; site?: SiteConfig; editor?: boolean }) {
   return (
     <>
-      <SiteNav activeRoute={page.route} />
+      <SiteNav activeRoute={page.route} menu={site.menu} settings={site.settings} />
       <main id="page">
         {page.blocks.map((b, i) => (
           <Fragment key={b._id ?? i}><TopBlock b={b} editor={editor} /></Fragment>
         ))}
       </main>
-      <SiteFooter />
+      <SiteFooter settings={site.settings} />
     </>
   )
 }
 
-export function SiteDocument({ page, assets }: { page: PageDoc; assets: SiteAssets }) {
-  const title = page.seo?.title || page.title
-  const desc = page.seo?.description || ''
+export function SiteDocument({ page, site, assets }: { page: PageDoc; site?: SiteConfig; assets: SiteAssets }) {
+  const title = page.title
   const inline = assets.mode === 'inline'
   return (
     <html lang="zh-CN">
@@ -42,7 +42,6 @@ export function SiteDocument({ page, assets }: { page: PageDoc; assets: SiteAsse
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{title}</title>
-        {desc ? <meta name="description" content={desc} /> : null}
         {inline
           ? (
             <>
@@ -58,7 +57,7 @@ export function SiteDocument({ page, assets }: { page: PageDoc; assets: SiteAsse
           )}
       </head>
       <body>
-        <SiteBody page={page} />
+        <SiteBody page={page} site={site} />
         {inline
           ? (
             <>

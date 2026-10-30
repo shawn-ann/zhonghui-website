@@ -5,7 +5,6 @@ import type { PageDoc } from '../types'
 const page: PageDoc = {
   title: '首页',
   route: '/',
-  seo: { title: '中惠文化' },
   blocks: [{ type: 'text', body: '你好' }],
 }
 

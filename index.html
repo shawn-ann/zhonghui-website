@@ -312,7 +312,7 @@
             { img: "img/prog-uk-study.jpg",    title: "英国留学",    desc: "英伦名校，开启留学之旅" },
             { img: "img/prog-iccp.jpg",        title: "澳洲留学",    desc: "南半球留学体验" },
             { img: "img/prog-us-study.jpg",    title: "美国留学",    desc: "美国名校留学申请" } ] },
-        options: { columns: 3, alt: false, bg: "img/bg2.jpg" } },
+        options: { columns: 3, bgHeight: 304, bg: "linear-gradient(90deg, #FC0401 0%, #F5534E 50%, #F4585E 62%, #FC1972 100%)" } },
 
       // ③ 中惠优势：2×4 图标网格
       { type: "advantage-grid",
@@ -350,18 +350,27 @@
 
   // ---------------- 统一区块外壳：支持背景（图/纯色/渐变）与前置背景带 ----------------
   // 把 b.options.bg 转成背景 style 字符串。"" | linear-gradient…/radial-gradient… → 渐变 | #hex/var()/rgb/hsl/颜色名 → 纯色 | 其余 → 图片
-  function bgStyle(bg) {
+  // b.options.bgHeight 存在时，背景只铺顶部固定高度（背景带），其余区域用白色兜底。
+  function bgStyle(bg, opts = {}) {
     if (!bg) return "";
     const v = String(bg).trim();
-    if (/^(linear-gradient|radial-gradient)/i.test(v)) return `style="background:${v};"`;
-    if (/^(#|var\(|rgb|hsl)/i.test(v)) return `style="background:${v};"`;
-    if (/\/|\.(png|jpe?g|gif|webp|svg)(\?|$)/i.test(v)) return `style="background-image:url('${esc(v)}');background-size:cover;background-position:center;"`;
+    const bh = Number(opts.bgHeight);
+    const band = bh > 0
+      ? `background-size:100% ${bh}px;background-repeat:no-repeat;background-position:top center;background-color:var(--white);`
+      : "";
+    if (/^(linear-gradient|radial-gradient)/i.test(v)) {
+      return band ? `style="background-image:${esc(v)};${band}"` : `style="background:${esc(v)};"`;
+    }
+    if (/^(#|var\(|rgb|hsl)/i.test(v)) return `style="background:${esc(v)};"`;
+    if (/\/|\.(png|jpe?g|gif|webp|svg)(\?|$)/i.test(v)) {
+      return `style="background-image:url('${esc(v)}');${band || "background-size:cover;background-position:center;"}"`;
+    }
     return `style="background:${v};"`;
   }
 
   function shell(b, innerHtml) {
     const bg = b.options.bg || "";
-    const style = bgStyle(bg);
+    const style = bgStyle(bg, b.options);
     const cls = ["section"];
     if (!style && b.options.alt) cls.push("section-alt");
     return `<section class="${cls.join(" ")}" ${style}>${innerHtml}</section>`;

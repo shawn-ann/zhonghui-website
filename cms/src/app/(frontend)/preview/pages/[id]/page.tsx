@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { mapPageDoc, resolveMedia } from '@/generate/loadSiteData'
+import { buildSiteConfig } from '@/site/config'
 import { SiteBody } from '@/site/SiteDocument'
 import { SiteScripts } from '@/site/SiteScripts'
 
@@ -18,7 +19,11 @@ async function loadPreview(id: string) {
     const routes = new Map<string, string>(
       pages.docs.map((d: any) => [String(d.id), String(d.route ?? '')]),
     )
-    return { doc, routes }
+    const [menuRaw, settingsRaw] = await Promise.all([
+      payload.findGlobal({ slug: 'menu', depth: 1 }).catch(() => null),
+      payload.findGlobal({ slug: 'site-settings', depth: 1 }).catch(() => null),
+    ])
+    return { doc, site: buildSiteConfig(menuRaw, settingsRaw, routes) }
   } catch {
     return null
   }
@@ -28,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params
   const data: any = await loadPreview(id)
   if (!data?.doc) return {}
-  return { title: data.doc.seo?.title || data.doc.title, description: data.doc.seo?.description }
+  return { title: data.doc.title }
 }
 
 export default async function PreviewPage({ params }: { params: Promise<{ id: string }> }) {
@@ -38,7 +43,7 @@ export default async function PreviewPage({ params }: { params: Promise<{ id: st
 
   return (
     <>
-      <SiteBody page={mapPageDoc(data.doc, resolveMedia, data.routes)} />
+      <SiteBody page={mapPageDoc(data.doc, resolveMedia, data.routes)} site={data.site} />
       <SiteScripts lockLinks />
     </>
   )

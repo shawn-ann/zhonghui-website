@@ -1,23 +1,22 @@
 import { readFileSync } from 'fs'
 import path from 'path'
-import { fileURLToPath } from 'url'
 import { renderPage } from '../render/layout'
 import type { SiteData } from '../render/types'
 import { routeToFile } from './route'
 import { rewriteMediaUrls } from './media'
 
-const dirname = path.dirname(fileURLToPath(import.meta.url))
-const read = (p: string) => readFileSync(path.resolve(dirname, p), 'utf-8')
-const staticDir = path.resolve(dirname, '../static')
+const cmsDir = process.cwd()
+const read = (p: string) => readFileSync(path.resolve(cmsDir, p), 'utf-8')
+const staticDir = path.resolve(cmsDir, 'src/static')
 const readStatic = (rel: string): Buffer => readFileSync(path.join(staticDir, rel))
 
-const baseCss = read('../render/styles/base.css')
-const mainJs = read('../render/styles/main.js')
+const baseCss = read('src/render/styles/base.css')
+const mainJs = read('src/render/styles/main.js')
 
 export function generateSite(data: SiteData): Map<string, string | Buffer> {
   const out = new Map<string, string | Buffer>()
   for (const page of data.pages) {
-    out.set(routeToFile(page.route), rewriteMediaUrls(renderPage(page)))
+    out.set(routeToFile(page.route), rewriteMediaUrls(renderPage(page, data.site)))
   }
   out.set('assets/style.css', baseCss)
   out.set('assets/main.js', mainJs)

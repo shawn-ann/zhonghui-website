@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { SiteBody } from '../site/SiteDocument'
 import type { EditorDoc } from './types'
+import type { SiteConfig } from '../render/types'
 
 export const CANVAS_STYLE =
   '.ed-selected{position:relative}' +
@@ -32,7 +33,7 @@ const FRAME_SRC = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"
   `<script src="/assets/main.js"></script></body></html>`
 
 export default function Canvas({
-  doc, selectedId, selectedLabel, onSelect, onEditField, onReorder, onDelete, deviceWidth = 1280,
+  doc, selectedId, selectedLabel, onSelect, onEditField, onReorder, onDelete, site, deviceWidth = 1280,
 }: {
   doc: EditorDoc
   selectedId?: string
@@ -41,6 +42,7 @@ export default function Canvas({
   onEditField: (blockId: string, field: string, value: string) => void
   onReorder?: (from: number, to: number) => void
   onDelete?: (id: string) => void
+  site?: SiteConfig
   deviceWidth?: number
 }) {
   const ref = useRef<HTMLIFrameElement>(null)
@@ -208,7 +210,7 @@ export default function Canvas({
           onLoad={handleLoad}
           style={{ width: deviceWidth, height: '900px', border: 0, transform: `scale(${scale})`, transformOrigin: 'top left' }}
         />
-        {root ? createPortal(<SiteBody page={doc} editor />, root) : null}
+        {root ? createPortal(<SiteBody page={doc} site={site} editor />, root) : null}
       </div>
       {toolbar ? (
         <div className="ed-block-overlay" style={{ top: toolbar.top, left: toolbar.left }}>
