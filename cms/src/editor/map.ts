@@ -160,6 +160,8 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'infoList':
+      if (b.title !== undefined) out.title = b.title
+      out.titleAlign = b.titleAlign || 'left'
       out.items = (b.items || []).map((i) => ({ label: i.label || '', desc: i.desc || '' }))
       out.showDots = b.showDots !== false
       break

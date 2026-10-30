@@ -62,6 +62,8 @@
 **字段**
 
 ```ts
+title?: string      // 可选，卡片内标题
+titleAlign: 'left' | 'center'
 items: {
   label: string      // 可选，标签/年份/姓名
   desc: string       // 说明，必填
@@ -75,7 +77,7 @@ showDots: boolean   // 默认 true
 - `showDots=true`：玫红圆点 + 标签 + 说明。
 - `showDots=false`：不显示圆点；标签为空时只渲染说明。
 - 标签存在时使用品牌深玫红强调，说明使用正文色。
-- 标题由同级 `heading` 组件提供。
+- 标题可直接写在组件内（左/居中），也可用同级 `heading` 组件；师资团队使用组件内标题。
 
 **用途**
 
@@ -279,7 +281,7 @@ interface RepeaterFieldDef {
 | 2 | 背景图 `bg2.jpg`，铺满整个分栏（bgHeight=0） | `heading` 公司介绍（白字） + `grid`（2 列，左窄右宽，顶部对齐：图片 4:3 + `stack`（白底、内边距 20、6 个单段文本）） |
 | 3 | 默认 | `heading` 中惠历程 + `hscroll`（timeline=true，内部 14 个图文卡片） |
 | 4 | 浅粉，`paddingY=2xl` | `heading` 中惠理念 + 两个连续 `text`（正文 + 高亮句） |
-| 5 | 默认 | `heading` 创始团队 + `grid`（3 列：3 个图文卡片，副标题为职位） + `heading` 专业师资团队 + `infoList`（无圆点） |
+| 5 | 背景图 `yinji-bg.jpg` | `heading` 创始团队 + `grid`（3 列：3 个图文卡片，副标题为职位） + `infoList`（无圆点，标题「专业师资团队」左对齐） |
 | 6 | 浅粉 | `heading` 核心优势 + `iconList`（alternate） |
 
 说明：公司介绍右列使用 `stack` 纵向容器；公司名称、介绍正文、两个小标题及说明均为单段 `text`，通过字号、字重、颜色和上间距形成层级。

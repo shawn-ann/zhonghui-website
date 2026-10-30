@@ -1028,6 +1028,8 @@ export interface Page {
                       blockType: 'richtext';
                     }
                   | {
+                      title?: string | null;
+                      titleAlign?: ('left' | 'center') | null;
                       items: {
                         label?: string | null;
                         desc: string;
@@ -2035,6 +2037,8 @@ export interface Page {
             blockType: 'iconCard';
           }
         | {
+            title?: string | null;
+            titleAlign?: ('left' | 'center') | null;
             items: {
               label?: string | null;
               desc: string;
@@ -2946,6 +2950,8 @@ export interface PagesSelect<T extends boolean = true> {
                     infoList?:
                       | T
                       | {
+                          title?: T;
+                          titleAlign?: T;
                           items?:
                             | T
                             | {
@@ -3599,6 +3605,8 @@ export interface PagesSelect<T extends boolean = true> {
         infoList?:
           | T
           | {
+              title?: T;
+              titleAlign?: T;
               items?:
                 | T
                 | {

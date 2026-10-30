@@ -365,3 +365,5 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .stack-item > .container { width: 100%; max-width: none; margin: 0; padding: 0; }
 .image-block.has-ratio { overflow: hidden; }
 .image-block.has-ratio img { display: block; }
+.info-list-title { margin: 0 0 11px; color: var(--deep-blue); font-size: 20px; line-height: 1.4; }
+.info-list-title.is-center { text-align: center; }

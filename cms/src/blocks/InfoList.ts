@@ -4,6 +4,17 @@ export const InfoListBlock: Block = {
   slug: 'infoList',
   labels: { singular: '信息列表', plural: '信息列表' },
   fields: [
+    { name: 'title', type: 'text', label: '标题（可选）' },
+    {
+      name: 'titleAlign',
+      type: 'select',
+      defaultValue: 'left',
+      label: '标题对齐',
+      options: [
+        { label: '左对齐', value: 'left' },
+        { label: '居中', value: 'center' },
+      ],
+    },
     {
       name: 'items',
       type: 'array',

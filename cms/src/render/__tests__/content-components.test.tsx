@@ -76,9 +76,12 @@ describe('content component extensions', () => {
       type: 'infoList',
       _id: 'i',
       showDots: false,
+      title: '专业师资团队',
+      titleAlign: 'center',
       items: [{ label: '', desc: '说明一' }, { label: '食宿', desc: '免费' }],
     }
     const html = render(b)
+    expect(html).toContain('info-list-title is-center')
     expect(html).toContain('info-item')
     expect(html).not.toContain('info-dot')
     expect(html).toContain('食宿')

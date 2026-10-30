@@ -98,10 +98,10 @@ describe('mapBlock', () => {
   })
   it('maps info list, icon list and hscroll recursively', () => {
     const info = mapBlock({
-      blockType: 'infoList', showDots: false,
+      blockType: 'infoList', showDots: false, title: '标题', titleAlign: 'center',
       items: [{ label: '食宿', desc: '免费' }, { desc: '无标签' }],
     }, resolve) as any
-    expect(info).toMatchObject({ type: 'infoList', showDots: false })
+    expect(info).toMatchObject({ type: 'infoList', showDots: false, title: '标题', titleAlign: 'center' })
     expect(info.items).toEqual([{ label: '食宿', desc: '免费' }, { label: undefined, desc: '无标签' }])
 
     const icons = mapBlock({

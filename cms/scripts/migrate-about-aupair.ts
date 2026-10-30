@@ -251,9 +251,10 @@ const aboutBlocks: any[] = [
         },
       ],
     },
-    heading('专业师资团队'),
     {
       blockType: 'infoList',
+      title: '专业师资团队',
+      titleAlign: 'left',
       showDots: false,
       items: [
         '深耕互惠生项目十年以上，专注项目推广与美国签证培训的资深讲师',
@@ -263,7 +264,7 @@ const aboutBlocks: any[] = [
         '亲身参与过德国互惠、主攻赴德互惠项目，为学员提供全套专业指导的老师',
       ].map((desc) => ({ label: '', desc })),
     },
-  ]),
+  ], { bgImage: '/assets/yinji-bg.jpg' }),
   section([
     heading('核心优势 · 为什么选择中惠'),
     {
@@ -272,7 +273,7 @@ const aboutBlocks: any[] = [
       iconColor: '#E60039',
       items: advantages.map(([name, title, desc]) => ({ icon: advantageIcons[name], title, desc })),
     },
-  ], { bgColor: '#FFF1F6', paddingY: '2xl' }),
+  ], { bgColor: '#FFF1F6' }),
 ]
 
 const aupairHero = aboutHero

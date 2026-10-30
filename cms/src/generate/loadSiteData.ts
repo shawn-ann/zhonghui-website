@@ -144,6 +144,8 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
     case 'infoList':
       return {
         type: 'infoList',
+        title: raw.title || undefined,
+        titleAlign: raw.titleAlign === 'center' ? 'center' : 'left',
         items: arr<Record<string, any>>(raw.items).map((i) => ({
           label: i.label || undefined,
           desc: String(i.desc ?? ''),

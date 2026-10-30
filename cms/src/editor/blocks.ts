@@ -98,7 +98,9 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '居中', value: 'center' }, { label: '左对齐', value: 'left' }] },
     { key: 'padding', label: '内边距', control: 'number' },
   ] },
-  infoList: { type: 'infoList', label: '信息列表', defaults: () => ({ type: 'infoList', showDots: true, items: [{ label: '标签', desc: '说明' }] }), fields: [
+  infoList: { type: 'infoList', label: '信息列表', defaults: () => ({ type: 'infoList', showDots: true, titleAlign: 'left', items: [{ label: '标签', desc: '说明' }] }), fields: [
+    { key: 'title', label: '标题（可选）', control: 'text' },
+    { key: 'titleAlign', label: '标题对齐', control: 'select', options: [{ label: '左对齐', value: 'left' }, { label: '居中', value: 'center' }] },
     { key: 'items', label: '条目', control: 'repeater', addLabel: '添加条目', itemFields: [
       { key: 'label', label: '标签（可选）', control: 'text' },
       { key: 'desc', label: '说明', control: 'textarea' },

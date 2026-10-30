@@ -340,6 +340,9 @@ export function InfoListView({ b }: { b: InfoListBlock }) {
   return (
     <div className="container" data-bid={b._id}>
       <div className="info-list">
+        {b.title ? (
+          <h3 className={`info-list-title${b.titleAlign === 'center' ? ' is-center' : ''}`}>{b.title}</h3>
+        ) : null}
         {(b.items || []).map((item, i) => (
           <div className={`info-item${b.showDots === false ? ' no-dot' : ''}`} key={i}>
             {b.showDots === false ? null : <span className="info-dot" />}

@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 为 CMS 增加信息列表、图标列表、横向滚动容器和纵向容器，扩展现有网格/文本/图文卡片，并把「关于中惠」「美国互惠生」两页内容迁入后台。
+**Goal:** 为 CMS 增加信息列表（支持可选标题与左/居中对齐）、图标列表、横向滚动容器和纵向容器，扩展现有网格/文本/图文卡片，并把「关于中惠」「美国互惠生」两页内容迁入后台。
 
 **Architecture:** 新组件沿用现有 block 体系：Payload 字段定义 → `mapBlock` 转 PageDoc → React 渲染 → 编辑器属性面板。信息列表和图标列表使用新的通用重复项控件；横向滚动是布局容器，子项直接复用 `imageText`。迁移脚本通过 Payload Local API 幂等创建页面和媒体。
 

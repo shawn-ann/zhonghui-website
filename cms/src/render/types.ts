@@ -134,6 +134,8 @@ export interface IconCardBlock extends BlockBase {
 
 export interface InfoListBlock extends BlockBase {
   type: 'infoList'
+  title?: string
+  titleAlign?: 'left' | 'center'
   items: { label?: string; desc: string }[]
   showDots: boolean
 }
