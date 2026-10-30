@@ -370,4 +370,5 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .info-list-title { margin: 0 0 11px; color: var(--deep-blue); font-size: 20px; line-height: 1.4; }
 .info-list-title.is-center { text-align: center; }
 .section-content > * { min-width: 0; }
+.section-content > .container { width: 100%; }
 .section-content > .container:first-child .section-heading { margin-bottom: 0; }
