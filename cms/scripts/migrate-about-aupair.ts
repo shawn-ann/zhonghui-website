@@ -264,7 +264,7 @@ const aboutBlocks: any[] = [
         '亲身参与过德国互惠、主攻赴德互惠项目，为学员提供全套专业指导的老师',
       ].map((desc) => ({ label: '', desc })),
     },
-  ], { bgImage: '/assets/yinji-bg.jpg' }),
+  ], { bgImage: '/assets/yinji-bg.jpg', contentGap: 32 }),
   section([
     heading('核心优势 · 为什么选择中惠'),
     {

@@ -144,6 +144,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
     case 'section':
       out.paddingY = b.paddingY || 'md'
       if (b.paddingCustom !== undefined) out.paddingCustom = b.paddingCustom
+      if (b.contentGap !== undefined) out.contentGap = b.contentGap
       if (b.bgImage !== undefined) out.bgImage = b.bgImage
       if (b.bgColor !== undefined) out.bgColor = b.bgColor
       if (b.bgGradient !== undefined) out.bgGradient = b.bgGradient

@@ -204,6 +204,10 @@ export interface Page {
              * 大于 0 时覆盖上方预设
              */
             paddingCustom?: number | null;
+            /**
+             * 分栏直接子项之间的统一间距；0/留空不启用
+             */
+            contentGap?: number | null;
             children?:
               | (
                   | {
@@ -2420,6 +2424,7 @@ export interface PagesSelect<T extends boolean = true> {
               bg?: T;
               paddingY?: T;
               paddingCustom?: T;
+              contentGap?: T;
               children?:
                 | T
                 | {

@@ -151,6 +151,8 @@ describe('mapBlock', () => {
     expect(b).toMatchObject({ type: 'section', paddingY: 'none' })
     const d = mapBlock({ blockType: 'section' }, resolve) as any
     expect(d.paddingY).toBe('md')
+    const gapped = mapBlock({ blockType: 'section', contentGap: 32 }, resolve) as any
+    expect(gapped.contentGap).toBe(32)
   })
   it('ignores legacy per-side section padding fields', () => {
     const b = mapBlock({ blockType: 'section', paddingTop: 60, paddingBottom: 120 }, resolve) as any

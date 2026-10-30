@@ -73,12 +73,18 @@ export function SectionView({ b, editor = false }: { b: SectionBlock; editor?: b
     background = { backgroundColor: b.bgColor }
   }
   const pad = b.paddingCustom && b.paddingCustom > 0 ? b.paddingCustom : PAD[b.paddingY || 'md'] ?? 72
+  const gap = b.contentGap && b.contentGap > 0 ? b.contentGap : 0
   const style = { padding: `${pad}px 0`, ...background }
+  const children = (b.children || []).map((c, i) => (
+    <Fragment key={c._id ?? i}>{blockNode(c, editor)}</Fragment>
+  ))
   return (
     <section className={`section${!band && b.bgImage && !gradient ? ' on-image' : ''}`} data-bid={b._id} style={style}>
-      {(b.children || []).map((c, i) => (
-        <Fragment key={c._id ?? i}>{blockNode(c, editor)}</Fragment>
-      ))}
+      {gap ? (
+        <div className="section-content" style={{ display: 'flex', flexDirection: 'column', gap: `${gap}px` }}>
+          {children}
+        </div>
+      ) : children}
     </section>
   )
 }

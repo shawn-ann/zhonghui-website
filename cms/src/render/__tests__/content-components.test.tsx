@@ -24,6 +24,12 @@ describe('content component extensions', () => {
     expect(html).toContain('margin-top:14px')
   })
 
+  it('applies section child gap', () => {
+    const html = render({ type: 'section', _id: 'sg', contentGap: 32, children: [{ type: 'text', body: 'A' }] })
+    expect(html).toContain('class="section-content"')
+    expect(html).toContain('gap:32px')
+  })
+
   it('supports large and custom section padding', () => {
     const large = render({ type: 'section', _id: 's1', paddingY: '2xl', children: [] })
     expect(large).toContain('padding:160px 0')
