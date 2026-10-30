@@ -159,7 +159,7 @@ const aboutBlocks: any[] = [
     ],
   },
   section([
-    heading('公司介绍'),
+    { blockType: 'heading', title: '公司介绍', align: 'center', titleColor: '#FFFFFF' },
     {
       blockType: 'grid',
       columns: 2,
@@ -170,6 +170,8 @@ const aboutBlocks: any[] = [
         {
           blockType: 'stack',
           gap: 'sm',
+          bgColor: '#FFFFFF',
+          padding: 20,
           children: [
             {
               blockType: 'text',
@@ -213,7 +215,7 @@ const aboutBlocks: any[] = [
         },
       ],
     },
-  ]),
+  ], { bgImage: '/assets/bg2.jpg', bgHeight: 304 }),
   section([heading('中惠历程'), { blockType: 'hscroll', timeline: true, children: milestoneCards }]),
   section([
     heading('中惠理念'),

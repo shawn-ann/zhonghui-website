@@ -194,7 +194,7 @@ export function TextView({ b, editor = false }: { b: TextBlock; editor?: boolean
     <div className="container" data-bid={b._id} style={textColorVars(b.titleColor, b.bodyColor)}>
       <div className="text-block" style={textStyle}>
         {b.title ? <h2 data-field="title">{b.title}</h2> : null}
-        <p data-field="body">{b.body}</p>
+        <p data-field="body">{lines(b.body)}</p>
       </div>
     </div>
   )

@@ -24,6 +24,11 @@ describe('content component extensions', () => {
     expect(html).toContain('margin-top:14px')
   })
 
+  it('renders text line breaks', () => {
+    const html = render({ type: 'text', _id: 'tb', body: '第一行\n第二行' })
+    expect(html).toContain('第一行<br/>第二行')
+  })
+
   it('renders grid column ratio for two columns', () => {
     const b: GridBlock = {
       type: 'grid',
