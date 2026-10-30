@@ -332,12 +332,14 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .hscroll-viewport { overflow-x: auto; overflow-y: hidden; cursor: grab; scrollbar-width: none; padding: 4px 4px 16px; overscroll-behavior-x: contain; scroll-snap-type: x proximity; }
 .hscroll-viewport::-webkit-scrollbar { display: none; }
 .hscroll-viewport.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
-.hscroll-inner { position: relative; display: flex; gap: 20px; width: max-content; }
+.hscroll-inner { position: relative; display: flex; align-items: stretch; gap: 20px; width: max-content; }
 .hscroll-inner::before { content: ''; position: absolute; left: 0; right: 0; top: 195px; height: 2px; background: linear-gradient(90deg, var(--accent), #f3d6e2); display: none; }
 .hscroll.timeline .hscroll-inner::before { display: block; }
-.hscroll-item { flex: 0 0 260px; scroll-snap-align: start; }
-.hscroll-item .container { width: 100%; max-width: none; padding: 0; margin: 0; }
-.hscroll-item .image-text { height: 100%; }
+.hscroll-item { flex: 0 0 260px; scroll-snap-align: start; display: flex; }
+.hscroll-item > .container { width: 100%; max-width: none; padding: 0; margin: 0; display: flex; flex: 1; }
+.hscroll-item .it-link { display: flex; flex: 1; }
+.hscroll-item .image-text { height: auto; flex: 1; display: flex; flex-direction: column; }
+.hscroll-item .it-body { flex: 1; }
 .hscroll-item .it-img { height: 195px; aspect-ratio: auto; }
 .hscroll-item .it-img img { width: 100%; height: 100%; object-fit: cover; }
 .hscroll-item .it-body { padding: 15px 18px 18px; }
