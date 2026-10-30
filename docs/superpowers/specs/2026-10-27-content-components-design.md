@@ -270,7 +270,7 @@ interface RepeaterFieldDef {
 | 顺序 | 分栏背景 | 内容 |
 |---|---|---|
 | 1 | 默认 | `banner` |
-| 2 | 背景图 `bg2.jpg`，304px 顶部色带 | `heading` 公司介绍（白字） + `grid`（2 列，左窄右宽，顶部对齐：图片 4:3 + `stack`（白底、内边距 20、6 个单段文本）） |
+| 2 | 背景图 `bg2.jpg`，铺满整个分栏（bgHeight=0） | `heading` 公司介绍（白字） + `grid`（2 列，左窄右宽，顶部对齐：图片 4:3 + `stack`（白底、内边距 20、6 个单段文本）） |
 | 3 | 默认 | `heading` 中惠历程 + `hscroll`（timeline=true，内部 14 个图文卡片） |
 | 4 | 浅粉 | `heading` 中惠理念 + 两个连续 `text`（正文 + 高亮句） |
 | 5 | 默认 | `heading` 创始团队 + `grid`（3 列：3 个图文卡片，副标题为职位） + `heading` 专业师资团队 + `infoList`（无圆点） |

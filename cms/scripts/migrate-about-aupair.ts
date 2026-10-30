@@ -215,7 +215,7 @@ const aboutBlocks: any[] = [
         },
       ],
     },
-  ], { bgImage: '/assets/bg2.jpg', bgHeight: 304 }),
+  ], { bgImage: '/assets/bg2.jpg', bgHeight: 0 }),
   section([heading('中惠历程'), { blockType: 'hscroll', timeline: true, children: milestoneCards }]),
   section([
     heading('中惠理念'),

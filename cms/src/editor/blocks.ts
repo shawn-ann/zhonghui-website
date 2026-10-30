@@ -193,7 +193,7 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
 export const LAYOUT_TYPES = ['section', 'grid', 'hscroll', 'stack'] as const
 
 /** 分栏：版面级内容。 */
-export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'iconList', 'hscroll']
+export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'iconList', 'hscroll']
 /** 网格：卡片/文本级内容。 */
 export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack']
 

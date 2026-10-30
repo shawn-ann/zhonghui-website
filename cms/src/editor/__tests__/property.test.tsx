@@ -61,10 +61,9 @@ describe('PropertyPanel', () => {
     const onAddChild = vi.fn()
     const section: Block = { type: 'section', _id: 's1', children: [] }
     render(<PropertyPanel block={section} onChange={() => {}} onAddChild={onAddChild} />)
-    for (const label of ['标题', '网格', '图集', '横幅', '轮播', '富文本']) {
+    for (const label of ['标题', '文本', '网格', '图集', '横幅', '轮播', '富文本', '信息列表', '图标列表', '横向滚动']) {
       expect(screen.getByTitle(`添加${label}`)).toBeTruthy()
     }
-    expect(screen.queryByTitle('添加文本')).toBeNull()
     fireEvent.click(screen.getByTitle('添加富文本'))
     expect(onAddChild).toHaveBeenCalledWith('richtext')
   })
