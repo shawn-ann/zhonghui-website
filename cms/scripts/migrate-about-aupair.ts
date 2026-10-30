@@ -104,6 +104,12 @@ const icon = (name: string) =>
 const section = (children: any[], extra: Record<string, unknown> = {}) => ({
   blockType: 'section',
   paddingY: 'md',
+  bgImage: null,
+  bgColor: null,
+  bgGradient: null,
+  bgHeight: 0,
+  paddingCustom: 0,
+  contentGap: 0,
   ...extra,
   children,
 })
