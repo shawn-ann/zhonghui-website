@@ -309,7 +309,7 @@ const aupairBlocks: any[] = [
       showDots: true,
       items: requirements.map(([label, desc]) => ({ label, desc })),
     },
-  ], { bgColor: '#FFF1F6', paddingY: '2xl' }),
+  ], { bgColor: '#FFF1F6', paddingY: 'md' }),
   section([
     heading('申请流程'),
     {
@@ -318,7 +318,7 @@ const aupairBlocks: any[] = [
       iconColor: '#E60039',
       items: applySteps.map(([name, title, desc]) => ({ icon: stepIcons[name], title, desc })),
     },
-  ], { bgColor: '#FFF1F6', paddingY: '2xl' }),
+  ], { bgColor: '#FFF1F6', paddingY: 'md' }),
 ]
 
 async function ensurePage(route: string, title: string, blocks: any[]) {
