@@ -513,16 +513,33 @@
 .ed-tree-add:hover { background: var(--zc-primary, #c2185b); color: #fff; }
 
 .rep { margin-bottom: 14px; }
-.rep-item { border: 1px solid #eee7ea; border-radius: 7px; padding: 9px; margin-bottom: 8px; background: #fdfbfc; }
-.rep-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; color: #8a7c83; font-size: 11px; }
-.rep-actions { display: flex; gap: 4px; }
-.rep-actions button, .rep-media button { border: 1px solid #e2d5db; background: #fff; color: #5a4a52; border-radius: 4px; padding: 2px 7px; font-size: 11px; cursor: pointer; }
-.rep-actions button:disabled { opacity: .35; cursor: default; }
+.rep-count { color: #a08b95; font-weight: 400; }
+.rep-count::before { content: ''; }
+.rep-list { display: flex; flex-direction: column; gap: 7px; }
+.rep-item { border: 1px solid #ece3e8; border-radius: 7px; background: #fff; overflow: hidden; }
+.rep-item.is-open { border-color: #e3b7c9; box-shadow: 0 3px 10px rgba(138,14,75,.06); }
+.rep-item.is-over { border-color: #e60039; box-shadow: inset 0 2px 0 #e60039; }
+.rep-head { display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 5px 7px; }
+.rep-drag { color: #c9b7bf; font-size: 15px; letter-spacing: -2px; cursor: grab; flex: none; user-select: none; }
+.rep-index, .rep-thumb { width: 22px; height: 22px; flex: none; border-radius: 50%; background: #fbf3f6; color: #c2185b; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.rep-thumb { border-radius: 5px; object-fit: contain; background: #fff; border: 1px solid #eee; }
+.rep-thumb-empty { border-style: dashed; color: #a08b95; }
+.rep-toggle { min-width: 0; flex: 1; border: 0; background: none; padding: 0; display: flex; flex-direction: column; text-align: left; cursor: pointer; font: inherit; }
+.rep-title { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #3e3237; font-size: 11.5px; }
+.rep-sub { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #a08b95; font-size: 10px; margin-top: 1px; }
+.rep-actions { display: flex; gap: 1px; flex: none; }
+.rep-actions button, .rep-media button { border: 0; background: transparent; color: #a08b95; border-radius: 4px; padding: 3px 4px; font-size: 12px; cursor: pointer; }
+.rep-actions button:hover, .rep-media button:hover { background: #fff1f6; color: #c2185b; }
 .rep-actions .rep-danger, .rep-media .rep-danger { color: #b42318; }
-.rep-field { display: flex; flex-direction: column; gap: 3px; margin-bottom: 6px; color: #7c6b73; font-size: 11px; }
-.rep-field input, .rep-field textarea { width: 100%; border: 1px solid #e2d5db; border-radius: 5px; padding: 6px 8px; font: inherit; font-size: 12px; }
+.rep-actions .rep-danger:hover, .rep-media .rep-danger:hover { background: #fdecec; }
+.rep-chev { border: 0; background: none; color: #a08b95; cursor: pointer; font-size: 11px; padding: 3px 2px; flex: none; }
+.rep-open { padding: 0 9px 10px; border-top: 1px dashed #f2e9ed; }
+.rep-field { display: flex; flex-direction: column; gap: 3px; margin-top: 8px; color: #7c6b73; font-size: 11px; }
+.rep-field input, .rep-field textarea { width: 100%; border: 1px solid #e2d5db; border-radius: 5px; padding: 6px 8px; font: inherit; font-size: 12px; background: #fff; }
+.rep-field input:focus, .rep-field textarea:focus { outline: none; border-color: #c2185b; box-shadow: 0 0 0 3px rgba(194,24,91,.1); }
 .rep-media { display: flex; align-items: center; gap: 6px; }
 .rep-media img { width: 40px; height: 32px; object-fit: contain; border: 1px solid #eee; border-radius: 4px; }
 .rep-media span { font-size: 11px; color: #a08b95; }
-.rep-add { border: 0; background: none; color: #c2185b; font-size: 12px; padding: 4px 0; cursor: pointer; }
-.rep-toggle { border: 0; background: none; padding: 0; color: #7c6b73; font: inherit; font-size: 11px; cursor: pointer; }
+.rep-media button { border: 1px solid #e2d5db; background: #fff; color: #5a4a52; font-size: 11px; }
+.rep-add { margin-top: 9px; width: 100%; height: 32px; border: 1px dashed #d9c5cf; border-radius: 6px; background: #fffbfd; color: #c2185b; font-size: 11.5px; cursor: pointer; }
+.rep-add:hover { border-color: #c2185b; background: #fff1f6; }

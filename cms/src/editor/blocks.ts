@@ -14,6 +14,9 @@ export interface FieldDef {
   options?: { label: string; value: string }[]
   itemFields?: RepeaterItemField[]
   addLabel?: string
+  titleKey?: string
+  subtitleKey?: string
+  mediaKey?: string
 }
 export interface BlockMeta { type: Block['type']; label: string; defaults: () => Block; fields: FieldDef[] }
 
@@ -101,14 +104,14 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   infoList: { type: 'infoList', label: '信息列表', defaults: () => ({ type: 'infoList', showDots: true, titleAlign: 'left', items: [{ label: '标签', desc: '说明' }] }), fields: [
     { key: 'title', label: '标题（可选）', control: 'text' },
     { key: 'titleAlign', label: '标题对齐', control: 'select', options: [{ label: '左对齐', value: 'left' }, { label: '居中', value: 'center' }] },
-    { key: 'items', label: '条目', control: 'repeater', addLabel: '添加条目', itemFields: [
+    { key: 'items', label: '条目', control: 'repeater', addLabel: '添加条目', titleKey: 'label', subtitleKey: 'desc', itemFields: [
       { key: 'label', label: '标签（可选）', control: 'text' },
       { key: 'desc', label: '说明', control: 'textarea' },
     ] },
     { key: 'showDots', label: '显示圆点', control: 'boolean' },
   ] },
   iconList: { type: 'iconList', label: '图标列表', defaults: () => ({ type: 'iconList', iconPosition: 'left', items: [{ icon: '', title: '标题', desc: '说明' }] }), fields: [
-    { key: 'items', label: '条目', control: 'repeater', addLabel: '添加条目', itemFields: [
+    { key: 'items', label: '条目', control: 'repeater', addLabel: '添加条目', titleKey: 'title', subtitleKey: 'desc', mediaKey: 'icon', itemFields: [
       { key: 'icon', label: '图标', control: 'media' },
       { key: 'title', label: '标题', control: 'text' },
       { key: 'desc', label: '说明', control: 'textarea' },

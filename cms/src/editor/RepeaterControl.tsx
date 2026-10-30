@@ -1,10 +1,14 @@
 'use client'
 import React, { useState } from 'react'
-import type { FieldDef, RepeaterItemField } from './blocks'
+import type { FieldDef } from './blocks'
 import MediaModal from './MediaModal'
 import type { MediaItem } from './api'
 
 type Value = Record<string, unknown>[]
+
+function text(value: unknown): string {
+  return String(value ?? '').trim()
+}
 
 export default function RepeaterControl({
   field,
@@ -18,6 +22,8 @@ export default function RepeaterControl({
   const items = Array.isArray(value) ? value : []
   const [mediaTarget, setMediaTarget] = useState<{ index: number; key: string } | null>(null)
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const [dragIndex, setDragIndex] = useState<number | null>(null)
+  const [overIndex, setOverIndex] = useState<number | null>(null)
 
   const update = (next: Value) => onChange(next)
   const setField = (index: number, key: string, next: unknown) => {
@@ -30,17 +36,27 @@ export default function RepeaterControl({
     ])
     setOpenIndex(items.length)
   }
-  const remove = (index: number) => update(items.filter((_, i) => i !== index))
-  const move = (index: number, dir: -1 | 1) => {
-    const to = index + dir
-    if (to < 0 || to >= items.length) return
+  const remove = (index: number) => {
+    if (!window.confirm(`确定删除条目 #${index + 1}？`)) return
+    update(items.filter((_, i) => i !== index))
+    setOpenIndex(null)
+  }
+  const duplicate = (index: number) => {
     const next = items.slice()
-    const [item] = next.splice(index, 1)
+    next.splice(index + 1, 0, { ...items[index] })
+    update(next)
+    setOpenIndex(index + 1)
+  }
+  const move = (from: number, to: number) => {
+    if (from === to) return
+    const next = items.slice()
+    const [item] = next.splice(from, 1)
     next.splice(to, 0, item)
     update(next)
+    setOpenIndex(to)
   }
 
-  const renderField = (f: RepeaterItemField, index: number) => {
+  const renderField = (f: NonNullable<FieldDef['itemFields']>[number], index: number) => {
     const raw = items[index]?.[f.key]
     if (f.control === 'text') {
       return (
@@ -55,7 +71,7 @@ export default function RepeaterControl({
       return (
         <textarea
           value={String(raw ?? '')}
-          rows={2}
+          rows={3}
           onChange={(e) => setField(index, f.key, e.target.value)}
           placeholder={f.label}
         />
@@ -75,27 +91,82 @@ export default function RepeaterControl({
 
   return (
     <div className="rep">
-      <div className="ed-label">{field.label}</div>
-      {items.map((_, index) => (
-        <div className="rep-item" key={index}>
-          <div className="rep-head">
-            <button type="button" className="rep-toggle" onClick={() => setOpenIndex(openIndex === index ? null : index)}>
-              {openIndex === index ? '▾' : '▸'} #{index + 1}
-            </button>
-            <span className="rep-actions">
-              <button type="button" disabled={index === 0} title={`上移条目 ${index + 1}`} onClick={() => move(index, -1)}>↑</button>
-              <button type="button" disabled={index === items.length - 1} title={`下移条目 ${index + 1}`} onClick={() => move(index, 1)}>↓</button>
-              <button type="button" className="rep-danger" title={`删除条目 ${index + 1}`} onClick={() => remove(index)}>删除</button>
-            </span>
-          </div>
-          {openIndex === index ? (field.itemFields || []).map((f) => (
-            <label className="rep-field" key={f.key}>
-              <span>{f.label}</span>
-              {renderField(f, index)}
-            </label>
-          )) : null}
-        </div>
-      ))}
+      <div className="ed-label">
+        {field.label}
+        {items.length ? <span className="rep-count"> · {items.length} 条</span> : null}
+      </div>
+      <div className="rep-list">
+        {items.map((item, index) => {
+          const title = field.titleKey ? text(item[field.titleKey]) : ''
+          const subtitle = field.subtitleKey ? text(item[field.subtitleKey]) : ''
+          const mediaUrl = field.mediaKey ? text(item[field.mediaKey]) : ''
+          const open = openIndex === index
+          return (
+            <div
+              className={`rep-item${open ? ' is-open' : ''}${overIndex === index ? ' is-over' : ''}`}
+              key={index}
+              onDragOver={(e) => {
+                if (dragIndex == null || dragIndex === index) return
+                e.preventDefault()
+                setOverIndex(index)
+              }}
+              onDragLeave={() => setOverIndex((v) => (v === index ? null : v))}
+              onDrop={(e) => {
+                e.preventDefault()
+                if (dragIndex != null) move(dragIndex, index)
+                setDragIndex(null)
+                setOverIndex(null)
+              }}
+            >
+              <div className="rep-head">
+                <span
+                  className="rep-drag"
+                  draggable
+                  title="拖动排序"
+                  onDragStart={(e) => {
+                    setDragIndex(index)
+                    e.dataTransfer.effectAllowed = 'move'
+                    e.dataTransfer.setData('text/plain', String(index))
+                  }}
+                  onDragEnd={() => {
+                    setDragIndex(null)
+                    setOverIndex(null)
+                  }}
+                >⠿</span>
+                {field.mediaKey ? (
+                  mediaUrl
+                    ? <img className="rep-thumb" src={mediaUrl} alt="" />
+                    : <span className="rep-thumb rep-thumb-empty">{index + 1}</span>
+                ) : <span className="rep-index">{index + 1}</span>}
+                <button type="button" className="rep-toggle" onClick={() => setOpenIndex(open ? null : index)}>
+                  <span className="rep-title">{title || `条目 #${index + 1}`}</span>
+                  <span className="rep-sub">{subtitle || (title ? '' : '未填写')}</span>
+                </button>
+                <span className="rep-actions">
+                  <button type="button" title={`复制条目 ${index + 1}`} onClick={() => duplicate(index)}>⧉</button>
+                  <button type="button" className="rep-danger" title={`删除条目 ${index + 1}`} onClick={() => remove(index)}>✕</button>
+                </span>
+                <button
+                  type="button"
+                  className="rep-chev"
+                  aria-label={open ? '收起条目' : '展开条目'}
+                  onClick={() => setOpenIndex(open ? null : index)}
+                >{open ? '▴' : '▾'}</button>
+              </div>
+              {open ? (
+                <div className="rep-open">
+                  {(field.itemFields || []).map((f) => (
+                    <label className="rep-field" key={f.key}>
+                      <span>{f.label}</span>
+                      {renderField(f, index)}
+                    </label>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          )
+        })}
+      </div>
       <button type="button" className="rep-add" onClick={add}>{field.addLabel || '添加条目'}</button>
       {mediaTarget ? (
         <MediaModal
