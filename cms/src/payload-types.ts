@@ -226,6 +226,7 @@ export interface Page {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
                       columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
+                      alignItems?: ('stretch' | 'start' | 'center' | 'end') | null;
                       children?:
                         | (
                             | {
@@ -281,6 +282,8 @@ export interface Page {
                                  * 站内路由以 / 开头，或完整外链 https://…
                                  */
                                 link?: string | null;
+                                aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                fit?: ('cover' | 'contain') | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -443,6 +446,8 @@ export interface Page {
                                            * 站内路由以 / 开头，或完整外链 https://…
                                            */
                                           link?: string | null;
+                                          aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                          fit?: ('cover' | 'contain') | null;
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -555,6 +560,7 @@ export interface Page {
                                 columns?: number | null;
                                 gap?: ('sm' | 'md' | 'lg') | null;
                                 columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
+                                alignItems?: ('stretch' | 'start' | 'center' | 'end') | null;
                                 children?:
                                   | (
                                       | {
@@ -610,6 +616,8 @@ export interface Page {
                                            * 站内路由以 / 开头，或完整外链 https://…
                                            */
                                           link?: string | null;
+                                          aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                          fit?: ('cover' | 'contain') | null;
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -772,6 +780,8 @@ export interface Page {
                                                      * 站内路由以 / 开头，或完整外链 https://…
                                                      */
                                                     link?: string | null;
+                                                    aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                                    fit?: ('cover' | 'contain') | null;
                                                     bg?: string | null;
                                                     alt?: boolean | null;
                                                     /**
@@ -1086,6 +1096,7 @@ export interface Page {
             columns?: number | null;
             gap?: ('sm' | 'md' | 'lg') | null;
             columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
+            alignItems?: ('stretch' | 'start' | 'center' | 'end') | null;
             children?:
               | (
                   | {
@@ -1141,6 +1152,8 @@ export interface Page {
                        * 站内路由以 / 开头，或完整外链 https://…
                        */
                       link?: string | null;
+                      aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                      fit?: ('cover' | 'contain') | null;
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -1303,6 +1316,8 @@ export interface Page {
                                  * 站内路由以 / 开头，或完整外链 https://…
                                  */
                                 link?: string | null;
+                                aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                fit?: ('cover' | 'contain') | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -1415,6 +1430,7 @@ export interface Page {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
                       columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
+                      alignItems?: ('stretch' | 'start' | 'center' | 'end') | null;
                       children?:
                         | (
                             | {
@@ -1470,6 +1486,8 @@ export interface Page {
                                  * 站内路由以 / 开头，或完整外链 https://…
                                  */
                                 link?: string | null;
+                                aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                fit?: ('cover' | 'contain') | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -1632,6 +1650,8 @@ export interface Page {
                                            * 站内路由以 / 开头，或完整外链 https://…
                                            */
                                           link?: string | null;
+                                          aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                          fit?: ('cover' | 'contain') | null;
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -1828,6 +1848,8 @@ export interface Page {
              * 站内路由以 / 开头，或完整外链 https://…
              */
             link?: string | null;
+            aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+            fit?: ('cover' | 'contain') | null;
             bg?: string | null;
             alt?: boolean | null;
             /**
@@ -2111,6 +2133,8 @@ export interface Page {
                        * 站内路由以 / 开头，或完整外链 https://…
                        */
                       link?: string | null;
+                      aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                      fit?: ('cover' | 'contain') | null;
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -2382,6 +2406,7 @@ export interface PagesSelect<T extends boolean = true> {
                           columns?: T;
                           gap?: T;
                           columnRatio?: T;
+                          alignItems?: T;
                           children?:
                             | T
                             | {
@@ -2421,6 +2446,8 @@ export interface PagesSelect<T extends boolean = true> {
                                       media?: T;
                                       altText?: T;
                                       link?: T;
+                                      aspectRatio?: T;
+                                      fit?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
@@ -2523,6 +2550,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                   media?: T;
                                                   altText?: T;
                                                   link?: T;
+                                                  aspectRatio?: T;
+                                                  fit?: T;
                                                   bg?: T;
                                                   alt?: T;
                                                   padding?: T;
@@ -2589,6 +2618,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       columns?: T;
                                       gap?: T;
                                       columnRatio?: T;
+                                      alignItems?: T;
                                       children?:
                                         | T
                                         | {
@@ -2628,6 +2658,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                   media?: T;
                                                   altText?: T;
                                                   link?: T;
+                                                  aspectRatio?: T;
+                                                  fit?: T;
                                                   bg?: T;
                                                   alt?: T;
                                                   padding?: T;
@@ -2730,6 +2762,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                               media?: T;
                                                               altText?: T;
                                                               link?: T;
+                                                              aspectRatio?: T;
+                                                              fit?: T;
                                                               bg?: T;
                                                               alt?: T;
                                                               padding?: T;
@@ -2943,6 +2977,7 @@ export interface PagesSelect<T extends boolean = true> {
               columns?: T;
               gap?: T;
               columnRatio?: T;
+              alignItems?: T;
               children?:
                 | T
                 | {
@@ -2982,6 +3017,8 @@ export interface PagesSelect<T extends boolean = true> {
                           media?: T;
                           altText?: T;
                           link?: T;
+                          aspectRatio?: T;
+                          fit?: T;
                           bg?: T;
                           alt?: T;
                           padding?: T;
@@ -3084,6 +3121,8 @@ export interface PagesSelect<T extends boolean = true> {
                                       media?: T;
                                       altText?: T;
                                       link?: T;
+                                      aspectRatio?: T;
+                                      fit?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
@@ -3150,6 +3189,7 @@ export interface PagesSelect<T extends boolean = true> {
                           columns?: T;
                           gap?: T;
                           columnRatio?: T;
+                          alignItems?: T;
                           children?:
                             | T
                             | {
@@ -3189,6 +3229,8 @@ export interface PagesSelect<T extends boolean = true> {
                                       media?: T;
                                       altText?: T;
                                       link?: T;
+                                      aspectRatio?: T;
+                                      fit?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
@@ -3291,6 +3333,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                   media?: T;
                                                   altText?: T;
                                                   link?: T;
+                                                  aspectRatio?: T;
+                                                  fit?: T;
                                                   bg?: T;
                                                   alt?: T;
                                                   padding?: T;
@@ -3406,6 +3450,8 @@ export interface PagesSelect<T extends boolean = true> {
               media?: T;
               altText?: T;
               link?: T;
+              aspectRatio?: T;
+              fit?: T;
               bg?: T;
               alt?: T;
               padding?: T;
@@ -3608,6 +3654,8 @@ export interface PagesSelect<T extends boolean = true> {
                           media?: T;
                           altText?: T;
                           link?: T;
+                          aspectRatio?: T;
+                          fit?: T;
                           bg?: T;
                           alt?: T;
                           padding?: T;

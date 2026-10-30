@@ -245,6 +245,7 @@ git commit -m "feat(cms): extend grid, text and image card fields"
 - Create: `cms/src/blocks/IconList.ts`
 - Create: `cms/src/blocks/Hscroll.ts`
 - Create: `cms/src/blocks/Stack.ts`（含背景图片、背景色、内边距、垂直间距）
+- 网格扩展：`alignItems`；图片扩展：`aspectRatio`、`fit`
 - Modify: `cms/src/blocks/index.ts`
 - Modify: `cms/src/generate/loadSiteData.ts`
 - Test: extend `cms/src/render/__tests__/content-components.test.tsx`

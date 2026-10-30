@@ -41,9 +41,12 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'marginTop', label: '上间距', control: 'number' },
     { key: 'padding', label: '内边距', control: 'number' },
   ] },
-  image: { type: 'image', label: '图片', defaults: () => ({ type: 'image', media: '' }), fields: [
+  image: { type: 'image', label: '图片', defaults: () => ({ type: 'image', media: '', aspectRatio: 'auto', fit: 'cover' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'altText', label: '替代文本', control: 'text' },
-    { key: 'link', label: '链接', control: 'link' }, { key: 'padding', label: '内边距', control: 'number' },
+    { key: 'link', label: '链接', control: 'link' },
+    { key: 'aspectRatio', label: '图片比例', control: 'select', options: [{ label: '自动', value: 'auto' }, { label: '1:1', value: '1:1' }, { label: '4:3', value: '4:3' }, { label: '3:4', value: '3:4' }, { label: '16:9', value: '16:9' }] },
+    { key: 'fit', label: '填充方式', control: 'select', options: [{ label: '裁剪填充', value: 'cover' }, { label: '完整显示', value: 'contain' }] },
+    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   imageText: { type: 'imageText', label: '图文卡片', defaults: () => ({ type: 'imageText', media: '' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'title', label: '标题', control: 'text' },
@@ -84,6 +87,7 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   grid: { type: 'grid', label: '网格', defaults: () => ({ type: 'grid', columns: 3, gap: 'md', columnRatio: 'equal', children: [] }), fields: [
     { key: 'columns', label: '列数', control: 'number' }, { key: 'gap', label: '间距', control: 'select', options: [{ label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
     { key: 'columnRatio', label: '列宽比例', control: 'select', options: [{ label: '等宽', value: 'equal' }, { label: '左窄右宽', value: 'leftNarrow' }, { label: '左宽右窄', value: 'leftWide' }] },
+    { key: 'alignItems', label: '垂直对齐', control: 'select', options: [{ label: '拉伸等高', value: 'stretch' }, { label: '顶部对齐', value: 'start' }, { label: '居中', value: 'center' }, { label: '底部对齐', value: 'end' }] },
     { key: 'bgImage', label: '背景图片', control: 'media' },
     { key: 'bgColor', label: '背景颜色', control: 'color' },
   ] },

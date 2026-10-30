@@ -105,6 +105,8 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.media = resolveMediaId(b.media, urlToId, raw?.media)
       if (b.altText !== undefined) out.altText = b.altText
       if (b.link !== undefined) out.link = b.link
+      if (b.aspectRatio !== undefined) out.aspectRatio = b.aspectRatio
+      if (b.fit !== undefined) out.fit = b.fit
       if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'imageText':
@@ -151,6 +153,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.columns = b.columns
       if (b.gap !== undefined) out.gap = b.gap
       if (b.columnRatio !== undefined) out.columnRatio = b.columnRatio
+      if (b.alignItems !== undefined) out.alignItems = b.alignItems
       if (b.bgImage !== undefined) out.bgImage = b.bgImage
       if (b.bgColor !== undefined) out.bgColor = b.bgColor
       out.children = editorToPayloadBlocks(b.children || [], urlToId)

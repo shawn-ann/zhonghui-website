@@ -36,6 +36,17 @@ export function makeGrid(slug: string, label: string, cellComponents: Block[]): 
           { label: '左宽右窄', value: 'leftWide' },
         ],
       },
+      {
+        name: 'alignItems',
+        type: 'select',
+        defaultValue: 'stretch',
+        options: [
+          { label: '拉伸等高', value: 'stretch' },
+          { label: '顶部对齐', value: 'start' },
+          { label: '居中', value: 'center' },
+          { label: '底部对齐', value: 'end' },
+        ],
+      },
       { name: 'children', type: 'blocks', blocks: cellComponents },
       { name: 'bgImage', type: 'text', admin: { description: '背景图片 URL' } },
       { name: 'bgColor', type: 'text', admin: { description: '背景颜色，如 #FFF1F6' } },

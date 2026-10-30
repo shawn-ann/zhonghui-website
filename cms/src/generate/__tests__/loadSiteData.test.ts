@@ -12,7 +12,10 @@ describe('mapPageDoc', () => {
     }
     const doc = mapPageDoc(raw as any, (m) => (typeof m === 'object' ? (m as any).url : m))
     expect(doc.blocks[0]).toEqual({ type: 'text', title: 'a', body: 'b', align: 'center', bg: undefined, alt: false })
-    expect(doc.blocks[1]).toEqual({ type: 'image', media: '/media/x.jpg', altText: 'x', link: undefined, bg: undefined, alt: false })
+    expect(doc.blocks[1]).toEqual({
+      type: 'image', media: '/media/x.jpg', altText: 'x', link: undefined,
+      aspectRatio: 'auto', fit: 'cover', padding: undefined, bg: undefined, alt: false,
+    })
   })
 })
 
@@ -106,6 +109,9 @@ describe('mapBlock', () => {
       items: [{ icon: { url: '/i.svg' }, title: '步骤', desc: '说明' }],
     }, resolve) as any
     expect(icons.items[0].icon).toBe('/i.svg')
+
+    const image = mapBlock({ blockType: 'image', media: { url: '/a.jpg' }, aspectRatio: '4:3', fit: 'contain' }, resolve) as any
+    expect(image).toMatchObject({ type: 'image', aspectRatio: '4:3', fit: 'contain' })
 
     const stack = mapBlock({
       blockType: 'stack', gap: 'lg', bgColor: '#FFF1F6', padding: 20,

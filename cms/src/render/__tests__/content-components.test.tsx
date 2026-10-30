@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { blockNode } from '../../site/blocks'
-import type { GridBlock, HscrollBlock, IconListBlock, ImageTextBlock, InfoListBlock, StackBlock, TextBlock } from '../types'
+import type { GridBlock, HscrollBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, StackBlock, TextBlock } from '../types'
 
 const render = (b: any) => renderToStaticMarkup(blockNode(b)!)
 
@@ -33,6 +33,17 @@ describe('content component extensions', () => {
       children: [],
     }
     expect(render(b)).toContain('grid-template-columns:0.9fr 1.4fr')
+  })
+
+  it('applies grid vertical alignment and image aspect ratio', () => {
+    const grid: GridBlock = {
+      type: 'grid', _id: 'g2', columns: 2, alignItems: 'start',
+      children: [{ type: 'image', media: '/a.jpg', aspectRatio: '4:3', fit: 'cover' }],
+    }
+    const html = render(grid)
+    expect(html).toContain('align-items:start')
+    expect(html).toContain('aspect-ratio:4 / 3')
+    expect(html).toContain('object-fit:cover')
   })
 
   it('renders image text subtitle', () => {

@@ -85,12 +85,11 @@ export function SectionView({ b, editor = false }: { b: SectionBlock; editor?: b
 export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean }) {
   const cols = Math.min(4, Math.max(1, b.columns || 3))
   const gap = b.gap && /^(sm|md|lg)$/.test(b.gap) ? b.gap : 'md'
-  const ratioStyle =
-    cols === 2 && b.columnRatio === 'leftNarrow'
-      ? { gridTemplateColumns: '0.9fr 1.4fr' }
-      : cols === 2 && b.columnRatio === 'leftWide'
-        ? { gridTemplateColumns: '1.4fr 0.9fr' }
-        : undefined
+  const ratioStyle = {
+    ...(cols === 2 && b.columnRatio === 'leftNarrow' ? { gridTemplateColumns: '0.9fr 1.4fr' } : {}),
+    ...(cols === 2 && b.columnRatio === 'leftWide' ? { gridTemplateColumns: '1.4fr 0.9fr' } : {}),
+    ...(b.alignItems && b.alignItems !== 'stretch' ? { alignItems: b.alignItems } : {}),
+  }
   const style = {
     ...(b.bgColor ? { backgroundColor: b.bgColor } : {}),
     ...bgImageCss(b.bgImage),
@@ -207,10 +206,20 @@ export function ImageView({ b, editor = false }: { b: ImageBlock; editor?: boole
     return <EmptyEditorBlock b={b} label="图片" tip="在右侧选择图片" />
   }
   const href = b.link ? safeUrl(b.link) : ''
-  const img = src ? <img src={src} alt={b.altText || ''} /> : null
+  const ratio = b.aspectRatio && b.aspectRatio !== 'auto' ? b.aspectRatio.replace(':', ' / ') : undefined
+  const img = src ? (
+    <img
+      src={src}
+      alt={b.altText || ''}
+      style={ratio ? { width: '100%', height: '100%', objectFit: b.fit === 'contain' ? 'contain' : 'cover' } : undefined}
+    />
+  ) : null
   return (
     <div className="container" data-bid={b._id}>
-      <div className="image-block" style={padStyle(b.padding)}>
+      <div
+        className={`image-block${ratio ? ' has-ratio' : ''}`}
+        style={{ ...(ratio ? { aspectRatio: ratio } : {}), ...padStyle(b.padding) }}
+      >
         {href && img ? <a href={href}>{img}</a> : img}
       </div>
     </div>

@@ -33,6 +33,7 @@ export interface GridBlock extends BlockBase {
   columns: number
   gap?: string
   columnRatio?: 'equal' | 'leftNarrow' | 'leftWide'
+  alignItems?: 'stretch' | 'start' | 'center' | 'end'
   /** 背景图片 URL（可与背景色叠加） */
   bgImage?: string
   /** 背景颜色（CSS 颜色值） */
@@ -59,6 +60,8 @@ export interface ImageBlock extends BlockBase {
   media: string
   altText?: string
   link?: string
+  aspectRatio?: 'auto' | '1:1' | '4:3' | '3:4' | '16:9'
+  fit?: 'cover' | 'contain'
   padding?: number
 }
 

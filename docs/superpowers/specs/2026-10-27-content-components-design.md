@@ -163,9 +163,11 @@ padding?: number
 
 ```ts
 columnRatio: 'equal' | 'leftNarrow' | 'leftWide'
+alignItems: 'stretch' | 'start' | 'center' | 'end'
 ```
 
-- 仅当 `columns=2` 时生效。
+- `alignItems` 默认 `stretch`，兼容现有页面；公司介绍使用 `start`。
+- 列宽比例仅当 `columns=2` 时生效。
 - `equal`：`1fr 1fr`（默认，兼容现有页面）。
 - `leftNarrow`：左窄右宽，约 `0.9fr 1.4fr`。
 - `leftWide`：左宽右窄，约 `1.4fr 0.9fr`。
@@ -188,7 +190,18 @@ marginTop?: number    // px，段落/分组上间距
 - 不增加列表模式：师资列表改用 `infoList`。
 - 理念区由两个连续文本实现：正文 + 高亮句（高亮句设置字重 600/700、品牌色、相同最大宽度）。
 
-### 5.7 图文卡片 `imageText` 扩展
+### 5.7 图片 `image` 扩展
+
+```ts
+aspectRatio: 'auto' | '1:1' | '4:3' | '3:4' | '16:9'
+fit: 'cover' | 'contain'
+```
+
+- 用比例而不是固定高度控制图片，配合 `object-fit` 裁剪或完整显示。
+- 参考 WordPress Media & Text 的裁剪/填充思路，避免为每张图片写死像素高度。
+- 公司介绍图片使用 `4:3` + `cover`。
+
+### 5.8 图文卡片 `imageText` 扩展
 
 **新增字段**
 
@@ -256,7 +269,7 @@ interface RepeaterFieldDef {
 | 顺序 | 分栏背景 | 内容 |
 |---|---|---|
 | 1 | 默认 | `banner` |
-| 2 | 浅粉/白底 | `heading` 公司介绍 + `grid`（2 列，左窄右宽：图片 + `stack`（6 个单段文本）） |
+| 2 | 浅粉/白底 | `heading` 公司介绍 + `grid`（2 列，左窄右宽，顶部对齐：图片 4:3 + `stack`（6 个单段文本）） |
 | 3 | 默认 | `heading` 中惠历程 + `hscroll`（timeline=true，内部 14 个图文卡片） |
 | 4 | 浅粉 | `heading` 中惠理念 + 两个连续 `text`（正文 + 高亮句） |
 | 5 | 默认 | `heading` 创始团队 + `grid`（3 列：3 个图文卡片，副标题为职位） + `heading` 专业师资团队 + `infoList`（无圆点） |

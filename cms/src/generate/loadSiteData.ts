@@ -70,7 +70,17 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         alt,
       }
     case 'image':
-      return { type: 'image', media: resolveMedia(raw.media), altText: raw.altText || undefined, link: raw.link || undefined, padding: raw.padding || undefined, bg, alt }
+      return {
+        type: 'image',
+        media: resolveMedia(raw.media),
+        altText: raw.altText || undefined,
+        link: raw.link || undefined,
+        aspectRatio: ['auto', '1:1', '4:3', '3:4', '16:9'].includes(raw.aspectRatio) ? raw.aspectRatio : 'auto',
+        fit: raw.fit === 'contain' ? 'contain' : 'cover',
+        padding: raw.padding || undefined,
+        bg,
+        alt,
+      }
     case 'imageText':
       return {
         type: 'imageText',
@@ -124,6 +134,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         columns: raw.columns || 3,
         gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md',
         columnRatio: ['equal', 'leftNarrow', 'leftWide'].includes(raw.columnRatio) ? raw.columnRatio : 'equal',
+        alignItems: ['stretch', 'start', 'center', 'end'].includes(raw.alignItems) ? raw.alignItems : 'stretch',
         bgImage: raw.bgImage || undefined,
         bgColor: raw.bgColor || undefined,
         children,
