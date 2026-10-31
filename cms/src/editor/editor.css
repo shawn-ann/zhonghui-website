@@ -584,6 +584,9 @@
 .rt-single-image { margin: 12px 0; border: 1px dashed #e2d5db; border-radius: 8px; padding: 8px; }
 .rt-single-image img { width: 100%; height: auto; max-height: 320px; object-fit: contain; border-radius: 6px; display: block; background: #faf7f9; }
 .rt-single-image .rt-image-row-delete { margin-top: 6px; }
+.rt-image-edit { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.rt-image-edit:focus-visible { outline: 2px solid #1e6fff; outline-offset: 2px; }
+.rt-image-edit img { display: block; }
 .rt-image-row-grid-cols-1 { grid-template-columns: 1fr; }
 .rt-image-row-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .rt-image-row-grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
