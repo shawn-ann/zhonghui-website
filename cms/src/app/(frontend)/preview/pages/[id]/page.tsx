@@ -6,6 +6,7 @@ import { mapPageDoc, resolveMedia } from '@/generate/loadSiteData'
 import { buildSiteConfig } from '@/site/config'
 import { SiteBody } from '@/site/SiteDocument'
 import { SiteScripts } from '@/site/SiteScripts'
+import PreviewSync from '@/editor/PreviewSync'
 
 export const dynamic = 'force-dynamic'
 
@@ -43,6 +44,7 @@ export default async function PreviewPage({ params }: { params: Promise<{ id: st
 
   return (
     <>
+      <PreviewSync id={id} />
       <SiteBody page={mapPageDoc(data.doc, resolveMedia, data.routes)} site={data.site} />
       <SiteScripts lockLinks />
     </>

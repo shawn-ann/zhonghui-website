@@ -31,7 +31,8 @@ export function lexicalToHtml(data: unknown): string {
             .filter((image) => image?.src)
             .map((image) => `<img src="${escapeAttr(String(image.src))}" alt="${escapeAttr(String(image.alt || ''))}" />`)
             .join('')
-          return `<div class="richtext-gallery">${html}</div>`
+          const columns = Math.min(4, Math.max(1, Number((node as { columns?: number }).columns) || 3))
+          return `<div class="richtext-gallery richtext-gallery-cols-${columns}">${html}</div>`
         },
       }),
     }))

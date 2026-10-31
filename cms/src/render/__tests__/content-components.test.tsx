@@ -42,10 +42,10 @@ describe('content component extensions', () => {
     const html = lexicalToHtml({
       root: {
         type: 'root', version: 1, direction: 'ltr', format: '', indent: 0,
-        children: [{ type: 'image-row', version: 1, images: [{ src: '/api/media/file/a.jpg', alt: 'A' }] }],
+        children: [{ type: 'image-row', version: 1, columns: 2, images: [{ src: '/api/media/file/a.jpg', alt: 'A' }] }],
       },
     })
-    expect(html).toContain('richtext-gallery')
+    expect(html).toContain('richtext-gallery-cols-2')
     expect(html).toContain('/api/media/file/a.jpg')
   })
 

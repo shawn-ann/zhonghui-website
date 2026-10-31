@@ -6,6 +6,7 @@ import type {
   SectionBlock, SliderBlock, StackBlock, TextBlock,
 } from '../render/types'
 import { bgCss, bgImageCss } from './bg'
+import { lexicalToHtml } from '../render/richText'
 
 const PAD: Record<string, number> = { none: 0, sm: 32, md: 72, lg: 96, xl: 128, '2xl': 160 }
 const padStyle = (padding?: number) => (padding && padding > 0 ? { padding: `${padding}px` } : undefined)
@@ -320,12 +321,13 @@ export function ButtonView({ b, editor = false }: { b: ButtonBlock; editor?: boo
 }
 
 export function RichTextView({ b, editor = false }: { b: RichTextBlock; editor?: boolean }) {
-  if (editor && richTextEmpty(b.html)) {
+  const html = editor && b.content ? lexicalToHtml(b.content) : b.html
+  if (editor && richTextEmpty(html)) {
     return <EmptyEditorBlock b={b} label="富文本" tip="在右侧编辑内容" variant="wide" />
   }
   return (
     <div className="container" data-bid={b._id}>
-      <div className="richtext" style={padStyle(b.padding)} dangerouslySetInnerHTML={{ __html: b.html || '' }} />
+      <div className="richtext" style={padStyle(b.padding)} dangerouslySetInnerHTML={{ __html: html || '' }} />
     </div>
   )
 }

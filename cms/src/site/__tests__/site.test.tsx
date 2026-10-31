@@ -69,6 +69,25 @@ describe('site blocks', () => {
     expect(icon).toContain('--sub-color:#DDDDDD')
   })
 
+  it('renders editor rich text from live content instead of stale html', () => {
+    const content = {
+      root: {
+        type: 'root', version: 1, direction: 'ltr', format: '', indent: 0,
+        children: [{
+          type: 'paragraph', version: 1, direction: 'ltr', format: '', indent: 0,
+          children: [{ type: 'text', text: 'NEW', format: 0, style: '', mode: 'normal', detail: 0, version: 1 }],
+        }],
+      },
+    }
+    const html = render(blockNode({ type: 'richtext', _id: 'r', html: '<p>OLD</p>', content }, true)!)
+    expect(html).toContain('NEW')
+    expect(html).not.toContain('OLD')
+
+    const staticHtml = render(blockNode({ type: 'richtext', _id: 'r', html: '<p>OLD</p>', content })!)
+    expect(staticHtml).toContain('OLD')
+    expect(staticHtml).not.toContain('NEW')
+  })
+
   it('renders a gradient background band with fixed height', () => {
     const html = render(blockNode({
       type: 'section', _id: 's1', paddingY: 'md', bgHeight: 304,

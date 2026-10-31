@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   DecoratorNode,
+  $createParagraphNode,
   $getNodeByKey,
   $getRoot,
   $getSelection,
@@ -81,4 +82,8 @@ export function $insertImage(src: string, alt = '') {
   const node = new ImageNode(src, alt)
   if (selection) selection.insertNodes([node])
   else $getRoot().append(node)
+  const paragraph = $createParagraphNode()
+  node.insertAfter(paragraph)
+  paragraph.selectStart()
+  return paragraph.getKey()
 }

@@ -100,7 +100,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 ```
 
 - 可用于分栏直接子项，也可用于网格单元格。
-- 富文本内部支持 `rich-image` 单图节点和 `image-row` 图集节点；图片/图集均复用统一媒体选择器（含上传），图集可在文章中插入一行 2–4 张图片。
+- 富文本内部支持 `rich-image` 单图节点和 `image-row` 图集节点；图片/图集均复用统一媒体选择器（含上传），图集可在文章中插入一组图片，并在节点工具条选择 1–4 列。
 - 不再嵌套布局容器（不允许 stack 内放 grid/section/hscroll/stack）。
 - `gap`：`sm` / `md` / `lg`。
 - 支持背景图片、背景颜色、内边距，固定 12px 圆角。
@@ -273,7 +273,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 ### 5.13 其它
 
 - `button`：`label`、`linkType`/`internalPage`/`externalUrl`、`style`
-- `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/图集节点；历史 `padding` 保留兼容
+- `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/单图/图集节点（可配置 1–4 列）；历史 `padding` 保留兼容
 - `gallery`：`images`、`columns`；历史 `padding` 保留兼容
 - `slider`：`images`
 - `gridInner`：历史兼容，编辑器不提供；序列化仍保留
@@ -438,7 +438,7 @@ section(bgColor=light-pink)
     )
 ```
 
-富文本编辑器以弹窗形式打开，支持粗体、斜体、下划线、H2/H3、正文、有序/无序列表、链接、单张图片、图集、撤销/重做。图片和图集复用统一媒体选择器（含上传）。
+富文本编辑器以弹窗形式打开，支持粗体、斜体、下划线、H2/H3、正文、有序/无序列表、链接、单张图片、图集（1–4 列）、撤销/重做。图片和图集复用统一媒体选择器（含上传）；插入后光标自动落到下一段，可继续输入。
 
 ## 11. 常见错误
 

@@ -32,6 +32,7 @@ export default function PageEditor({ id }: { id: number | string }) {
   const defaults = useRef<DefaultMedia>({})
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const editVersion = useRef(0)
+  const previewChannel = useRef<BroadcastChannel | null>(null)
 
   useEffect(() => {
     getPage(id).then((d) => setDoc({ ...d, blocks: ensureIds(d.blocks) }))
@@ -55,6 +56,12 @@ export default function PageEditor({ id }: { id: number | string }) {
       })
       .catch(() => {})
   }, [id])
+
+  useEffect(() => {
+    if (typeof BroadcastChannel === 'undefined') return
+    previewChannel.current = new BroadcastChannel('zhonghui-preview')
+    return () => previewChannel.current?.close()
+  }, [])
 
   useEffect(() => () => {
     clearTimeout(timer.current)
@@ -107,6 +114,7 @@ export default function PageEditor({ id }: { id: number | string }) {
         route: d.route,
         blocks: editorToPayloadBlocks(d.blocks, urlToId.current),
       }).then(() => {
+        previewChannel.current?.postMessage({ type: 'page-saved', id })
         if (version === undefined || version === editVersion.current) setDirty(false)
       }),
     [id],
@@ -202,7 +210,7 @@ export default function PageEditor({ id }: { id: number | string }) {
         dirty={dirty}
         build={build}
         publishing={publishing}
-        onPreview={() => window.open(`/preview/pages/${id}`, '_blank')}
+        onPreview={() => window.open(`/preview/pages/${id}?t=${Date.now()}`, '_blank')}
         onSave={saveNow}
         onPublish={publishNow}
       />

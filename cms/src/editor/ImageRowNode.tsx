@@ -1,10 +1,10 @@
 import React from 'react'
 import {
   DecoratorNode,
+  $createParagraphNode,
   $getNodeByKey,
   $getRoot,
   $getSelection,
-  type LexicalNode,
   type NodeKey,
   type SerializedLexicalNode,
   type Spread,
@@ -12,51 +12,78 @@ import {
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 
 export type ImageRowItem = { src: string; alt?: string }
-type SerializedImageRowNode = Spread<{ images: ImageRowItem[] }, SerializedLexicalNode>
+type SerializedImageRowNode = Spread<{ images: ImageRowItem[]; columns?: number }, SerializedLexicalNode>
 
-function ImageRowView({ nodeKey, images }: { nodeKey: NodeKey; images: ImageRowItem[] }) {
+function ImageRowView({
+  nodeKey,
+  images,
+  columns,
+}: {
+  nodeKey: NodeKey
+  images: ImageRowItem[]
+  columns: number
+}) {
   const [editor] = useLexicalComposerContext()
+  const cols = Math.min(4, Math.max(1, columns || 3))
+
+  const updateColumns = (next: number) => {
+    editor.update(() => {
+      const node = $getNodeByKey(nodeKey)
+      if (node instanceof ImageRowNode) node.setColumns(next)
+    })
+  }
+
   return (
     <div className="rt-image-row" contentEditable={false}>
-      <div className="rt-image-row-grid">
+      <div className={`rt-image-row-grid rt-image-row-grid-cols-${cols}`}>
         {images.map((image, index) => (
           <img key={`${image.src}-${index}`} src={image.src} alt={image.alt || ''} />
         ))}
       </div>
-      <button
-        type="button"
-        className="rt-image-row-delete"
-        onClick={() => {
-          editor.update(() => {
-            const node = $getNodeByKey(nodeKey)
-            if (node) node.remove()
-          })
-        }}
-      >
-        移除图集
-      </button>
+      <div className="rt-image-row-tools">
+        <label>
+          列数
+          <select value={cols} onChange={(e) => updateColumns(Number(e.target.value))}>
+            {[1, 2, 3, 4].map((value) => <option key={value} value={value}>{value} 列</option>)}
+          </select>
+        </label>
+        <button
+          type="button"
+          className="rt-image-row-delete"
+          onClick={() => {
+            editor.update(() => {
+              const node = $getNodeByKey(nodeKey)
+              if (node) node.remove()
+            })
+          }}
+        >
+          移除图集
+        </button>
+      </div>
     </div>
   )
 }
 
 export class ImageRowNode extends DecoratorNode<React.JSX.Element> {
   __images: ImageRowItem[]
+  __columns: number
 
   static getType(): string {
     return 'image-row'
   }
 
   static clone(node: ImageRowNode): ImageRowNode {
-    return new ImageRowNode(node.__images, node.__key)
+    return new ImageRowNode(node.__images, node.__columns, node.__key)
   }
 
-  constructor(images: ImageRowItem[], key?: NodeKey) {
+  constructor(images: ImageRowItem[], columns = 3, key?: NodeKey) {
     super(key)
     this.__images = images
+    this.__columns = columns
   }
 
   static importJSON(serialized: SerializedImageRowNode): ImageRowNode {
-    return new ImageRowNode(serialized.images || [])
+    return new ImageRowNode(serialized.images || [], serialized.columns || 3)
   }
 
   exportJSON(): SerializedImageRowNode {
@@ -64,7 +91,13 @@ export class ImageRowNode extends DecoratorNode<React.JSX.Element> {
       type: 'image-row',
       version: 1,
       images: this.__images,
+      columns: this.__columns,
     }
+  }
+
+  setColumns(columns: number): void {
+    const writable = this.getWritable()
+    writable.__columns = Math.min(4, Math.max(1, columns))
   }
 
   createDOM(): HTMLElement {
@@ -80,22 +113,17 @@ export class ImageRowNode extends DecoratorNode<React.JSX.Element> {
   }
 
   decorate(): React.JSX.Element {
-    return <ImageRowView nodeKey={this.getKey()} images={this.__images} />
+    return <ImageRowView nodeKey={this.getKey()} images={this.__images} columns={this.__columns} />
   }
 }
 
-export function $createImageRowNode(images: ImageRowItem[]): ImageRowNode {
-  return new ImageRowNode(images)
-}
-
-export function $insertImageRow(images: ImageRowItem[]) {
+export function $insertImageRow(images: ImageRowItem[], columns = 3) {
   const selection = $getSelection()
-  const node = $createImageRowNode(images)
+  const node = new ImageRowNode(images, columns)
   if (selection) selection.insertNodes([node])
   else $getRoot().append(node)
-  return node
-}
-
-export function isImageRowNode(node: LexicalNode | null | undefined): node is ImageRowNode {
-  return node instanceof ImageRowNode
+  const paragraph = $createParagraphNode()
+  node.insertAfter(paragraph)
+  paragraph.selectStart()
+  return paragraph.getKey()
 }

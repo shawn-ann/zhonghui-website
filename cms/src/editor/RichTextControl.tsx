@@ -12,7 +12,7 @@ import { HeadingNode, QuoteNode, $createHeadingNode } from '@lexical/rich-text'
 import { ListNode, ListItemNode, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from '@lexical/list'
 import { LinkNode, AutoLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
 import { $setBlocksType } from '@lexical/selection'
-import { $createParagraphNode, $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND, UNDO_COMMAND, REDO_COMMAND } from 'lexical'
+import { $createParagraphNode, $getNodeByKey, $getSelection, $isElementNode, $isRangeSelection, FORMAT_TEXT_COMMAND, UNDO_COMMAND, REDO_COMMAND } from 'lexical'
 import { ImageRowNode, $insertImageRow } from './ImageRowNode'
 import { ImageNode, $insertImage } from './ImageNode'
 import MediaModal from './MediaModal'
@@ -34,6 +34,17 @@ function Toolbar() {
   const list = (type: 'ul' | 'ol') => {
     editor.dispatchCommand(type === 'ul' ? INSERT_UNORDERED_LIST_COMMAND : INSERT_ORDERED_LIST_COMMAND, undefined)
   }
+  const focusParagraph = (key: string | null) => {
+    window.setTimeout(() => {
+      editor.focus()
+      if (!key) return
+      editor.update(() => {
+        const node = $getNodeByKey(key)
+        if ($isElementNode(node)) node.selectStart()
+      })
+    }, 50)
+  }
+
   const link = () => {
     const url = window.prompt('链接地址（留空取消）')
     if (url !== null) editor.dispatchCommand(TOGGLE_LINK_COMMAND, url || null)
@@ -65,8 +76,10 @@ function Toolbar() {
         title="插入图片"
         onClose={() => setPicker(null)}
         onSelect={(item) => {
-          if (item.url) editor.update(() => { $insertImage(item.url as string, item.alt || '') })
+          let paragraphKey: string | null = null
+          if (item.url) editor.update(() => { paragraphKey = $insertImage(item.url as string, item.alt || '') })
           setPicker(null)
+          focusParagraph(paragraphKey)
         }}
       />
     ) : null}
@@ -79,10 +92,12 @@ function Toolbar() {
           const images = items
             .filter((item) => item.url)
             .map((item) => ({ src: item.url as string, alt: item.alt || '' }))
+          let paragraphKey: string | null = null
           if (images.length) {
-            editor.update(() => { $insertImageRow(images) })
+            editor.update(() => { paragraphKey = $insertImageRow(images) })
           }
           setPicker(null)
+          focusParagraph(paragraphKey)
         }}
       />
     ) : null}
