@@ -312,9 +312,15 @@ export interface Page {
                             | {
                                 media: number | Media;
                                 altText?: string | null;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                 fit?: ('cover' | 'contain') | null;
@@ -368,9 +374,15 @@ export interface Page {
                               }
                             | {
                                 label: string;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 style?: ('primary' | 'outline') | null;
                                 bg?: string | null;
@@ -423,7 +435,7 @@ export interface Page {
                               }
                             | {
                                 gap?: ('sm' | 'md' | 'lg') | null;
-                                bgImage?: (number | null) | Media;
+                                bgImage?: string | null;
                                 bgColor?: string | null;
                                 padding?: number | null;
                                 children?:
@@ -477,9 +489,15 @@ export interface Page {
                                       | {
                                           media: number | Media;
                                           altText?: string | null;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
                                           /**
-                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           * 静态生成时解析为该页面的路由
                                            */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
                                           link?: string | null;
                                           aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                           fit?: ('cover' | 'contain') | null;
@@ -571,9 +589,15 @@ export interface Page {
                                         }
                                       | {
                                           label: string;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
                                           /**
-                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           * 静态生成时解析为该页面的路由
                                            */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
                                           link?: string | null;
                                           style?: ('primary' | 'outline') | null;
                                           bg?: string | null;
@@ -648,9 +672,15 @@ export interface Page {
                                       | {
                                           media: number | Media;
                                           altText?: string | null;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
                                           /**
-                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           * 静态生成时解析为该页面的路由
                                            */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
                                           link?: string | null;
                                           aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                           fit?: ('cover' | 'contain') | null;
@@ -704,9 +734,15 @@ export interface Page {
                                         }
                                       | {
                                           label: string;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
                                           /**
-                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           * 静态生成时解析为该页面的路由
                                            */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
                                           link?: string | null;
                                           style?: ('primary' | 'outline') | null;
                                           bg?: string | null;
@@ -759,7 +795,7 @@ export interface Page {
                                         }
                                       | {
                                           gap?: ('sm' | 'md' | 'lg') | null;
-                                          bgImage?: (number | null) | Media;
+                                          bgImage?: string | null;
                                           bgColor?: string | null;
                                           padding?: number | null;
                                           children?:
@@ -813,9 +849,15 @@ export interface Page {
                                                 | {
                                                     media: number | Media;
                                                     altText?: string | null;
+                                                    linkType?: ('none' | 'internal' | 'external') | null;
                                                     /**
-                                                     * 站内路由以 / 开头，或完整外链 https://…
+                                                     * 静态生成时解析为该页面的路由
                                                      */
+                                                    internalPage?: (number | null) | Page;
+                                                    /**
+                                                     * https://… / mailto: / tel:
+                                                     */
+                                                    externalUrl?: string | null;
                                                     link?: string | null;
                                                     aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                                     fit?: ('cover' | 'contain') | null;
@@ -907,9 +949,15 @@ export interface Page {
                                                   }
                                                 | {
                                                     label: string;
+                                                    linkType?: ('none' | 'internal' | 'external') | null;
                                                     /**
-                                                     * 站内路由以 / 开头，或完整外链 https://…
+                                                     * 静态生成时解析为该页面的路由
                                                      */
+                                                    internalPage?: (number | null) | Page;
+                                                    /**
+                                                     * https://… / mailto: / tel:
+                                                     */
+                                                    externalUrl?: string | null;
                                                     link?: string | null;
                                                     style?: ('primary' | 'outline') | null;
                                                     bg?: string | null;
@@ -1109,7 +1157,7 @@ export interface Page {
                     }
                   | {
                       gap?: ('sm' | 'md' | 'lg') | null;
-                      bgImage?: (number | null) | Media;
+                      bgImage?: string | null;
                       bgColor?: string | null;
                       padding?: number | null;
                       children?:
@@ -1163,9 +1211,15 @@ export interface Page {
                             | {
                                 media: number | Media;
                                 altText?: string | null;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                 fit?: ('cover' | 'contain') | null;
@@ -1257,9 +1311,15 @@ export interface Page {
                               }
                             | {
                                 label: string;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 style?: ('primary' | 'outline') | null;
                                 bg?: string | null;
@@ -1360,9 +1420,15 @@ export interface Page {
                   | {
                       media: number | Media;
                       altText?: string | null;
+                      linkType?: ('none' | 'internal' | 'external') | null;
                       /**
-                       * 站内路由以 / 开头，或完整外链 https://…
+                       * 静态生成时解析为该页面的路由
                        */
+                      internalPage?: (number | null) | Page;
+                      /**
+                       * https://… / mailto: / tel:
+                       */
+                      externalUrl?: string | null;
                       link?: string | null;
                       aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                       fit?: ('cover' | 'contain') | null;
@@ -1416,9 +1482,15 @@ export interface Page {
                     }
                   | {
                       label: string;
+                      linkType?: ('none' | 'internal' | 'external') | null;
                       /**
-                       * 站内路由以 / 开头，或完整外链 https://…
+                       * 静态生成时解析为该页面的路由
                        */
+                      internalPage?: (number | null) | Page;
+                      /**
+                       * https://… / mailto: / tel:
+                       */
+                      externalUrl?: string | null;
                       link?: string | null;
                       style?: ('primary' | 'outline') | null;
                       bg?: string | null;
@@ -1471,7 +1543,7 @@ export interface Page {
                     }
                   | {
                       gap?: ('sm' | 'md' | 'lg') | null;
-                      bgImage?: (number | null) | Media;
+                      bgImage?: string | null;
                       bgColor?: string | null;
                       padding?: number | null;
                       children?:
@@ -1525,9 +1597,15 @@ export interface Page {
                             | {
                                 media: number | Media;
                                 altText?: string | null;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                 fit?: ('cover' | 'contain') | null;
@@ -1619,9 +1697,15 @@ export interface Page {
                               }
                             | {
                                 label: string;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 style?: ('primary' | 'outline') | null;
                                 bg?: string | null;
@@ -1696,9 +1780,15 @@ export interface Page {
                             | {
                                 media: number | Media;
                                 altText?: string | null;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                 fit?: ('cover' | 'contain') | null;
@@ -1752,9 +1842,15 @@ export interface Page {
                               }
                             | {
                                 label: string;
+                                linkType?: ('none' | 'internal' | 'external') | null;
                                 /**
-                                 * 站内路由以 / 开头，或完整外链 https://…
+                                 * 静态生成时解析为该页面的路由
                                  */
+                                internalPage?: (number | null) | Page;
+                                /**
+                                 * https://… / mailto: / tel:
+                                 */
+                                externalUrl?: string | null;
                                 link?: string | null;
                                 style?: ('primary' | 'outline') | null;
                                 bg?: string | null;
@@ -1807,7 +1903,7 @@ export interface Page {
                               }
                             | {
                                 gap?: ('sm' | 'md' | 'lg') | null;
-                                bgImage?: (number | null) | Media;
+                                bgImage?: string | null;
                                 bgColor?: string | null;
                                 padding?: number | null;
                                 children?:
@@ -1861,9 +1957,15 @@ export interface Page {
                                       | {
                                           media: number | Media;
                                           altText?: string | null;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
                                           /**
-                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           * 静态生成时解析为该页面的路由
                                            */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
                                           link?: string | null;
                                           aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                           fit?: ('cover' | 'contain') | null;
@@ -1955,9 +2057,15 @@ export interface Page {
                                         }
                                       | {
                                           label: string;
+                                          linkType?: ('none' | 'internal' | 'external') | null;
                                           /**
-                                           * 站内路由以 / 开头，或完整外链 https://…
+                                           * 静态生成时解析为该页面的路由
                                            */
+                                          internalPage?: (number | null) | Page;
+                                          /**
+                                           * https://… / mailto: / tel:
+                                           */
+                                          externalUrl?: string | null;
                                           link?: string | null;
                                           style?: ('primary' | 'outline') | null;
                                           bg?: string | null;
@@ -2060,9 +2168,15 @@ export interface Page {
         | {
             media: number | Media;
             altText?: string | null;
+            linkType?: ('none' | 'internal' | 'external') | null;
             /**
-             * 站内路由以 / 开头，或完整外链 https://…
+             * 静态生成时解析为该页面的路由
              */
+            internalPage?: (number | null) | Page;
+            /**
+             * https://… / mailto: / tel:
+             */
+            externalUrl?: string | null;
             link?: string | null;
             aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
             fit?: ('cover' | 'contain') | null;
@@ -2116,9 +2230,15 @@ export interface Page {
           }
         | {
             label: string;
+            linkType?: ('none' | 'internal' | 'external') | null;
             /**
-             * 站内路由以 / 开头，或完整外链 https://…
+             * 静态生成时解析为该页面的路由
              */
+            internalPage?: (number | null) | Page;
+            /**
+             * https://… / mailto: / tel:
+             */
+            externalUrl?: string | null;
             link?: string | null;
             style?: ('primary' | 'outline') | null;
             bg?: string | null;
@@ -2295,7 +2415,7 @@ export interface Page {
           }
         | {
             gap?: ('sm' | 'md' | 'lg') | null;
-            bgImage?: (number | null) | Media;
+            bgImage?: string | null;
             bgColor?: string | null;
             padding?: number | null;
             children?:
@@ -2349,9 +2469,15 @@ export interface Page {
                   | {
                       media: number | Media;
                       altText?: string | null;
+                      linkType?: ('none' | 'internal' | 'external') | null;
                       /**
-                       * 站内路由以 / 开头，或完整外链 https://…
+                       * 静态生成时解析为该页面的路由
                        */
+                      internalPage?: (number | null) | Page;
+                      /**
+                       * https://… / mailto: / tel:
+                       */
+                      externalUrl?: string | null;
                       link?: string | null;
                       aspectRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                       fit?: ('cover' | 'contain') | null;
@@ -2443,9 +2569,15 @@ export interface Page {
                     }
                   | {
                       label: string;
+                      linkType?: ('none' | 'internal' | 'external') | null;
                       /**
-                       * 站内路由以 / 开头，或完整外链 https://…
+                       * 静态生成时解析为该页面的路由
                        */
+                      internalPage?: (number | null) | Page;
+                      /**
+                       * https://… / mailto: / tel:
+                       */
+                      externalUrl?: string | null;
                       link?: string | null;
                       style?: ('primary' | 'outline') | null;
                       bg?: string | null;
@@ -2686,6 +2818,9 @@ export interface PagesSelect<T extends boolean = true> {
                                   | {
                                       media?: T;
                                       altText?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       aspectRatio?: T;
                                       fit?: T;
@@ -2720,6 +2855,9 @@ export interface PagesSelect<T extends boolean = true> {
                                   | T
                                   | {
                                       label?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       style?: T;
                                       bg?: T;
@@ -2791,6 +2929,9 @@ export interface PagesSelect<T extends boolean = true> {
                                               | {
                                                   media?: T;
                                                   altText?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
                                                   link?: T;
                                                   aspectRatio?: T;
                                                   fit?: T;
@@ -2843,6 +2984,9 @@ export interface PagesSelect<T extends boolean = true> {
                                               | T
                                               | {
                                                   label?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
                                                   link?: T;
                                                   style?: T;
                                                   bg?: T;
@@ -2900,6 +3044,9 @@ export interface PagesSelect<T extends boolean = true> {
                                               | {
                                                   media?: T;
                                                   altText?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
                                                   link?: T;
                                                   aspectRatio?: T;
                                                   fit?: T;
@@ -2934,6 +3081,9 @@ export interface PagesSelect<T extends boolean = true> {
                                               | T
                                               | {
                                                   label?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
                                                   link?: T;
                                                   style?: T;
                                                   bg?: T;
@@ -3005,6 +3155,9 @@ export interface PagesSelect<T extends boolean = true> {
                                                           | {
                                                               media?: T;
                                                               altText?: T;
+                                                              linkType?: T;
+                                                              internalPage?: T;
+                                                              externalUrl?: T;
                                                               link?: T;
                                                               aspectRatio?: T;
                                                               fit?: T;
@@ -3057,6 +3210,9 @@ export interface PagesSelect<T extends boolean = true> {
                                                           | T
                                                           | {
                                                               label?: T;
+                                                              linkType?: T;
+                                                              internalPage?: T;
+                                                              externalUrl?: T;
                                                               link?: T;
                                                               style?: T;
                                                               bg?: T;
@@ -3248,6 +3404,9 @@ export interface PagesSelect<T extends boolean = true> {
                                   | {
                                       media?: T;
                                       altText?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       aspectRatio?: T;
                                       fit?: T;
@@ -3300,6 +3459,9 @@ export interface PagesSelect<T extends boolean = true> {
                                   | T
                                   | {
                                       label?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       style?: T;
                                       bg?: T;
@@ -3373,6 +3535,9 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           media?: T;
                           altText?: T;
+                          linkType?: T;
+                          internalPage?: T;
+                          externalUrl?: T;
                           link?: T;
                           aspectRatio?: T;
                           fit?: T;
@@ -3407,6 +3572,9 @@ export interface PagesSelect<T extends boolean = true> {
                       | T
                       | {
                           label?: T;
+                          linkType?: T;
+                          internalPage?: T;
+                          externalUrl?: T;
                           link?: T;
                           style?: T;
                           bg?: T;
@@ -3478,6 +3646,9 @@ export interface PagesSelect<T extends boolean = true> {
                                   | {
                                       media?: T;
                                       altText?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       aspectRatio?: T;
                                       fit?: T;
@@ -3530,6 +3701,9 @@ export interface PagesSelect<T extends boolean = true> {
                                   | T
                                   | {
                                       label?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       style?: T;
                                       bg?: T;
@@ -3587,6 +3761,9 @@ export interface PagesSelect<T extends boolean = true> {
                                   | {
                                       media?: T;
                                       altText?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       aspectRatio?: T;
                                       fit?: T;
@@ -3621,6 +3798,9 @@ export interface PagesSelect<T extends boolean = true> {
                                   | T
                                   | {
                                       label?: T;
+                                      linkType?: T;
+                                      internalPage?: T;
+                                      externalUrl?: T;
                                       link?: T;
                                       style?: T;
                                       bg?: T;
@@ -3692,6 +3872,9 @@ export interface PagesSelect<T extends boolean = true> {
                                               | {
                                                   media?: T;
                                                   altText?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
                                                   link?: T;
                                                   aspectRatio?: T;
                                                   fit?: T;
@@ -3744,6 +3927,9 @@ export interface PagesSelect<T extends boolean = true> {
                                               | T
                                               | {
                                                   label?: T;
+                                                  linkType?: T;
+                                                  internalPage?: T;
+                                                  externalUrl?: T;
                                                   link?: T;
                                                   style?: T;
                                                   bg?: T;
@@ -3810,6 +3996,9 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               media?: T;
               altText?: T;
+              linkType?: T;
+              internalPage?: T;
+              externalUrl?: T;
               link?: T;
               aspectRatio?: T;
               fit?: T;
@@ -3844,6 +4033,9 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               label?: T;
+              linkType?: T;
+              internalPage?: T;
+              externalUrl?: T;
               link?: T;
               style?: T;
               bg?: T;
@@ -4018,6 +4210,9 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           media?: T;
                           altText?: T;
+                          linkType?: T;
+                          internalPage?: T;
+                          externalUrl?: T;
                           link?: T;
                           aspectRatio?: T;
                           fit?: T;
@@ -4070,6 +4265,9 @@ export interface PagesSelect<T extends boolean = true> {
                       | T
                       | {
                           label?: T;
+                          linkType?: T;
+                          internalPage?: T;
+                          externalUrl?: T;
                           link?: T;
                           style?: T;
                           bg?: T;

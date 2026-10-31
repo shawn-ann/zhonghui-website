@@ -76,7 +76,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         type: 'image',
         media: resolveMedia(raw.media),
         altText: raw.altText || undefined,
-        link: raw.link || undefined,
+        ...resolveBlockLink(raw, routes),
         aspectRatio: ['auto', '1:1', '4:3', '3:4', '16:9'].includes(raw.aspectRatio) ? raw.aspectRatio : 'auto',
         fit: raw.fit === 'contain' ? 'contain' : 'cover',
         padding: raw.padding || undefined,
@@ -113,7 +113,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         descColor: raw.descColor || undefined,
       }
     case 'button':
-      return { type: 'button', label: String(raw.label ?? ''), link: raw.link || '', style: raw.style === 'outline' ? 'outline' : 'primary', padding: raw.padding || undefined, bg, alt }
+      return { type: 'button', label: String(raw.label ?? ''), ...resolveBlockLink(raw, routes), style: raw.style === 'outline' ? 'outline' : 'primary', padding: raw.padding || undefined, bg, alt }
     case 'banner':
       return {
         type: 'banner',
@@ -169,7 +169,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
       return {
         type: 'stack',
         gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md',
-        bgImage: raw.bgImage ? resolveMedia(raw.bgImage) : undefined,
+        bgImage: typeof raw.bgImage === 'string' ? raw.bgImage : raw.bgImage ? resolveMedia(raw.bgImage) : undefined,
         bgColor: raw.bgColor || undefined,
         padding: raw.padding > 0 ? Number(raw.padding) : undefined,
         children: arr<Record<string, any>>(raw.children)

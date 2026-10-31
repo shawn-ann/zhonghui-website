@@ -9,7 +9,7 @@ describe('PropertyPanel', () => {
 
   it('renders Chinese labels for a text block', () => {
     render(<PropertyPanel block={block} onChange={() => {}} />)
-    for (const label of ['标题', '正文', '对齐']) {
+    for (const label of ['正文', '对齐']) {
       expect(screen.getByText(label)).toBeTruthy()
     }
   })

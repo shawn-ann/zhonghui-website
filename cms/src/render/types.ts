@@ -60,6 +60,10 @@ export interface ImageBlock extends BlockBase {
   media: string
   altText?: string
   link?: string
+  linkType?: 'none' | 'internal' | 'external'
+  internalPageId?: string | number
+  internalRoute?: string
+  externalUrl?: string
   aspectRatio?: 'auto' | '1:1' | '4:3' | '3:4' | '16:9'
   fit?: 'cover' | 'contain'
   padding?: number
@@ -87,6 +91,10 @@ export interface ButtonBlock extends BlockBase {
   type: 'button'
   label: string
   link: string
+  linkType?: 'none' | 'internal' | 'external'
+  internalPageId?: string | number
+  internalRoute?: string
+  externalUrl?: string
   style?: 'primary' | 'outline'
   padding?: number
 }

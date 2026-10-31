@@ -104,7 +104,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
     case 'image':
       out.media = resolveMediaId(b.media, urlToId, raw?.media)
       if (b.altText !== undefined) out.altText = b.altText
-      if (b.link !== undefined) out.link = b.link
+      writeLink(out, b)
       if (b.aspectRatio !== undefined) out.aspectRatio = b.aspectRatio
       if (b.fit !== undefined) out.fit = b.fit
       if (b.padding && b.padding > 0) out.padding = b.padding
@@ -134,7 +134,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       break
     case 'button':
       out.label = b.label
-      out.link = b.link
+      writeLink(out, b)
       if (b.style !== undefined) out.style = b.style
       if (b.padding && b.padding > 0) out.padding = b.padding
       break

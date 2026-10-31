@@ -1,5 +1,5 @@
 import type { Block } from 'payload'
-import { legacyBgAltFields, linkField, paddingField } from './common'
+import { legacyBgAltFields, pageLinkFields, paddingField } from './common'
 
 export const ImageBlock: Block = {
   slug: 'image',
@@ -7,7 +7,7 @@ export const ImageBlock: Block = {
   fields: [
     { name: 'media', type: 'upload', relationTo: 'media', required: true },
     { name: 'altText', type: 'text' },
-    linkField(),
+    ...pageLinkFields(),
     {
       name: 'aspectRatio',
       type: 'select',

@@ -20,36 +20,28 @@ export interface FieldDef {
 }
 export interface BlockMeta { type: Block['type']; label: string; defaults: () => Block; fields: FieldDef[] }
 
-const common: FieldDef[] = [
-  { key: 'bg', label: '背景', control: 'bg' },
-  { key: 'alt', label: '浅粉底', control: 'boolean' },
-]
-
 export const BLOCKS: Record<Block['type'], BlockMeta> = {
   banner: { type: 'banner', label: '横幅', defaults: () => ({ type: 'banner', variant: 'split' }), fields: [
     { key: 'title', label: '标题', control: 'text' }, { key: 'sub', label: '副标题', control: 'text' },
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },
     { key: 'subColor', label: '副标题颜色', control: 'textColor' },
     { key: 'variant', label: '布局变体', control: 'select', options: [{ label: '左右', value: 'split' }, { label: '整图', value: 'centered' }] },
-    { key: 'image', label: '配图', control: 'media' }, { key: 'pattern', label: '装饰图', control: 'media' }, ...common,
+    { key: 'image', label: '配图', control: 'media' }, { key: 'pattern', label: '装饰图', control: 'media' },
   ] },
   text: { type: 'text', label: '文本', defaults: () => ({ type: 'text', body: '' }), fields: [
-    { key: 'title', label: '标题', control: 'text' }, { key: 'body', label: '正文', control: 'textarea' },
-    { key: 'titleColor', label: '标题颜色', control: 'textColor' },
+    { key: 'body', label: '正文', control: 'textarea' },
     { key: 'bodyColor', label: '正文颜色', control: 'textColor' },
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '左', value: 'left' }, { label: '居中', value: 'center' }] },
     { key: 'fontSize', label: '正文字号', control: 'number' },
     { key: 'fontWeight', label: '正文字重', control: 'select', options: [{ label: '常规', value: '400' }, { label: '中等', value: '600' }, { label: '粗体', value: '700' }] },
     { key: 'maxWidth', label: '最大宽度', control: 'number' },
     { key: 'marginTop', label: '上间距', control: 'number' },
-    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   image: { type: 'image', label: '图片', defaults: () => ({ type: 'image', media: '', aspectRatio: 'auto', fit: 'cover' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'altText', label: '替代文本', control: 'text' },
-    { key: 'link', label: '链接', control: 'link' },
+    { key: 'link', label: '链接', control: 'pageLink' },
     { key: 'aspectRatio', label: '图片比例', control: 'select', options: [{ label: '自动', value: 'auto' }, { label: '1:1', value: '1:1' }, { label: '4:3', value: '4:3' }, { label: '3:4', value: '3:4' }, { label: '16:9', value: '16:9' }] },
     { key: 'fit', label: '填充方式', control: 'select', options: [{ label: '裁剪填充', value: 'cover' }, { label: '完整显示', value: 'contain' }] },
-    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   imageText: { type: 'imageText', label: '图文卡片', defaults: () => ({ type: 'imageText', media: '' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'title', label: '标题', control: 'text' },
@@ -60,7 +52,6 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'link', label: '链接', control: 'pageLink' },
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },
     { key: 'descColor', label: '描述颜色', control: 'textColor' },
-    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   iconCard: { type: 'iconCard', label: '图标卡片', defaults: () => ({ type: 'iconCard', icon: '' }), fields: [
     { key: 'icon', label: '图标', control: 'media' },
@@ -74,17 +65,14 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'bgColor', label: '背景颜色', control: 'color' },
   ] },
   button: { type: 'button', label: '按钮', defaults: () => ({ type: 'button', label: '', link: '' }), fields: [
-    { key: 'label', label: '文字', control: 'text' }, { key: 'link', label: '链接', control: 'link' },
+    { key: 'label', label: '文字', control: 'text' }, { key: 'link', label: '链接', control: 'pageLink' },
     { key: 'style', label: '样式', control: 'select', options: [{ label: '实心', value: 'primary' }, { label: '描边', value: 'outline' }] },
-    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   richtext: { type: 'richtext', label: '富文本', defaults: () => ({ type: 'richtext', html: '' }), fields: [
-    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   gallery: { type: 'gallery', label: '图集', defaults: () => ({ type: 'gallery', images: [] }), fields: [
     { key: 'columns', label: '列数', control: 'number' },
     { key: 'images', label: '图片', control: 'mediaList' },
-    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   slider: { type: 'slider', label: '轮播', defaults: () => ({ type: 'slider', images: [] }), fields: [
     { key: 'images', label: '轮播图片', control: 'mediaList' },
@@ -101,7 +89,6 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },
     { key: 'subtitleColor', label: '副标题颜色', control: 'textColor' },
     { key: 'align', label: '对齐', control: 'select', options: [{ label: '居中', value: 'center' }, { label: '左对齐', value: 'left' }] },
-    { key: 'padding', label: '内边距', control: 'number' },
   ] },
   infoList: { type: 'infoList', label: '信息列表', defaults: () => ({ type: 'infoList', showDots: true, titleAlign: 'left', items: [{ label: '标签', desc: '说明' }] }), fields: [
     { key: 'title', label: '标题（可选）', control: 'text' },

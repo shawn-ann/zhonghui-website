@@ -14,6 +14,7 @@ describe('mapPageDoc', () => {
     expect(doc.blocks[0]).toEqual({ type: 'text', title: 'a', body: 'b', align: 'center', bg: undefined, alt: false })
     expect(doc.blocks[1]).toEqual({
       type: 'image', media: '/media/x.jpg', altText: 'x', link: undefined,
+      linkType: 'none', internalPageId: undefined, internalRoute: undefined, externalUrl: undefined,
       aspectRatio: 'auto', fit: 'cover', padding: undefined, bg: undefined, alt: false,
     })
   })
@@ -84,6 +85,19 @@ describe('mapBlock', () => {
     expect(b.type).toBe('grid')
     expect(b.children[0].type).toBe('text')
   })
+  it('resolves page links for image and button', () => {
+    const image = mapBlock({
+      blockType: 'image', media: { url: '/a.jpg' },
+      linkType: 'internal', internalPage: { id: 7, route: '/contact/' },
+    }, resolve) as any
+    expect(image).toMatchObject({ link: '/contact/', linkType: 'internal', internalPageId: 7, internalRoute: '/contact/' })
+
+    const button = mapBlock({
+      blockType: 'button', label: '去', linkType: 'external', externalUrl: 'https://example.com',
+    }, resolve) as any
+    expect(button).toMatchObject({ link: 'https://example.com', linkType: 'external' })
+  })
+
   it('maps gallery images to urls', () => {
     const raw = { blockType: 'gallery', columns: 2, images: [{ image: { url: '/media/1.jpg' } }, { image: { url: '/media/2.jpg' } }] }
     const b = mapBlock(raw, resolve) as any

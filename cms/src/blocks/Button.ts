@@ -1,12 +1,12 @@
 import type { Block } from 'payload'
-import { legacyBgAltFields, linkField, paddingField } from './common'
+import { legacyBgAltFields, pageLinkFields, paddingField } from './common'
 
 export const ButtonBlock: Block = {
   slug: 'button',
   labels: { singular: '按钮', plural: '按钮' },
   fields: [
     { name: 'label', type: 'text', required: true },
-    linkField(),
+    ...pageLinkFields(),
     {
       name: 'style',
       type: 'select',

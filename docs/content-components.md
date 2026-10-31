@@ -139,7 +139,7 @@ heading, text, image, imageText, iconCard, button
 
 ### 4.3 图片
 
-- 所有图片通过媒体库上传，不直接写 URL。
+- 内容图片通过媒体库上传；背景图片统一保存为媒体 URL 字符串。
 - 独立图片 `image`：
   - `aspectRatio`：`auto` / `1:1` / `4:3` / `3:4` / `16:9`
   - `fit`：`cover` / `contain`
@@ -151,13 +151,14 @@ heading, text, image, imageText, iconCard, button
 
 两种链接模型：
 
-1. **简单链接**：`image`、`button` 使用 `link` 文本字段。
-   - 站内路径以 `/` 开头，或完整 `https://…` / `mailto:` / `tel:`。
-2. **页面关系链接**：`imageText`、`iconCard` 使用：
-   - `linkType`：`none` / `internal` / `external`
-   - `internalPage`：页面关系，静态生成时解析为页面 `route`
-   - `externalUrl`：外链
-   - 隐藏字段 `link` 仅用于兼容旧数据
+所有内容链接统一使用页面关系模型：
+
+- `linkType`：`none` / `internal` / `external`
+- `internalPage`：页面关系，静态生成时解析为页面 `route`
+- `externalUrl`：外链
+- 隐藏字段 `link` 仅用于兼容旧数据
+
+适用于 `image`、`imageText`、`iconCard`、`button`。
 
 规则：站内链接必须保存页面 ID，不能把 `.html` 路由写进内容。
 
@@ -216,7 +217,7 @@ heading, text, image, imageText, iconCard, button
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
 | `gap` | select | `md` | sm/md/lg |
-| `bgImage` | upload | 空 | 背景图 |
+| `bgImage` | text | 空 | 背景图 URL（媒体选择器写入） |
 | `bgColor` | text | 空 | 背景色 |
 | `padding` | number | 0 | 内边距 |
 | `children` | blocks | — | 见 3.4 |
@@ -233,19 +234,19 @@ heading, text, image, imageText, iconCard, button
 
 ### 5.6 标题 `heading`
 
-`title`、`subtitle`、`titleColor`、`subtitleColor`、`align`（center/left）、`padding`。
+`title`、`subtitle`、`titleColor`、`subtitleColor`、`align`（center/left）。历史 `padding` 保留渲染兼容，不再出现在编辑器。
 
 ### 5.7 文本 `text`
 
-`title`（历史兼容）、`body`、`titleColor`、`bodyColor`、`align`、`fontSize`、`fontWeight`、`maxWidth`、`marginTop`、`padding`。
+`body`、`bodyColor`、`align`、`fontSize`、`fontWeight`、`maxWidth`、`marginTop`。历史 `title`/`titleColor` 不再出现在编辑器中，仅保留渲染兼容。
 
 ### 5.8 图片 `image`
 
-`media`、`altText`、`link`、`aspectRatio`、`fit`、`padding`。
+`media`、`altText`、`linkType`/`internalPage`/`externalUrl`、`aspectRatio`、`fit`。
 
 ### 5.9 图文卡片 `imageText`
 
-`media`、`title`、`subtitle`、`subtitleColor`、`desc`、`imageRatio`、`titleColor`、`descColor`、`linkType`/`internalPage`/`externalUrl`、`padding`。
+`media`、`title`、`subtitle`、`subtitleColor`、`desc`、`imageRatio`、`titleColor`、`descColor`、`linkType`/`internalPage`/`externalUrl`。历史 `padding` 保留渲染兼容。
 
 ### 5.10 图标卡片 `iconCard`
 
@@ -270,9 +271,9 @@ heading, text, image, imageText, iconCard, button
 
 ### 5.13 其它
 
-- `button`：`label`、`link`、`style`、`padding`
-- `richtext`：`content`（Payload Lexical）、`padding`
-- `gallery`：`images`、`columns`、`padding`
+- `button`：`label`、`linkType`/`internalPage`/`externalUrl`、`style`
+- `richtext`：`content`（Payload Lexical）；历史 `padding` 保留兼容
+- `gallery`：`images`、`columns`；历史 `padding` 保留兼容
 - `slider`：`images`
 - `gridInner`：历史兼容，编辑器不提供；序列化仍保留
 
