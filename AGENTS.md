@@ -13,6 +13,7 @@
 |---|---|
 | `index.html` | 首页，包含全部 CSS、`pageConfig`、`bgStyle`/`shell` 工具、`renderers`、渲染入口 |
 | `img/` | 图片素材（logo、背景图、项目图、banner 装饰 SVG 等） |
+| `docs/content-components.md` | **内容组件规则 / 放置关系 / 新增组件检查清单** |
 | `docs/design-system.md` | **配色 / 设计令牌的唯一权威来源** |
 | `docs/superpowers/specs/`、`docs/superpowers/plans/` | 设计文档与实现计划 |
 | `中惠门户网站架构文档.md` | 站点整体架构（栏目、内容模型） |
