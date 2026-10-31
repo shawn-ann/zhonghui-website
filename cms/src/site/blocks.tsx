@@ -412,12 +412,14 @@ export function StackView({ b, editor = false }: { b: StackBlock; editor?: boole
     ...(b.padding ? { padding: `${b.padding}px` } : {}),
   }
   return (
-    <div className={`stack stack-gap-${b.gap || 'md'}`} data-bid={b._id} style={style}>
-      {editor && children.length === 0 ? (
-        <div className="ed-empty-block"><span className="ed-empty-label">纵向容器</span><span className="ed-empty-tip">添加内容</span></div>
-      ) : children.map((child, i) => (
-        <div className="stack-item" key={child._id ?? i}>{blockNode(child, editor)}</div>
-      ))}
+    <div className="container stack-shell">
+      <div className={`stack stack-gap-${b.gap || 'md'}`} data-bid={b._id} style={style}>
+        {editor && children.length === 0 ? (
+          <div className="ed-empty-block"><span className="ed-empty-label">纵向容器</span><span className="ed-empty-tip">添加内容</span></div>
+        ) : children.map((child, i) => (
+          <div className="stack-item" key={child._id ?? i}>{blockNode(child, editor)}</div>
+        ))}
+      </div>
     </div>
   )
 }

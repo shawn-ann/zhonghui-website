@@ -372,3 +372,4 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .section-content > * { min-width: 0; }
 .section-content > .container { width: 100%; }
 .section-content > .container:first-child .section-heading { margin-bottom: 0; }
+.grid-cell > .stack-shell { width: 100%; max-width: none; margin: 0; padding: 0; }
