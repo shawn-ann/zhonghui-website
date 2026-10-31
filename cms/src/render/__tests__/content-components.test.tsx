@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { blockNode } from '../../site/blocks'
+import { lexicalToHtml } from '../richText'
 import type { GridBlock, HscrollBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, StackBlock, TextBlock } from '../types'
 
 const render = (b: any) => renderToStaticMarkup(blockNode(b)!)
@@ -35,6 +36,17 @@ describe('content component extensions', () => {
     expect(large).toContain('padding:160px 0')
     const custom = render({ type: 'section', _id: 's2', paddingY: 'md', paddingCustom: 120, children: [] })
     expect(custom).toContain('padding:120px 0')
+  })
+
+  it('converts rich text image rows to a gallery', () => {
+    const html = lexicalToHtml({
+      root: {
+        type: 'root', version: 1, direction: 'ltr', format: '', indent: 0,
+        children: [{ type: 'image-row', version: 1, images: [{ src: '/api/media/file/a.jpg', alt: 'A' }] }],
+      },
+    })
+    expect(html).toContain('richtext-gallery')
+    expect(html).toContain('/api/media/file/a.jpg')
   })
 
   it('renders text line breaks', () => {

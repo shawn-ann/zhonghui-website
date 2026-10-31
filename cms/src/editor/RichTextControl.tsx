@@ -13,9 +13,12 @@ import { ListNode, ListItemNode, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_L
 import { LinkNode, AutoLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
 import { $setBlocksType } from '@lexical/selection'
 import { $createParagraphNode, $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND, UNDO_COMMAND, REDO_COMMAND } from 'lexical'
+import { ImageRowNode } from './ImageRowNode'
+import ImageRowPicker from './ImageRowPicker'
 
 function Toolbar() {
   const [editor] = useLexicalComposerContext()
+  const [pickerOpen, setPickerOpen] = useState(false)
 
   const format = (value: 'bold' | 'italic' | 'underline') => {
     editor.dispatchCommand(FORMAT_TEXT_COMMAND, value)
@@ -36,6 +39,7 @@ function Toolbar() {
   }
 
   return (
+    <>
     <div className="rt-toolbar">
       <button type="button" onClick={() => format('bold')}><b>B</b></button>
       <button type="button" onClick={() => format('italic')}><i>I</i></button>
@@ -49,9 +53,13 @@ function Toolbar() {
       <button type="button" onClick={() => list('ol')}>1. 列表</button>
       <button type="button" onClick={link}>链接</button>
       <span className="rt-divider" />
+      <button type="button" onClick={() => setPickerOpen(true)}>图集</button>
+      <span className="rt-divider" />
       <button type="button" onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}>撤销</button>
       <button type="button" onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}>重做</button>
     </div>
+    {pickerOpen ? <ImageRowPicker onClose={() => setPickerOpen(false)} /> : null}
+    </>
   )
 }
 
@@ -64,7 +72,7 @@ function Editor({
 }) {
   const initialConfig = useMemo(() => ({
     namespace: 'zhonghui-rich-text',
-    nodes: [HeadingNode, QuoteNode, ListNode, ListItemNode, LinkNode, AutoLinkNode],
+    nodes: [HeadingNode, QuoteNode, ListNode, ListItemNode, LinkNode, AutoLinkNode, ImageRowNode],
     onError: (error: Error) => { throw error },
     editorState: value && typeof value === 'object' ? JSON.stringify(value) : undefined,
     theme: {
