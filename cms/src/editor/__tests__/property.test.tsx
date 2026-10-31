@@ -53,7 +53,8 @@ describe('PropertyPanel', () => {
     )
     expect(screen.getByText('链接')).toBeTruthy()
     expect(screen.getByText('关于中惠（/about/）')).toBeTruthy()
-    fireEvent.change(screen.getAllByRole('combobox')[0], { target: { value: 'external' } })
+    const linkSelect = screen.getAllByRole('combobox').find((el) => el.textContent?.includes('外部链接'))!
+    fireEvent.change(linkSelect, { target: { value: 'external' } })
     expect(onPatch).toHaveBeenCalledWith(expect.objectContaining({ linkType: 'external' }))
   })
 
@@ -61,7 +62,7 @@ describe('PropertyPanel', () => {
     const onAddChild = vi.fn()
     const section: Block = { type: 'section', _id: 's1', children: [] }
     render(<PropertyPanel block={section} onChange={() => {}} onAddChild={onAddChild} />)
-    for (const label of ['标题', '文本', '网格', '图集', '横幅', '轮播', '富文本', '信息列表', '图标列表', '横向滚动']) {
+    for (const label of ['标题', '文本', '网格', '图集', '横幅', '轮播', '富文本', '信息列表', '图标列表', '横向滚动', '纵向容器']) {
       expect(screen.getByTitle(`添加${label}`)).toBeTruthy()
     }
     fireEvent.click(screen.getByTitle('添加富文本'))

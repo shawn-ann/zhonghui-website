@@ -55,7 +55,9 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'media', label: '图片', control: 'media' }, { key: 'title', label: '标题', control: 'text' },
     { key: 'subtitle', label: '副标题', control: 'text' },
     { key: 'subtitleColor', label: '副标题颜色', control: 'textColor' },
-    { key: 'desc', label: '描述', control: 'textarea' }, { key: 'link', label: '链接', control: 'pageLink' },
+    { key: 'desc', label: '描述', control: 'textarea' },
+    { key: 'imageRatio', label: '图片比例', control: 'select', options: [{ label: '自动', value: 'auto' }, { label: '1:1', value: '1:1' }, { label: '4:3', value: '4:3' }, { label: '3:4', value: '3:4' }, { label: '16:9', value: '16:9' }] },
+    { key: 'link', label: '链接', control: 'pageLink' },
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },
     { key: 'descColor', label: '描述颜色', control: 'textColor' },
     { key: 'padding', label: '内边距', control: 'number' },
@@ -200,7 +202,7 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
 export const LAYOUT_TYPES = ['section', 'grid', 'hscroll', 'stack'] as const
 
 /** 分栏：版面级内容。 */
-export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'iconList', 'hscroll']
+export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'iconList', 'hscroll', 'stack']
 /** 网格：卡片/文本级内容。 */
 export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack']
 

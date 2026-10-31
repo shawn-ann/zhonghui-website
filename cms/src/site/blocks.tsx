@@ -239,9 +239,14 @@ export function ImageTextView({ b, editor = false }: { b: ImageTextBlock; editor
     return <EmptyEditorBlock b={b} label="图文卡片" tip="添加图片与文字" variant="card" />
   }
   const href = b.link ? safeUrl(b.link) : ''
+  const ratio = b.imageRatio && b.imageRatio !== 'auto' ? b.imageRatio.replace(':', ' / ') : undefined
   const card = (
     <div className="image-text" style={padStyle(b.padding)}>
-      {src ? <div className="it-img"><img src={src} alt={b.title || ''} /></div> : null}
+      {src ? (
+        <div className="it-img" style={ratio ? { aspectRatio: ratio } : undefined}>
+          <img src={src} alt={b.title || ''} />
+        </div>
+      ) : null}
       <div className="it-body">
         {b.title ? <h3 data-field="title">{b.title}</h3> : null}
         {b.subtitle ? (

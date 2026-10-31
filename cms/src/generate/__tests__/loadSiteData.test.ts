@@ -113,6 +113,9 @@ describe('mapBlock', () => {
     const image = mapBlock({ blockType: 'image', media: { url: '/a.jpg' }, aspectRatio: '4:3', fit: 'contain' }, resolve) as any
     expect(image).toMatchObject({ type: 'image', aspectRatio: '4:3', fit: 'contain' })
 
+    const imageText = mapBlock({ blockType: 'imageText', media: { url: '/a.jpg' }, imageRatio: '16:9' }, resolve) as any
+    expect(imageText).toMatchObject({ type: 'imageText', imageRatio: '16:9' })
+
     const stack = mapBlock({
       blockType: 'stack', gap: 'lg', bgColor: '#FFF1F6', padding: 20,
       children: [{ blockType: 'text', body: 'A' }, { blockType: 'text', body: 'B' }],

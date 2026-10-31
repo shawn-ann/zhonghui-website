@@ -219,11 +219,13 @@ fit: 'cover' | 'contain'
 ```ts
 subtitle?: string
 subtitleColor?: string
+imageRatio?: 'auto' | '1:1' | '4:3' | '3:4' | '16:9'
 ```
 
 - 渲染在标题和正文之间。
 - 团队卡片：标题=姓名，副标题=职位，正文=简介。
 - 留空时完全保持现有首页图文卡片效果。
+- 热门目的地卡片使用 `16:9`。
 
 ## 6. 编辑器设计
 
@@ -298,6 +300,16 @@ interface RepeaterFieldDef {
 | 2 | 背景图 | `heading` 项目待遇 + `infoList`（圆点开启） |
 | 3 | 浅粉 | `heading` 项目要求 + `infoList`（圆点开启） |
 | 4 | 浅粉 | `heading` 申请流程 + `iconList`（图标居左） |
+
+### 7.3 海外留学
+
+| 顺序 | 分栏背景 | 内容 |
+|---|---|---|
+| 1 | 默认 | `banner` |
+| 2 | 背景图 `yinji-bg.jpg` | `heading` 海外留学项目（白字） + `stack`（白底、内边距 40）内 7 个单段 `text` |
+| 3 | 浅粉 | `heading` 热门留学目的地 + `grid`（3 列，`imageText` 图片比例 16:9） |
+
+说明：留学项目小标题不加强调竖线，使用字号/字重/颜色/上间距形成层级。
 
 ## 8. 数据与迁移
 

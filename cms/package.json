@@ -18,7 +18,8 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "build:generator": "node scripts/build-generator.mjs",
     "generate": "npm run build:generator && cross-env NODE_ENV=production node generator/generate.mjs",
-    "migrate:about-aupair": "tsx scripts/migrate-about-aupair.ts"
+    "migrate:about-aupair": "tsx scripts/migrate-about-aupair.ts",
+    "migrate:study-abroad": "tsx scripts/migrate-study-abroad.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.90.2",

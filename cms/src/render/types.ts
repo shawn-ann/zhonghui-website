@@ -74,6 +74,7 @@ export interface ImageTextBlock extends BlockBase {
   desc?: string
   titleColor?: string
   descColor?: string
+  imageRatio?: 'auto' | '1:1' | '4:3' | '3:4' | '16:9'
   link?: string
   linkType?: 'none' | 'internal' | 'external'
   internalPageId?: string | number

@@ -64,17 +64,19 @@ describe('content component extensions', () => {
     expect(html).toContain('object-fit:cover')
   })
 
-  it('renders image text subtitle', () => {
+  it('renders image text subtitle and ratio', () => {
     const b: ImageTextBlock = {
       type: 'imageText',
       _id: 'it',
       media: '/a.jpg',
       title: 'Lucy',
       subtitle: '创始人',
+      imageRatio: '16:9',
     }
     const html = render(b)
     expect(html).toContain('it-subtitle')
     expect(html).toContain('创始人')
+    expect(html).toContain('aspect-ratio:16 / 9')
   })
 
   it('renders info list with and without dots', () => {
