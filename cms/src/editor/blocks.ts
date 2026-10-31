@@ -10,7 +10,7 @@ export interface RepeaterItemField {
 export interface FieldDef {
   key: string
   label: string
-  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'mediaList' | 'link' | 'pageLink' | 'bg' | 'color' | 'textColor' | 'gradient' | 'repeater'
+  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'mediaList' | 'link' | 'pageLink' | 'bg' | 'color' | 'textColor' | 'gradient' | 'repeater' | 'richtext'
   options?: { label: string; value: string }[]
   itemFields?: RepeaterItemField[]
   addLabel?: string
@@ -69,6 +69,7 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'style', label: '样式', control: 'select', options: [{ label: '实心', value: 'primary' }, { label: '描边', value: 'outline' }] },
   ] },
   richtext: { type: 'richtext', label: '富文本', defaults: () => ({ type: 'richtext', html: '' }), fields: [
+    { key: 'content', label: '正文', control: 'richtext' },
   ] },
   gallery: { type: 'gallery', label: '图集', defaults: () => ({ type: 'gallery', images: [] }), fields: [
     { key: 'columns', label: '列数', control: 'number' },
@@ -202,7 +203,7 @@ export function allowedChildTypes(parent: Block['type']): Block['type'][] {
   if (parent === 'section') return [...SECTION_CHILD_TYPES]
   if (parent === 'grid') return [...GRID_CHILD_TYPES]
   if (parent === 'hscroll') return ['imageText']
-  if (parent === 'stack') return ['heading', 'text', 'image', 'imageText', 'iconCard', 'button']
+  if (parent === 'stack') return ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'gallery', 'richtext']
   return []
 }
 
