@@ -49,6 +49,17 @@ describe('content component extensions', () => {
     expect(html).toContain('/api/media/file/a.jpg')
   })
 
+  it('converts a single rich text image', () => {
+    const html = lexicalToHtml({
+      root: {
+        type: 'root', version: 1, direction: 'ltr', format: '', indent: 0,
+        children: [{ type: 'rich-image', version: 1, src: '/api/media/file/b.jpg', alt: 'B' }],
+      },
+    })
+    expect(html).toContain('richtext-image')
+    expect(html).toContain('/api/media/file/b.jpg')
+  })
+
   it('renders text line breaks', () => {
     const html = render({ type: 'text', _id: 'tb', body: '第一行\n第二行' })
     expect(html).toContain('第一行<br/>第二行')

@@ -13,12 +13,13 @@ import { ListNode, ListItemNode, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_L
 import { LinkNode, AutoLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
 import { $setBlocksType } from '@lexical/selection'
 import { $createParagraphNode, $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND, UNDO_COMMAND, REDO_COMMAND } from 'lexical'
-import { ImageRowNode } from './ImageRowNode'
-import ImageRowPicker from './ImageRowPicker'
+import { ImageRowNode, $insertImageRow } from './ImageRowNode'
+import { ImageNode, $insertImage } from './ImageNode'
+import MediaModal from './MediaModal'
 
 function Toolbar() {
   const [editor] = useLexicalComposerContext()
-  const [pickerOpen, setPickerOpen] = useState(false)
+  const [picker, setPicker] = useState<'image' | 'gallery' | null>(null)
 
   const format = (value: 'bold' | 'italic' | 'underline') => {
     editor.dispatchCommand(FORMAT_TEXT_COMMAND, value)
@@ -53,12 +54,38 @@ function Toolbar() {
       <button type="button" onClick={() => list('ol')}>1. 列表</button>
       <button type="button" onClick={link}>链接</button>
       <span className="rt-divider" />
-      <button type="button" onClick={() => setPickerOpen(true)}>图集</button>
+      <button type="button" onClick={() => setPicker('image')}>图片</button>
+      <button type="button" onClick={() => setPicker('gallery')}>图集</button>
       <span className="rt-divider" />
       <button type="button" onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}>撤销</button>
       <button type="button" onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}>重做</button>
     </div>
-    {pickerOpen ? <ImageRowPicker onClose={() => setPickerOpen(false)} /> : null}
+    {picker === 'image' ? (
+      <MediaModal
+        title="插入图片"
+        onClose={() => setPicker(null)}
+        onSelect={(item) => {
+          if (item.url) editor.update(() => { $insertImage(item.url as string, item.alt || '') })
+          setPicker(null)
+        }}
+      />
+    ) : null}
+    {picker === 'gallery' ? (
+      <MediaModal
+        title="插入图集（可多选）"
+        multiple
+        onClose={() => setPicker(null)}
+        onSelectMany={(items) => {
+          const images = items
+            .filter((item) => item.url)
+            .map((item) => ({ src: item.url as string, alt: item.alt || '' }))
+          if (images.length) {
+            editor.update(() => { $insertImageRow(images) })
+          }
+          setPicker(null)
+        }}
+      />
+    ) : null}
     </>
   )
 }
@@ -72,7 +99,7 @@ function Editor({
 }) {
   const initialConfig = useMemo(() => ({
     namespace: 'zhonghui-rich-text',
-    nodes: [HeadingNode, QuoteNode, ListNode, ListItemNode, LinkNode, AutoLinkNode, ImageRowNode],
+    nodes: [HeadingNode, QuoteNode, ListNode, ListItemNode, LinkNode, AutoLinkNode, ImageRowNode, ImageNode],
     onError: (error: Error) => { throw error },
     editorState: value && typeof value === 'object' ? JSON.stringify(value) : undefined,
     theme: {
