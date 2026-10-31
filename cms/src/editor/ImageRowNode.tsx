@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   DecoratorNode,
   $createParagraphNode,
@@ -10,6 +10,8 @@ import {
   type Spread,
 } from 'lexical'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import MediaModal from './MediaModal'
+import type { MediaItem } from './api'
 
 export type ImageRowItem = { src: string; alt?: string }
 type SerializedImageRowNode = Spread<{ images: ImageRowItem[]; columns?: number }, SerializedLexicalNode>
@@ -24,6 +26,7 @@ function ImageRowView({
   columns: number
 }) {
   const [editor] = useLexicalComposerContext()
+  const [picking, setPicking] = useState(false)
   const cols = Math.min(4, Math.max(1, columns || 3))
 
   const updateColumns = (next: number) => {
@@ -33,11 +36,31 @@ function ImageRowView({
     })
   }
 
+  const updateImages = (items: MediaItem[]) => {
+    const next = items
+      .filter((item) => item.url)
+      .map((item) => ({ src: item.url as string, alt: item.alt || '' }))
+    editor.update(() => {
+      const node = $getNodeByKey(nodeKey)
+      if (node instanceof ImageRowNode) node.setImages(next)
+    })
+    setPicking(false)
+  }
+
   return (
     <div className="rt-image-row" contentEditable={false}>
       <div className={`rt-image-row-grid rt-image-row-grid-cols-${cols}`}>
         {images.map((image, index) => (
-          <img key={`${image.src}-${index}`} src={image.src} alt={image.alt || ''} />
+          <button
+            type="button"
+            className="rt-image-edit"
+            key={`${image.src}-${index}`}
+            title="点击编辑图集"
+            aria-label={`编辑图集，第 ${index + 1} 张`}
+            onClick={() => setPicking(true)}
+          >
+            <img src={image.src} alt={image.alt || ''} />
+          </button>
         ))}
       </div>
       <div className="rt-image-row-tools">
@@ -60,6 +83,16 @@ function ImageRowView({
           移除图集
         </button>
       </div>
+      {picking ? (
+        <MediaModal
+          title="编辑图集"
+          multiple
+          initialImages={images}
+          confirmVerb="更新"
+          onClose={() => setPicking(false)}
+          onSelectMany={updateImages}
+        />
+      ) : null}
     </div>
   )
 }
@@ -93,6 +126,11 @@ export class ImageRowNode extends DecoratorNode<React.JSX.Element> {
       images: this.__images,
       columns: this.__columns,
     }
+  }
+
+  setImages(images: ImageRowItem[]): void {
+    const writable = this.getWritable()
+    writable.__images = images
   }
 
   setColumns(columns: number): void {
