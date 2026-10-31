@@ -2,31 +2,74 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { listMedia, uploadMedia, type MediaItem } from './api'
 
+type InitialImage = { src: string; alt?: string }
+
+function toMediaItem(image: InitialImage): MediaItem {
+  return { id: `url:${image.src}`, url: image.src, alt: image.alt || '' }
+}
+
+function sameMedia(a: MediaItem, b: MediaItem): boolean {
+  if (a.url && b.url) return a.url === b.url
+  return a.id === b.id
+}
+
+function initialItems(images?: InitialImage[]): MediaItem[] {
+  const seen = new Set<string>()
+  const items: MediaItem[] = []
+  for (const image of images || []) {
+    if (!image?.src || seen.has(image.src)) continue
+    seen.add(image.src)
+    items.push(toMediaItem(image))
+  }
+  return items
+}
+
 export default function MediaModal({
   onClose,
   onSelect,
   onSelectMany,
   multiple = false,
   title,
+  initialImages,
+  confirmVerb = '插入',
 }: {
   onClose: () => void
   onSelect?: (item: MediaItem) => void
   onSelectMany?: (items: MediaItem[]) => void
   multiple?: boolean
   title?: string
+  initialImages?: InitialImage[]
+  confirmVerb?: string
 }) {
-  const [items, setItems] = useState<MediaItem[]>([])
-  const [selected, setSelected] = useState<MediaItem[]>([])
+  const [initial] = useState(() => initialItems(initialImages))
+  const [items, setItems] = useState<MediaItem[]>(initial)
+  const [selected, setSelected] = useState<MediaItem[]>(initial)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
-  useEffect(() => { listMedia().then(setItems).catch(() => setItems([])) }, [])
 
-  const selectedIds = new Set(selected.map((item) => item.id))
+  useEffect(() => {
+    listMedia()
+      .then((media) => {
+        const libraryUrls = new Set(media.map((next) => next.url).filter(Boolean))
+        setItems((current) => [
+          ...current.filter((item) => !item.url || !libraryUrls.has(item.url)),
+          ...media,
+        ])
+        setSelected((current) => current.map(
+          (item) => media.find((next) => next.url && next.url === item.url) || item,
+        ))
+      })
+      .catch(() => setItems(initial))
+  }, [initial])
+
+  const isSelected = (item: MediaItem) => selected.some((next) => sameMedia(next, item))
 
   const toggle = (item: MediaItem) => {
     setSelected((current) => {
-      if (current.some((next) => next.id === item.id)) return current.filter((next) => next.id !== item.id)
+      if (current.some((next) => sameMedia(next, item))) {
+        return current.filter((next) => !sameMedia(next, item))
+      }
       return [...current, item]
     })
   }
@@ -80,11 +123,11 @@ export default function MediaModal({
             <button
               type="button"
               key={m.id}
-              className={selectedIds.has(m.id) ? 'is-selected' : undefined}
+              className={isSelected(m) ? 'is-selected' : undefined}
               onClick={() => pick(m)}
             >
               <img src={m.url} alt={m.alt || ''} />
-              {selectedIds.has(m.id) ? <span className="ed-media-check">✓</span> : null}
+              {isSelected(m) ? <span className="ed-media-check">✓</span> : null}
             </button>
           ) : null))}
         </div>
@@ -97,7 +140,7 @@ export default function MediaModal({
               disabled={!selected.length}
               onClick={() => { onSelectMany?.(selected); onClose() }}
             >
-              插入 {selected.length || ''} 张
+              {confirmVerb} {selected.length} 张
             </button>
           </div>
         ) : null}
