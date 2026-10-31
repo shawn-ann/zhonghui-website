@@ -8,6 +8,7 @@ import type { PageSummary } from './api'
 import MediaModal from './MediaModal'
 import AddChildPicker from './AddChildPicker'
 import RepeaterControl from './RepeaterControl'
+import RichTextControl from './RichTextControl'
 import type { MediaItem } from './api'
 
 export default function PropertyPanel({
@@ -69,6 +70,14 @@ export default function PropertyPanel({
               key={f.key}
               field={f}
               value={val(f.key) as Record<string, unknown>[] | undefined}
+              onChange={(v) => onChange(f.key, v)}
+            />
+          )
+          case 'richtext': return (
+            <RichTextControl
+              key={`${block._id}-${f.key}`}
+              label={f.label}
+              value={val(f.key)}
               onChange={(v) => onChange(f.key, v)}
             />
           )

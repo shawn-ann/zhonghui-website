@@ -106,6 +106,8 @@ export interface RichTextBlock extends BlockBase {
    * Trusted editor content only — NEVER assign raw user input here.
    */
   html: string
+  /** Lexical editor state used by the visual editor. */
+  content?: unknown
   padding?: number
 }
 

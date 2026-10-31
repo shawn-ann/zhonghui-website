@@ -5,6 +5,8 @@ import { ImageBlock } from './Image'
 import { ImageTextBlock } from './ImageText'
 import { IconCardBlock } from './IconCard'
 import { ButtonBlock } from './Button'
+import { GalleryBlock } from './Gallery'
+import { RichTextBlock } from './RichText'
 
 export const StackBlock: Block = {
   slug: 'stack',
@@ -26,7 +28,7 @@ export const StackBlock: Block = {
     {
       name: 'children',
       type: 'blocks',
-      blocks: [HeadingBlock, TextBlock, ImageBlock, ImageTextBlock, IconCardBlock, ButtonBlock],
+      blocks: [HeadingBlock, TextBlock, ImageBlock, ImageTextBlock, IconCardBlock, ButtonBlock, GalleryBlock, RichTextBlock],
       labels: { singular: '内容', plural: '内容' },
     },
   ],

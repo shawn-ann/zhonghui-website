@@ -543,3 +543,29 @@
 .rep-media button { border: 1px solid #e2d5db; background: #fff; color: #5a4a52; font-size: 11px; }
 .rep-add { margin-top: 9px; width: 100%; height: 32px; border: 1px dashed #d9c5cf; border-radius: 6px; background: #fffbfd; color: #c2185b; font-size: 11.5px; cursor: pointer; }
 .rep-add:hover { border-color: #c2185b; background: #fff1f6; }
+
+.rt-control { gap: 6px; }
+.rt-open { height: 32px; border: 1px solid #e2d5db; border-radius: 5px; background: #fff; color: #c2185b; font-size: 12px; cursor: pointer; }
+.rt-open:hover { border-color: #c2185b; background: #fff1f6; }
+.rt-state { color: #a08b95; font-size: 10px; }
+.rt-modal-body { width: min(760px, 94vw); max-height: 86vh; display: flex; flex-direction: column; }
+.rt-modal-body .ed-modal-head { margin-bottom: 10px; }
+.rt-modal-body .rt-shell { flex: 1; min-height: 0; }
+.rt-modal-body .rt-toolbar { flex: none; }
+.rt-shell { position: relative; border: 1px solid #e2d5db; border-radius: 6px; overflow: hidden; }
+.rt-toolbar { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px; background: #faf7f9; border-bottom: 1px solid #eee7ea; }
+.rt-toolbar button { height: 24px; padding: 0 6px; border: 1px solid transparent; border-radius: 4px; background: transparent; color: #5a4a52; font-size: 11px; cursor: pointer; }
+.rt-toolbar button:hover { background: #fff; border-color: #e2d5db; color: #c2185b; }
+.rt-divider { width: 1px; margin: 2px 3px; background: #e7dbe1; }
+.rt-content { min-height: 320px; max-height: 52vh; overflow: auto; padding: 16px 18px; outline: none; font-size: 14px; line-height: 1.8; color: #332b2f; }
+.rt-placeholder { position: absolute; top: 58px; left: 18px; color: #b6a4ac; font-size: 14px; pointer-events: none; }
+.rt-h2 { font-size: 24px; color: #8a0e4b; margin: 14px 0 8px; }
+.rt-h3 { font-size: 18px; color: #8a0e4b; margin: 14px 0 6px; }
+.rt-p { margin: 0 0 10px; }
+.rt-ul, .rt-ol { margin: 8px 0 10px 22px; }
+.rt-bold { font-weight: 700; }
+.rt-italic { font-style: italic; }
+.rt-underline { text-decoration: underline; }
+.rt-link { color: #c2185b; text-decoration: underline; }
+.rt-modal-actions { display: flex; justify-content: flex-end; gap: 8px; padding-top: 10px; flex: none; }
+.rt-done { height: 30px; padding: 0 12px; border: 1px solid #c2185b; border-radius: 5px; background: #c2185b; color: #fff; font-size: 12px; cursor: pointer; }

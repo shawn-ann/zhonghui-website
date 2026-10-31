@@ -610,6 +610,48 @@ export interface Page {
                                           blockName?: string | null;
                                           blockType: 'button';
                                         }
+                                      | {
+                                          images: {
+                                            image: number | Media;
+                                            id?: string | null;
+                                          }[];
+                                          columns?: number | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'gallery';
+                                        }
+                                      | {
+                                          content?: {
+                                            root: {
+                                              type: string;
+                                              children: {
+                                                type: any;
+                                                version: number;
+                                                [k: string]: unknown;
+                                              }[];
+                                              direction: ('ltr' | 'rtl') | null;
+                                              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                                              indent: number;
+                                              version: number;
+                                            };
+                                            [k: string]: unknown;
+                                          } | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'richtext';
+                                        }
                                     )[]
                                   | null;
                                 id?: string | null;
@@ -969,6 +1011,55 @@ export interface Page {
                                                     id?: string | null;
                                                     blockName?: string | null;
                                                     blockType: 'button';
+                                                  }
+                                                | {
+                                                    images: {
+                                                      image: number | Media;
+                                                      id?: string | null;
+                                                    }[];
+                                                    columns?: number | null;
+                                                    bg?: string | null;
+                                                    alt?: boolean | null;
+                                                    /**
+                                                     * 内容内边距(px)，默认0
+                                                     */
+                                                    padding?: number | null;
+                                                    id?: string | null;
+                                                    blockName?: string | null;
+                                                    blockType: 'gallery';
+                                                  }
+                                                | {
+                                                    content?: {
+                                                      root: {
+                                                        type: string;
+                                                        children: {
+                                                          type: any;
+                                                          version: number;
+                                                          [k: string]: unknown;
+                                                        }[];
+                                                        direction: ('ltr' | 'rtl') | null;
+                                                        format:
+                                                          | 'left'
+                                                          | 'start'
+                                                          | 'center'
+                                                          | 'right'
+                                                          | 'end'
+                                                          | 'justify'
+                                                          | '';
+                                                        indent: number;
+                                                        version: number;
+                                                      };
+                                                      [k: string]: unknown;
+                                                    } | null;
+                                                    bg?: string | null;
+                                                    alt?: boolean | null;
+                                                    /**
+                                                     * 内容内边距(px)，默认0
+                                                     */
+                                                    padding?: number | null;
+                                                    id?: string | null;
+                                                    blockName?: string | null;
+                                                    blockType: 'richtext';
                                                   }
                                               )[]
                                             | null;
@@ -1331,6 +1422,48 @@ export interface Page {
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'button';
+                              }
+                            | {
+                                images: {
+                                  image: number | Media;
+                                  id?: string | null;
+                                }[];
+                                columns?: number | null;
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'gallery';
+                              }
+                            | {
+                                content?: {
+                                  root: {
+                                    type: string;
+                                    children: {
+                                      type: any;
+                                      version: number;
+                                      [k: string]: unknown;
+                                    }[];
+                                    direction: ('ltr' | 'rtl') | null;
+                                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                                    indent: number;
+                                    version: number;
+                                  };
+                                  [k: string]: unknown;
+                                } | null;
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'richtext';
                               }
                           )[]
                         | null;
@@ -1718,6 +1851,48 @@ export interface Page {
                                 blockName?: string | null;
                                 blockType: 'button';
                               }
+                            | {
+                                images: {
+                                  image: number | Media;
+                                  id?: string | null;
+                                }[];
+                                columns?: number | null;
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'gallery';
+                              }
+                            | {
+                                content?: {
+                                  root: {
+                                    type: string;
+                                    children: {
+                                      type: any;
+                                      version: number;
+                                      [k: string]: unknown;
+                                    }[];
+                                    direction: ('ltr' | 'rtl') | null;
+                                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                                    indent: number;
+                                    version: number;
+                                  };
+                                  [k: string]: unknown;
+                                } | null;
+                                bg?: string | null;
+                                alt?: boolean | null;
+                                /**
+                                 * 内容内边距(px)，默认0
+                                 */
+                                padding?: number | null;
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'richtext';
+                              }
                           )[]
                         | null;
                       id?: string | null;
@@ -2077,6 +2252,48 @@ export interface Page {
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'button';
+                                        }
+                                      | {
+                                          images: {
+                                            image: number | Media;
+                                            id?: string | null;
+                                          }[];
+                                          columns?: number | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'gallery';
+                                        }
+                                      | {
+                                          content?: {
+                                            root: {
+                                              type: string;
+                                              children: {
+                                                type: any;
+                                                version: number;
+                                                [k: string]: unknown;
+                                              }[];
+                                              direction: ('ltr' | 'rtl') | null;
+                                              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                                              indent: number;
+                                              version: number;
+                                            };
+                                            [k: string]: unknown;
+                                          } | null;
+                                          bg?: string | null;
+                                          alt?: boolean | null;
+                                          /**
+                                           * 内容内边距(px)，默认0
+                                           */
+                                          padding?: number | null;
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'richtext';
                                         }
                                     )[]
                                   | null;
@@ -2590,6 +2807,48 @@ export interface Page {
                       blockName?: string | null;
                       blockType: 'button';
                     }
+                  | {
+                      images: {
+                        image: number | Media;
+                        id?: string | null;
+                      }[];
+                      columns?: number | null;
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'gallery';
+                    }
+                  | {
+                      content?: {
+                        root: {
+                          type: string;
+                          children: {
+                            type: any;
+                            version: number;
+                            [k: string]: unknown;
+                          }[];
+                          direction: ('ltr' | 'rtl') | null;
+                          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                          indent: number;
+                          version: number;
+                        };
+                        [k: string]: unknown;
+                      } | null;
+                      bg?: string | null;
+                      alt?: boolean | null;
+                      /**
+                       * 内容内边距(px)，默认0
+                       */
+                      padding?: number | null;
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'richtext';
+                    }
                 )[]
               | null;
             id?: string | null;
@@ -2995,6 +3254,32 @@ export interface PagesSelect<T extends boolean = true> {
                                                   id?: T;
                                                   blockName?: T;
                                                 };
+                                            gallery?:
+                                              | T
+                                              | {
+                                                  images?:
+                                                    | T
+                                                    | {
+                                                        image?: T;
+                                                        id?: T;
+                                                      };
+                                                  columns?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            richtext?:
+                                              | T
+                                              | {
+                                                  content?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
                                           };
                                       id?: T;
                                       blockName?: T;
@@ -3215,6 +3500,32 @@ export interface PagesSelect<T extends boolean = true> {
                                                               externalUrl?: T;
                                                               link?: T;
                                                               style?: T;
+                                                              bg?: T;
+                                                              alt?: T;
+                                                              padding?: T;
+                                                              id?: T;
+                                                              blockName?: T;
+                                                            };
+                                                        gallery?:
+                                                          | T
+                                                          | {
+                                                              images?:
+                                                                | T
+                                                                | {
+                                                                    image?: T;
+                                                                    id?: T;
+                                                                  };
+                                                              columns?: T;
+                                                              bg?: T;
+                                                              alt?: T;
+                                                              padding?: T;
+                                                              id?: T;
+                                                              blockName?: T;
+                                                            };
+                                                        richtext?:
+                                                          | T
+                                                          | {
+                                                              content?: T;
                                                               bg?: T;
                                                               alt?: T;
                                                               padding?: T;
@@ -3470,6 +3781,32 @@ export interface PagesSelect<T extends boolean = true> {
                                       id?: T;
                                       blockName?: T;
                                     };
+                                gallery?:
+                                  | T
+                                  | {
+                                      images?:
+                                        | T
+                                        | {
+                                            image?: T;
+                                            id?: T;
+                                          };
+                                      columns?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      padding?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                richtext?:
+                                  | T
+                                  | {
+                                      content?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      padding?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
                               };
                           id?: T;
                           blockName?: T;
@@ -3712,6 +4049,32 @@ export interface PagesSelect<T extends boolean = true> {
                                       id?: T;
                                       blockName?: T;
                                     };
+                                gallery?:
+                                  | T
+                                  | {
+                                      images?:
+                                        | T
+                                        | {
+                                            image?: T;
+                                            id?: T;
+                                          };
+                                      columns?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      padding?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                richtext?:
+                                  | T
+                                  | {
+                                      content?: T;
+                                      bg?: T;
+                                      alt?: T;
+                                      padding?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
                               };
                           id?: T;
                           blockName?: T;
@@ -3932,6 +4295,32 @@ export interface PagesSelect<T extends boolean = true> {
                                                   externalUrl?: T;
                                                   link?: T;
                                                   style?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            gallery?:
+                                              | T
+                                              | {
+                                                  images?:
+                                                    | T
+                                                    | {
+                                                        image?: T;
+                                                        id?: T;
+                                                      };
+                                                  columns?: T;
+                                                  bg?: T;
+                                                  alt?: T;
+                                                  padding?: T;
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            richtext?:
+                                              | T
+                                              | {
+                                                  content?: T;
                                                   bg?: T;
                                                   alt?: T;
                                                   padding?: T;
@@ -4270,6 +4659,32 @@ export interface PagesSelect<T extends boolean = true> {
                           externalUrl?: T;
                           link?: T;
                           style?: T;
+                          bg?: T;
+                          alt?: T;
+                          padding?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    gallery?:
+                      | T
+                      | {
+                          images?:
+                            | T
+                            | {
+                                image?: T;
+                                id?: T;
+                              };
+                          columns?: T;
+                          bg?: T;
+                          alt?: T;
+                          padding?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    richtext?:
+                      | T
+                      | {
+                          content?: T;
                           bg?: T;
                           alt?: T;
                           padding?: T;

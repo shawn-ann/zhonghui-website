@@ -139,7 +139,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'richtext':
-      out.content = raw?.content ?? null
+      out.content = b.content ?? raw?.content ?? null
       if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'section':

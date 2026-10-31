@@ -12,7 +12,7 @@ describe('component categories', () => {
     expect(allowedChildTypes('section')).toEqual(['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'iconList', 'hscroll', 'stack'])
     expect(allowedChildTypes('grid')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack'])
     expect(allowedChildTypes('hscroll')).toEqual(['imageText'])
-    expect(allowedChildTypes('stack')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button'])
+    expect(allowedChildTypes('stack')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'gallery', 'richtext'])
     expect(allowedChildTypes('image')).toEqual([])
   })
   it('summary for text/heading', () => {

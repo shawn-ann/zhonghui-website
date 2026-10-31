@@ -96,7 +96,7 @@ imageText
 允许的子组件：
 
 ```text
-heading, text, image, imageText, iconCard, button
+heading, text, image, imageText, iconCard, button, gallery, richtext
 ```
 
 - 可用于分栏直接子项，也可用于网格单元格。
@@ -272,7 +272,7 @@ heading, text, image, imageText, iconCard, button
 ### 5.13 其它
 
 - `button`：`label`、`linkType`/`internalPage`/`externalUrl`、`style`
-- `richtext`：`content`（Payload Lexical）；历史 `padding` 保留兼容
+- `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；历史 `padding` 保留兼容
 - `gallery`：`images`、`columns`；历史 `padding` 保留兼容
 - `slider`：`images`
 - `gridInner`：历史兼容，编辑器不提供；序列化仍保留
@@ -422,6 +422,21 @@ section(bgColor=light-pink)
   heading(热门留学目的地)
   grid(3列, imageText, imageRatio=16:9 ×5)
 ```
+
+### 新西兰留学
+
+```text
+section(banner)
+section(bgColor=light-pink)
+  stack(白底, padding=40)
+    richtext(标题 + 介绍段落)
+    gallery(3列, nz-1/2/3)
+    richtext(三个小标题 + 段落)
+    gallery(3列, nz-4/5/6)
+    richtext(两个小标题 + 段落)
+```
+
+富文本编辑器以弹窗形式打开，支持粗体、斜体、下划线、H2/H3、正文、有序/无序列表、链接、撤销/重做。
 
 ## 11. 常见错误
 

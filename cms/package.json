@@ -19,9 +19,15 @@
     "build:generator": "node scripts/build-generator.mjs",
     "generate": "npm run build:generator && cross-env NODE_ENV=production node generator/generate.mjs",
     "migrate:about-aupair": "tsx scripts/migrate-about-aupair.ts",
-    "migrate:study-abroad": "tsx scripts/migrate-study-abroad.ts"
+    "migrate:study-abroad": "tsx scripts/migrate-study-abroad.ts",
+    "migrate:new-zealand": "tsx scripts/migrate-new-zealand.ts"
   },
   "dependencies": {
+    "@lexical/link": "^0.50.0",
+    "@lexical/list": "^0.50.0",
+    "@lexical/react": "^0.50.0",
+    "@lexical/rich-text": "^0.50.0",
+    "@lexical/selection": "^0.50.0",
     "@payloadcms/db-postgres": "3.90.2",
     "@payloadcms/next": "3.90.2",
     "@payloadcms/richtext-lexical": "3.90.2",
@@ -30,6 +36,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",
+    "lexical": "^0.50.0",
     "next": "16.3.3",
     "payload": "3.90.2",
     "react": "19.2.6",
