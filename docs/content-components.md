@@ -416,9 +416,11 @@ section(banner)
 section(bgImage=yinji)
   heading(白字)
   stack(白底, padding=40)
-    text(小标题, 20/700, 无竖线)
-    text(正文, 15)
-    ...
+    richtext(
+      H3 美国留学 · 奖学金计划 + 段落 +
+      H3 英国留学 + 段落 +
+      H3 其他留学项目 + 段落
+    )
 section(bgColor=light-pink)
   heading(热门留学目的地)
   grid(3列, imageText, imageRatio=16:9 ×5)
