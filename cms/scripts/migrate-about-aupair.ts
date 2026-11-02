@@ -2,6 +2,7 @@ import 'dotenv/config'
 import path from 'path'
 import { getPayload } from 'payload'
 import config from '../src/payload.config'
+import { textBlocksToRichText } from '../src/generate/textBlocksToRichText'
 
 const payload = await getPayload({ config })
 
@@ -258,17 +259,22 @@ const aboutBlocks: any[] = [
       ],
     },
     {
-      blockType: 'infoList',
-      title: '专业师资团队',
-      titleAlign: 'left',
-      showDots: false,
-      items: [
-        '深耕互惠生项目十年以上，专注项目推广与美国签证培训的资深讲师',
-        '具备招聘培训从业经历，擅长面试辅导，能够针对性拆解面试难题的面试老师',
-        '负责英语测评与申请材料指导，严谨协助学员打造优质申请资料的材料老师',
-        '拥有美国留学经历、多年汉语教学经验，精通少儿语言教学方法的讲师',
-        '亲身参与过德国互惠、主攻赴德互惠项目，为学员提供全套专业指导的老师',
-      ].map((desc) => ({ label: '', desc })),
+      blockType: 'stack',
+      gap: 'sm',
+      bgColor: '#FFFFFF',
+      padding: 40,
+      children: [
+        textBlocksToRichText([
+          { body: '专业师资团队', fontSize: 20, fontWeight: '700' },
+          ...([
+            '深耕互惠生项目十年以上，专注项目推广与美国签证培训的资深讲师',
+            '具备招聘培训从业经历，擅长面试辅导，能够针对性拆解面试难题的面试老师',
+            '负责英语测评与申请材料指导，严谨协助学员打造优质申请资料的材料老师',
+            '拥有美国留学经历、多年汉语教学经验，精通少儿语言教学方法的讲师',
+            '亲身参与过德国互惠、主攻赴德互惠项目，为学员提供全套专业指导的老师',
+          ].map((desc) => ({ body: desc, fontSize: 15 }))),
+        ]),
+      ],
     },
   ], { bgImage: '/assets/yinji-bg.jpg', contentGap: 32 }),
   section([
