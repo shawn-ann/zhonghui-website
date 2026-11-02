@@ -19,6 +19,7 @@
     "build:generator": "node scripts/build-generator.mjs",
     "generate": "npm run build:generator && cross-env NODE_ENV=production node generator/generate.mjs",
     "migrate:about-aupair": "tsx scripts/migrate-about-aupair.ts",
+    "migrate:about-company-richtext": "tsx scripts/migrate-about-company-richtext.ts",
     "migrate:about-teachers-richtext": "tsx scripts/migrate-about-teachers-richtext.ts",
     "migrate:study-abroad": "tsx scripts/migrate-study-abroad.ts",
     "migrate:study-abroad-richtext": "tsx scripts/migrate-study-abroad-richtext.ts",

@@ -377,12 +377,11 @@ section(bgImage=bg2, bgHeight=0)
   grid(2列, leftNarrow, start)
     image(4:3)
     stack(白底, padding=20)
-      text(公司名称, 22/700)
-      text(正文, 15)
-      text(小标题, 17/600, marginTop=14)
-      text(正文, 15)
-      text(小标题, 17/600, marginTop=14)
-      text(正文, 15)
+      richtext(
+        H3 公司名称 + 正文 +
+        H3 行业地位与规模 + 正文 +
+        H3 核心业务 + 正文
+      )
 section
   heading(中惠历程)
   hscroll(timeline=true)
