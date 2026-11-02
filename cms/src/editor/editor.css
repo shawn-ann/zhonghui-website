@@ -243,6 +243,9 @@
   border-radius: 4px;
   font-size: 13px;
 }
+.ed-ratio-hint { display: block; margin-top: 3px; color: #a08b95; font-size: 10px; line-height: 1.4; }
+.ed-ratio-hint.is-error { color: #b42318; }
+.ed-ctl input[aria-invalid='true'] { border-color: #d92d20; }
 .ed-ctl-inline {
   display: flex;
   align-items: center;

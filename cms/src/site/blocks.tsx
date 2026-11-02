@@ -7,6 +7,7 @@ import type {
 } from '../render/types'
 import { bgCss, bgImageCss } from './bg'
 import { lexicalToHtml } from '../render/richText'
+import { ratioToGridTemplate } from '../render/columnRatio'
 
 const PAD: Record<string, number> = { none: 0, sm: 32, md: 72, lg: 96, xl: 128, '2xl': 160 }
 const padStyle = (padding?: number) => (padding && padding > 0 ? { padding: `${padding}px` } : undefined)
@@ -93,9 +94,9 @@ export function SectionView({ b, editor = false }: { b: SectionBlock; editor?: b
 export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean }) {
   const cols = Math.min(4, Math.max(1, b.columns || 3))
   const gap = b.gap && /^(sm|md|lg)$/.test(b.gap) ? b.gap : 'md'
+  const ratio = ratioToGridTemplate(b.columnRatio, cols)
   const ratioStyle = {
-    ...(cols === 2 && b.columnRatio === 'leftNarrow' ? { gridTemplateColumns: '0.9fr 1.4fr' } : {}),
-    ...(cols === 2 && b.columnRatio === 'leftWide' ? { gridTemplateColumns: '1.4fr 0.9fr' } : {}),
+    ...(ratio ? { gridTemplateColumns: ratio } : {}),
     ...(b.alignItems && b.alignItems !== 'stretch' ? { alignItems: b.alignItems } : {}),
   }
   const style = {

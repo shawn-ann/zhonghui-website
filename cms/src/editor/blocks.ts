@@ -10,7 +10,7 @@ export interface RepeaterItemField {
 export interface FieldDef {
   key: string
   label: string
-  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'mediaList' | 'link' | 'pageLink' | 'bg' | 'color' | 'textColor' | 'gradient' | 'repeater' | 'richtext'
+  control: 'text' | 'textarea' | 'number' | 'select' | 'boolean' | 'media' | 'mediaList' | 'link' | 'pageLink' | 'bg' | 'color' | 'textColor' | 'gradient' | 'repeater' | 'richtext' | 'ratio'
   options?: { label: string; value: string }[]
   itemFields?: RepeaterItemField[]
   addLabel?: string
@@ -78,9 +78,9 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   slider: { type: 'slider', label: '轮播', defaults: () => ({ type: 'slider', images: [] }), fields: [
     { key: 'images', label: '轮播图片', control: 'mediaList' },
   ] },
-  grid: { type: 'grid', label: '网格', defaults: () => ({ type: 'grid', columns: 3, gap: 'md', columnRatio: 'equal', children: [] }), fields: [
+  grid: { type: 'grid', label: '网格', defaults: () => ({ type: 'grid', columns: 3, gap: 'md', columnRatio: '1:1:1', children: [] }), fields: [
     { key: 'columns', label: '列数', control: 'number' }, { key: 'gap', label: '间距', control: 'select', options: [{ label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
-    { key: 'columnRatio', label: '列宽比例', control: 'select', options: [{ label: '等宽', value: 'equal' }, { label: '左窄右宽', value: 'leftNarrow' }, { label: '左宽右窄', value: 'leftWide' }] },
+    { key: 'columnRatio', label: '列宽比例', control: 'ratio' },
     { key: 'alignItems', label: '垂直对齐', control: 'select', options: [{ label: '拉伸等高', value: 'stretch' }, { label: '顶部对齐', value: 'start' }, { label: '居中', value: 'center' }, { label: '底部对齐', value: 'end' }] },
     { key: 'bgImage', label: '背景图片', control: 'media' },
     { key: 'bgColor', label: '背景颜色', control: 'color' },

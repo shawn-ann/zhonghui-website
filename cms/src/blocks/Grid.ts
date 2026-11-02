@@ -28,13 +28,9 @@ export function makeGrid(slug: string, label: string, cellComponents: Block[]): 
       },
       {
         name: 'columnRatio',
-        type: 'select',
-        defaultValue: 'equal',
-        options: [
-          { label: '等宽', value: 'equal' },
-          { label: '左窄右宽', value: 'leftNarrow' },
-          { label: '左宽右窄', value: 'leftWide' },
-        ],
+        type: 'text',
+        defaultValue: '1:1:1',
+        admin: { description: '正整数比例，段数需等于列数，如 2:3 或 1:2:1' },
       },
       {
         name: 'alignItems',

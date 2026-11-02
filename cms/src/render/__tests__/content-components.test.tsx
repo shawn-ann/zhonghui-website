@@ -70,10 +70,10 @@ describe('content component extensions', () => {
       type: 'grid',
       _id: 'g',
       columns: 2,
-      columnRatio: 'leftNarrow',
+      columnRatio: '2:3',
       children: [],
     }
-    expect(render(b)).toContain('grid-template-columns:0.9fr 1.4fr')
+    expect(render(b)).toContain('grid-template-columns:2fr 3fr')
   })
 
   it('applies grid vertical alignment and image aspect ratio', () => {

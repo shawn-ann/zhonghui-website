@@ -259,7 +259,10 @@ export interface Page {
                   | {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
-                      columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
+                      /**
+                       * 正整数比例，段数需等于列数，如 2:3 或 1:2:1
+                       */
+                      columnRatio?: string | null;
                       alignItems?: ('stretch' | 'start' | 'center' | 'end') | null;
                       children?:
                         | (
@@ -661,7 +664,10 @@ export interface Page {
                             | {
                                 columns?: number | null;
                                 gap?: ('sm' | 'md' | 'lg') | null;
-                                columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
+                                /**
+                                 * 正整数比例，段数需等于列数，如 2:3 或 1:2:1
+                                 */
+                                columnRatio?: string | null;
                                 alignItems?: ('stretch' | 'start' | 'center' | 'end') | null;
                                 children?:
                                   | (
@@ -1500,7 +1506,10 @@ export interface Page {
         | {
             columns?: number | null;
             gap?: ('sm' | 'md' | 'lg') | null;
-            columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
+            /**
+             * 正整数比例，段数需等于列数，如 2:3 或 1:2:1
+             */
+            columnRatio?: string | null;
             alignItems?: ('stretch' | 'start' | 'center' | 'end') | null;
             children?:
               | (
@@ -1902,7 +1911,10 @@ export interface Page {
                   | {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
-                      columnRatio?: ('equal' | 'leftNarrow' | 'leftWide') | null;
+                      /**
+                       * 正整数比例，段数需等于列数，如 2:3 或 1:2:1
+                       */
+                      columnRatio?: string | null;
                       alignItems?: ('stretch' | 'start' | 'center' | 'end') | null;
                       children?:
                         | (

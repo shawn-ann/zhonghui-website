@@ -74,7 +74,7 @@ heading, text, image, imageText, iconCard, button, stack
 ```
 
 - `columns` 范围 1–4，默认 3。
-- `columnRatio` 仅在 `columns=2` 时生效：`equal` / `leftNarrow` / `leftWide`。
+- `columnRatio` 使用正整数比例，段数必须等于列数，如 `1:1`、`1:2:1`；默认按列数生成等宽比例。
 - `alignItems`：`stretch`（默认）/ `start` / `center` / `end`。
 - 网格单元格内的视觉卡片由子组件自己负责，网格不设置卡片高度。
 
@@ -200,7 +200,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 |---|---|---|---|
 | `columns` | number | 3 | 1–4 |
 | `gap` | select | `md` | sm/md/lg |
-| `columnRatio` | select | `equal` | 仅两列；equal/leftNarrow/leftWide |
+| `columnRatio` | text | 按列数生成 | 正整数比例，段数=列数；如 `2:3`、`1:2:1` |
 | `alignItems` | select | `stretch` | stretch/start/center/end |
 | `bgImage` | text | 空 | 网格背景图 |
 | `bgColor` | text | 空 | 网格背景色 |
@@ -374,7 +374,7 @@ Payload block
 section(banner)
 section(bgImage=bg2, bgHeight=0)
   heading(公司介绍, 白字)
-  grid(2列, leftNarrow, start)
+  grid(2列, ratio=2:3, start)
     image(4:3)
     stack(白底, padding=20)
       richtext(

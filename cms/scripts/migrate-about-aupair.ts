@@ -170,7 +170,7 @@ const aboutBlocks: any[] = [
     {
       blockType: 'grid',
       columns: 2,
-      columnRatio: 'leftNarrow',
+      columnRatio: '2:3',
       alignItems: 'start',
       children: [
         { blockType: 'image', media: company, aspectRatio: '4:3', fit: 'cover' },

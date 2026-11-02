@@ -32,7 +32,7 @@ export interface GridBlock extends BlockBase {
   type: 'grid'
   columns: number
   gap?: string
-  columnRatio?: 'equal' | 'leftNarrow' | 'leftWide'
+  columnRatio?: string
   alignItems?: 'stretch' | 'start' | 'center' | 'end'
   /** 背景图片 URL（可与背景色叠加） */
   bgImage?: string

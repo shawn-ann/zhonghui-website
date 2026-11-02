@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { BLOCKS, isLayout, allowedChildTypes } from './blocks'
 import type { Block } from './types'
 import { blockChildren } from './state'
-import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, PageLinkControl, BgControl, MediaControl, MediaListControl, ColorControl, TextColorControl, GradientControl } from './controls'
+import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, PageLinkControl, BgControl, MediaControl, MediaListControl, ColorControl, TextColorControl, GradientControl, RatioControl } from './controls'
 import type { PageSummary } from './api'
 import MediaModal from './MediaModal'
 import AddChildPicker from './AddChildPicker'
@@ -45,6 +45,9 @@ export default function PropertyPanel({
           case 'textarea': return <TextAreaControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />
           case 'number': return <NumberControl key={f.key} label={f.label} value={val(f.key) as number} onChange={(v) => onChange(f.key, v)} />
           case 'select': return <SelectControl key={f.key} label={f.label} value={val(f.key) as string} options={f.options ?? []} onChange={(v) => onChange(f.key, v)} />
+          case 'ratio': return Number(val('columns')) > 1
+            ? <RatioControl key={f.key} label={f.label} value={val(f.key) as string} columns={Number(val('columns'))} onChange={(v) => onChange(f.key, v)} />
+            : null
           case 'boolean': return <BooleanControl key={f.key} label={f.label} value={val(f.key) as boolean} onChange={(v) => onChange(f.key, v)} />
           case 'link': return <LinkControl key={f.key} label={f.label} value={val(f.key) as string} onChange={(v) => onChange(f.key, v)} />
           case 'pageLink': return (

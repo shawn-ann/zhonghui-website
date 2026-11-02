@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import type { PageSummary } from './api'
+import { clampColumns, defaultColumnRatio, normalizeColumnRatio, parseColumnRatio } from '../render/columnRatio'
 
 interface Base { label: string }
 type V<T> = { value?: T; onChange: (v: T) => void }
@@ -8,6 +9,43 @@ type V<T> = { value?: T; onChange: (v: T) => void }
 export function TextControl({ label, value, onChange }: Base & V<string>) {
   return <label className="ed-ctl"><span>{label}</span><input value={value ?? ''} onChange={(e) => onChange(e.target.value)} /></label>
 }
+export function RatioControl({
+  label,
+  value,
+  columns,
+  onChange,
+}: Base & V<string> & { columns: number }) {
+  const count = clampColumns(columns)
+  const fallback = defaultColumnRatio(count)
+  const current = value ?? fallback
+  const [draft, setDraft] = React.useState(current)
+
+  React.useEffect(() => setDraft(current), [current])
+
+  const valid = parseColumnRatio(draft, count) !== null
+
+  return (
+    <label className="ed-ctl">
+      <span>{label}</span>
+      <input
+        value={draft}
+        placeholder={fallback}
+        aria-invalid={!valid}
+        onChange={(e) => {
+          const next = e.target.value
+          setDraft(next)
+          if (parseColumnRatio(next, count)) onChange(normalizeColumnRatio(next, count))
+        }}
+        onBlur={() => { if (!valid) setDraft(current) }}
+        onKeyDown={(e) => { if (e.key === 'Enter' && !valid) setDraft(current) }}
+      />
+      <small className={`ed-ratio-hint${valid ? '' : ' is-error'}`}>
+        {valid ? `共 ${count} 列，按整数比例分配` : `请输入 ${count} 个正整数，如 ${fallback}`}
+      </small>
+    </label>
+  )
+}
+
 export function TextAreaControl({ label, value, onChange }: Base & V<string>) {
   return <label className="ed-ctl"><span>{label}</span><textarea rows={3} value={value ?? ''} onChange={(e) => onChange(e.target.value)} /></label>
 }

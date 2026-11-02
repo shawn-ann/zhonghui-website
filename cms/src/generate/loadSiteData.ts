@@ -1,4 +1,5 @@
 import { lexicalToHtml } from '../render/richText'
+import { normalizeColumnRatio } from '../render/columnRatio'
 import type { Block, PageDoc, SiteData } from '../render/types'
 import { buildSiteConfig } from '../site/config'
 
@@ -136,7 +137,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         type: 'grid',
         columns: raw.columns || 3,
         gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md',
-        columnRatio: ['equal', 'leftNarrow', 'leftWide'].includes(raw.columnRatio) ? raw.columnRatio : 'equal',
+        columnRatio: normalizeColumnRatio(raw.columnRatio, raw.columns || 3),
         alignItems: ['stretch', 'start', 'center', 'end'].includes(raw.alignItems) ? raw.alignItems : 'stretch',
         bgImage: raw.bgImage || undefined,
         bgColor: raw.bgColor || undefined,
