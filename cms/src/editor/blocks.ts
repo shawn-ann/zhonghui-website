@@ -63,6 +63,7 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'link', label: '链接', control: 'pageLink' },
     { key: 'bgImage', label: '背景图片', control: 'media' },
     { key: 'bgColor', label: '背景颜色', control: 'color' },
+    { key: 'variant', label: '卡片样式', control: 'select', options: [{ label: '标准', value: 'default' }, { label: '紧凑', value: 'compact' }] },
   ] },
   button: { type: 'button', label: '按钮', defaults: () => ({ type: 'button', label: '', link: '' }), fields: [
     { key: 'label', label: '文字', control: 'text' }, { key: 'link', label: '链接', control: 'pageLink' },

@@ -112,6 +112,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         iconColor: raw.iconColor || undefined,
         titleColor: raw.titleColor || undefined,
         descColor: raw.descColor || undefined,
+        variant: raw.variant === 'compact' ? 'compact' : 'default',
       }
     case 'button':
       return { type: 'button', label: String(raw.label ?? ''), ...resolveBlockLink(raw, routes), style: raw.style === 'outline' ? 'outline' : 'primary', padding: raw.padding || undefined, bg, alt }

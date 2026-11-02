@@ -14,5 +14,14 @@ export const IconCardBlock: Block = {
     { name: 'bgImage', type: 'text', admin: { description: '卡片背景图片 URL' } },
     { name: 'bgColor', type: 'text', admin: { description: '卡片背景颜色，如 #FFF1F6' } },
     { name: 'iconColor', type: 'text', admin: { description: '图标颜色，如 #E60039' } },
+    {
+      name: 'variant',
+      type: 'select',
+      defaultValue: 'default',
+      options: [
+        { label: '标准', value: 'default' },
+        { label: '紧凑（社交矩阵）', value: 'compact' },
+      ],
+    },
   ],
 }

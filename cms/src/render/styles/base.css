@@ -164,6 +164,11 @@ header {
 }
 .adv-card h3 { font-size: 19px; color: var(--title-color, var(--deep-blue)); font-weight: 600; }
 .adv-card p { font-size: 14px; color: var(--sub-color, var(--gray-blue)); margin-top: 10px; line-height: 1.8; }
+.adv-card.is-compact { padding: 18px 10px; }
+.adv-card.is-compact .icon { width: 56px; height: 56px; margin-bottom: 10px; border-width: 1px; }
+.adv-card.is-compact .icon img, .adv-card.is-compact .icon-glyph { width: 30px; height: 30px; }
+.adv-card.is-compact h3 { font-size: 15px; }
+.adv-card.is-compact p { font-size: 12px; margin-top: 5px; line-height: 1.55; }
 
 /* ===== 中惠印记：Swiper 3D 封面流（参照 chinaaupairs.com） ===== */
 .memory-slider { position: relative; overflow: hidden; }
@@ -236,6 +241,7 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-cols-5 { grid-template-columns: repeat(5, 1fr); }
 .grid-cell { min-width: 0; }
 /* 网格单元内不再叠加容器的左右 24，避免与 grid gap 叠加导致间距过大 */
 .grid-cell .container { padding-left: 0; padding-right: 0; }
@@ -303,7 +309,7 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   .banner--split .banner-media { height: auto; min-height: 0; position: relative; }
   .banner--split .banner-photo { position: static; width: 100%; height: auto; margin-top: 24px; }
   .banner--split .banner-pattern { display: none; }
-  .grid-cols-2, .grid-cols-3, .grid-cols-4, .gallery-cols-2, .gallery-cols-3, .gallery-cols-4 { grid-template-columns: 1fr; }
+  .grid-cols-2, .grid-cols-3, .grid-cols-4, .grid-cols-5, .gallery-cols-2, .gallery-cols-3, .gallery-cols-4 { grid-template-columns: 1fr; }
 }
 .image-text .it-subtitle { margin-top: 4px; color: #C07A39; font-size: 12px; font-weight: 600; }
 

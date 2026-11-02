@@ -73,7 +73,7 @@ infoList, iconList, hscroll, stack
 heading, text, image, imageText, iconCard, button, stack
 ```
 
-- `columns` 范围 1–4，默认 3。
+- `columns` 范围 1–5，默认 3。
 - `columnRatio` 使用正整数比例，段数必须等于列数，如 `1:1`、`1:2:1`；默认按列数生成等宽比例。
 - `alignItems`：`stretch`（默认）/ `start` / `center` / `end`。
 - 网格单元格内的视觉卡片由子组件自己负责，网格不设置卡片高度。
@@ -198,7 +198,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
-| `columns` | number | 3 | 1–4 |
+| `columns` | number | 3 | 1–5 |
 | `gap` | select | `md` | sm/md/lg |
 | `columnRatio` | text | 按列数生成 | 正整数比例，段数=列数；如 `2:3`、`1:2:1` |
 | `alignItems` | select | `stretch` | stretch/start/center/end |
@@ -251,7 +251,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 ### 5.10 图标卡片 `iconCard`
 
-`icon`、`iconColor`、`title`、`desc`、`titleColor`、`descColor`、`bgImage`、`bgColor`、`linkType`/`internalPage`/`externalUrl`。
+`icon`、`iconColor`、`title`、`desc`、`titleColor`、`descColor`、`bgImage`、`bgColor`、`variant`、`linkType`/`internalPage`/`externalUrl`。`variant` 支持 `default` / `compact`，`compact` 用于 5 列社交矩阵等紧凑场景。
 
 ### 5.11 信息列表 `infoList`
 
@@ -367,6 +367,28 @@ Payload block
 - 不要用 `!important` 解决局部布局问题，除非是覆盖 Payload 默认样式且已限定作用域。
 
 ## 10. 页面编排示例
+
+### 联系我们
+
+```text
+section(banner)
+section(bgImage=yinji)
+  heading(联系方式, 白字)
+  stack(白底, padding=32)
+    richtext(官网/地址/电话/邮箱，共 5 行)
+section(bgColor=light-pink)
+  heading(中惠官方账号)
+  grid(5列, iconCard compact ×5)
+section(bgImage=yinji)
+  heading(扫码咨询, 白字)
+  grid(2列, imageText 二维码 ×2)
+section(bgColor=light-pink)
+  heading(温馨提示)
+  stack(白底, padding=32)
+    richtext(有序列表 ×4)
+```
+
+联系我们页的二维码当前使用占位 SVG；上线前在媒体库替换为实际二维码图片。
 
 ### 关于中惠
 

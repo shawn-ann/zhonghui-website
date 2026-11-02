@@ -432,6 +432,7 @@ export interface Page {
                                  * 图标颜色，如 #E60039
                                  */
                                 iconColor?: string | null;
+                                variant?: ('default' | 'compact') | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'iconCard';
@@ -586,6 +587,7 @@ export interface Page {
                                            * 图标颜色，如 #E60039
                                            */
                                           iconColor?: string | null;
+                                          variant?: ('default' | 'compact') | null;
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'iconCard';
@@ -837,6 +839,7 @@ export interface Page {
                                            * 图标颜色，如 #E60039
                                            */
                                           iconColor?: string | null;
+                                          variant?: ('default' | 'compact') | null;
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'iconCard';
@@ -991,6 +994,7 @@ export interface Page {
                                                      * 图标颜色，如 #E60039
                                                      */
                                                     iconColor?: string | null;
+                                                    variant?: ('default' | 'compact') | null;
                                                     id?: string | null;
                                                     blockName?: string | null;
                                                     blockType: 'iconCard';
@@ -1402,6 +1406,7 @@ export interface Page {
                                  * 图标颜色，如 #E60039
                                  */
                                 iconColor?: string | null;
+                                variant?: ('default' | 'compact') | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'iconCard';
@@ -1679,6 +1684,7 @@ export interface Page {
                        * 图标颜色，如 #E60039
                        */
                       iconColor?: string | null;
+                      variant?: ('default' | 'compact') | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'iconCard';
@@ -1833,6 +1839,7 @@ export interface Page {
                                  * 图标颜色，如 #E60039
                                  */
                                 iconColor?: string | null;
+                                variant?: ('default' | 'compact') | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'iconCard';
@@ -2084,6 +2091,7 @@ export interface Page {
                                  * 图标颜色，如 #E60039
                                  */
                                 iconColor?: string | null;
+                                variant?: ('default' | 'compact') | null;
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'iconCard';
@@ -2238,6 +2246,7 @@ export interface Page {
                                            * 图标颜色，如 #E60039
                                            */
                                           iconColor?: string | null;
+                                          variant?: ('default' | 'compact') | null;
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'iconCard';
@@ -2566,6 +2575,7 @@ export interface Page {
              * 图标颜色，如 #E60039
              */
             iconColor?: string | null;
+            variant?: ('default' | 'compact') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'iconCard';
@@ -2792,6 +2802,7 @@ export interface Page {
                        * 图标颜色，如 #E60039
                        */
                       iconColor?: string | null;
+                      variant?: ('default' | 'compact') | null;
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'iconCard';
@@ -3152,6 +3163,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       bgImage?: T;
                                       bgColor?: T;
                                       iconColor?: T;
+                                      variant?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -3248,6 +3260,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   bgImage?: T;
                                                   bgColor?: T;
                                                   iconColor?: T;
+                                                  variant?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -3404,6 +3417,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   bgImage?: T;
                                                   bgColor?: T;
                                                   iconColor?: T;
+                                                  variant?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -3500,6 +3514,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               bgImage?: T;
                                                               bgColor?: T;
                                                               iconColor?: T;
+                                                              variant?: T;
                                                               id?: T;
                                                               blockName?: T;
                                                             };
@@ -3775,6 +3790,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       bgImage?: T;
                                       bgColor?: T;
                                       iconColor?: T;
+                                      variant?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -3947,6 +3963,7 @@ export interface PagesSelect<T extends boolean = true> {
                           bgImage?: T;
                           bgColor?: T;
                           iconColor?: T;
+                          variant?: T;
                           id?: T;
                           blockName?: T;
                         };
@@ -4043,6 +4060,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       bgImage?: T;
                                       bgColor?: T;
                                       iconColor?: T;
+                                      variant?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -4199,6 +4217,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       bgImage?: T;
                                       bgColor?: T;
                                       iconColor?: T;
+                                      variant?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -4295,6 +4314,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   bgImage?: T;
                                                   bgColor?: T;
                                                   iconColor?: T;
+                                                  variant?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -4499,6 +4519,7 @@ export interface PagesSelect<T extends boolean = true> {
               bgImage?: T;
               bgColor?: T;
               iconColor?: T;
+              variant?: T;
               id?: T;
               blockName?: T;
             };
@@ -4659,6 +4680,7 @@ export interface PagesSelect<T extends boolean = true> {
                           bgImage?: T;
                           bgColor?: T;
                           iconColor?: T;
+                          variant?: T;
                           id?: T;
                           blockName?: T;
                         };

@@ -7,6 +7,7 @@ describe('columnRatio', () => {
     expect(defaultColumnRatio(2)).toBe('1:1')
     expect(defaultColumnRatio(3)).toBe('1:1:1')
     expect(defaultColumnRatio(4)).toBe('1:1:1:1')
+    expect(defaultColumnRatio(5)).toBe('1:1:1:1:1')
   })
 
   it('parses integer ratios with the right segment count', () => {

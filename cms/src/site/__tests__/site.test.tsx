@@ -69,6 +69,16 @@ describe('site blocks', () => {
     expect(icon).toContain('--sub-color:#DDDDDD')
   })
 
+  it('renders five-column grids and compact icon cards', () => {
+    const grid = render(blockNode({ type: 'grid', _id: 'g5', columns: 5, children: [] })!)
+    expect(grid).toContain('grid-cols-5')
+
+    const card = render(blockNode({
+      type: 'iconCard', _id: 'ic', icon: '/icon.svg', title: '知乎', desc: '中惠互惠生', variant: 'compact',
+    })!)
+    expect(card).toContain('adv-card is-compact')
+  })
+
   it('renders editor rich text from live content instead of stale html', () => {
     const content = {
       root: {
@@ -131,7 +141,7 @@ describe('site blocks', () => {
       type: 'grid', _id: 'g1', columns: 5, gap: 'lg', bgColor: '#FFF1F6', bgImage: '/g.jpg',
       children: [{ type: 'text', _id: 't1', body: 'x' }],
     })!)
-    expect(html).toContain('grid grid-cols-4 grid-gap-lg')
+    expect(html).toContain('grid grid-cols-5 grid-gap-lg')
     expect(html).toContain('class="grid-cell"')
     expect(html).toContain('data-bid="t1"')
     expect(html).toContain('background-color:#FFF1F6')

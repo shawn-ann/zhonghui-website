@@ -8,6 +8,7 @@ import type {
 import { bgCss, bgImageCss } from './bg'
 import { lexicalToHtml } from '../render/richText'
 import { ratioToGridTemplate } from '../render/columnRatio'
+import LexicalContent from './LexicalContent'
 
 const PAD: Record<string, number> = { none: 0, sm: 32, md: 72, lg: 96, xl: 128, '2xl': 160 }
 const padStyle = (padding?: number) => (padding && padding > 0 ? { padding: `${padding}px` } : undefined)
@@ -92,7 +93,7 @@ export function SectionView({ b, editor = false }: { b: SectionBlock; editor?: b
 }
 
 export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean }) {
-  const cols = Math.min(4, Math.max(1, b.columns || 3))
+  const cols = Math.min(5, Math.max(1, b.columns || 3))
   const gap = b.gap && /^(sm|md|lg)$/.test(b.gap) ? b.gap : 'md'
   const ratio = ratioToGridTemplate(b.columnRatio, cols)
   const ratioStyle = {
@@ -275,7 +276,7 @@ export function IconCardView({ b, editor = false }: { b: IconCardBlock; editor?:
   const href = b.link ? safeUrl(b.link) : ''
   const card = (
     <div
-      className="adv-card"
+      className={`adv-card${b.variant === 'compact' ? ' is-compact' : ''}`}
       data-bid={b._id}
       style={{ ...(b.bgColor ? { backgroundColor: b.bgColor } : {}), ...bgImageCss(b.bgImage) }}
     >
@@ -322,13 +323,16 @@ export function ButtonView({ b, editor = false }: { b: ButtonBlock; editor?: boo
 }
 
 export function RichTextView({ b, editor = false }: { b: RichTextBlock; editor?: boolean }) {
-  const html = editor && b.content ? lexicalToHtml(b.content) : b.html
+  const live = editor && !!b.content && typeof b.content === 'object'
+  const html = live ? lexicalToHtml(b.content) : b.html
   if (editor && richTextEmpty(html)) {
     return <EmptyEditorBlock b={b} label="富文本" tip="在右侧编辑内容" variant="wide" />
   }
   return (
     <div className="container" data-bid={b._id}>
-      <div className="richtext" style={padStyle(b.padding)} dangerouslySetInnerHTML={{ __html: html || '' }} />
+      {live
+        ? <div className="richtext" style={padStyle(b.padding)}><LexicalContent data={b.content} /></div>
+        : <div className="richtext" style={padStyle(b.padding)} dangerouslySetInnerHTML={{ __html: html || '' }} />}
     </div>
   )
 }
