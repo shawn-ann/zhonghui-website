@@ -1,0 +1,380 @@
+.ed-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f5f5f7;
+}
+
+.ed-account {
+  font-size: 13px;
+  color: #666;
+  text-decoration: none;
+  align-self: center;
+  margin-right: 4px;
+}
+.ed-account:hover { color: #1E6FFF; }
+
+.ed-topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 48px;
+  padding: 0 16px 0 48px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  flex: 0 0 auto;
+  position: relative;
+}
+.ed-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3a2a32;
+}
+.ed-status {
+  font-size: 12px;
+  color: #9a8c93;
+}
+.ed-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.ed-spacer { flex: 1 1 auto; }
+.ed-docnav { display: flex; gap: 14px; font-size: 13px; }
+.ed-docnav a { color: #666; text-decoration: none; }
+.ed-docnav a:hover { color: #1E6FFF; }
+.ed-docnav a.is-active { color: #1E6FFF; font-weight: 600; }
+.ed-actions button {
+  font-size: 13px;
+  padding: 6px 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  color: #5a4a52;
+  cursor: pointer;
+}
+.ed-actions button:hover {
+  border-color: #e60039;
+}
+.ed-actions .ed-publish {
+  background: #e60039;
+  border-color: #e60039;
+  color: #fff;
+}
+
+.ed-body {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: 250px 1fr 240px;
+  gap: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+.ed-left {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ed-left .ed-palette {
+  flex: 0 0 auto;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  border-radius: 0;
+  max-height: 55%;
+}
+.ed-left .ed-tree {
+  flex: 1 1 auto;
+  overflow: auto;
+  border-top: 0;
+}
+
+.ed-loading {
+  padding: 40px;
+  color: #9a8c93;
+  font-size: 14px;
+}
+
+.ed-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5a4a52;
+  margin-bottom: 8px;
+}
+
+.ed-muted {
+  color: #9a8c93;
+  font-size: 12px;
+}
+
+/* Palette */
+.ed-palette {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 10px;
+  overflow: auto;
+}
+.ed-palette-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.ed-palette-item {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  background: #fff;
+  cursor: grab;
+  overflow: hidden;
+}
+.ed-palette-item:hover {
+  border-color: #e60039;
+}
+.ed-thumb {
+  width: 100%;
+  background: #faf7f9;
+}
+.ed-thumb-label {
+  font-size: 12px;
+  color: #5a4a52;
+  padding: 4px 0;
+  text-align: center;
+}
+
+/* Canvas */
+.ed-canvas {
+  position: relative;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ed-canvas-wrap {
+  overflow: auto;
+  background: #eef0f3;
+  padding: 12px;
+  height: 100%;
+  box-sizing: border-box;
+}
+.ed-canvas-frame {
+  display: block;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+.ed-block-overlay { position: absolute; display: flex; gap: 6px; align-items: center; transform: translateY(-100%); z-index: 5; }
+.ed-block-badge { background: #1E6FFF; color: #fff; font-size: 10px; padding: 1px 8px; border-radius: 3px; }
+.ed-block-del { background: #fff; border: 1px solid #1E6FFF; color: #1E6FFF; font-size: 10px; padding: 1px 8px; border-radius: 3px; cursor: pointer; }
+
+/* Property panel */
+.ed-props {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 10px;
+  overflow: auto;
+}
+.ed-ctl {
+  display: block;
+  margin-bottom: 10px;
+}
+.ed-ctl > span {
+  display: block;
+  font-size: 12px;
+  color: #7c6b73;
+  margin-bottom: 4px;
+}
+.ed-ctl input[type='text'],
+.ed-ctl input:not([type]),
+.ed-ctl input[type='number'],
+.ed-ctl textarea,
+.ed-ctl select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.ed-ctl-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ed-ctl-inline > span {
+  margin: 0;
+}
+.ed-bg-swatch { width: 28px; height: 20px; border: 1px solid #ddd; border-radius: 3px; display: inline-block; }
+.ed-media-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ed-media-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+.ed-media-row button {
+  font-size: 12px;
+  padding: 4px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+.ed-grid-cells {
+  margin-top: 12px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+.ed-cell-row {
+  font-size: 12px;
+  color: #5a4a52;
+  padding: 4px 0;
+}
+.ed-child-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 12px;
+  color: #5a4a52;
+}
+.ed-child-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ed-child-actions {
+  display: flex;
+  gap: 4px;
+  flex: none;
+}
+.ed-child-actions button {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+}
+.ed-child-actions button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.ed-child-add {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+.ed-child-add select {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.ed-child-add button {
+  padding: 6px 12px;
+  border: 1px solid #e60039;
+  border-radius: 4px;
+  background: #fff;
+  color: #e60039;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* Media modal */
+.ed-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.ed-modal-body {
+  width: min(680px, 90vw);
+  max-height: 80vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+}
+.ed-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.ed-modal-head button {
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+}
+.ed-modal-actions {
+  margin-bottom: 12px;
+}
+.ed-modal-actions button {
+  font-size: 13px;
+  padding: 6px 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+.ed-media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+}
+.ed-media-grid button {
+  padding: 0;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+}
+.ed-media-grid img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Structure tree */
+.ed-tree { padding: 8px; border-top: 1px solid #eee; overflow: auto; }
+.ed-tree-row { display: flex; align-items: center; gap: 6px; padding: 4px 6px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+.ed-tree-row:hover { background: #f4f4f4; }
+.ed-tree-row.is-selected { background: #e7f0ff; box-shadow: inset 3px 0 0 #1E6FFF; }
+.ed-tree-caret { width: 14px; background: none; border: 0; cursor: pointer; color: #888; padding: 0; }
+.ed-tree-label { color: #333; }
+.ed-tree-summary { color: #aaa; font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ed-tree-actions { margin-left: auto; display: flex; align-items: center; gap: 2px; }
+.ed-tree-actions button { border: 0; background: none; color: #bbb; cursor: pointer; padding: 0 2px; }
+.ed-tree-row:hover .ed-tree-actions button { color: #E60039; }
+.ed-tree-move { font-size: 11px; }
+.ed-tree-move:disabled { opacity: .35; cursor: default; }
+.ed-tree-del { border: 0; background: none; color: #bbb; cursor: pointer; }
+
+/* 结构面板头部与新增分栏 */
+.ed-tree-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.ed-tree-add { font-size: 11px; border: 1px solid #E60039; color: #E60039; background: #fff; border-radius: 4px; padding: 2px 8px; cursor: pointer; }
+.ed-tree-add:hover { background: #E60039; color: #fff; }
