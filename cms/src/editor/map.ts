@@ -5,7 +5,7 @@ import { newId } from './state'
 function withIds(rawBlock: any, mapped: Block): Block {
   const id = rawBlock?.id != null ? String(rawBlock.id) : newId()
   const b = { ...mapped, _id: id, _raw: rawBlock }
-  if ((b.type === 'section' || b.type === 'grid' || b.type === 'hscroll' || b.type === 'stack') && Array.isArray(rawBlock?.children) && Array.isArray((b as any).children)) {
+  if ((b.type === 'section' || b.type === 'grid' || b.type === 'gridRow' || b.type === 'gridCell' || b.type === 'hscroll' || b.type === 'stack') && Array.isArray(rawBlock?.children) && Array.isArray((b as any).children)) {
     ;(b as any).children = (b as any).children.map((child: Block, i: number) =>
       withIds(rawBlock.children[i], child),
     )
@@ -155,11 +155,21 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       break
     case 'grid':
       out.columns = b.columns
+      out.layout = b.layout === 'rows' ? 'rows' : 'flow'
       if (b.gap !== undefined) out.gap = b.gap
       if (b.columnRatio !== undefined) out.columnRatio = b.columnRatio
       if (b.alignItems !== undefined) out.alignItems = b.alignItems
       if (b.bgImage !== undefined) out.bgImage = b.bgImage
       if (b.bgColor !== undefined) out.bgColor = b.bgColor
+      out.children = editorToPayloadBlocks(b.children || [], urlToId)
+      break
+    case 'gridRow':
+      out.columns = b.columns
+      if (b.gap !== undefined) out.gap = b.gap
+      if (b.columnRatio !== undefined) out.columnRatio = b.columnRatio
+      out.children = editorToPayloadBlocks(b.children || [], urlToId)
+      break
+    case 'gridCell':
       out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'infoList':

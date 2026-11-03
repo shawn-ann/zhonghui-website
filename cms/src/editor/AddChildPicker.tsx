@@ -59,6 +59,16 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
       <div style={{ background: '#f0e3ea', borderRadius: 2 }} /><div style={{ background: '#f0e3ea', borderRadius: 2 }} /><div style={{ background: '#f0e3ea', borderRadius: 2 }} />
     </div>
   ),
+  gridRow: (
+    <div style={{ display: 'grid', gridTemplateRows: '1fr 1fr', gap: 3, padding: 6, height: 44 }}>
+      <div style={{ background: '#f0e3ea', borderRadius: 2 }} /><div style={{ background: '#f0e3ea', borderRadius: 2 }} />
+    </div>
+  ),
+  gridCell: (
+    <div style={{ ...box, border: '1px dashed #d8a9be' }}>
+      <div style={{ width: 18, height: 18, border: '1px dashed #C2185B', borderRadius: 3 }} />
+    </div>
+  ),
   infoList: (
     <div style={{ height: 44, padding: 7 }}>
       <div style={line('90%')} /><div style={line('80%')} /><div style={line('88%')} /><div style={line('70%')} />

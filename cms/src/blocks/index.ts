@@ -8,6 +8,9 @@ import { RichTextBlock } from './RichText'
 import { GalleryBlock } from './Gallery'
 import { SliderBlock } from './Slider'
 import { Grid } from './Grid'
+import { GridRowBlock } from './GridRow'
+import { GridCellBlock } from './GridCell'
+import { gridContent } from './gridContent'
 import { HeadingBlock } from './Heading'
 import { IconCardBlock } from './IconCard'
 import { makeSection } from './Section'
@@ -19,6 +22,8 @@ import { StackBlock } from './Stack'
 export const sectionChildren: Block[] = [HeadingBlock, TextBlock, Grid, GalleryBlock, BannerBlock, SliderBlock, RichTextBlock, InfoListBlock, IconListBlock, HscrollBlock, StackBlock]
 
 export const SectionBlock = makeSection(sectionChildren)
+
+export { GridRowBlock, GridCellBlock, gridContent }
 
 export const pageBlocks: Block[] = [
   SectionBlock,

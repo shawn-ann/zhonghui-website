@@ -1,20 +1,24 @@
 import type { Block } from 'payload'
-import { TextBlock } from './Text'
-import { ImageBlock } from './Image'
-import { ImageTextBlock } from './ImageText'
-import { ButtonBlock } from './Button'
-import { HeadingBlock } from './Heading'
-import { IconCardBlock } from './IconCard'
-import { StackBlock } from './Stack'
+import { gridContent } from './gridContent'
+import { GridRowBlock } from './GridRow'
 
 /** 网格允许的卡片/文本组件（编辑器同步使用）。 */
-export const gridChildren: Block[] = [HeadingBlock, TextBlock, ImageBlock, ImageTextBlock, ButtonBlock, IconCardBlock, StackBlock]
+export const gridChildren: Block[] = gridContent
 
 export function makeGrid(slug: string, label: string, cellComponents: Block[]): Block {
   return {
     slug,
     labels: { singular: label, plural: label },
     fields: [
+      {
+        name: 'layout',
+        type: 'select',
+        defaultValue: 'flow',
+        options: [
+          { label: '流式（自动换行）', value: 'flow' },
+          { label: '按行（显式格子）', value: 'rows' },
+        ],
+      },
       { name: 'columns', type: 'number', defaultValue: 3, min: 1, max: 6 },
       {
         name: 'gap',
@@ -54,5 +58,5 @@ export function makeGrid(slug: string, label: string, cellComponents: Block[]): 
 }
 
 // 保留内层网格定义以兼容历史数据；编辑器不再提供嵌套网格。
-export const GridInner = makeGrid('gridInner', '网格(内层)', gridChildren)
-export const Grid = makeGrid('grid', '网格', [...gridChildren, GridInner])
+export const GridInner = makeGrid('gridInner', '网格(内层)', gridContent)
+export const Grid = makeGrid('grid', '网格', [...gridContent, GridRowBlock, GridInner])

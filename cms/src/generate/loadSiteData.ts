@@ -1,5 +1,5 @@
 import { lexicalToHtml } from '../render/richText'
-import { normalizeColumnRatio } from '../render/columnRatio'
+import { clampColumns, normalizeColumnRatio } from '../render/columnRatio'
 import type { Block, PageDoc, SiteData } from '../render/types'
 import { buildSiteConfig } from '../site/config'
 
@@ -136,6 +136,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         .filter((x): x is Block => x !== null)
       return {
         type: 'grid',
+        layout: raw.blockType === 'grid' && raw.layout === 'rows' ? 'rows' : 'flow',
         columns: raw.columns || 3,
         gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md',
         columnRatio: normalizeColumnRatio(raw.columnRatio, raw.columns || 3),
@@ -145,6 +146,25 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         children,
       }
     }
+    case 'gridRow': {
+      const columns = clampColumns(raw.columns)
+      return {
+        type: 'gridRow',
+        columns,
+        gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md',
+        columnRatio: normalizeColumnRatio(raw.columnRatio, columns),
+        children: arr<Record<string, any>>(raw.children)
+          .map((child) => mapBlock(child, resolveMedia, routes))
+          .filter((x): x is Block => x !== null),
+      }
+    }
+    case 'gridCell':
+      return {
+        type: 'gridCell',
+        children: arr<Record<string, any>>(raw.children)
+          .map((child) => mapBlock(child, resolveMedia, routes))
+          .filter((x): x is Block => x !== null),
+      }
     case 'infoList':
       return {
         type: 'infoList',

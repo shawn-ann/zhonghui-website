@@ -56,6 +56,29 @@ describe('mapPageDoc robustness', () => {
 const resolve = (m: unknown) => (m && typeof m === 'object' && 'url' in (m as any) ? (m as any).url : '')
 
 describe('mapBlock', () => {
+  it('maps row-layout grid blocks and their cells', () => {
+    const row = mapBlock({
+      blockType: 'gridRow',
+      columns: 6,
+      gap: 'md',
+      columnRatio: '1:1:1:1:1:1',
+      children: [{ blockType: 'gridCell', children: [{ blockType: 'text', body: 'x' }] }],
+    }, resolve) as any
+    expect(row).toMatchObject({
+      type: 'gridRow', columns: 6, gap: 'md', columnRatio: '1:1:1:1:1:1',
+    })
+    expect(row.children[0]).toMatchObject({ type: 'gridCell' })
+    expect(row.children[0].children[0]).toMatchObject({ type: 'text', body: 'x' })
+
+    const grid = mapBlock({
+      blockType: 'grid', layout: 'rows', columns: 6, children: [{
+        blockType: 'gridRow', columns: 6, children: [],
+      }],
+    }, resolve) as any
+    expect(grid).toMatchObject({ type: 'grid', layout: 'rows' })
+    expect(grid.children[0]).toMatchObject({ type: 'gridRow' })
+  })
+
   it('resolves external, internal and legacy links', () => {
     const external = mapBlock({
       blockType: 'imageText', media: { url: '/a.jpg' },

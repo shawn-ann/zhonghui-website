@@ -30,6 +30,8 @@ export interface HeadingBlock extends BlockBase {
 
 export interface GridBlock extends BlockBase {
   type: 'grid'
+  /** flow：子块自动换行；rows：子块为 gridRow，行内是显式格子 */
+  layout?: 'flow' | 'rows'
   columns: number
   gap?: string
   columnRatio?: string
@@ -38,6 +40,19 @@ export interface GridBlock extends BlockBase {
   bgImage?: string
   /** 背景颜色（CSS 颜色值） */
   bgColor?: string
+  children: Block[]
+}
+
+export interface GridRowBlock extends BlockBase {
+  type: 'gridRow'
+  columns: number
+  gap?: string
+  columnRatio?: string
+  children: Block[]
+}
+
+export interface GridCellBlock extends BlockBase {
+  type: 'gridCell'
   children: Block[]
 }
 
@@ -196,6 +211,8 @@ export type Block =
   | BannerBlock
   | HeadingBlock
   | GridBlock
+  | GridRowBlock
+  | GridCellBlock
   | TextBlock
   | ImageBlock
   | ImageTextBlock

@@ -86,6 +86,15 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'bgImage', label: '背景图片', control: 'media' },
     { key: 'bgColor', label: '背景颜色', control: 'color' },
   ] },
+  gridRow: { type: 'gridRow', label: '行', defaults: () => ({
+    type: 'gridRow', columns: 3, gap: 'md', columnRatio: '1:1:1',
+    children: Array.from({ length: 3 }, () => ({ type: 'gridCell' as const, _id: newId(), children: [] })),
+  }), fields: [
+    { key: 'columns', label: '列数', control: 'number' },
+    { key: 'gap', label: '间距', control: 'select', options: [{ label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
+    { key: 'columnRatio', label: '列宽比例', control: 'ratio' },
+  ] },
+  gridCell: { type: 'gridCell', label: '格子', defaults: () => ({ type: 'gridCell', children: [] }), fields: [] },
   heading: { type: 'heading', label: '标题', defaults: () => ({ type: 'heading', title: '标题' }), fields: [
     { key: 'title', label: '标题', control: 'text' }, { key: 'subtitle', label: '副标题', control: 'text' },
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },
@@ -188,7 +197,7 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
   }
 }
 
-export const LAYOUT_TYPES = ['section', 'grid', 'hscroll', 'stack'] as const
+export const LAYOUT_TYPES = ['section', 'grid', 'gridRow', 'gridCell', 'hscroll', 'stack'] as const
 
 /** 分栏：版面级内容。 */
 export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'iconList', 'hscroll', 'stack']

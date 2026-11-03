@@ -82,6 +82,33 @@ describe('site blocks', () => {
     expect(card).toContain('adv-card is-compact')
   })
 
+  it('renders row-layout grids with explicit empty cells', () => {
+    const cell = (children: any[] = []): any => ({ type: 'gridCell', children })
+    const row = (cells: any[]): any => ({ type: 'gridRow', _id: 'r1', columns: 6, columnRatio: '1:1:1:1:1:1', children: cells })
+    const html = render(blockNode({
+      type: 'grid', _id: 'g1', layout: 'rows', columns: 6, children: [
+        row([
+          cell(), cell(),
+          cell([{ type: 'text', _id: 't1', body: '二维码 A' }]),
+          cell([{ type: 'text', _id: 't2', body: '二维码 B' }]),
+          cell(), cell(),
+        ]),
+      ],
+    })!)
+    expect(html).toContain('grid-rows')
+    expect((html.match(/class="grid-cell/g) || []).length).toBe(6)
+    expect(html).toContain('二维码 A')
+    expect(html).toContain('二维码 B')
+  })
+
+  it('keeps legacy flow grids when layout is absent', () => {
+    const legacy = render(blockNode({
+      type: 'grid', _id: 'g0', columns: 3, children: [{ type: 'text', _id: 't0', body: 'x' }],
+    })!)
+    expect(legacy).not.toContain('grid-rows')
+    expect(legacy).toContain('grid-cols-3')
+  })
+
   it('renders editor rich text from live content instead of stale html', () => {
     const content = {
       root: {

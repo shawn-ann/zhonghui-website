@@ -1,9 +1,9 @@
 import { Fragment, type CSSProperties } from 'react'
 import { safeUrl } from '../render/primitives'
 import type {
-  BannerBlock, Block, ButtonBlock, GalleryBlock, GridBlock, HeadingBlock, IconCardBlock,
-  IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, HscrollBlock, RichTextBlock,
-  SectionBlock, SliderBlock, StackBlock, TextBlock,
+  BannerBlock, Block, ButtonBlock, GalleryBlock, GridBlock, GridCellBlock, GridRowBlock,
+  HeadingBlock, IconCardBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock,
+  HscrollBlock, RichTextBlock, SectionBlock, SliderBlock, StackBlock, TextBlock,
 } from '../render/types'
 import { bgCss, bgImageCss } from './bg'
 import { lexicalToHtml } from '../render/richText'
@@ -92,6 +92,41 @@ export function SectionView({ b, editor = false }: { b: SectionBlock; editor?: b
   )
 }
 
+export function GridRowView({ b, editor = false }: { b: GridRowBlock; editor?: boolean }) {
+  const cols = Math.min(6, Math.max(1, b.columns || 3))
+  const gap = b.gap && /^(sm|md|lg)$/.test(b.gap) ? b.gap : 'md'
+  const ratio = ratioToGridTemplate(b.columnRatio, cols)
+  const style = ratio ? { gridTemplateColumns: ratio } : undefined
+  const cells = b.children || []
+  return (
+    <div className={`grid grid-cols-${cols} grid-gap-${gap}`} data-bid={b._id} style={style}>
+      {Array.from({ length: cols }, (_, i) => {
+        const cell = cells[i]
+        if (cell && cell.type === 'gridCell') {
+          return <Fragment key={cell._id ?? i}>{blockNode(cell, editor)}</Fragment>
+        }
+        return <div className="grid-cell is-empty" key={`empty-${i}`} />
+      })}
+    </div>
+  )
+}
+
+export function GridCellView({ b, editor = false }: { b: GridCellBlock; editor?: boolean }) {
+  const children = b.children || []
+  return (
+    <div className={`grid-cell${children.length ? '' : ' is-empty'}`} data-bid={b._id}>
+      {editor && children.length === 0 ? (
+        <div className="ed-grid-empty-cell">
+          <span className="ed-grid-plus">＋</span>
+          <span>格子</span>
+        </div>
+      ) : children.map((child, i) => (
+        <Fragment key={child._id ?? i}>{blockNode(child, editor)}</Fragment>
+      ))}
+    </div>
+  )
+}
+
 export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean }) {
   const cols = Math.min(6, Math.max(1, b.columns || 3))
   const gap = b.gap && /^(sm|md|lg)$/.test(b.gap) ? b.gap : 'md'
@@ -105,6 +140,27 @@ export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean
     ...bgImageCss(b.bgImage),
   }
   const children = b.children || []
+  const rows = children.filter((c) => c.type === 'gridRow')
+
+  // 按行布局：每行独立网格，空 gridCell 保留固定轨道。
+  if (b.layout === 'rows' && rows.length) {
+    return (
+      <div className="container" data-bid={b._id} style={style}>
+        <div className={`grid-rows grid-gap-${gap}`}>
+          {rows.map((c, i) => (
+            <Fragment key={c._id ?? i}>{blockNode(c, editor)}</Fragment>
+          ))}
+        </div>
+        {editor ? (
+          <div className="ed-grid-hint">
+            <span>网格 · 按行 · {rows.length} 行</span>
+            <span className="ed-grid-tip">从右侧添加行</span>
+          </div>
+        ) : null}
+      </div>
+    )
+  }
+
   // 编辑器里把最后一行补满：空网格显示一整行，非空时只补当前行剩余空位。
   const placeholders = !editor
     ? 0
@@ -459,6 +515,8 @@ export function blockNode(b: Block, editor = false): React.ReactNode {
   switch (b.type) {
     case 'section': return <SectionView b={b} editor={editor} />
     case 'grid': return <GridView b={b} editor={editor} />
+    case 'gridRow': return <GridRowView b={b} editor={editor} />
+    case 'gridCell': return <GridCellView b={b} editor={editor} />
     case 'banner': return <BannerView b={b} editor={editor} />
     case 'infoList': return <InfoListView b={b} />
     case 'iconList': return <IconListView b={b} />
