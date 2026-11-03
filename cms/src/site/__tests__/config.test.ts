@@ -23,6 +23,21 @@ describe('buildSiteConfig', () => {
     ])
   })
 
+  it('resolves case index, case category and external menu links', () => {
+    const site = buildSiteConfig({
+      items: [
+        { label: '案例分享', linkType: 'caseIndex' },
+        { label: '学员视频', linkType: 'caseCategory', caseCategory: 7 },
+        { label: '外链', linkType: 'external', externalUrl: 'https://x.test' },
+        { label: '旧页面', page: { id: 1, route: '/old/' } },
+      ],
+    }, null, new Map(), new Map([['7', '/blog/video/']]))
+
+    expect(site.menu.map((m) => m.link)).toEqual([
+      '/blog/', '/blog/video/', 'https://x.test', '/old/',
+    ])
+  })
+
   it('uses settings values and defaults', () => {
     const site = buildSiteConfig({}, {
       logo: { url: '/media/logo.png' },

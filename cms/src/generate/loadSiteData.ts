@@ -322,12 +322,13 @@ export async function loadSiteData(payload: {
     ])
   }
   const casePages = buildCasePages(categories, cases, mapCaseSettings(caseSettingsRaw))
+  const categoryRoutes = new Map(categories.map((category) => [String(category.id), `/blog/${category.slug}/`]))
   const redirects = redirectRes.docs
     .map((raw) => ({ from: String(raw?.from ?? '').trim(), to: String(raw?.to ?? '').trim() }))
     .filter((r) => r.from && r.to)
   return {
     pages: [...res.docs.map((d) => mapPageDoc(d, resolveMedia, routes)), ...casePages],
-    site: buildSiteConfig(menuRaw, settingsRaw, routes),
+    site: buildSiteConfig(menuRaw, settingsRaw, routes, categoryRoutes),
     redirects,
   }
 }

@@ -4,24 +4,42 @@ import './menu-editor.css'
 import { AdminPageHeader } from './admin/AdminPageHeader'
 
 interface PageOption { id: number | string; title: string; route: string; status?: string }
-interface MenuItem { id?: number | string; label: string; pageId?: number | string; children: MenuItem[] }
+interface CategoryOption { id: number | string; title: string; slug: string }
+type LinkType = 'page' | 'caseIndex' | 'caseCategory' | 'external'
+interface MenuItem {
+  id?: number | string
+  label: string
+  linkType: LinkType
+  pageId?: number | string
+  categoryId?: number | string
+  externalUrl?: string
+  children: MenuItem[]
+}
 type ModalState =
-  | { mode: 'create'; parent: number | null; index?: number; label: string; pageId?: number | string }
-  | { mode: 'edit'; parent: number | null; index: number; label: string; pageId?: number | string }
+  | { mode: 'create'; parent: number | null; index?: number; label: string; linkType: LinkType; pageId?: number | string; categoryId?: number | string; externalUrl?: string }
+  | { mode: 'edit'; parent: number | null; index: number; label: string; linkType: LinkType; pageId?: number | string; categoryId?: number | string; externalUrl?: string }
   | null
 
-const pageIdOf = (page: any): number | string | undefined =>
-  page && typeof page === 'object' ? page.id : page ?? undefined
+const relationIdOf = (value: any): number | string | undefined =>
+  value && typeof value === 'object' ? value.id : value ?? undefined
 
 const pageIdValue = (value: number | string | undefined) =>
   typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : value
+
+const linkTypeOf = (i: any): LinkType => {
+  if (i?.linkType === 'caseIndex' || i?.linkType === 'caseCategory' || i?.linkType === 'external') return i.linkType
+  return 'page'
+}
 
 function normalizeItems(raw: any): MenuItem[] {
   if (!Array.isArray(raw)) return []
   return raw.map((i: any) => ({
     id: i?.id,
     label: String(i?.label ?? ''),
-    pageId: pageIdOf(i?.page),
+    linkType: linkTypeOf(i),
+    pageId: relationIdOf(i?.page),
+    categoryId: relationIdOf(i?.caseCategory),
+    externalUrl: i?.externalUrl ? String(i.externalUrl) : undefined,
     children: normalizeItems(i?.children),
   }))
 }
@@ -33,6 +51,7 @@ function itemKey(parent: number | null, index: number) {
 export default function MenuEditorView() {
   const [items, setItems] = useState<MenuItem[]>([])
   const [pages, setPages] = useState<PageOption[]>([])
+  const [categories, setCategories] = useState<CategoryOption[]>([])
   const [loading, setLoading] = useState(true)
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [savedAt, setSavedAt] = useState('')
@@ -53,18 +72,24 @@ export default function MenuEditorView() {
   const load = useCallback(async () => {
     setLoading(true)
     try {
-      const [menuRes, pagesRes] = await Promise.all([
+      const [menuRes, pagesRes, categoriesRes] = await Promise.all([
         fetch('/api/globals/menu?depth=1', { credentials: 'include' }),
         fetch('/api/pages?limit=200&depth=0&draft=true', { credentials: 'include' }),
+        fetch('/api/case-categories?limit=200&depth=0', { credentials: 'include' }),
       ])
       if (!menuRes.ok) throw new Error(`加载菜单失败：${menuRes.status}`)
       if (!pagesRes.ok) throw new Error(`加载页面失败：${pagesRes.status}`)
+      if (!categoriesRes.ok) throw new Error(`加载案例分类失败：${categoriesRes.status}`)
       const menu = await menuRes.json()
       const pageData = await pagesRes.json()
+      const categoryData = await categoriesRes.json()
       setItems(normalizeItems(menu.items))
       setSaveState('idle')
       setPages((pageData.docs || []).map((p: any) => ({
         id: p.id, title: p.title || '', route: p.route || '', status: p._status,
+      })))
+      setCategories((categoryData.docs || []).map((c: any) => ({
+        id: c.id, title: c.title || '', slug: c.slug || '',
       })))
     } catch (e) {
       notify('error', e instanceof Error ? e.message : '加载失败')
@@ -76,23 +101,31 @@ export default function MenuEditorView() {
   useEffect(() => { void load() }, [load])
 
   const pageMap = useMemo(() => new Map(pages.map((p) => [String(p.id), p])), [pages])
+  const categoryMap = useMemo(() => new Map(categories.map((c) => [String(c.id), c])), [categories])
 
-  const pageText = (item: MenuItem) => {
+  const linkText = (item: MenuItem): string => {
+    if (item.linkType === 'caseIndex') return '案例汇总（/blog/）'
+    if (item.linkType === 'caseCategory') {
+      const c = item.categoryId != null ? categoryMap.get(String(item.categoryId)) : undefined
+      return c ? `${c.title}（/blog/${c.slug}/）` : '未选择案例分类'
+    }
+    if (item.linkType === 'external') return item.externalUrl || '未填写外链'
     const p = item.pageId != null ? pageMap.get(String(item.pageId)) : undefined
     return p ? `${p.title}（${p.route}）` : '未选择页面'
   }
 
-  const buildPayload = (list: MenuItem[]) => list.map((it) => ({
+  const payloadItem = (it: MenuItem) => ({
     ...(it.id != null ? { id: it.id } : {}),
     label: it.label,
-    page: pageIdValue(it.pageId),
-    ...(it.children.length ? {
-      children: it.children.map((c) => ({
-        ...(c.id != null ? { id: c.id } : {}),
-        label: c.label,
-        page: pageIdValue(c.pageId),
-      })),
-    } : {}),
+    linkType: it.linkType,
+    page: it.linkType === 'page' ? pageIdValue(it.pageId) : null,
+    caseCategory: it.linkType === 'caseCategory' ? pageIdValue(it.categoryId) : null,
+    externalUrl: it.linkType === 'external' ? it.externalUrl ?? '' : null,
+  })
+
+  const buildPayload = (list: MenuItem[]) => list.map((it) => ({
+    ...payloadItem(it),
+    ...(it.children.length ? { children: it.children.map(payloadItem) } : {}),
   }))
 
   const flush = async () => {
@@ -166,18 +199,32 @@ export default function MenuEditorView() {
     replaceSiblings(parent, next)
   }
 
-  const openCreate = (parent: number | null) => setModal({ mode: 'create', parent, label: '', pageId: pages[0]?.id })
+  const openCreate = (parent: number | null) => setModal({
+    mode: 'create', parent, label: '', linkType: 'page', pageId: pages[0]?.id,
+  })
   const openEdit = (parent: number | null, index: number) => {
     const item = siblings(parent)[index]
-    setModal({ mode: 'edit', parent, index, label: item.label, pageId: item.pageId })
+    setModal({
+      mode: 'edit', parent, index, label: item.label, linkType: item.linkType,
+      pageId: item.pageId, categoryId: item.categoryId, externalUrl: item.externalUrl,
+    })
   }
 
   const saveModal = () => {
     if (!modal) return
     const label = modal.label.trim()
     if (!label) { notify('error', '名称不能为空'); return }
-    if (modal.pageId == null) { notify('error', '请选择内部页面'); return }
-    const item: MenuItem = { label, pageId: modal.pageId, children: [] }
+    if (modal.linkType === 'page' && modal.pageId == null) { notify('error', '请选择内部页面'); return }
+    if (modal.linkType === 'caseCategory' && modal.categoryId == null) { notify('error', '请选择案例分类'); return }
+    if (modal.linkType === 'external' && !modal.externalUrl?.trim()) { notify('error', '请填写外链地址'); return }
+    const item: MenuItem = {
+      label,
+      linkType: modal.linkType,
+      pageId: modal.linkType === 'page' ? modal.pageId : undefined,
+      categoryId: modal.linkType === 'caseCategory' ? modal.categoryId : undefined,
+      externalUrl: modal.linkType === 'external' ? modal.externalUrl?.trim() : undefined,
+      children: [],
+    }
     if (modal.mode === 'create') {
       const list = siblings(modal.parent).slice()
       const at = modal.index == null ? list.length : modal.index
@@ -185,7 +232,7 @@ export default function MenuEditorView() {
       replaceSiblings(modal.parent, list)
     } else {
       const list = siblings(modal.parent).slice()
-      list[modal.index] = { ...list[modal.index], label, pageId: modal.pageId }
+      list[modal.index] = { ...list[modal.index], ...item, children: list[modal.index].children }
       replaceSiblings(modal.parent, list)
     }
     setModal(null)
@@ -230,7 +277,7 @@ export default function MenuEditorView() {
           <span className="me-handle" title="拖动排序">⠿</span>
           {item.label}
         </td>
-        <td><code>{pageText(item)}</code></td>
+        <td><code>{linkText(item)}</code></td>
         <td className="me-ops">
           <button type="button" disabled={index === 0} onClick={() => move(parent, index, index - 1)} title="上移">↑</button>
           <button type="button" disabled={index === siblings(parent).length - 1} onClick={() => move(parent, index, index + 1)} title="下移">↓</button>
@@ -284,7 +331,7 @@ export default function MenuEditorView() {
           <div className="zc-table-scroll">
             <table className="me-table">
               <thead>
-                <tr><th>名称</th><th>页面</th><th>操作</th></tr>
+                <tr><th>名称</th><th>链接</th><th>操作</th></tr>
               </thead>
               <tbody>{rows}</tbody>
             </table>
@@ -304,14 +351,49 @@ export default function MenuEditorView() {
               <input autoFocus value={modal.label} onChange={(e) => setModal({ ...modal, label: e.target.value })} />
             </label>
             <label className="me-field">
-              <span>内部页面</span>
-              <select value={modal.pageId ?? ''} onChange={(e) => setModal({ ...modal, pageId: e.target.value })}>
-                <option value="">选择页面…</option>
-                {pages.map((p) => (
-                  <option key={p.id} value={String(p.id)}>{p.title}（{p.route}）</option>
-                ))}
+              <span>链接类型</span>
+              <select
+                value={modal.linkType}
+                onChange={(e) => setModal({ ...modal, linkType: e.target.value as LinkType })}
+              >
+                <option value="page">内部页面</option>
+                <option value="caseIndex">案例汇总（/blog/）</option>
+                <option value="caseCategory">案例分类</option>
+                <option value="external">外链</option>
               </select>
             </label>
+            {modal.linkType === 'page' ? (
+              <label className="me-field">
+                <span>内部页面</span>
+                <select value={modal.pageId ?? ''} onChange={(e) => setModal({ ...modal, pageId: e.target.value })}>
+                  <option value="">选择页面…</option>
+                  {pages.map((p) => (
+                    <option key={p.id} value={String(p.id)}>{p.title}（{p.route}）</option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
+            {modal.linkType === 'caseCategory' ? (
+              <label className="me-field">
+                <span>案例分类</span>
+                <select value={modal.categoryId ?? ''} onChange={(e) => setModal({ ...modal, categoryId: e.target.value })}>
+                  <option value="">选择分类…</option>
+                  {categories.map((c) => (
+                    <option key={c.id} value={String(c.id)}>{c.title}（/blog/{c.slug}/）</option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
+            {modal.linkType === 'external' ? (
+              <label className="me-field">
+                <span>外链地址</span>
+                <input
+                  value={modal.externalUrl ?? ''}
+                  placeholder="https://"
+                  onChange={(e) => setModal({ ...modal, externalUrl: e.target.value })}
+                />
+              </label>
+            ) : null}
             <div className="me-modal-actions">
               <button type="button" className="zc-btn secondary" onClick={() => setModal(null)}>取消</button>
               <button type="button" className="zc-btn" onClick={saveModal}>确定</button>

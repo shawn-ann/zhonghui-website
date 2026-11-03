@@ -1,8 +1,14 @@
 import { hrefOf } from './assets'
 import type { MenuNode, SiteSettings } from '../render/types'
 
+function isActiveLink(link: string, activeRoute: string): boolean {
+  if (link === activeRoute) return true
+  if (link === '/blog/') return activeRoute.startsWith('/blog/page/')
+  return link !== '/' && activeRoute.startsWith(link)
+}
+
 function NavItem({ item, activeRoute }: { item: MenuNode; activeRoute: string }) {
-  const active = item.link === activeRoute
+  const active = isActiveLink(item.link, activeRoute)
   return (
     <li>
       <a href={hrefOf(item.link)} {...(active ? { className: 'active' } : {})}>

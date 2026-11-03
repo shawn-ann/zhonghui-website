@@ -6525,11 +6525,17 @@ export interface Menu {
   items?:
     | {
         label: string;
-        page: number | Page;
+        linkType?: ('page' | 'caseIndex' | 'caseCategory' | 'external') | null;
+        page?: (number | null) | Page;
+        caseCategory?: (number | null) | CaseCategory;
+        externalUrl?: string | null;
         children?:
           | {
               label: string;
-              page: number | Page;
+              linkType?: ('page' | 'caseIndex' | 'caseCategory' | 'external') | null;
+              page?: (number | null) | Page;
+              caseCategory?: (number | null) | CaseCategory;
+              externalUrl?: string | null;
               id?: string | null;
             }[]
           | null;
@@ -6592,12 +6598,18 @@ export interface MenuSelect<T extends boolean = true> {
     | T
     | {
         label?: T;
+        linkType?: T;
         page?: T;
+        caseCategory?: T;
+        externalUrl?: T;
         children?:
           | T
           | {
               label?: T;
+              linkType?: T;
               page?: T;
+              caseCategory?: T;
+              externalUrl?: T;
               id?: T;
             };
         id?: T;

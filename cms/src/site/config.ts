@@ -33,15 +33,25 @@ function pageRoute(page: unknown, routes?: Map<string, string>): string | undefi
 function resolveMenu(
   items: any,
   routes?: Map<string, string>,
+  categoryRoutes?: Map<string, string>,
 ): MenuNode[] {
   if (!Array.isArray(items)) return []
   return items.flatMap((item) => {
-    const link = pageRoute(item?.page, routes)
+    const type = item?.linkType || 'page'
+    let link: string | undefined
+    if (type === 'caseIndex') link = '/blog/'
+    else if (type === 'caseCategory') {
+      const category = item?.caseCategory
+      const id = category && typeof category === 'object' ? category.id : category
+      link = id != null ? categoryRoutes?.get(String(id)) : undefined
+    } else if (type === 'external') link = item?.externalUrl || undefined
+    else link = pageRoute(item?.page, routes)
+
     if (!link) return []
     return [{
       label: String(item?.label ?? ''),
       link,
-      children: resolveMenu(item?.children, routes),
+      children: resolveMenu(item?.children, routes, categoryRoutes),
     }]
   })
 }
@@ -50,6 +60,7 @@ export function buildSiteConfig(
   menuRaw: any,
   settingsRaw: any,
   routes?: Map<string, string>,
+  categoryRoutes?: Map<string, string>,
 ): SiteConfig {
   const raw = settingsRaw || {}
   const contactRoute = pageRoute(raw.footerContactPage, routes)
@@ -71,7 +82,7 @@ export function buildSiteConfig(
     langOtherUrl: raw.langOtherUrl || DEFAULT_SETTINGS.langOtherUrl,
   }
   return {
-    menu: resolveMenu(menuRaw?.items, routes),
+    menu: resolveMenu(menuRaw?.items, routes, categoryRoutes),
     settings,
   }
 }

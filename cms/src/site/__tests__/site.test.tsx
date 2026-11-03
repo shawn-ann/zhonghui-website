@@ -101,6 +101,15 @@ describe('site blocks', () => {
     expect(html).toContain('--icon-size:44px')
   })
 
+  it('keeps a category menu item active on case detail routes', () => {
+    const nav = render(<SiteNav
+      activeRoute="/blog/study-case/xiaocao/"
+      menu={[{ label: '案例分享', link: '/blog/study-case/' }]}
+      settings={{ ...DEFAULT_SETTINGS, footerQr: [] }}
+    />)
+    expect(nav).toContain('class="active"')
+  })
+
   it('renders the qr variant without the white card background', () => {
     const html = render(blockNode({
       type: 'imageText', _id: 'qr', media: '/test.png', title: '公众号', variant: 'qr', imageFit: 'contain',
