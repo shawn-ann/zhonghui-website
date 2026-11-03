@@ -40,6 +40,21 @@ describe('gridLayout', () => {
     expect((rows.children[0] as GridRowBlock).children).toHaveLength(6)
   })
 
+  it('flattens existing rows when switching to rows again', () => {
+    const grid: GridBlock = {
+      type: 'grid', _id: 'g', layout: 'rows', columns: 3,
+      children: [{
+        type: 'gridRow', _id: 'r', columns: 3,
+        children: [cell([text('a')]), cell(), cell([text('b')])],
+      }],
+    }
+    const rows = convertGridLayout(grid, 'rows')
+    expect(rows.children).toHaveLength(1)
+    const cells = (rows.children[0] as GridRowBlock).children
+    expect((cells[0] as GridCellBlock).children.map((c) => c._id)).toEqual(['a'])
+    expect((cells[1] as GridCellBlock).children.map((c) => c._id)).toEqual(['b'])
+  })
+
   it('does not shrink a row past cells that contain content', () => {
     const row: GridRowBlock = {
       type: 'gridRow', _id: 'r', columns: 6,

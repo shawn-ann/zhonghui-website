@@ -25,7 +25,10 @@ function newRow(columns: number, gap: string | undefined, ratio: string | undefi
 export function convertGridLayout(grid: GridBlock, layout: 'flow' | 'rows'): GridBlock {
   if (layout === 'rows') {
     const columns = clampColumns(grid.columns)
-    const content = (grid.children || []).filter((child) => child.type !== 'gridRow')
+    const content = (grid.children || []).flatMap((child) => {
+      if (child.type !== 'gridRow') return [child]
+      return (child.children || []).flatMap((cell) => (cell.type === 'gridCell' ? cell.children || [] : []))
+    })
     if (content.length === 0) {
       return { ...grid, layout: 'rows', children: [newRow(columns, grid.gap, grid.columnRatio, Array.from({ length: columns }, emptyCell))] }
     }

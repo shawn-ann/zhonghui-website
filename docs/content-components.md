@@ -26,7 +26,7 @@
 | 类型 | 显示名 | 作用 |
 |---|---|---|
 | `section` | 分栏 | 页面区块外壳，负责背景、垂直内边距、子项间距 |
-| `grid` | 网格 | 2–4 列二维布局，负责列宽、列间距、垂直对齐 |
+| `grid` | 网格 | 1–6 列二维布局，负责列宽、列间距、垂直对齐；支持流式与按行 |
 | `hscroll` | 横向滚动 | 横向拖动的卡片轨道，内部只放图文卡片 |
 | `stack` | 纵向容器 | 纵向连续排列多个内容组件，可带背景/内边距 |
 
@@ -72,6 +72,8 @@ infoList, iconList, hscroll, stack
 ```text
 heading, text, image, imageText, iconCard, button, stack
 ```
+
+按行布局时子组件为 `gridRow`，`gridRow` 内为 `gridCell`。
 
 - `columns` 范围 1–6，默认 3。
 - `layout`：`flow`（默认，自动换行）/ `rows`（按行，显式格子）。

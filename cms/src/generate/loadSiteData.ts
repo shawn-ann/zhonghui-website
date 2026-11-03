@@ -1,5 +1,6 @@
 import { lexicalToHtml } from '../render/richText'
-import { clampColumns, normalizeColumnRatio } from '../render/columnRatio'
+import { normalizeColumnRatio } from '../render/columnRatio'
+import { effectiveRowColumns } from '../render/gridRows'
 import type { Block, PageDoc, SiteData } from '../render/types'
 import { buildSiteConfig } from '../site/config'
 
@@ -148,7 +149,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
       }
     }
     case 'gridRow': {
-      const columns = clampColumns(raw.columns)
+      const columns = effectiveRowColumns(raw)
       return {
         type: 'gridRow',
         columns,

@@ -8,6 +8,7 @@ import type {
 import { bgCss, bgImageCss } from './bg'
 import { lexicalToHtml } from '../render/richText'
 import { ratioToGridTemplate } from '../render/columnRatio'
+import { effectiveRowColumns } from '../render/gridRows'
 import LexicalContent from './LexicalContent'
 
 const PAD: Record<string, number> = { none: 0, sm: 32, md: 72, lg: 96, xl: 128, '2xl': 160 }
@@ -93,7 +94,7 @@ export function SectionView({ b, editor = false }: { b: SectionBlock; editor?: b
 }
 
 export function GridRowView({ b, editor = false }: { b: GridRowBlock; editor?: boolean }) {
-  const cols = Math.min(6, Math.max(1, b.columns || 3))
+  const cols = effectiveRowColumns(b)
   const gap = b.gap && /^(sm|md|lg)$/.test(b.gap) ? b.gap : 'md'
   const ratio = ratioToGridTemplate(b.columnRatio, cols)
   const style = ratio ? { gridTemplateColumns: ratio } : undefined
@@ -143,7 +144,8 @@ export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean
   const rows = children.filter((c) => c.type === 'gridRow')
 
   // 按行布局：每行独立网格，空 gridCell 保留固定轨道。
-  if (b.layout === 'rows' && rows.length) {
+  // 数据混合时退回流式，避免直接子块被静默丢弃。
+  if (b.layout === 'rows' && rows.length && rows.length === children.length) {
     return (
       <div className="container" data-bid={b._id} style={style}>
         <div className={`grid-rows grid-gap-${gap}`}>

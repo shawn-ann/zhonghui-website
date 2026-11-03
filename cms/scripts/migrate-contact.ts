@@ -1,3 +1,5 @@
+// 注意：gridRow / gridCell 是新增区块类型。生产环境需先完成 Payload schema 同步
+// （部署时的 migrate/push 流程），再执行本脚本，否则新块可能无法写入。
 import 'dotenv/config'
 import fs from 'fs'
 import path from 'path'

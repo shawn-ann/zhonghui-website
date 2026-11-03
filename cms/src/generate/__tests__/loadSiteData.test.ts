@@ -79,6 +79,18 @@ describe('mapBlock', () => {
     expect(grid.children[0]).toMatchObject({ type: 'gridRow' })
   })
 
+  it('expands row columns to cover populated cells', () => {
+    const row = mapBlock({
+      blockType: 'gridRow',
+      columns: 3,
+      children: Array.from({ length: 5 }, (_, i) => ({
+        blockType: 'gridCell',
+        children: [{ blockType: 'text', body: String(i) }],
+      })),
+    }, resolve) as any
+    expect(row.columns).toBe(5)
+  })
+
   it('resolves external, internal and legacy links', () => {
     const external = mapBlock({
       blockType: 'imageText', media: { url: '/a.jpg' },

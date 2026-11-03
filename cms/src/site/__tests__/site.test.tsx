@@ -111,6 +111,45 @@ describe('site blocks', () => {
     expect(html).toContain('二维码 B')
   })
 
+  it('renders every populated row cell even when columns is understated', () => {
+    const cells: any[] = Array.from({ length: 5 }, (_, i) => ({
+      type: 'gridCell', _id: `c${i}`, children: [{ type: 'text', _id: `t${i}`, body: String(i) }],
+    }))
+    const html = render(blockNode({
+      type: 'grid', _id: 'g', layout: 'rows', columns: 3,
+      children: [{ type: 'gridRow', _id: 'r', columns: 3, children: cells }],
+    })!)
+    expect((html.match(/class="grid-cell/g) || []).length).toBe(5)
+    expect(html).toContain('>4<')
+  })
+
+  it('falls back to flow when rows mode has no rows', () => {
+    const html = render(blockNode({
+      type: 'grid', _id: 'g', layout: 'rows', columns: 3,
+      children: [{ type: 'text', _id: 't', body: 'direct' }],
+    })!)
+    expect(html).not.toContain('grid-rows')
+    expect(html).toContain('direct')
+  })
+
+  it('keeps mixed row and direct children visible', () => {
+    const html = render(blockNode({
+      type: 'grid', _id: 'g', layout: 'rows', columns: 3,
+      children: [
+        { type: 'gridRow', _id: 'r', columns: 3, children: [] },
+        { type: 'text', _id: 't', body: 'mixed' },
+      ],
+    })!)
+    expect(html).toContain('mixed')
+    expect(html).not.toContain('grid-rows')
+  })
+
+  it('marks empty cells as selectable in the editor', () => {
+    const html = render(blockNode({ type: 'gridCell', _id: 'c1', children: [] }, true)!)
+    expect(html).toContain('data-bid="c1"')
+    expect(html).toContain('ed-grid-empty-cell')
+  })
+
   it('keeps legacy flow grids when layout is absent', () => {
     const legacy = render(blockNode({
       type: 'grid', _id: 'g0', columns: 3, children: [{ type: 'text', _id: 't0', body: 'x' }],
