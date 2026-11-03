@@ -173,6 +173,8 @@ const blocks: any[] = [
         title,
         desc,
         variant: 'compact',
+        iconFrame: 'none',
+        iconSize: 44,
       })),
     },
   ], { bgColor: '#FFF1F6' }),

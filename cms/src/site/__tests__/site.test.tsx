@@ -92,6 +92,15 @@ describe('site blocks', () => {
     expect(cover).toContain('object-fit:cover')
   })
 
+  it('renders icon cards without a frame and with a custom icon size', () => {
+    const html = render(blockNode({
+      type: 'iconCard', _id: 'ic', icon: '/icon.png', title: '知乎',
+      variant: 'compact', iconFrame: 'none', iconSize: 44,
+    })!)
+    expect(html).toContain('is-icon-plain')
+    expect(html).toContain('--icon-size:44px')
+  })
+
   it('renders the qr variant without the white card background', () => {
     const html = render(blockNode({
       type: 'imageText', _id: 'qr', media: '/test.png', title: '公众号', variant: 'qr', imageFit: 'contain',

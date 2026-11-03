@@ -438,6 +438,11 @@ export interface Page {
                                  * 图标颜色，如 #E60039
                                  */
                                 iconColor?: string | null;
+                                iconFrame?: ('circle' | 'none') | null;
+                                /**
+                                 * 图标尺寸(px)，留空沿用变体默认值
+                                 */
+                                iconSize?: number | null;
                                 variant?: ('default' | 'compact') | null;
                                 id?: string | null;
                                 blockName?: string | null;
@@ -598,6 +603,11 @@ export interface Page {
                                            * 图标颜色，如 #E60039
                                            */
                                           iconColor?: string | null;
+                                          iconFrame?: ('circle' | 'none') | null;
+                                          /**
+                                           * 图标尺寸(px)，留空沿用变体默认值
+                                           */
+                                          iconSize?: number | null;
                                           variant?: ('default' | 'compact') | null;
                                           id?: string | null;
                                           blockName?: string | null;
@@ -856,6 +866,11 @@ export interface Page {
                                                  * 图标颜色，如 #E60039
                                                  */
                                                 iconColor?: string | null;
+                                                iconFrame?: ('circle' | 'none') | null;
+                                                /**
+                                                 * 图标尺寸(px)，留空沿用变体默认值
+                                                 */
+                                                iconSize?: number | null;
                                                 variant?: ('default' | 'compact') | null;
                                                 id?: string | null;
                                                 blockName?: string | null;
@@ -1017,6 +1032,11 @@ export interface Page {
                                                            * 图标颜色，如 #E60039
                                                            */
                                                           iconColor?: string | null;
+                                                          iconFrame?: ('circle' | 'none') | null;
+                                                          /**
+                                                           * 图标尺寸(px)，留空沿用变体默认值
+                                                           */
+                                                          iconSize?: number | null;
                                                           variant?: ('default' | 'compact') | null;
                                                           id?: string | null;
                                                           blockName?: string | null;
@@ -1293,6 +1313,11 @@ export interface Page {
                                            * 图标颜色，如 #E60039
                                            */
                                           iconColor?: string | null;
+                                          iconFrame?: ('circle' | 'none') | null;
+                                          /**
+                                           * 图标尺寸(px)，留空沿用变体默认值
+                                           */
+                                          iconSize?: number | null;
                                           variant?: ('default' | 'compact') | null;
                                           id?: string | null;
                                           blockName?: string | null;
@@ -1453,6 +1478,11 @@ export interface Page {
                                                      * 图标颜色，如 #E60039
                                                      */
                                                     iconColor?: string | null;
+                                                    iconFrame?: ('circle' | 'none') | null;
+                                                    /**
+                                                     * 图标尺寸(px)，留空沿用变体默认值
+                                                     */
+                                                    iconSize?: number | null;
                                                     variant?: ('default' | 'compact') | null;
                                                     id?: string | null;
                                                     blockName?: string | null;
@@ -1875,6 +1905,11 @@ export interface Page {
                                  * 图标颜色，如 #E60039
                                  */
                                 iconColor?: string | null;
+                                iconFrame?: ('circle' | 'none') | null;
+                                /**
+                                 * 图标尺寸(px)，留空沿用变体默认值
+                                 */
+                                iconSize?: number | null;
                                 variant?: ('default' | 'compact') | null;
                                 id?: string | null;
                                 blockName?: string | null;
@@ -2159,6 +2194,11 @@ export interface Page {
                        * 图标颜色，如 #E60039
                        */
                       iconColor?: string | null;
+                      iconFrame?: ('circle' | 'none') | null;
+                      /**
+                       * 图标尺寸(px)，留空沿用变体默认值
+                       */
+                      iconSize?: number | null;
                       variant?: ('default' | 'compact') | null;
                       id?: string | null;
                       blockName?: string | null;
@@ -2319,6 +2359,11 @@ export interface Page {
                                  * 图标颜色，如 #E60039
                                  */
                                 iconColor?: string | null;
+                                iconFrame?: ('circle' | 'none') | null;
+                                /**
+                                 * 图标尺寸(px)，留空沿用变体默认值
+                                 */
+                                iconSize?: number | null;
                                 variant?: ('default' | 'compact') | null;
                                 id?: string | null;
                                 blockName?: string | null;
@@ -2577,6 +2622,11 @@ export interface Page {
                                        * 图标颜色，如 #E60039
                                        */
                                       iconColor?: string | null;
+                                      iconFrame?: ('circle' | 'none') | null;
+                                      /**
+                                       * 图标尺寸(px)，留空沿用变体默认值
+                                       */
+                                      iconSize?: number | null;
                                       variant?: ('default' | 'compact') | null;
                                       id?: string | null;
                                       blockName?: string | null;
@@ -2737,6 +2787,11 @@ export interface Page {
                                                  * 图标颜色，如 #E60039
                                                  */
                                                 iconColor?: string | null;
+                                                iconFrame?: ('circle' | 'none') | null;
+                                                /**
+                                                 * 图标尺寸(px)，留空沿用变体默认值
+                                                 */
+                                                iconSize?: number | null;
                                                 variant?: ('default' | 'compact') | null;
                                                 id?: string | null;
                                                 blockName?: string | null;
@@ -3007,6 +3062,11 @@ export interface Page {
                                  * 图标颜色，如 #E60039
                                  */
                                 iconColor?: string | null;
+                                iconFrame?: ('circle' | 'none') | null;
+                                /**
+                                 * 图标尺寸(px)，留空沿用变体默认值
+                                 */
+                                iconSize?: number | null;
                                 variant?: ('default' | 'compact') | null;
                                 id?: string | null;
                                 blockName?: string | null;
@@ -3167,6 +3227,11 @@ export interface Page {
                                            * 图标颜色，如 #E60039
                                            */
                                           iconColor?: string | null;
+                                          iconFrame?: ('circle' | 'none') | null;
+                                          /**
+                                           * 图标尺寸(px)，留空沿用变体默认值
+                                           */
+                                          iconSize?: number | null;
                                           variant?: ('default' | 'compact') | null;
                                           id?: string | null;
                                           blockName?: string | null;
@@ -3501,6 +3566,11 @@ export interface Page {
              * 图标颜色，如 #E60039
              */
             iconColor?: string | null;
+            iconFrame?: ('circle' | 'none') | null;
+            /**
+             * 图标尺寸(px)，留空沿用变体默认值
+             */
+            iconSize?: number | null;
             variant?: ('default' | 'compact') | null;
             id?: string | null;
             blockName?: string | null;
@@ -3738,6 +3808,11 @@ export interface Page {
                        * 图标颜色，如 #E60039
                        */
                       iconColor?: string | null;
+                      iconFrame?: ('circle' | 'none') | null;
+                      /**
+                       * 图标尺寸(px)，留空沿用变体默认值
+                       */
+                      iconSize?: number | null;
                       variant?: ('default' | 'compact') | null;
                       id?: string | null;
                       blockName?: string | null;
@@ -4102,6 +4177,8 @@ export interface PagesSelect<T extends boolean = true> {
                                       bgImage?: T;
                                       bgColor?: T;
                                       iconColor?: T;
+                                      iconFrame?: T;
+                                      iconSize?: T;
                                       variant?: T;
                                       id?: T;
                                       blockName?: T;
@@ -4201,6 +4278,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                   bgImage?: T;
                                                   bgColor?: T;
                                                   iconColor?: T;
+                                                  iconFrame?: T;
+                                                  iconSize?: T;
                                                   variant?: T;
                                                   id?: T;
                                                   blockName?: T;
@@ -4365,6 +4444,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                               bgImage?: T;
                                                               bgColor?: T;
                                                               iconColor?: T;
+                                                              iconFrame?: T;
+                                                              iconSize?: T;
                                                               variant?: T;
                                                               id?: T;
                                                               blockName?: T;
@@ -4464,6 +4545,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                                           bgImage?: T;
                                                                           bgColor?: T;
                                                                           iconColor?: T;
+                                                                          iconFrame?: T;
+                                                                          iconSize?: T;
                                                                           variant?: T;
                                                                           id?: T;
                                                                           blockName?: T;
@@ -4632,6 +4715,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                   bgImage?: T;
                                                   bgColor?: T;
                                                   iconColor?: T;
+                                                  iconFrame?: T;
+                                                  iconSize?: T;
                                                   variant?: T;
                                                   id?: T;
                                                   blockName?: T;
@@ -4731,6 +4816,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                               bgImage?: T;
                                                               bgColor?: T;
                                                               iconColor?: T;
+                                                              iconFrame?: T;
+                                                              iconSize?: T;
                                                               variant?: T;
                                                               id?: T;
                                                               blockName?: T;
@@ -5011,6 +5098,8 @@ export interface PagesSelect<T extends boolean = true> {
                                       bgImage?: T;
                                       bgColor?: T;
                                       iconColor?: T;
+                                      iconFrame?: T;
+                                      iconSize?: T;
                                       variant?: T;
                                       id?: T;
                                       blockName?: T;
@@ -5187,6 +5276,8 @@ export interface PagesSelect<T extends boolean = true> {
                           bgImage?: T;
                           bgColor?: T;
                           iconColor?: T;
+                          iconFrame?: T;
+                          iconSize?: T;
                           variant?: T;
                           id?: T;
                           blockName?: T;
@@ -5286,6 +5377,8 @@ export interface PagesSelect<T extends boolean = true> {
                                       bgImage?: T;
                                       bgColor?: T;
                                       iconColor?: T;
+                                      iconFrame?: T;
+                                      iconSize?: T;
                                       variant?: T;
                                       id?: T;
                                       blockName?: T;
@@ -5450,6 +5543,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                   bgImage?: T;
                                                   bgColor?: T;
                                                   iconColor?: T;
+                                                  iconFrame?: T;
+                                                  iconSize?: T;
                                                   variant?: T;
                                                   id?: T;
                                                   blockName?: T;
@@ -5549,6 +5644,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                               bgImage?: T;
                                                               bgColor?: T;
                                                               iconColor?: T;
+                                                              iconFrame?: T;
+                                                              iconSize?: T;
                                                               variant?: T;
                                                               id?: T;
                                                               blockName?: T;
@@ -5717,6 +5814,8 @@ export interface PagesSelect<T extends boolean = true> {
                                       bgImage?: T;
                                       bgColor?: T;
                                       iconColor?: T;
+                                      iconFrame?: T;
+                                      iconSize?: T;
                                       variant?: T;
                                       id?: T;
                                       blockName?: T;
@@ -5816,6 +5915,8 @@ export interface PagesSelect<T extends boolean = true> {
                                                   bgImage?: T;
                                                   bgColor?: T;
                                                   iconColor?: T;
+                                                  iconFrame?: T;
+                                                  iconSize?: T;
                                                   variant?: T;
                                                   id?: T;
                                                   blockName?: T;
@@ -6023,6 +6124,8 @@ export interface PagesSelect<T extends boolean = true> {
               bgImage?: T;
               bgColor?: T;
               iconColor?: T;
+              iconFrame?: T;
+              iconSize?: T;
               variant?: T;
               id?: T;
               blockName?: T;
@@ -6188,6 +6291,8 @@ export interface PagesSelect<T extends boolean = true> {
                           bgImage?: T;
                           bgColor?: T;
                           iconColor?: T;
+                          iconFrame?: T;
+                          iconSize?: T;
                           variant?: T;
                           id?: T;
                           blockName?: T;

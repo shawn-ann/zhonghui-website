@@ -133,6 +133,8 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.bgImage !== undefined) out.bgImage = b.bgImage
       if (b.bgColor !== undefined) out.bgColor = b.bgColor
       if (b.iconColor !== undefined) out.iconColor = b.iconColor
+      if (b.iconFrame !== undefined) out.iconFrame = b.iconFrame
+      if (b.iconSize !== undefined) out.iconSize = b.iconSize
       if (b.variant !== undefined) out.variant = b.variant
       break
     case 'button':

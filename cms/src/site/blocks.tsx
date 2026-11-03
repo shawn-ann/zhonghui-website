@@ -334,12 +334,18 @@ export function IconCardView({ b, editor = false }: { b: IconCardBlock; editor?:
   const href = b.link ? safeUrl(b.link) : ''
   const card = (
     <div
-      className={`adv-card${b.variant === 'compact' ? ' is-compact' : ''}`}
+      className={`adv-card${b.variant === 'compact' ? ' is-compact' : ''}${b.iconFrame === 'none' ? ' is-icon-plain' : ''}`}
       data-bid={b._id}
       style={{ ...(b.bgColor ? { backgroundColor: b.bgColor } : {}), ...bgImageCss(b.bgImage) }}
     >
       {icon ? (
-        <div className="icon" style={b.iconColor ? { borderColor: b.iconColor } : undefined}>
+        <div
+          className="icon"
+          style={{
+            ...(b.iconColor ? { borderColor: b.iconColor } : {}),
+            ...(b.iconSize ? { '--icon-size': `${b.iconSize}px` } : {}),
+          } as CSSProperties}
+        >
           {b.iconColor ? (
             <span
               className="icon-glyph"

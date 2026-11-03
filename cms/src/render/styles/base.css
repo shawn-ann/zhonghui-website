@@ -155,9 +155,9 @@ header {
   background: transparent; border: 2px solid var(--accent);
   display: flex; align-items: center; justify-content: center;
 }
-.adv-card .icon img { width: 60px; height: 60px; display: block; }
+.adv-card .icon img { width: var(--icon-size, 60px); height: var(--icon-size, 60px); display: block; }
 .adv-card .icon-glyph {
-  width: 60px; height: 60px; display: block;
+  width: var(--icon-size, 60px); height: var(--icon-size, 60px); display: block;
   -webkit-mask-size: contain; mask-size: contain;
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-position: center; mask-position: center;
@@ -166,9 +166,10 @@ header {
 .adv-card p { font-size: 14px; color: var(--sub-color, var(--gray-blue)); margin-top: 10px; line-height: 1.8; }
 .adv-card.is-compact { padding: 18px 10px; }
 .adv-card.is-compact .icon { width: 56px; height: 56px; margin-bottom: 10px; border-width: 1px; }
-.adv-card.is-compact .icon img, .adv-card.is-compact .icon-glyph { width: 30px; height: 30px; }
+.adv-card.is-compact .icon img, .adv-card.is-compact .icon-glyph { width: var(--icon-size, 30px); height: var(--icon-size, 30px); }
 .adv-card.is-compact h3 { font-size: 15px; }
 .adv-card.is-compact p { font-size: 12px; margin-top: 5px; line-height: 1.55; }
+.adv-card.is-icon-plain .icon { border: 0; background: transparent; }
 
 /* ===== 中惠印记：Swiper 3D 封面流（参照 chinaaupairs.com） ===== */
 .memory-slider { position: relative; overflow: hidden; }

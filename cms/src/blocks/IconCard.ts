@@ -15,6 +15,16 @@ export const IconCardBlock: Block = {
     { name: 'bgColor', type: 'text', admin: { description: '卡片背景颜色，如 #FFF1F6' } },
     { name: 'iconColor', type: 'text', admin: { description: '图标颜色，如 #E60039' } },
     {
+      name: 'iconFrame',
+      type: 'select',
+      defaultValue: 'circle',
+      options: [
+        { label: '圆形边框', value: 'circle' },
+        { label: '无边框', value: 'none' },
+      ],
+    },
+    { name: 'iconSize', type: 'number', min: 16, max: 96, admin: { description: '图标尺寸(px)，留空沿用变体默认值' } },
+    {
       name: 'variant',
       type: 'select',
       defaultValue: 'default',

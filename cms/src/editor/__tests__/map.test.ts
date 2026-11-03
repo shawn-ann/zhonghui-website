@@ -106,6 +106,16 @@ describe('editorToPayloadBlocks', () => {
     expect(back[0]).toMatchObject({ blockType: 'section', paddingY: 'md' })
   })
 
+  it('round-trips icon frame and size settings', () => {
+    const raw = { id: 1, title: 't', route: '/', blocks: [
+      { id: 'ic', blockType: 'iconCard', icon: 140, title: '知乎', iconFrame: 'none', iconSize: 44 },
+    ] }
+    const ed = docToEditorDoc(raw)
+    expect(ed.blocks[0]).toMatchObject({ type: 'iconCard', iconFrame: 'none', iconSize: 44 })
+    const back = editorToPayloadBlocks(ed.blocks, new Map())
+    expect(back[0]).toMatchObject({ blockType: 'iconCard', iconFrame: 'none', iconSize: 44 })
+  })
+
   it('round-trips the imageText qr variant', () => {
     const raw = { id: 1, title: 't', route: '/', blocks: [
       { id: 'it', blockType: 'imageText', media: 140, title: '公众号', variant: 'qr', imageFit: 'contain' },

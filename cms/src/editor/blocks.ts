@@ -58,6 +58,8 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   iconCard: { type: 'iconCard', label: '图标卡片', defaults: () => ({ type: 'iconCard', icon: '' }), fields: [
     { key: 'icon', label: '图标', control: 'media' },
     { key: 'iconColor', label: '图标颜色', control: 'color' },
+    { key: 'iconFrame', label: '图标边框', control: 'select', options: [{ label: '圆形边框', value: 'circle' }, { label: '无边框', value: 'none' }] },
+    { key: 'iconSize', label: '图标尺寸(px)', control: 'number' },
     { key: 'title', label: '标题', control: 'text' },
     { key: 'desc', label: '描述', control: 'textarea' },
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },

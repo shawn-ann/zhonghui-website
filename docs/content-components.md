@@ -290,7 +290,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 ### 5.10 图标卡片 `iconCard`
 
-`icon`、`iconColor`、`title`、`desc`、`titleColor`、`descColor`、`bgImage`、`bgColor`、`variant`、`linkType`/`internalPage`/`externalUrl`。`variant` 支持 `default` / `compact`，`compact` 用于 5 列社交矩阵等紧凑场景。
+`icon`、`iconColor`、`iconFrame`、`iconSize`、`title`、`desc`、`titleColor`、`descColor`、`bgImage`、`bgColor`、`variant`、`linkType`/`internalPage`/`externalUrl`。`variant` 支持 `default` / `compact`，`compact` 用于 5 列社交矩阵等紧凑场景。`iconFrame` 支持 `circle`（默认圆形边框）/ `none`（无边框）；`iconSize` 为图标像素尺寸，留空时默认 60px、compact 30px。
 
 ### 5.11 信息列表 `infoList`
 
@@ -417,7 +417,7 @@ section(bgImage=yinji)
     richtext(官网/地址/电话/邮箱，共 5 行)
 section(bgColor=light-pink)
   heading(中惠官方账号)
-  grid(5列, iconCard compact ×5)
+  grid(5列, iconCard compact ×5, iconFrame=none, iconSize=44)
 section(bgImage=yinji)
   heading(扫码咨询, 白字)
   grid(layout=rows, 6列)

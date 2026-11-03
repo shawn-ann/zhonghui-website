@@ -158,6 +158,8 @@ export interface IconCardBlock extends BlockBase {
   bgColor?: string
   /** 图标颜色；设置后以 mask 方式给 SVG 上色 */
   iconColor?: string
+  iconFrame?: 'circle' | 'none'
+  iconSize?: number
   variant?: 'default' | 'compact'
 }
 
