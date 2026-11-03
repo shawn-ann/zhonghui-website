@@ -119,6 +119,16 @@ describe('site blocks', () => {
     expect(legacy).toContain('grid-cols-3')
   })
 
+  it('wraps flow grids into multiple rows by column count', () => {
+    const grid = (columns: number, count: number) => render(blockNode({
+      type: 'grid', _id: `g${columns}-${count}`, columns,
+      children: Array.from({ length: count }, (_, i) => ({ type: 'text' as const, _id: `t${i}`, body: String(i) })),
+    })!)
+    expect((grid(3, 6).match(/class="grid-cell/g) || []).length).toBe(6)
+    expect((grid(3, 9).match(/class="grid-cell/g) || []).length).toBe(9)
+    expect((grid(4, 8).match(/class="grid-cell/g) || []).length).toBe(8)
+  })
+
   it('renders editor rich text from live content instead of stale html', () => {
     const content = {
       root: {

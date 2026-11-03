@@ -73,10 +73,31 @@ infoList, iconList, hscroll, stack
 heading, text, image, imageText, iconCard, button, stack
 ```
 
-- `columns` 范围 1–5，默认 3。
+- `columns` 范围 1–6，默认 3。
+- `layout`：`flow`（默认，自动换行）/ `rows`（按行，显式格子）。
 - `columnRatio` 使用正整数比例，段数必须等于列数，如 `1:1`、`1:2:1`；默认按列数生成等宽比例。
 - `alignItems`：`stretch`（默认）/ `start` / `center` / `end`。
 - 网格单元格内的视觉卡片由子组件自己负责，网格不设置卡片高度。
+
+#### 流式（`layout: flow`）
+
+子块按顺序自动换行：每行个数由 `columns` 决定。旧数据没有 `layout` 时一律按流式渲染，不需要迁移。
+
+#### 按行（`layout: rows`）
+
+子块为 `gridRow`，每行独立配置列数、间距和列宽比例；行内子块为 `gridCell`：
+
+```text
+grid(layout=rows)
+  gridRow(columns=6)
+    gridCell(children=[])            ← 空格子
+    gridCell(children=[imageText])   ← 有内容的格子
+```
+
+- 空格子保留固定的等宽轨道，用于把内容放到指定列。
+- `gridCell.children` 为空数组即空格子。
+- 移动端每行变为 1 列，空格子隐藏。
+- 行的列数改小时，不会删除末尾有内容的格子。
 
 ### 3.3 横向滚动 `hscroll`
 
@@ -198,13 +219,29 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
-| `columns` | number | 3 | 1–5 |
+| `layout` | select | `flow` | flow（自动换行）/ rows（显式格子） |
+| `columns` | number | 3 | 1–6 |
 | `gap` | select | `md` | sm/md/lg |
 | `columnRatio` | text | 按列数生成 | 正整数比例，段数=列数；如 `2:3`、`1:2:1` |
 | `alignItems` | select | `stretch` | stretch/start/center/end |
 | `bgImage` | text | 空 | 网格背景图 |
 | `bgColor` | text | 空 | 网格背景色 |
-| `children` | blocks | — | 见 3.2 |
+| `children` | blocks | — | 流式：内容组件；按行：`gridRow` |
+
+### 5.2.1 行 `gridRow`
+
+| 字段 | 类型 | 默认 | 说明 |
+|---|---|---|---|
+| `columns` | number | 3 | 1–6，本行列数 |
+| `gap` | select | `md` | sm/md/lg |
+| `columnRatio` | text | 按列数生成 | 正整数比例，段数=列数 |
+| `children` | blocks | — | 仅 `gridCell` |
+
+### 5.2.2 格子 `gridCell`
+
+| 字段 | 类型 | 默认 | 说明 |
+|---|---|---|---|
+| `children` | blocks | — | 空数组表示空格子 |
 
 ### 5.3 横向滚动 `hscroll`
 
@@ -247,7 +284,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 ### 5.9 图文卡片 `imageText`
 
-`media`、`title`、`subtitle`、`subtitleColor`、`desc`、`imageRatio`、`titleColor`、`descColor`、`linkType`/`internalPage`/`externalUrl`。历史 `padding` 保留渲染兼容。
+`media`、`title`、`subtitle`、`subtitleColor`、`desc`、`imageRatio`、`imageFit`、`titleColor`、`descColor`、`linkType`/`internalPage`/`externalUrl`。`imageFit` 支持 `cover`（默认，裁剪填充）/ `contain`（完整显示，二维码等场景使用）。历史 `padding` 保留渲染兼容。
 
 ### 5.10 图标卡片 `iconCard`
 
@@ -381,7 +418,12 @@ section(bgColor=light-pink)
   grid(5列, iconCard compact ×5)
 section(bgImage=yinji)
   heading(扫码咨询, 白字)
-  grid(2列, imageText 二维码 ×2)
+  grid(layout=rows, 6列)
+    gridRow(6列, ratio=1:1:1:1:1:1)
+      gridCell ×2 空格
+      gridCell(公众号二维码, imageFit=contain)
+      gridCell(咨询微信二维码, imageFit=contain)
+      gridCell ×2 空格
 section(bgColor=light-pink)
   heading(温馨提示)
   stack(白底, padding=32)
