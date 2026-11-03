@@ -4,6 +4,7 @@ import { DEFAULT_SITE_CONFIG } from './config'
 import { TopBlock } from './blocks'
 import { SiteNav } from './nav'
 import { SiteFooter } from './footer'
+import { CaseDetailView, CaseListView } from './cases'
 
 export interface SiteAssets {
   mode: 'external' | 'inline'
@@ -24,9 +25,13 @@ export function SiteBody({ page, site = DEFAULT_SITE_CONFIG, editor = false }: {
     <>
       <SiteNav activeRoute={page.route} menu={site.menu} settings={site.settings} />
       <main id="page">
-        {page.blocks.map((b, i) => (
-          <Fragment key={b._id ?? i}><TopBlock b={b} editor={editor} /></Fragment>
-        ))}
+        {page.template?.kind === 'caseList'
+          ? <CaseListView page={page} />
+          : page.template?.kind === 'caseDetail'
+            ? <CaseDetailView page={page} />
+            : page.blocks.map((b, i) => (
+                <Fragment key={b._id ?? i}><TopBlock b={b} editor={editor} /></Fragment>
+              ))}
       </main>
       <SiteFooter settings={site.settings} />
     </>
