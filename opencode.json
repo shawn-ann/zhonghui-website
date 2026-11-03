@@ -4,7 +4,10 @@
     "playwright": {
       "type": "local",
       "command": ["npx", "-y", "@playwright/mcp@latest", "--extension"],
-      "enabled": true
+      "enabled": true,
+      "environment": {
+        "PLAYWRIGHT_MCP_EXTENSION_TOKEN": "V5r858L0-oldmn84Gm-N4ctXE9P0rG3T3gH43v2YYnc"
+      }
     }
   }
 }
