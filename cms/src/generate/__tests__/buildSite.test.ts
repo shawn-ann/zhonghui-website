@@ -19,6 +19,19 @@ describe('generateSite', () => {
     expect(out.get('assets/main.js')).toContain('swiper')
     expect((out.get('assets/swiper-bundle.min.js') as Buffer).toString('utf-8')).toContain('Swiper')
   })
+  it('emits redirect pages and redirects.json without overwriting real pages', () => {
+    const out = generateSite({
+      ...data,
+      redirects: [
+        { from: '/blog/old/xiaocao/', to: '/blog/study-case/xiaocao/' },
+        { from: '/about/', to: '/blog/' },
+      ],
+    })
+    expect(out.get('blog/old/xiaocao/index.html')).toContain('http-equiv="refresh"')
+    expect(out.get('about/index.html')).toContain('about')
+    expect(JSON.parse(String(out.get('redirects.json')))).toHaveLength(2)
+  })
+
   it('rewrites media urls', () => {
     expect(rewriteMediaUrls('<img src="/api/media/file/a.jpg">')).toContain('/assets/media/a.jpg')
   })

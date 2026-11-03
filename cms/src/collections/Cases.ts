@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { validateCaseSlug } from './caseSlug'
+import { redirectCaseMove } from './redirectHooks'
 
 export const Cases: CollectionConfig = {
   slug: 'cases',
@@ -9,6 +10,18 @@ export const Cases: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'publishedAt', '_status'],
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc, previousDoc, operation, req }) => {
+        if (operation !== 'update' || !previousDoc) return doc
+        if (doc._status !== 'published' || previousDoc._status !== 'published') return doc
+        const previous = previousDoc as any
+        if (previous.slug === doc.slug && previous.category === doc.category) return doc
+        await redirectCaseMove(req.payload, previous.category, previous.slug, doc.category, doc.slug)
+        return doc
+      },
+    ],
   },
   fields: [
     { name: 'title', type: 'text', required: true, label: '标题' },

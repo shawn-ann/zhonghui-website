@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { validateCaseSlug } from './caseSlug'
+import { redirectCategorySlug } from './redirectHooks'
 
 const slugField = {
   name: 'slug',
@@ -20,6 +21,14 @@ export const CaseCategories: CollectionConfig = {
     defaultColumns: ['title', 'slug', 'order', 'pageSize'],
   },
   hooks: {
+    afterChange: [
+      async ({ doc, previousDoc, operation, req }) => {
+        if (operation !== 'update' || !previousDoc?.slug) return doc
+        if (previousDoc.slug === doc.slug) return doc
+        await redirectCategorySlug(req.payload, doc.id, previousDoc.slug, doc.slug, doc.pageSize)
+        return doc
+      },
+    ],
     beforeDelete: [
       async ({ id, req }) => {
         const linked = await req.payload.find({

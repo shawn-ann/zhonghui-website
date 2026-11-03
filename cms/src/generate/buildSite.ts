@@ -4,6 +4,7 @@ import { renderPage } from '../render/layout'
 import type { SiteData } from '../render/types'
 import { routeToFile } from './route'
 import { rewriteMediaUrls } from './media'
+import { normalizeRedirects, renderRedirectHtml } from './redirects'
 
 const cmsDir = process.cwd()
 const read = (p: string) => readFileSync(path.resolve(cmsDir, p), 'utf-8')
@@ -18,6 +19,16 @@ export function generateSite(data: SiteData): Map<string, string | Buffer> {
   for (const page of data.pages) {
     out.set(routeToFile(page.route), rewriteMediaUrls(renderPage(page, data.site)))
   }
+  const redirects = normalizeRedirects(data.redirects || [])
+  for (const redirect of redirects) {
+    try {
+      const file = routeToFile(redirect.from)
+      if (!out.has(file)) out.set(file, renderRedirectHtml(redirect.to))
+    } catch {
+      // 无效旧路径不阻塞整站生成
+    }
+  }
+  if (redirects.length) out.set('redirects.json', JSON.stringify(redirects, null, 2))
   out.set('assets/style.css', baseCss)
   out.set('assets/main.js', mainJs)
   out.set('assets/swiper-bundle.min.css', readStatic('swiper-bundle.min.css'))
