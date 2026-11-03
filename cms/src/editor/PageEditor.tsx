@@ -16,6 +16,7 @@ import { editorToPayloadBlocks } from './map'
 import type { EditorDoc, Block } from './types'
 import type { SiteConfig } from '../render/types'
 import { clampColumns, normalizeColumnRatio } from '../render/columnRatio'
+import { convertGridLayout, resizeRowCells } from './gridLayout'
 
 export default function PageEditor({ id }: { id: number | string }) {
   const [doc, setDoc] = useState<EditorDoc | null>(null)
@@ -259,7 +260,15 @@ export default function PageEditor({ id }: { id: number | string }) {
           onSelectChild={setSelectedId}
           onChange={(key, value) => {
             if (!selectedPath || !selected) return
-            if (selected.type === 'grid' && key === 'columns') {
+            if (selected.type === 'grid' && key === 'layout') {
+              update(updateAtPath(doc.blocks, selectedPath, convertGridLayout(selected, value === 'rows' ? 'rows' : 'flow')))
+              return
+            }
+            if (selected.type === 'gridRow' && key === 'columns') {
+              update(updateAtPath(doc.blocks, selectedPath, resizeRowCells(selected, Number(value))))
+              return
+            }
+            if (selected.type === 'grid' && key === 'columns' && selected.layout !== 'rows') {
               const columns = clampColumns(value)
               update(updateAtPath(doc.blocks, selectedPath, {
                 ...selected,

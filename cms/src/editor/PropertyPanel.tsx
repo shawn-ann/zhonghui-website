@@ -33,7 +33,7 @@ export default function PropertyPanel({
   const b = block as unknown as Record<string, unknown>
   const val = (k: string) => b[k]
   const isContainer = isLayout(block.type)
-  const allowed = isLayout(block.type) ? allowedChildTypes(block.type) : []
+  const allowed = isLayout(block.type) ? allowedChildTypes(block.type, (block as { layout?: string }).layout) : []
   const children = blockChildren(block)
 
   return (

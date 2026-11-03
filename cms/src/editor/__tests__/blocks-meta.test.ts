@@ -5,12 +5,17 @@ describe('component categories', () => {
   it('classifies layout vs content', () => {
     expect(isLayout('section')).toBe(true)
     expect(isLayout('grid')).toBe(true)
+    expect(isLayout('gridRow')).toBe(true)
+    expect(isLayout('gridCell')).toBe(true)
     expect(isLayout('hscroll')).toBe(true)
     expect(isLayout('image')).toBe(false)
   })
   it('allowed children: section = layout blocks; grid = cards/text', () => {
     expect(allowedChildTypes('section')).toEqual(['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'iconList', 'hscroll', 'stack'])
     expect(allowedChildTypes('grid')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack'])
+    expect(allowedChildTypes('grid', 'rows')).toEqual(['gridRow'])
+    expect(allowedChildTypes('gridRow')).toEqual(['gridCell'])
+    expect(allowedChildTypes('gridCell')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack'])
     expect(allowedChildTypes('hscroll')).toEqual(['imageText'])
     expect(allowedChildTypes('stack')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'gallery', 'richtext'])
     expect(allowedChildTypes('image')).toEqual([])
@@ -18,6 +23,8 @@ describe('component categories', () => {
   it('summary for text/heading', () => {
     expect(blockSummary({ type: 'heading', title: '项目一览' } as any)).toBe('项目一览')
     expect(blockSummary({ type: 'grid', columns: 3 } as any)).toContain('3')
+    expect(blockSummary({ type: 'gridRow', columns: 6, children: [] } as any)).toContain('6')
+    expect(blockSummary({ type: 'gridCell', children: [] } as any)).toBe('空格子')
   })
   it('applies default content and media when adding blocks', () => {
     const media = { image: '/img.jpg', images: ['/a.jpg', '/b.jpg'], icon: '/i.svg' }

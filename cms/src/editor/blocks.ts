@@ -79,7 +79,8 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   slider: { type: 'slider', label: '轮播', defaults: () => ({ type: 'slider', images: [] }), fields: [
     { key: 'images', label: '轮播图片', control: 'mediaList' },
   ] },
-  grid: { type: 'grid', label: '网格', defaults: () => ({ type: 'grid', columns: 3, gap: 'md', columnRatio: '1:1:1', children: [] }), fields: [
+  grid: { type: 'grid', label: '网格', defaults: () => ({ type: 'grid', layout: 'flow', columns: 3, gap: 'md', columnRatio: '1:1:1', children: [] }), fields: [
+    { key: 'layout', label: '布局方式', control: 'select', options: [{ label: '流式（自动换行）', value: 'flow' }, { label: '按行（显式格子）', value: 'rows' }] },
     { key: 'columns', label: '列数', control: 'number' }, { key: 'gap', label: '间距', control: 'select', options: [{ label: '紧凑', value: 'sm' }, { label: '标准', value: 'md' }, { label: '宽松', value: 'lg' }] },
     { key: 'columnRatio', label: '列宽比例', control: 'ratio' },
     { key: 'alignItems', label: '垂直对齐', control: 'select', options: [{ label: '拉伸等高', value: 'stretch' }, { label: '顶部对齐', value: 'start' }, { label: '居中', value: 'center' }, { label: '底部对齐', value: 'end' }] },
@@ -209,9 +210,11 @@ export function isLayout(type: Block['type']): boolean {
 }
 
 /** 依据放置规则返回某容器允许的子组件类型。 */
-export function allowedChildTypes(parent: Block['type']): Block['type'][] {
+export function allowedChildTypes(parent: Block['type'], layout?: string): Block['type'][] {
   if (parent === 'section') return [...SECTION_CHILD_TYPES]
-  if (parent === 'grid') return [...GRID_CHILD_TYPES]
+  if (parent === 'grid') return layout === 'rows' ? ['gridRow'] : [...GRID_CHILD_TYPES]
+  if (parent === 'gridRow') return ['gridCell']
+  if (parent === 'gridCell') return [...GRID_CHILD_TYPES]
   if (parent === 'hscroll') return ['imageText']
   if (parent === 'stack') return ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'gallery', 'richtext']
   return []
@@ -228,7 +231,9 @@ export function blockSummary(b: Block): string {
     case 'button': return b.label || '按钮'
     case 'gallery': return `图集 · ${b.images.length} 张`
     case 'slider': return `轮播 · ${b.images.length} 张`
-    case 'grid': return `网格 · ${b.columns} 列`
+    case 'grid': return `网格 · ${b.layout === 'rows' ? '按行' : `${b.columns} 列`}`
+    case 'gridRow': return `行 · ${b.columns} 格`
+    case 'gridCell': return b.children?.length ? blockSummary(b.children[0]) : '空格子'
     case 'section': {
       const first = (b.children || [])[0]
       const titled = first && (first.type === 'heading' || first.type === 'text') ? (first as { title?: string }).title : ''
