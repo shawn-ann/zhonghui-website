@@ -39,7 +39,8 @@ export function SiteBody({ page, site = DEFAULT_SITE_CONFIG, editor = false }: {
 }
 
 export function SiteDocument({ page, site, assets }: { page: PageDoc; site?: SiteConfig; assets: SiteAssets }) {
-  const title = page.title
+  const title = page.seo?.title || page.title
+  const description = page.seo?.description
   const inline = assets.mode === 'inline'
   return (
     <html lang="zh-CN">
@@ -47,6 +48,7 @@ export function SiteDocument({ page, site, assets }: { page: PageDoc; site?: Sit
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{title}</title>
+        {description ? <meta name="description" content={description} /> : null}
         {inline
           ? (
             <>

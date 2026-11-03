@@ -14,6 +14,7 @@ describe('case redirects', () => {
       { from: '/blog/self/', to: '/blog/self/' },
     ])).toEqual([
       { from: '/blog/old/a/', to: '/blog/newer/a/' },
+      { from: '/blog/new/a/', to: '/blog/newer/a/' },
     ])
   })
 

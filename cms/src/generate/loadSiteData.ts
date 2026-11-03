@@ -257,10 +257,13 @@ function mapCaseCategory(raw: Record<string, any>): CaseCategory | null {
     subtitle: raw.subtitle || undefined,
     pageSize: Math.max(1, Math.trunc(Number(raw.pageSize) || 12)),
     order: Number(raw.order) || 0,
+    seoTitle: raw.seoTitle || undefined,
+    seoDescription: raw.seoDescription || undefined,
   }
 }
 
 function mapCaseItem(raw: Record<string, any>, categories: Map<string, CaseCategory>): CaseItem | null {
+  if (raw?._status && raw._status !== 'published') return null
   const slug = String(raw?.slug ?? '').trim()
   const title = String(raw?.title ?? '').trim()
   const categoryId = raw?.category && typeof raw.category === 'object' ? raw.category.id : raw?.category
@@ -275,6 +278,7 @@ function mapCaseItem(raw: Record<string, any>, categories: Map<string, CaseCateg
     categoryTitle: category.title,
     cover: resolveMedia(raw.cover),
     publishedAt: String(raw.publishedAt ?? ''),
+    createdAt: raw.createdAt ? String(raw.createdAt) : undefined,
     body: raw.body ?? null,
     seoTitle: raw.seoTitle || undefined,
     seoDescription: raw.seoDescription || undefined,
@@ -302,7 +306,12 @@ export async function loadSiteData(payload: {
       depth: 1,
     }),
     payload.find({ collection: 'case-categories', limit: 1000, depth: 1 }).catch(() => ({ docs: [] })),
-    payload.find({ collection: 'cases', limit: 1000, depth: 1 }).catch(() => ({ docs: [] })),
+    payload.find({
+      collection: 'cases',
+      where: { _status: { equals: 'published' } },
+      limit: 1000,
+      depth: 1,
+    }).catch(() => ({ docs: [] })),
     payload.find({ collection: 'case-redirects', limit: 1000, depth: 0 }).catch(() => ({ docs: [] })),
   ])
   const routes = new Map<string, string>(res.docs.map((d) => [String(d.id), String(d.route ?? '')]))

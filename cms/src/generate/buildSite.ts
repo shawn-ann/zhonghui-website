@@ -20,15 +20,24 @@ export function generateSite(data: SiteData): Map<string, string | Buffer> {
     out.set(routeToFile(page.route), rewriteMediaUrls(renderPage(page, data.site)))
   }
   const redirects = normalizeRedirects(data.redirects || [])
+  const valid: { from: string; to: string }[] = []
   for (const redirect of redirects) {
     try {
-      const file = routeToFile(redirect.from)
-      if (!out.has(file)) out.set(file, renderRedirectHtml(redirect.to))
+      const fromFile = routeToFile(redirect.from)
+      const toFile = routeToFile(redirect.to)
+      // 旧路径被真实页面占用时不覆盖；目标不存在时丢弃，避免上线后指向 404
+      if (out.has(fromFile)) continue
+      if (!out.has(toFile)) {
+        console.warn(`[redirect] target missing, skipped: ${redirect.from} -> ${redirect.to}`)
+        continue
+      }
+      out.set(fromFile, renderRedirectHtml(redirect.to))
+      valid.push(redirect)
     } catch {
       // 无效旧路径不阻塞整站生成
     }
   }
-  if (redirects.length) out.set('redirects.json', JSON.stringify(redirects, null, 2))
+  if (valid.length) out.set('redirects.json', JSON.stringify(valid, null, 2))
   out.set('assets/style.css', baseCss)
   out.set('assets/main.js', mainJs)
   out.set('assets/swiper-bundle.min.css', readStatic('swiper-bundle.min.css'))

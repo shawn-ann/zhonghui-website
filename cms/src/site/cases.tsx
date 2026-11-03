@@ -1,4 +1,4 @@
-import type { CaseItem, CaseListTemplate, PageDoc } from '../render/types'
+import type { CaseDetailTemplate, CaseItem, CaseListTemplate, PageDoc } from '../render/types'
 import { safeUrl } from '../render/primitives'
 import { hrefOf } from './assets'
 import LexicalContent from './LexicalContent'
@@ -41,6 +41,7 @@ export function CasePagination({ page, pageCount, basePath }: { page: number; pa
       {page < pageCount
         ? <a className="case-page-btn" href={pageHref(basePath, page + 1)} rel="next">›</a>
         : <span className="case-page-btn is-disabled">›</span>}
+      <span className="case-page-info">第 {page} / {pageCount} 页</span>
     </nav>
   )
 }
@@ -91,7 +92,7 @@ export function CaseListView({ page }: { page: PageDoc }) {
 }
 
 export function CaseDetailView({ page }: { page: PageDoc }) {
-  const template = page.template as any
+  const template = page.template as CaseDetailTemplate
   const item = template?.item
   const cover = safeUrl(item?.cover)
   return (

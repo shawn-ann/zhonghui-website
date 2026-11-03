@@ -290,7 +290,8 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 12px;
   font-size: 13px; font-weight: 600; color: #fff;
   background: rgba(138, 14, 75, 0.55); backdrop-filter: blur(2px);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  overflow: hidden; line-height: 1.45;
 }
 .case-empty { padding: 64px 0; text-align: center; color: var(--gray-blue); }
 .case-pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 40px; flex-wrap: wrap; }
@@ -304,6 +305,7 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .case-page-btn.is-active { background: var(--accent); color: #fff; }
 .case-page-btn.is-disabled { opacity: .45; cursor: not-allowed; }
 .case-page-gap { color: var(--gray-blue); padding: 0 2px; }
+.case-page-info { color: var(--gray-blue); font-size: 13px; margin-left: 8px; }
 .case-detail-hero {
   position: relative; display: flex; align-items: flex-end;
   min-height: 460px; background-size: cover; background-position: center;

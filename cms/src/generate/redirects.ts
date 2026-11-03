@@ -17,11 +17,9 @@ export function normalizeRedirects(rows: RedirectRow[]): RedirectRow[] {
   for (const row of rows) {
     if (row.from && row.to && row.from !== row.to) map.set(row.from, row.to)
   }
-  const targets = new Set(map.values())
   const out: RedirectRow[] = []
   for (const [from, first] of map) {
-    // 中间跳点不再单独输出，只保留最终入口
-    if (targets.has(from)) continue
+    // A→B→C 时 A 与 B 都直接跳到 C；B 曾经也是公开可访问的 URL，不能丢
     let to = first
     const seen = new Set([from])
     while (map.has(to) && !seen.has(to)) {
@@ -44,6 +42,7 @@ export function renderRedirectHtml(to: string): string {
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">`
     + `<meta http-equiv="refresh" content="0;url=${url}">`
     + `<link rel="canonical" href="${url}">`
+    + `<meta name="robots" content="noindex,follow">`
     + `<title>跳转中…</title></head><body>`
     + `<p>页面已迁移，正在跳转到 <a href="${url}">${url}</a>。</p>`
     + `</body></html>`

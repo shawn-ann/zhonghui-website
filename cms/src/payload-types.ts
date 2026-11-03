@@ -3952,6 +3952,7 @@ export interface Case {
     };
     [k: string]: unknown;
   };
+  publishedPath?: string | null;
   seoTitle?: string | null;
   seoDescription?: string | null;
   updatedAt: string;
@@ -6460,6 +6461,7 @@ export interface CasesSelect<T extends boolean = true> {
   cover?: T;
   publishedAt?: T;
   body?: T;
+  publishedPath?: T;
   seoTitle?: T;
   seoDescription?: T;
   updatedAt?: T;

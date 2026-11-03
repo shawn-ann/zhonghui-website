@@ -23,13 +23,16 @@ describe('generateSite', () => {
     const out = generateSite({
       ...data,
       redirects: [
-        { from: '/blog/old/xiaocao/', to: '/blog/study-case/xiaocao/' },
-        { from: '/about/', to: '/blog/' },
+        { from: '/blog/old/xiaocao/', to: '/about/' },
+        { from: '/about/', to: '/' },
+        { from: '/blog/gone/', to: '/blog/missing/' },
       ],
     })
     expect(out.get('blog/old/xiaocao/index.html')).toContain('http-equiv="refresh"')
     expect(out.get('about/index.html')).toContain('about')
-    expect(JSON.parse(String(out.get('redirects.json')))).toHaveLength(2)
+    expect(JSON.parse(String(out.get('redirects.json')))).toEqual([
+      { from: '/blog/old/xiaocao/', to: '/' },
+    ])
   })
 
   it('rewrites media urls', () => {

@@ -51,14 +51,15 @@ export async function redirectCategorySlug(
   categoryId: string | number,
   oldSlug: string,
   newSlug: string,
-  pageSize: number,
+  oldPageSize: number,
+  newPageSize: number,
 ): Promise<void> {
   if (!oldSlug || !newSlug || oldSlug === newSlug) return
   await upsertRedirect(payload, categoryPath(oldSlug), categoryPath(newSlug))
 
   const cases = await payload.find({
     collection: 'cases',
-    where: { category: { equals: categoryId } },
+    where: { category: { equals: categoryId }, _status: { equals: 'published' } },
     limit: 1000,
     depth: 0,
   }).catch(() => ({ docs: [] as any[] }))
@@ -66,8 +67,12 @@ export async function redirectCategorySlug(
     await upsertRedirect(payload, casePath(oldSlug, item.slug), casePath(newSlug, item.slug))
   }
 
-  const pageCount = Math.max(1, Math.ceil(cases.docs.length / Math.max(1, pageSize || 12)))
-  for (let page = 2; page <= pageCount; page++) {
-    await upsertRedirect(payload, `/blog/${oldSlug}/page/${page}/`, `/blog/${newSlug}/page/${page}/`)
+  const oldPageCount = Math.max(1, Math.ceil(cases.docs.length / Math.max(1, oldPageSize || 12)))
+  const newPageCount = Math.max(1, Math.ceil(cases.docs.length / Math.max(1, newPageSize || 12)))
+  for (let page = 2; page <= oldPageCount; page++) {
+    const targetPage = Math.min(page, newPageCount)
+    const from = `/blog/${oldSlug}/page/${page}/`
+    const to = targetPage <= 1 ? categoryPath(newSlug) : `/blog/${newSlug}/page/${targetPage}/`
+    await upsertRedirect(payload, from, to)
   }
 }

@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, copyFileSync } from 'fs'
 import path from 'path'
 import type { Block, SiteData } from '../render/types'
+import { lexicalToHtml } from '../render/richText'
 
 const MEDIA_URL_PREFIX = '/api/media/file/'
 const OUT_MEDIA_DIR = 'assets/media'
@@ -28,7 +29,25 @@ export function collectMediaUrls(data: SiteData): Set<string> {
       add((b as { bg?: string }).bg)
     }
   }
-  data.pages.forEach((p) => walk(p.blocks))
+  const addUrl = (u?: string) => { if (u && u.startsWith(MEDIA_URL_PREFIX)) set.add(u) }
+  const addHtml = (html: string) => {
+    const matches = html.match(/\/api\/media\/file\/[^"'\s)]+/g)
+    if (matches) matches.forEach(addUrl)
+  }
+  data.pages.forEach((p) => {
+    walk(p.blocks)
+    if (p.template?.kind === 'caseList') {
+      addUrl(p.template.banner)
+      p.template.items.forEach((item) => addUrl(item.cover))
+    } else if (p.template?.kind === 'caseDetail') {
+      addUrl(p.template.item.cover)
+      try {
+        addHtml(lexicalToHtml(p.template.item.body))
+      } catch {
+        // 正文异常不阻塞其它媒体收集
+      }
+    }
+  })
   const settings = data.site?.settings
   if (settings) {
     const add = (u?: string) => { if (u && u.startsWith(MEDIA_URL_PREFIX)) set.add(u) }
@@ -55,6 +74,8 @@ export function copyMedia(urls: Set<string>, mediaDir: string, outDir: string): 
     if (existsSync(from)) {
       mkdirSync(destDir, { recursive: true })
       copyFileSync(from, path.join(destDir, name))
+    } else {
+      console.warn(`[media] missing file for ${url}: ${from}`)
     }
   }
 }

@@ -43,10 +43,17 @@ describe('loadSiteData', () => {
           return { docs: [{ id: 1, title: '案例分享', slug: 'study-case', pageSize: 12, order: 0 }] }
         }
         if (args.collection === 'cases') {
-          return { docs: [{
-            id: 2, title: '小曹', slug: 'xiaocao', category: 1,
-            cover: { url: '/media/cover.jpg' }, publishedAt: '2025-07-02', body: { root: { children: [] } },
-          }] }
+          expect(args.where).toEqual({ _status: { equals: 'published' } })
+          return { docs: [
+            {
+              id: 2, title: '小曹', slug: 'xiaocao', category: 1, _status: 'published',
+              cover: { url: '/media/cover.jpg' }, publishedAt: '2025-07-02', body: { root: { children: [] } },
+            },
+            {
+              id: 3, title: '草稿', slug: 'draft', category: 1, _status: 'draft',
+              cover: { url: '/media/draft.jpg' }, publishedAt: '2025-07-03', body: { root: { children: [] } },
+            },
+          ] }
         }
         if (args.collection === 'case-redirects') {
           return { docs: [{ from: '/blog/old/xiaocao/', to: '/blog/study-case/xiaocao/' }] }
@@ -61,6 +68,7 @@ describe('loadSiteData', () => {
     expect(data.pages.map((p) => p.route)).toEqual(expect.arrayContaining([
       '/blog/', '/blog/study-case/', '/blog/study-case/xiaocao/',
     ]))
+    expect(data.pages.find((p) => p.route.includes('/draft/'))).toBeUndefined()
     expect(data.redirects).toEqual([{ from: '/blog/old/xiaocao/', to: '/blog/study-case/xiaocao/' }])
   })
 })

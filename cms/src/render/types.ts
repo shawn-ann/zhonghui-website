@@ -239,6 +239,8 @@ export interface CaseCategory {
   subtitle?: string
   pageSize: number
   order: number
+  seoTitle?: string
+  seoDescription?: string
 }
 
 export interface CaseItem {
@@ -250,6 +252,7 @@ export interface CaseItem {
   categoryTitle: string
   cover: string
   publishedAt: string
+  createdAt?: string
   body: unknown
   seoTitle?: string
   seoDescription?: string

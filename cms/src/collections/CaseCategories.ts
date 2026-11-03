@@ -25,7 +25,10 @@ export const CaseCategories: CollectionConfig = {
       async ({ doc, previousDoc, operation, req }) => {
         if (operation !== 'update' || !previousDoc?.slug) return doc
         if (previousDoc.slug === doc.slug) return doc
-        await redirectCategorySlug(req.payload, doc.id, previousDoc.slug, doc.slug, doc.pageSize)
+        await redirectCategorySlug(
+          req.payload, doc.id, previousDoc.slug, doc.slug,
+          Number(previousDoc.pageSize) || 12, Number(doc.pageSize) || 12,
+        )
         return doc
       },
     ],

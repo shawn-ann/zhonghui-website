@@ -16,7 +16,14 @@ export function paginateCases<T>(items: T[], pageSize: number): T[][] {
 function sorted(items: CaseItem[]): CaseItem[] {
   return [...items].sort((a, b) => {
     const byDate = String(b.publishedAt).localeCompare(String(a.publishedAt))
-    return byDate || String(b.id).localeCompare(String(a.id))
+    if (byDate) return byDate
+    const byCreated = String(b.createdAt || '').localeCompare(String(a.createdAt || ''))
+    if (byCreated) return byCreated
+    const an = Number(a.id)
+    const bn = Number(b.id)
+    return Number.isFinite(an) && Number.isFinite(bn)
+      ? bn - an
+      : String(b.id).localeCompare(String(a.id))
   })
 }
 
@@ -81,7 +88,8 @@ export function buildCasePages(
     chunks.forEach((pageItems, index) => {
       pages.push(listPage(
         basePath, index + 1, chunks.length, size, pageItems,
-        category.title, category.subtitle, category.banner, category,
+        category.title, category.subtitle, category.banner || settings.indexBanner, category,
+        { title: category.seoTitle, description: category.seoDescription },
       ))
     })
   }

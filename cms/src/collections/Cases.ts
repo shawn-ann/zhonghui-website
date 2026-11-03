@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { validateCaseSlug } from './caseSlug'
-import { redirectCaseMove } from './redirectHooks'
+import { categorySlugOf, upsertRedirect } from './redirectHooks'
+import { casePath } from '../generate/redirects'
 
 export const Cases: CollectionConfig = {
   slug: 'cases',
@@ -12,14 +13,25 @@ export const Cases: CollectionConfig = {
     defaultColumns: ['title', 'category', 'publishedAt', '_status'],
   },
   hooks: {
-    afterChange: [
-      async ({ doc, previousDoc, operation, req }) => {
-        if (operation !== 'update' || !previousDoc) return doc
-        if (doc._status !== 'published' || previousDoc._status !== 'published') return doc
-        const previous = previousDoc as any
-        if (previous.slug === doc.slug && previous.category === doc.category) return doc
-        await redirectCaseMove(req.payload, previous.category, previous.slug, doc.category, doc.slug)
-        return doc
+    beforeChange: [
+      async ({ data, originalDoc, req }) => {
+        if (data._status !== 'published') return data
+        const categorySlug = await categorySlugOf(req.payload, data.category)
+        if (!categorySlug) return data
+        const nextPath = casePath(categorySlug, String(data.slug))
+
+        // publishedPath 只在发布时更新，因此“草稿改 slug 再发布”仍能拿到上一个公开 URL
+        let previousPath = (originalDoc as any)?.publishedPath as string | undefined
+        if (!previousPath && (originalDoc as any)?._status === 'published') {
+          const oldCategory = await categorySlugOf(req.payload, (originalDoc as any)?.category)
+          if (oldCategory && (originalDoc as any)?.slug) {
+            previousPath = casePath(oldCategory, (originalDoc as any).slug)
+          }
+        }
+        if (previousPath && previousPath !== nextPath) {
+          await upsertRedirect(req.payload, previousPath, nextPath)
+        }
+        return { ...data, publishedPath: nextPath }
       },
     ],
   },
@@ -56,6 +68,7 @@ export const Cases: CollectionConfig = {
       admin: { date: { pickerAppearance: 'dayOnly' } },
     },
     { name: 'body', type: 'richText', required: true, label: '正文' },
+    { name: 'publishedPath', type: 'text', hidden: true, admin: { readOnly: true } },
     { name: 'seoTitle', type: 'text', label: 'SEO 标题（可选）' },
     { name: 'seoDescription', type: 'textarea', label: 'SEO 描述（可选）' },
   ],
