@@ -255,10 +255,38 @@ export interface CaseItem {
   seoDescription?: string
 }
 
+export interface CaseIndexSettings {
+  indexTitle: string
+  indexSubtitle: string
+  indexBanner?: string
+  indexPageSize: number
+}
+
+export interface CaseListTemplate {
+  kind: 'caseList'
+  category?: CaseCategory
+  items: CaseItem[]
+  page: number
+  pageCount: number
+  pageSize: number
+  basePath: string
+  title: string
+  subtitle?: string
+  banner?: string
+}
+
+export interface CaseDetailTemplate {
+  kind: 'caseDetail'
+  item: CaseItem
+  category: CaseCategory
+}
+
 export interface PageDoc {
   title: string
   route: string
   blocks: Block[]
+  template?: CaseListTemplate | CaseDetailTemplate
+  seo?: { title?: string; description?: string }
 }
 
 export interface MenuNode {
@@ -292,4 +320,5 @@ export interface SiteConfig {
 export interface SiteData {
   pages: PageDoc[]
   site?: SiteConfig
+  redirects?: { from: string; to: string }[]
 }

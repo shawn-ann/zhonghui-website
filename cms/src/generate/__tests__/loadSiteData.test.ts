@@ -25,6 +25,7 @@ describe('loadSiteData', () => {
     let captured: any
     const payload = {
       find: async (args: any) => {
+        if (args.collection !== 'pages') return { docs: [] }
         captured = args
         return { docs: [{ title: '首页', route: '/', _status: 'published', blocks: [{ blockType: 'text', body: 'home' }] }] }
       },
@@ -32,6 +33,35 @@ describe('loadSiteData', () => {
     const data = await loadSiteData(payload as any)
     expect(captured.where).toEqual({ _status: { equals: 'published' } })
     expect(data.pages[0].route).toBe('/')
+  })
+
+  it('builds case pages and redirects from collections', async () => {
+    const payload = {
+      find: async (args: any) => {
+        if (args.collection === 'pages') return { docs: [] }
+        if (args.collection === 'case-categories') {
+          return { docs: [{ id: 1, title: '案例分享', slug: 'study-case', pageSize: 12, order: 0 }] }
+        }
+        if (args.collection === 'cases') {
+          return { docs: [{
+            id: 2, title: '小曹', slug: 'xiaocao', category: 1,
+            cover: { url: '/media/cover.jpg' }, publishedAt: '2025-07-02', body: { root: { children: [] } },
+          }] }
+        }
+        if (args.collection === 'case-redirects') {
+          return { docs: [{ from: '/blog/old/xiaocao/', to: '/blog/study-case/xiaocao/' }] }
+        }
+        return { docs: [] }
+      },
+      findGlobal: async ({ slug }: any) => slug === 'case-settings'
+        ? { indexTitle: '案例分享', indexSubtitle: '故事', indexPageSize: 12 }
+        : {},
+    }
+    const data = await loadSiteData(payload as any)
+    expect(data.pages.map((p) => p.route)).toEqual(expect.arrayContaining([
+      '/blog/', '/blog/study-case/', '/blog/study-case/xiaocao/',
+    ]))
+    expect(data.redirects).toEqual([{ from: '/blog/old/xiaocao/', to: '/blog/study-case/xiaocao/' }])
   })
 })
 

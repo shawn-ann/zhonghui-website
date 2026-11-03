@@ -1,8 +1,9 @@
 import { lexicalToHtml } from '../render/richText'
 import { normalizeColumnRatio } from '../render/columnRatio'
 import { effectiveRowColumns } from '../render/gridRows'
-import type { Block, PageDoc, SiteData } from '../render/types'
+import type { Block, CaseCategory, CaseIndexSettings, CaseItem, PageDoc, SiteData } from '../render/types'
 import { buildSiteConfig } from '../site/config'
+import { buildCasePages } from './casePages'
 
 type MediaResolver = (media: unknown) => string
 type PageRoutes = Map<string, string>
@@ -244,27 +245,89 @@ export function resolveMedia(m: unknown): string {
   return ''
 }
 
+function mapCaseCategory(raw: Record<string, any>): CaseCategory | null {
+  const slug = String(raw?.slug ?? '').trim()
+  const title = String(raw?.title ?? '').trim()
+  if (!slug || !title) return null
+  return {
+    id: raw.id,
+    title,
+    slug,
+    banner: resolveMedia(raw.banner) || undefined,
+    subtitle: raw.subtitle || undefined,
+    pageSize: Math.max(1, Math.trunc(Number(raw.pageSize) || 12)),
+    order: Number(raw.order) || 0,
+  }
+}
+
+function mapCaseItem(raw: Record<string, any>, categories: Map<string, CaseCategory>): CaseItem | null {
+  const slug = String(raw?.slug ?? '').trim()
+  const title = String(raw?.title ?? '').trim()
+  const categoryId = raw?.category && typeof raw.category === 'object' ? raw.category.id : raw?.category
+  const category = categoryId != null ? categories.get(String(categoryId)) : undefined
+  if (!slug || !title || !category) return null
+  return {
+    id: raw.id,
+    title,
+    slug,
+    categoryId: category.id,
+    categorySlug: category.slug,
+    categoryTitle: category.title,
+    cover: resolveMedia(raw.cover),
+    publishedAt: String(raw.publishedAt ?? ''),
+    body: raw.body ?? null,
+    seoTitle: raw.seoTitle || undefined,
+    seoDescription: raw.seoDescription || undefined,
+  }
+}
+
+function mapCaseSettings(raw: any): CaseIndexSettings {
+  return {
+    indexTitle: raw?.indexTitle || '案例分享',
+    indexSubtitle: raw?.indexSubtitle || '每一段旅程，都值得被记录',
+    indexBanner: resolveMedia(raw?.indexBanner) || undefined,
+    indexPageSize: Math.max(1, Math.trunc(Number(raw?.indexPageSize) || 12)),
+  }
+}
+
 export async function loadSiteData(payload: {
   find: (args: any) => Promise<{ docs: any[] }>
   findGlobal?: (args: any) => Promise<any>
 }): Promise<SiteData> {
-  const res = await payload.find({
-    collection: 'pages',
-    where: { _status: { equals: 'published' } },
-    limit: 1000,
-    depth: 1,
-  })
+  const [res, categoryRes, caseRes, redirectRes] = await Promise.all([
+    payload.find({
+      collection: 'pages',
+      where: { _status: { equals: 'published' } },
+      limit: 1000,
+      depth: 1,
+    }),
+    payload.find({ collection: 'case-categories', limit: 1000, depth: 0 }).catch(() => ({ docs: [] })),
+    payload.find({ collection: 'cases', limit: 1000, depth: 0 }).catch(() => ({ docs: [] })),
+    payload.find({ collection: 'case-redirects', limit: 1000, depth: 0 }).catch(() => ({ docs: [] })),
+  ])
   const routes = new Map<string, string>(res.docs.map((d) => [String(d.id), String(d.route ?? '')]))
+  const categories = categoryRes.docs.map(mapCaseCategory).filter((x): x is CaseCategory => x !== null)
+  const categoryById = new Map(categories.map((category) => [String(category.id), category]))
+  const cases = caseRes.docs
+    .map((raw) => mapCaseItem(raw, categoryById))
+    .filter((x): x is CaseItem => x !== null)
   let menuRaw: any = null
   let settingsRaw: any = null
+  let caseSettingsRaw: any = null
   if (payload.findGlobal) {
-    ;[menuRaw, settingsRaw] = await Promise.all([
+    ;[menuRaw, settingsRaw, caseSettingsRaw] = await Promise.all([
       payload.findGlobal({ slug: 'menu', depth: 1 }).catch(() => null),
       payload.findGlobal({ slug: 'site-settings', depth: 1 }).catch(() => null),
+      payload.findGlobal({ slug: 'case-settings', depth: 1 }).catch(() => null),
     ])
   }
+  const casePages = buildCasePages(categories, cases, mapCaseSettings(caseSettingsRaw))
+  const redirects = redirectRes.docs
+    .map((raw) => ({ from: String(raw?.from ?? '').trim(), to: String(raw?.to ?? '').trim() }))
+    .filter((r) => r.from && r.to)
   return {
-    pages: res.docs.map((d) => mapPageDoc(d, resolveMedia, routes)),
+    pages: [...res.docs.map((d) => mapPageDoc(d, resolveMedia, routes)), ...casePages],
     site: buildSiteConfig(menuRaw, settingsRaw, routes),
+    redirects,
   }
 }
