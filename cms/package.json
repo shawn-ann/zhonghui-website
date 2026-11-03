@@ -21,6 +21,7 @@
     "migrate:about-aupair": "tsx scripts/migrate-about-aupair.ts",
     "migrate:about-company-richtext": "tsx scripts/migrate-about-company-richtext.ts",
     "migrate:contact": "tsx scripts/migrate-contact.ts",
+    "migrate:cases": "tsx scripts/migrate-cases.ts",
     "migrate:about-teachers-richtext": "tsx scripts/migrate-about-teachers-richtext.ts",
     "migrate:study-abroad": "tsx scripts/migrate-study-abroad.ts",
     "migrate:study-abroad-richtext": "tsx scripts/migrate-study-abroad-richtext.ts",

@@ -301,8 +301,8 @@ export async function loadSiteData(payload: {
       limit: 1000,
       depth: 1,
     }),
-    payload.find({ collection: 'case-categories', limit: 1000, depth: 0 }).catch(() => ({ docs: [] })),
-    payload.find({ collection: 'cases', limit: 1000, depth: 0 }).catch(() => ({ docs: [] })),
+    payload.find({ collection: 'case-categories', limit: 1000, depth: 1 }).catch(() => ({ docs: [] })),
+    payload.find({ collection: 'cases', limit: 1000, depth: 1 }).catch(() => ({ docs: [] })),
     payload.find({ collection: 'case-redirects', limit: 1000, depth: 0 }).catch(() => ({ docs: [] })),
   ])
   const routes = new Map<string, string>(res.docs.map((d) => [String(d.id), String(d.route ?? '')]))
