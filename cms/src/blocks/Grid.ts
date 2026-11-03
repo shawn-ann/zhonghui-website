@@ -15,7 +15,7 @@ export function makeGrid(slug: string, label: string, cellComponents: Block[]): 
     slug,
     labels: { singular: label, plural: label },
     fields: [
-      { name: 'columns', type: 'number', defaultValue: 3, min: 1, max: 5 },
+      { name: 'columns', type: 'number', defaultValue: 3, min: 1, max: 6 },
       {
         name: 'gap',
         type: 'select',

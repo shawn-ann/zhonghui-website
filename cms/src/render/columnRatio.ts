@@ -1,5 +1,5 @@
 const MIN_COLUMNS = 1
-const MAX_COLUMNS = 5
+const MAX_COLUMNS = 6
 
 export function clampColumns(columns: unknown): number {
   const value = Math.trunc(Number(columns) || 1)

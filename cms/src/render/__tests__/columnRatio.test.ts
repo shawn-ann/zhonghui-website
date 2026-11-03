@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { defaultColumnRatio, normalizeColumnRatio, parseColumnRatio, ratioToGridTemplate } from '../columnRatio'
+import { clampColumns, defaultColumnRatio, normalizeColumnRatio, parseColumnRatio, ratioToGridTemplate } from '../columnRatio'
 
 describe('columnRatio', () => {
   it('builds equal defaults for 1-4 columns', () => {
@@ -8,6 +8,8 @@ describe('columnRatio', () => {
     expect(defaultColumnRatio(3)).toBe('1:1:1')
     expect(defaultColumnRatio(4)).toBe('1:1:1:1')
     expect(defaultColumnRatio(5)).toBe('1:1:1:1:1')
+    expect(defaultColumnRatio(6)).toBe('1:1:1:1:1:1')
+    expect(clampColumns(9)).toBe(6)
   })
 
   it('parses integer ratios with the right segment count', () => {
@@ -31,6 +33,7 @@ describe('columnRatio', () => {
   it('renders fr values from a valid ratio', () => {
     expect(ratioToGridTemplate('2:3', 2)).toBe('2fr 3fr')
     expect(ratioToGridTemplate('1:2:1', 3)).toBe('1fr 2fr 1fr')
+    expect(ratioToGridTemplate('2:1:1:1:1:1', 6)).toBe('2fr 1fr 1fr 1fr 1fr 1fr')
     expect(ratioToGridTemplate('2:3', 3)).toBeUndefined()
   })
 })

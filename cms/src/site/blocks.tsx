@@ -93,7 +93,7 @@ export function SectionView({ b, editor = false }: { b: SectionBlock; editor?: b
 }
 
 export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean }) {
-  const cols = Math.min(5, Math.max(1, b.columns || 3))
+  const cols = Math.min(6, Math.max(1, b.columns || 3))
   const gap = b.gap && /^(sm|md|lg)$/.test(b.gap) ? b.gap : 'md'
   const ratio = ratioToGridTemplate(b.columnRatio, cols)
   const ratioStyle = {

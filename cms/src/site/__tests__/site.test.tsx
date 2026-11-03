@@ -73,6 +73,9 @@ describe('site blocks', () => {
     const grid = render(blockNode({ type: 'grid', _id: 'g5', columns: 5, children: [] })!)
     expect(grid).toContain('grid-cols-5')
 
+    const six = render(blockNode({ type: 'grid', _id: 'g6', columns: 6, children: [] })!)
+    expect(six).toContain('grid-cols-6')
+
     const card = render(blockNode({
       type: 'iconCard', _id: 'ic', icon: '/icon.svg', title: '知乎', desc: '中惠互惠生', variant: 'compact',
     })!)
