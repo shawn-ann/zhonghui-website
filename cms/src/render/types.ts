@@ -231,6 +231,30 @@ export type Block =
   | StackBlock
   | SectionBlock
 
+export interface CaseCategory {
+  id: string | number
+  title: string
+  slug: string
+  banner?: string
+  subtitle?: string
+  pageSize: number
+  order: number
+}
+
+export interface CaseItem {
+  id: string | number
+  title: string
+  slug: string
+  categoryId: string | number
+  categorySlug: string
+  categoryTitle: string
+  cover: string
+  publishedAt: string
+  body: unknown
+  seoTitle?: string
+  seoDescription?: string
+}
+
 export interface PageDoc {
   title: string
   route: string

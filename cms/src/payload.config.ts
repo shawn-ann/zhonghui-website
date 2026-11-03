@@ -8,8 +8,12 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { CaseCategories } from './collections/CaseCategories'
+import { Cases } from './collections/Cases'
+import { CaseRedirects } from './collections/CaseRedirects'
 import { Menu } from './globals/Menu'
 import { SiteSettings } from './globals/SiteSettings'
+import { CaseSettings } from './globals/CaseSettings'
 import { getBuildStatus, startBuild } from './build/manager'
 
 const srcDir = path.resolve(process.cwd(), 'src')
@@ -46,8 +50,8 @@ export default buildConfig({
     supportedLanguages: { zh },
     fallbackLanguage: 'zh',
   },
-  collections: [Users, Media, Pages],
-  globals: [Menu, SiteSettings],
+  collections: [Users, Media, Pages, CaseCategories, Cases, CaseRedirects],
+  globals: [Menu, SiteSettings, CaseSettings],
   endpoints: [
     {
       path: '/rebuild',

@@ -70,6 +70,9 @@ export interface Config {
     users: User;
     media: Media;
     pages: Page;
+    'case-categories': CaseCategory;
+    cases: Case;
+    'case-redirects': CaseRedirect;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +83,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    'case-categories': CaseCategoriesSelect<false> | CaseCategoriesSelect<true>;
+    cases: CasesSelect<false> | CasesSelect<true>;
+    'case-redirects': CaseRedirectsSelect<false> | CaseRedirectsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -92,10 +98,12 @@ export interface Config {
   globals: {
     menu: Menu;
     'site-settings': SiteSetting;
+    'case-settings': CaseSetting;
   };
   globalsSelect: {
     menu: MenuSelect<false> | MenuSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'case-settings': CaseSettingsSelect<false> | CaseSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -3897,6 +3905,72 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-categories".
+ */
+export interface CaseCategory {
+  id: number;
+  title: string;
+  /**
+   * URL 段，只能使用小写字母、数字和连字符，如 study-case
+   */
+  slug: string;
+  banner?: (number | null) | Media;
+  subtitle?: string | null;
+  pageSize: number;
+  order?: number | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cases".
+ */
+export interface Case {
+  id: number;
+  title: string;
+  /**
+   * 详情 URL 段，如 xiaocao；发布后修改会生成重定向
+   */
+  slug: string;
+  category: number | CaseCategory;
+  cover: number | Media;
+  publishedAt: string;
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-redirects".
+ */
+export interface CaseRedirect {
+  id: number;
+  from: string;
+  to: string;
+  createdAt: string;
+  updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -3930,6 +4004,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'case-categories';
+        value: number | CaseCategory;
+      } | null)
+    | ({
+        relationTo: 'cases';
+        value: number | Case;
+      } | null)
+    | ({
+        relationTo: 'case-redirects';
+        value: number | CaseRedirect;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -6349,6 +6435,49 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-categories_select".
+ */
+export interface CaseCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  banner?: T;
+  subtitle?: T;
+  pageSize?: T;
+  order?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cases_select".
+ */
+export interface CasesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  cover?: T;
+  publishedAt?: T;
+  body?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-redirects_select".
+ */
+export interface CaseRedirectsSelect<T extends boolean = true> {
+  from?: T;
+  to?: T;
+  createdAt?: T;
+  updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -6443,6 +6572,19 @@ export interface SiteSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-settings".
+ */
+export interface CaseSetting {
+  id: number;
+  indexTitle?: string | null;
+  indexSubtitle?: string | null;
+  indexBanner?: (number | null) | Media;
+  indexPageSize?: number | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "menu_select".
  */
 export interface MenuSelect<T extends boolean = true> {
@@ -6491,6 +6633,19 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   langCurrentLabel?: T;
   langOtherLabel?: T;
   langOtherUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-settings_select".
+ */
+export interface CaseSettingsSelect<T extends boolean = true> {
+  indexTitle?: T;
+  indexSubtitle?: T;
+  indexBanner?: T;
+  indexPageSize?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
