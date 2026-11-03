@@ -106,6 +106,16 @@ describe('editorToPayloadBlocks', () => {
     expect(back[0]).toMatchObject({ blockType: 'section', paddingY: 'md' })
   })
 
+  it('round-trips the imageText qr variant', () => {
+    const raw = { id: 1, title: 't', route: '/', blocks: [
+      { id: 'it', blockType: 'imageText', media: 140, title: '公众号', variant: 'qr', imageFit: 'contain' },
+    ] }
+    const ed = docToEditorDoc(raw)
+    expect(ed.blocks[0]).toMatchObject({ type: 'imageText', variant: 'qr', imageFit: 'contain' })
+    const back = editorToPayloadBlocks(ed.blocks, new Map())
+    expect(back[0]).toMatchObject({ blockType: 'imageText', variant: 'qr', imageFit: 'contain' })
+  })
+
   it('round-trips grid rows and cells through the editor document', () => {
     const raw = { id: 1, title: 't', route: '/', blocks: [{
       id: 'g1', blockType: 'grid', layout: 'rows', columns: 6,

@@ -92,6 +92,14 @@ describe('site blocks', () => {
     expect(cover).toContain('object-fit:cover')
   })
 
+  it('renders the qr variant without the white card background', () => {
+    const html = render(blockNode({
+      type: 'imageText', _id: 'qr', media: '/test.png', title: '公众号', variant: 'qr', imageFit: 'contain',
+    })!)
+    expect(html).toContain('image-text is-qr')
+    expect(html).not.toContain('<p data-field="desc">')
+  })
+
   it('renders row-layout grids with explicit empty cells', () => {
     const cell = (children: any[] = []): any => ({ type: 'gridCell', children })
     const row = (cells: any[]): any => ({ type: 'gridRow', _id: 'r1', columns: 6, columnRatio: '1:1:1:1:1:1', children: cells })

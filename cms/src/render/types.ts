@@ -88,6 +88,7 @@ export interface ImageTextBlock extends BlockBase {
   type: 'imageText'
   media: string
   imageFit?: 'cover' | 'contain'
+  variant?: 'default' | 'qr'
   title?: string
   subtitle?: string
   subtitleColor?: string

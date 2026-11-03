@@ -32,6 +32,15 @@ export const ImageTextBlock: Block = {
       ],
       admin: { description: '二维码等需要完整显示时选择“完整显示”' },
     },
+    {
+      name: 'variant',
+      type: 'select',
+      defaultValue: 'default',
+      options: [
+        { label: '标准卡片', value: 'default' },
+        { label: '二维码（白框 + 背景文字）', value: 'qr' },
+      ],
+    },
     { name: 'titleColor', type: 'text', admin: { description: '标题颜色，留空沿用主题色' } },
     { name: 'descColor', type: 'text', admin: { description: '描述颜色，留空沿用主题色' } },
     ...pageLinkFields(),

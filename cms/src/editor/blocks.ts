@@ -50,6 +50,7 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'desc', label: '描述', control: 'textarea' },
     { key: 'imageRatio', label: '图片比例', control: 'select', options: [{ label: '自动', value: 'auto' }, { label: '1:1', value: '1:1' }, { label: '4:3', value: '4:3' }, { label: '3:4', value: '3:4' }, { label: '16:9', value: '16:9' }] },
     { key: 'imageFit', label: '图片填充', control: 'select', options: [{ label: '裁剪填充', value: 'cover' }, { label: '完整显示', value: 'contain' }] },
+    { key: 'variant', label: '卡片样式', control: 'select', options: [{ label: '标准卡片', value: 'default' }, { label: '二维码（白框 + 背景文字）', value: 'qr' }] },
     { key: 'link', label: '链接', control: 'pageLink' },
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },
     { key: 'descColor', label: '描述颜色', control: 'textColor' },

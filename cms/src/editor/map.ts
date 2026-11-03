@@ -117,6 +117,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.desc !== undefined) out.desc = b.desc
       if (b.imageRatio !== undefined) out.imageRatio = b.imageRatio
       if (b.imageFit !== undefined) out.imageFit = b.imageFit
+      if (b.variant !== undefined) out.variant = b.variant
       if (b.titleColor !== undefined) out.titleColor = b.titleColor
       if (b.descColor !== undefined) out.descColor = b.descColor
       writeLink(out, b)

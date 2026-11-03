@@ -302,7 +302,7 @@ export function ImageTextView({ b, editor = false }: { b: ImageTextBlock; editor
   const href = b.link ? safeUrl(b.link) : ''
   const ratio = b.imageRatio && b.imageRatio !== 'auto' ? b.imageRatio.replace(':', ' / ') : undefined
   const card = (
-    <div className="image-text" style={padStyle(b.padding)}>
+    <div className={`image-text${b.variant === 'qr' ? ' is-qr' : ''}`} style={padStyle(b.padding)}>
       {src ? (
         <div className="it-img" style={ratio ? { aspectRatio: ratio } : undefined}>
           <img src={src} alt={b.title || ''} style={{ objectFit: b.imageFit || 'cover' }} />

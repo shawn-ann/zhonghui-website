@@ -1,7 +1,6 @@
 // 注意：gridRow / gridCell 是新增区块类型。生产环境需先完成 Payload schema 同步
 // （部署时的 migrate/push 流程），再执行本脚本，否则新块可能无法写入。
 import 'dotenv/config'
-import fs from 'fs'
 import path from 'path'
 import { getPayload } from 'payload'
 import config from '../src/payload.config'
@@ -107,10 +106,11 @@ const richTextBlock = (children: any[]) => ({
 
 const hero = await media('about-hero.jpg')
 const pattern = await ensureMedia('pattern-box-5.svg', staticFile('pattern-box-5.svg'), 'contact-pattern')
-const qrPath = staticFile('contact-qr.svg')
-const qr = fs.existsSync(qrPath)
-  ? await ensureMedia('contact-qr.svg', qrPath, 'contact-qr')
-  : ''
+// 使用媒体库中已上传的 test.png（两个二维码共用同一张图）。
+const qr = mediaByStem.get('test')
+if (qr == null) {
+  throw new Error('媒体库中未找到 test.png，请先上传后再执行迁移')
+}
 
 const socialIcons = await Promise.all([
   ensureMedia('icon-zhihu.png', img('icon-zhihu.png'), '知乎'),
@@ -195,13 +195,13 @@ const blocks: any[] = [
             {
               blockType: 'gridCell',
               children: [
-                { blockType: 'imageText', media: qr, title: '公众号', desc: '公众号二维码', imageRatio: '1:1', imageFit: 'contain' },
+                { blockType: 'imageText', media: qr, title: '公众号', imageRatio: '1:1', imageFit: 'contain', variant: 'qr' },
               ],
             },
             {
               blockType: 'gridCell',
               children: [
-                { blockType: 'imageText', media: qr, title: '咨询微信', desc: '咨询微信二维码', imageRatio: '1:1', imageFit: 'contain' },
+                { blockType: 'imageText', media: qr, title: '咨询微信', imageRatio: '1:1', imageFit: 'contain', variant: 'qr' },
               ],
             },
             { blockType: 'gridCell', children: [] },

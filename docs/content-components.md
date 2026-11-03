@@ -286,7 +286,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 ### 5.9 图文卡片 `imageText`
 
-`media`、`title`、`subtitle`、`subtitleColor`、`desc`、`imageRatio`、`imageFit`、`titleColor`、`descColor`、`linkType`/`internalPage`/`externalUrl`。`imageFit` 支持 `cover`（默认，裁剪填充）/ `contain`（完整显示，二维码等场景使用）。历史 `padding` 保留渲染兼容。
+`media`、`title`、`subtitle`、`subtitleColor`、`desc`、`imageRatio`、`imageFit`、`variant`、`titleColor`、`descColor`、`linkType`/`internalPage`/`externalUrl`。`imageFit` 支持 `cover`（默认，裁剪填充）/ `contain`（完整显示，二维码等场景使用）。`variant` 支持 `default`（标准白卡）/ `qr`（透明卡片 + 白色二维码框 + 背景上的标题，适合深色/图片背景）。历史 `padding` 保留渲染兼容。
 
 ### 5.10 图标卡片 `iconCard`
 
@@ -423,8 +423,8 @@ section(bgImage=yinji)
   grid(layout=rows, 6列)
     gridRow(6列, ratio=1:1:1:1:1:1)
       gridCell ×2 空格
-      gridCell(公众号二维码, imageFit=contain)
-      gridCell(咨询微信二维码, imageFit=contain)
+      gridCell(公众号, variant=qr, imageFit=contain)
+      gridCell(咨询微信, variant=qr, imageFit=contain)
       gridCell ×2 空格
 section(bgColor=light-pink)
   heading(温馨提示)
@@ -432,7 +432,7 @@ section(bgColor=light-pink)
     richtext(有序列表 ×4)
 ```
 
-联系我们页的二维码当前使用占位 SVG；上线前在媒体库替换为实际二维码图片。
+联系我们页的二维码使用媒体库中的 `test.png`，两个卡片共用同一张图；`variant=qr` 去掉白色文字卡片，只保留白色二维码框与背景上的标题。
 
 ### 关于中惠
 

@@ -352,6 +352,7 @@ export interface Page {
                                  * 二维码等需要完整显示时选择“完整显示”
                                  */
                                 imageFit?: ('cover' | 'contain') | null;
+                                variant?: ('default' | 'qr') | null;
                                 /**
                                  * 标题颜色，留空沿用主题色
                                  */
@@ -534,6 +535,7 @@ export interface Page {
                                            * 二维码等需要完整显示时选择“完整显示”
                                            */
                                           imageFit?: ('cover' | 'contain') | null;
+                                          variant?: ('default' | 'qr') | null;
                                           /**
                                            * 标题颜色，留空沿用主题色
                                            */
@@ -768,6 +770,7 @@ export interface Page {
                                                  * 二维码等需要完整显示时选择“完整显示”
                                                  */
                                                 imageFit?: ('cover' | 'contain') | null;
+                                                variant?: ('default' | 'qr') | null;
                                                 /**
                                                  * 标题颜色，留空沿用主题色
                                                  */
@@ -951,6 +954,7 @@ export interface Page {
                                                            * 二维码等需要完整显示时选择“完整显示”
                                                            */
                                                           imageFit?: ('cover' | 'contain') | null;
+                                                          variant?: ('default' | 'qr') | null;
                                                           /**
                                                            * 标题颜色，留空沿用主题色
                                                            */
@@ -1203,6 +1207,7 @@ export interface Page {
                                            * 二维码等需要完整显示时选择“完整显示”
                                            */
                                           imageFit?: ('cover' | 'contain') | null;
+                                          variant?: ('default' | 'qr') | null;
                                           /**
                                            * 标题颜色，留空沿用主题色
                                            */
@@ -1385,6 +1390,7 @@ export interface Page {
                                                      * 二维码等需要完整显示时选择“完整显示”
                                                      */
                                                     imageFit?: ('cover' | 'contain') | null;
+                                                    variant?: ('default' | 'qr') | null;
                                                     /**
                                                      * 标题颜色，留空沿用主题色
                                                      */
@@ -1680,6 +1686,7 @@ export interface Page {
                              * 二维码等需要完整显示时选择“完整显示”
                              */
                             imageFit?: ('cover' | 'contain') | null;
+                            variant?: ('default' | 'qr') | null;
                             /**
                              * 标题颜色，留空沿用主题色
                              */
@@ -1805,6 +1812,7 @@ export interface Page {
                                  * 二维码等需要完整显示时选择“完整显示”
                                  */
                                 imageFit?: ('cover' | 'contain') | null;
+                                variant?: ('default' | 'qr') | null;
                                 /**
                                  * 标题颜色，留空沿用主题色
                                  */
@@ -2065,6 +2073,7 @@ export interface Page {
                        * 二维码等需要完整显示时选择“完整显示”
                        */
                       imageFit?: ('cover' | 'contain') | null;
+                      variant?: ('default' | 'qr') | null;
                       /**
                        * 标题颜色，留空沿用主题色
                        */
@@ -2247,6 +2256,7 @@ export interface Page {
                                  * 二维码等需要完整显示时选择“完整显示”
                                  */
                                 imageFit?: ('cover' | 'contain') | null;
+                                variant?: ('default' | 'qr') | null;
                                 /**
                                  * 标题颜色，留空沿用主题色
                                  */
@@ -2481,6 +2491,7 @@ export interface Page {
                                        * 二维码等需要完整显示时选择“完整显示”
                                        */
                                       imageFit?: ('cover' | 'contain') | null;
+                                      variant?: ('default' | 'qr') | null;
                                       /**
                                        * 标题颜色，留空沿用主题色
                                        */
@@ -2663,6 +2674,7 @@ export interface Page {
                                                  * 二维码等需要完整显示时选择“完整显示”
                                                  */
                                                 imageFit?: ('cover' | 'contain') | null;
+                                                variant?: ('default' | 'qr') | null;
                                                 /**
                                                  * 标题颜色，留空沿用主题色
                                                  */
@@ -2909,6 +2921,7 @@ export interface Page {
                                  * 二维码等需要完整显示时选择“完整显示”
                                  */
                                 imageFit?: ('cover' | 'contain') | null;
+                                variant?: ('default' | 'qr') | null;
                                 /**
                                  * 标题颜色，留空沿用主题色
                                  */
@@ -3091,6 +3104,7 @@ export interface Page {
                                            * 二维码等需要完整显示时选择“完整显示”
                                            */
                                           imageFit?: ('cover' | 'contain') | null;
+                                          variant?: ('default' | 'qr') | null;
                                           /**
                                            * 标题颜色，留空沿用主题色
                                            */
@@ -3349,6 +3363,7 @@ export interface Page {
              * 二维码等需要完整显示时选择“完整显示”
              */
             imageFit?: ('cover' | 'contain') | null;
+            variant?: ('default' | 'qr') | null;
             /**
              * 标题颜色，留空沿用主题色
              */
@@ -3534,6 +3549,7 @@ export interface Page {
                    * 二维码等需要完整显示时选择“完整显示”
                    */
                   imageFit?: ('cover' | 'contain') | null;
+                  variant?: ('default' | 'qr') | null;
                   /**
                    * 标题颜色，留空沿用主题色
                    */
@@ -3659,6 +3675,7 @@ export interface Page {
                        * 二维码等需要完整显示时选择“完整显示”
                        */
                       imageFit?: ('cover' | 'contain') | null;
+                      variant?: ('default' | 'qr') | null;
                       /**
                        * 标题颜色，留空沿用主题色
                        */
@@ -4042,6 +4059,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       desc?: T;
                                       imageRatio?: T;
                                       imageFit?: T;
+                                      variant?: T;
                                       titleColor?: T;
                                       descColor?: T;
                                       linkType?: T;
@@ -4155,6 +4173,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   desc?: T;
                                                   imageRatio?: T;
                                                   imageFit?: T;
+                                                  variant?: T;
                                                   titleColor?: T;
                                                   descColor?: T;
                                                   linkType?: T;
@@ -4303,6 +4322,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               desc?: T;
                                                               imageRatio?: T;
                                                               imageFit?: T;
+                                                              variant?: T;
                                                               titleColor?: T;
                                                               descColor?: T;
                                                               linkType?: T;
@@ -4416,6 +4436,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                                           desc?: T;
                                                                           imageRatio?: T;
                                                                           imageFit?: T;
+                                                                          variant?: T;
                                                                           titleColor?: T;
                                                                           descColor?: T;
                                                                           linkType?: T;
@@ -4568,6 +4589,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   desc?: T;
                                                   imageRatio?: T;
                                                   imageFit?: T;
+                                                  variant?: T;
                                                   titleColor?: T;
                                                   descColor?: T;
                                                   linkType?: T;
@@ -4681,6 +4703,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               desc?: T;
                                                               imageRatio?: T;
                                                               imageFit?: T;
+                                                              variant?: T;
                                                               titleColor?: T;
                                                               descColor?: T;
                                                               linkType?: T;
@@ -4876,6 +4899,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       desc?: T;
                                       imageRatio?: T;
                                       imageFit?: T;
+                                      variant?: T;
                                       titleColor?: T;
                                       descColor?: T;
                                       linkType?: T;
@@ -4959,6 +4983,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       desc?: T;
                                       imageRatio?: T;
                                       imageFit?: T;
+                                      variant?: T;
                                       titleColor?: T;
                                       descColor?: T;
                                       linkType?: T;
@@ -5119,6 +5144,7 @@ export interface PagesSelect<T extends boolean = true> {
                           desc?: T;
                           imageRatio?: T;
                           imageFit?: T;
+                          variant?: T;
                           titleColor?: T;
                           descColor?: T;
                           linkType?: T;
@@ -5232,6 +5258,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       desc?: T;
                                       imageRatio?: T;
                                       imageFit?: T;
+                                      variant?: T;
                                       titleColor?: T;
                                       descColor?: T;
                                       linkType?: T;
@@ -5380,6 +5407,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   desc?: T;
                                                   imageRatio?: T;
                                                   imageFit?: T;
+                                                  variant?: T;
                                                   titleColor?: T;
                                                   descColor?: T;
                                                   linkType?: T;
@@ -5493,6 +5521,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               desc?: T;
                                                               imageRatio?: T;
                                                               imageFit?: T;
+                                                              variant?: T;
                                                               titleColor?: T;
                                                               descColor?: T;
                                                               linkType?: T;
@@ -5645,6 +5674,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       desc?: T;
                                       imageRatio?: T;
                                       imageFit?: T;
+                                      variant?: T;
                                       titleColor?: T;
                                       descColor?: T;
                                       linkType?: T;
@@ -5758,6 +5788,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   desc?: T;
                                                   imageRatio?: T;
                                                   imageFit?: T;
+                                                  variant?: T;
                                                   titleColor?: T;
                                                   descColor?: T;
                                                   linkType?: T;
@@ -5910,6 +5941,7 @@ export interface PagesSelect<T extends boolean = true> {
               desc?: T;
               imageRatio?: T;
               imageFit?: T;
+              variant?: T;
               titleColor?: T;
               descColor?: T;
               linkType?: T;
@@ -6044,6 +6076,7 @@ export interface PagesSelect<T extends boolean = true> {
                           desc?: T;
                           imageRatio?: T;
                           imageFit?: T;
+                          variant?: T;
                           titleColor?: T;
                           descColor?: T;
                           linkType?: T;
@@ -6127,6 +6160,7 @@ export interface PagesSelect<T extends boolean = true> {
                           desc?: T;
                           imageRatio?: T;
                           imageFit?: T;
+                          variant?: T;
                           titleColor?: T;
                           descColor?: T;
                           linkType?: T;
