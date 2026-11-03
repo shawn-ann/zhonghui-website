@@ -349,6 +349,10 @@ export interface Page {
                                 desc?: string | null;
                                 imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                 /**
+                                 * 二维码等需要完整显示时选择“完整显示”
+                                 */
+                                imageFit?: ('cover' | 'contain') | null;
+                                /**
                                  * 标题颜色，留空沿用主题色
                                  */
                                 titleColor?: string | null;
@@ -526,6 +530,10 @@ export interface Page {
                                           subtitleColor?: string | null;
                                           desc?: string | null;
                                           imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                          /**
+                                           * 二维码等需要完整显示时选择“完整显示”
+                                           */
+                                          imageFit?: ('cover' | 'contain') | null;
                                           /**
                                            * 标题颜色，留空沿用主题色
                                            */
@@ -757,6 +765,10 @@ export interface Page {
                                                 desc?: string | null;
                                                 imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                                 /**
+                                                 * 二维码等需要完整显示时选择“完整显示”
+                                                 */
+                                                imageFit?: ('cover' | 'contain') | null;
+                                                /**
                                                  * 标题颜色，留空沿用主题色
                                                  */
                                                 titleColor?: string | null;
@@ -935,6 +947,10 @@ export interface Page {
                                                           subtitleColor?: string | null;
                                                           desc?: string | null;
                                                           imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                                          /**
+                                                           * 二维码等需要完整显示时选择“完整显示”
+                                                           */
+                                                          imageFit?: ('cover' | 'contain') | null;
                                                           /**
                                                            * 标题颜色，留空沿用主题色
                                                            */
@@ -1184,6 +1200,10 @@ export interface Page {
                                           desc?: string | null;
                                           imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                           /**
+                                           * 二维码等需要完整显示时选择“完整显示”
+                                           */
+                                          imageFit?: ('cover' | 'contain') | null;
+                                          /**
                                            * 标题颜色，留空沿用主题色
                                            */
                                           titleColor?: string | null;
@@ -1361,6 +1381,10 @@ export interface Page {
                                                     subtitleColor?: string | null;
                                                     desc?: string | null;
                                                     imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                                    /**
+                                                     * 二维码等需要完整显示时选择“完整显示”
+                                                     */
+                                                    imageFit?: ('cover' | 'contain') | null;
                                                     /**
                                                      * 标题颜色，留空沿用主题色
                                                      */
@@ -1653,6 +1677,10 @@ export interface Page {
                             desc?: string | null;
                             imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                             /**
+                             * 二维码等需要完整显示时选择“完整显示”
+                             */
+                            imageFit?: ('cover' | 'contain') | null;
+                            /**
                              * 标题颜色，留空沿用主题色
                              */
                             titleColor?: string | null;
@@ -1773,6 +1801,10 @@ export interface Page {
                                 subtitleColor?: string | null;
                                 desc?: string | null;
                                 imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                /**
+                                 * 二维码等需要完整显示时选择“完整显示”
+                                 */
+                                imageFit?: ('cover' | 'contain') | null;
                                 /**
                                  * 标题颜色，留空沿用主题色
                                  */
@@ -2030,6 +2062,10 @@ export interface Page {
                       desc?: string | null;
                       imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                       /**
+                       * 二维码等需要完整显示时选择“完整显示”
+                       */
+                      imageFit?: ('cover' | 'contain') | null;
+                      /**
                        * 标题颜色，留空沿用主题色
                        */
                       titleColor?: string | null;
@@ -2207,6 +2243,10 @@ export interface Page {
                                 subtitleColor?: string | null;
                                 desc?: string | null;
                                 imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                /**
+                                 * 二维码等需要完整显示时选择“完整显示”
+                                 */
+                                imageFit?: ('cover' | 'contain') | null;
                                 /**
                                  * 标题颜色，留空沿用主题色
                                  */
@@ -2438,6 +2478,10 @@ export interface Page {
                                       desc?: string | null;
                                       imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                       /**
+                                       * 二维码等需要完整显示时选择“完整显示”
+                                       */
+                                      imageFit?: ('cover' | 'contain') | null;
+                                      /**
                                        * 标题颜色，留空沿用主题色
                                        */
                                       titleColor?: string | null;
@@ -2615,6 +2659,10 @@ export interface Page {
                                                 subtitleColor?: string | null;
                                                 desc?: string | null;
                                                 imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                                /**
+                                                 * 二维码等需要完整显示时选择“完整显示”
+                                                 */
+                                                imageFit?: ('cover' | 'contain') | null;
                                                 /**
                                                  * 标题颜色，留空沿用主题色
                                                  */
@@ -2858,6 +2906,10 @@ export interface Page {
                                 desc?: string | null;
                                 imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                                 /**
+                                 * 二维码等需要完整显示时选择“完整显示”
+                                 */
+                                imageFit?: ('cover' | 'contain') | null;
+                                /**
                                  * 标题颜色，留空沿用主题色
                                  */
                                 titleColor?: string | null;
@@ -3035,6 +3087,10 @@ export interface Page {
                                           subtitleColor?: string | null;
                                           desc?: string | null;
                                           imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                                          /**
+                                           * 二维码等需要完整显示时选择“完整显示”
+                                           */
+                                          imageFit?: ('cover' | 'contain') | null;
                                           /**
                                            * 标题颜色，留空沿用主题色
                                            */
@@ -3290,6 +3346,10 @@ export interface Page {
             desc?: string | null;
             imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
             /**
+             * 二维码等需要完整显示时选择“完整显示”
+             */
+            imageFit?: ('cover' | 'contain') | null;
+            /**
              * 标题颜色，留空沿用主题色
              */
             titleColor?: string | null;
@@ -3471,6 +3531,10 @@ export interface Page {
                   desc?: string | null;
                   imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
                   /**
+                   * 二维码等需要完整显示时选择“完整显示”
+                   */
+                  imageFit?: ('cover' | 'contain') | null;
+                  /**
                    * 标题颜色，留空沿用主题色
                    */
                   titleColor?: string | null;
@@ -3591,6 +3655,10 @@ export interface Page {
                       subtitleColor?: string | null;
                       desc?: string | null;
                       imageRatio?: ('auto' | '1:1' | '4:3' | '3:4' | '16:9') | null;
+                      /**
+                       * 二维码等需要完整显示时选择“完整显示”
+                       */
+                      imageFit?: ('cover' | 'contain') | null;
                       /**
                        * 标题颜色，留空沿用主题色
                        */
@@ -3973,6 +4041,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       subtitleColor?: T;
                                       desc?: T;
                                       imageRatio?: T;
+                                      imageFit?: T;
                                       titleColor?: T;
                                       descColor?: T;
                                       linkType?: T;
@@ -4085,6 +4154,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   subtitleColor?: T;
                                                   desc?: T;
                                                   imageRatio?: T;
+                                                  imageFit?: T;
                                                   titleColor?: T;
                                                   descColor?: T;
                                                   linkType?: T;
@@ -4232,6 +4302,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               subtitleColor?: T;
                                                               desc?: T;
                                                               imageRatio?: T;
+                                                              imageFit?: T;
                                                               titleColor?: T;
                                                               descColor?: T;
                                                               linkType?: T;
@@ -4344,6 +4415,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                                           subtitleColor?: T;
                                                                           desc?: T;
                                                                           imageRatio?: T;
+                                                                          imageFit?: T;
                                                                           titleColor?: T;
                                                                           descColor?: T;
                                                                           linkType?: T;
@@ -4495,6 +4567,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   subtitleColor?: T;
                                                   desc?: T;
                                                   imageRatio?: T;
+                                                  imageFit?: T;
                                                   titleColor?: T;
                                                   descColor?: T;
                                                   linkType?: T;
@@ -4607,6 +4680,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               subtitleColor?: T;
                                                               desc?: T;
                                                               imageRatio?: T;
+                                                              imageFit?: T;
                                                               titleColor?: T;
                                                               descColor?: T;
                                                               linkType?: T;
@@ -4801,6 +4875,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       subtitleColor?: T;
                                       desc?: T;
                                       imageRatio?: T;
+                                      imageFit?: T;
                                       titleColor?: T;
                                       descColor?: T;
                                       linkType?: T;
@@ -4883,6 +4958,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       subtitleColor?: T;
                                       desc?: T;
                                       imageRatio?: T;
+                                      imageFit?: T;
                                       titleColor?: T;
                                       descColor?: T;
                                       linkType?: T;
@@ -5042,6 +5118,7 @@ export interface PagesSelect<T extends boolean = true> {
                           subtitleColor?: T;
                           desc?: T;
                           imageRatio?: T;
+                          imageFit?: T;
                           titleColor?: T;
                           descColor?: T;
                           linkType?: T;
@@ -5154,6 +5231,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       subtitleColor?: T;
                                       desc?: T;
                                       imageRatio?: T;
+                                      imageFit?: T;
                                       titleColor?: T;
                                       descColor?: T;
                                       linkType?: T;
@@ -5301,6 +5379,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   subtitleColor?: T;
                                                   desc?: T;
                                                   imageRatio?: T;
+                                                  imageFit?: T;
                                                   titleColor?: T;
                                                   descColor?: T;
                                                   linkType?: T;
@@ -5413,6 +5492,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               subtitleColor?: T;
                                                               desc?: T;
                                                               imageRatio?: T;
+                                                              imageFit?: T;
                                                               titleColor?: T;
                                                               descColor?: T;
                                                               linkType?: T;
@@ -5564,6 +5644,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       subtitleColor?: T;
                                       desc?: T;
                                       imageRatio?: T;
+                                      imageFit?: T;
                                       titleColor?: T;
                                       descColor?: T;
                                       linkType?: T;
@@ -5676,6 +5757,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   subtitleColor?: T;
                                                   desc?: T;
                                                   imageRatio?: T;
+                                                  imageFit?: T;
                                                   titleColor?: T;
                                                   descColor?: T;
                                                   linkType?: T;
@@ -5827,6 +5909,7 @@ export interface PagesSelect<T extends boolean = true> {
               subtitleColor?: T;
               desc?: T;
               imageRatio?: T;
+              imageFit?: T;
               titleColor?: T;
               descColor?: T;
               linkType?: T;
@@ -5960,6 +6043,7 @@ export interface PagesSelect<T extends boolean = true> {
                           subtitleColor?: T;
                           desc?: T;
                           imageRatio?: T;
+                          imageFit?: T;
                           titleColor?: T;
                           descColor?: T;
                           linkType?: T;
@@ -6042,6 +6126,7 @@ export interface PagesSelect<T extends boolean = true> {
                           subtitleColor?: T;
                           desc?: T;
                           imageRatio?: T;
+                          imageFit?: T;
                           titleColor?: T;
                           descColor?: T;
                           linkType?: T;

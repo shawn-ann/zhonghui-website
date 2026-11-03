@@ -82,6 +82,16 @@ describe('site blocks', () => {
     expect(card).toContain('adv-card is-compact')
   })
 
+  it('renders image text with the configured image fit', () => {
+    const contain = render(blockNode({
+      type: 'imageText', _id: 'it1', media: '/qr.png', imageRatio: '1:1', imageFit: 'contain',
+    })!)
+    expect(contain).toContain('object-fit:contain')
+
+    const cover = render(blockNode({ type: 'imageText', _id: 'it2', media: '/a.jpg' })!)
+    expect(cover).toContain('object-fit:cover')
+  })
+
   it('renders row-layout grids with explicit empty cells', () => {
     const cell = (children: any[] = []): any => ({ type: 'gridCell', children })
     const row = (cells: any[]): any => ({ type: 'gridRow', _id: 'r1', columns: 6, columnRatio: '1:1:1:1:1:1', children: cells })

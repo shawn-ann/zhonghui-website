@@ -303,7 +303,7 @@ export function ImageTextView({ b, editor = false }: { b: ImageTextBlock; editor
     <div className="image-text" style={padStyle(b.padding)}>
       {src ? (
         <div className="it-img" style={ratio ? { aspectRatio: ratio } : undefined}>
-          <img src={src} alt={b.title || ''} />
+          <img src={src} alt={b.title || ''} style={{ objectFit: b.imageFit || 'cover' }} />
         </div>
       ) : null}
       <div className="it-body">

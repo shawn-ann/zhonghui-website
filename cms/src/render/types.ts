@@ -87,6 +87,7 @@ export interface ImageBlock extends BlockBase {
 export interface ImageTextBlock extends BlockBase {
   type: 'imageText'
   media: string
+  imageFit?: 'cover' | 'contain'
   title?: string
   subtitle?: string
   subtitleColor?: string

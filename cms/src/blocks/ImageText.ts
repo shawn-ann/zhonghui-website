@@ -22,6 +22,16 @@ export const ImageTextBlock: Block = {
         { label: '16:9', value: '16:9' },
       ],
     },
+    {
+      name: 'imageFit',
+      type: 'select',
+      defaultValue: 'cover',
+      options: [
+        { label: '裁剪填充', value: 'cover' },
+        { label: '完整显示', value: 'contain' },
+      ],
+      admin: { description: '二维码等需要完整显示时选择“完整显示”' },
+    },
     { name: 'titleColor', type: 'text', admin: { description: '标题颜色，留空沿用主题色' } },
     { name: 'descColor', type: 'text', admin: { description: '描述颜色，留空沿用主题色' } },
     ...pageLinkFields(),
