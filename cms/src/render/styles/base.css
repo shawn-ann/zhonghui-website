@@ -314,6 +314,8 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   .banner--split .banner-photo { position: static; width: 100%; height: auto; margin-top: 24px; }
   .banner--split .banner-pattern { display: none; }
   .grid-cols-2, .grid-cols-3, .grid-cols-4, .grid-cols-5, .grid-cols-6, .gallery-cols-2, .gallery-cols-3, .gallery-cols-4 { grid-template-columns: 1fr; }
+  /* 行内比例以 inline style 输出，移动端必须强制单列 */
+  .grid { grid-template-columns: 1fr !important; }
   .grid-cell.is-empty { display: none; }
 }
 .image-text .it-subtitle { margin-top: 4px; color: #C07A39; font-size: 12px; font-weight: 600; }

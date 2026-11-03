@@ -178,11 +178,34 @@ const blocks: any[] = [
     { blockType: 'heading', title: '扫码咨询', align: 'center', titleColor: '#FFFFFF' },
     {
       blockType: 'grid',
-      columns: 2,
+      layout: 'rows',
+      columns: 6,
       gap: 'md',
       children: [
-        { blockType: 'imageText', media: qr, title: '公众号', desc: '公众号二维码', imageRatio: '1:1' },
-        { blockType: 'imageText', media: qr, title: '咨询微信', desc: '咨询微信二维码', imageRatio: '1:1' },
+        {
+          blockType: 'gridRow',
+          columns: 6,
+          gap: 'md',
+          columnRatio: '1:1:1:1:1:1',
+          children: [
+            { blockType: 'gridCell', children: [] },
+            { blockType: 'gridCell', children: [] },
+            {
+              blockType: 'gridCell',
+              children: [
+                { blockType: 'imageText', media: qr, title: '公众号', desc: '公众号二维码', imageRatio: '1:1', imageFit: 'contain' },
+              ],
+            },
+            {
+              blockType: 'gridCell',
+              children: [
+                { blockType: 'imageText', media: qr, title: '咨询微信', desc: '咨询微信二维码', imageRatio: '1:1', imageFit: 'contain' },
+              ],
+            },
+            { blockType: 'gridCell', children: [] },
+            { blockType: 'gridCell', children: [] },
+          ],
+        },
       ],
     },
   ], { bgImage: '/assets/yinji-bg.jpg' }),
