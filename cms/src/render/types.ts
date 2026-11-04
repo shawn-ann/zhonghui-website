@@ -238,7 +238,6 @@ export interface CaseCategory {
   banner?: string
   subtitle?: string
   pageSize: number
-  order: number
   seoTitle?: string
   seoDescription?: string
 }

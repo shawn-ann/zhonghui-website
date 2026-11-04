@@ -94,7 +94,6 @@ const categoryData: any = {
   banner,
   subtitle: '来自全国学员的真实案例与经验分享',
   pageSize: 12,
-  order: 0,
 }
 
 const foundCategory = await payload.find({

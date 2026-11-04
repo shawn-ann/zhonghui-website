@@ -19,7 +19,7 @@ export const CaseCategories: CollectionConfig = {
   access: { read: () => true },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'order', 'pageSize'],
+    defaultColumns: ['title', 'slug', 'pageSize'],
     description: '文章分类决定列表页与文章的所属栏目。',
   },
   hooks: {
@@ -68,7 +68,8 @@ export const CaseCategories: CollectionConfig = {
       max: 48,
       label: '每页文章数',
     },
-    { name: 'order', type: 'number', defaultValue: 0, label: '排序（越小越前）' },
+    // 旧字段：排序已移除，保留列以避免生产 schema 删除数据。
+    { name: 'order', type: 'number', defaultValue: 0, hidden: true },
     { name: 'seoTitle', type: 'text', hidden: true },
     { name: 'seoDescription', type: 'textarea', hidden: true },
   ],

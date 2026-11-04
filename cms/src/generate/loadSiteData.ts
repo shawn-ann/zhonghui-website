@@ -256,7 +256,6 @@ function mapCaseCategory(raw: Record<string, any>): CaseCategory | null {
     banner: resolveMedia(raw.banner) || undefined,
     subtitle: raw.subtitle || undefined,
     pageSize: Math.max(1, Math.trunc(Number(raw.pageSize) || 12)),
-    order: Number(raw.order) || 0,
     seoTitle: raw.seoTitle || undefined,
     seoDescription: raw.seoDescription || undefined,
   }
@@ -296,7 +295,7 @@ export async function loadSiteData(payload: {
       limit: 1000,
       depth: 1,
     }),
-    payload.find({ collection: 'case-categories', limit: 1000, depth: 1 }).catch(() => ({ docs: [] })),
+    payload.find({ collection: 'case-categories', limit: 1000, depth: 1, sort: 'title' }).catch(() => ({ docs: [] })),
     payload.find({
       collection: 'cases',
       where: { _status: { equals: 'published' } },

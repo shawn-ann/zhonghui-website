@@ -40,7 +40,7 @@ describe('loadSiteData', () => {
       find: async (args: any) => {
         if (args.collection === 'pages') return { docs: [] }
         if (args.collection === 'case-categories') {
-          return { docs: [{ id: 1, title: '案例分享', slug: 'study-case', pageSize: 12, order: 0 }] }
+          return { docs: [{ id: 1, title: '案例分享', slug: 'study-case', pageSize: 12 }] }
         }
         if (args.collection === 'cases') {
           expect(args.where).toEqual({ _status: { equals: 'published' } })

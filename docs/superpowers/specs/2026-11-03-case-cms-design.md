@@ -100,7 +100,6 @@
 | `banner` | upload(media) | 否 | 分类列表页 Banner 图 |
 | `subtitle` | text | 否 | 分类列表页副标题 |
 | `pageSize` | number | 是 | 每页条数，默认 12，范围 1–48 |
-| `order` | number | 否 | 后台排序，默认 0 |
 | `seoTitle` / `seoDescription` | text / textarea | 否 | 列表页 SEO 覆盖 |
 
 分类不使用草稿状态：保存即公开。删除分类前必须先把该分类下的案例移到其它分类；仍有案例时阻止删除，避免案例被静默隐藏或构建失败。
@@ -174,7 +173,7 @@ Banner（分类标题、副标题、分类 Banner 图）
 
 ### 8.1 运营流程
 
-1. 创建分类：名称、slug、Banner、副标题、每页条数、排序。
+1. 创建分类：名称、slug、Banner、副标题、每页条数。
 2. 创建案例：标题、slug、分类、封面、发布日期、富文本正文。
 3. 发布后由现有生成流程重建静态站。
 4. 菜单编辑器中选择链接类型：
@@ -201,7 +200,7 @@ Banner（分类标题、副标题、分类 Banner 图）
 
 `loadSiteData` 新增查询：
 
-- `caseCategories`（按 `order`、`title`；分类无草稿状态）
+- `caseCategories`（按 `title` 排序；分类无草稿状态）
 - `cases`（published，按 `publishedAt` 降序）
 - `caseRedirects`
 

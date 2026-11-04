@@ -58,6 +58,7 @@ html.admin-shell .template-default > .zc-sidebar {
 html.admin-shell .template-default__wrap {
   width: calc(100% - 224px);
   margin-left: 224px;
+  box-sizing: border-box;
   min-height: 100vh;
   transition: width .18s ease, margin-left .18s ease;
 }
@@ -71,6 +72,9 @@ html.admin-shell.zc-sidebar-collapsed .template-default__wrap {
   margin-left: 64px;
 }
 
+/* 给文档页头留出与列表页一致的顶部间距，同时避免 margin 穿透产生灰色空带 */
+html.admin-shell .template-default__wrap:has(.doc-header) { padding-top: 26px; }
+
 html.admin-shell.admin-custom-page .doc-header {
   display: none !important;
 }
@@ -83,6 +87,7 @@ html.ed-route .zc-mobilebar {
 
 html.ed-route .template-default__wrap {
   margin-left: 0 !important;
+  padding-top: 0;
 }
 
 /* Shared page header / breadcrumb */
@@ -529,7 +534,7 @@ html.admin-shell .list-header { padding-top: 26px; }
 html.admin-shell .collection-list { padding-bottom: 26px; }
 
 html.admin-shell .doc-header {
-  margin: 26px 32px 0;
+  margin: 0 32px 0;
   max-width: 1360px;
   border-bottom: 0;
   background: transparent;

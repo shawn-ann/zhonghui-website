@@ -3,7 +3,7 @@ import { buildCasePages, paginateCases } from '../casePages'
 import type { CaseCategory, CaseItem } from '../../render/types'
 
 const category: CaseCategory = {
-  id: 1, title: '案例分享', slug: 'study-case', pageSize: 2, order: 0,
+  id: 1, title: '案例分享', slug: 'study-case', pageSize: 2,
 }
 
 const item = (slug: string, publishedAt: string, categorySlug = 'study-case'): CaseItem => ({

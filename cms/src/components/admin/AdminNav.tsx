@@ -24,8 +24,8 @@ const GROUPS: NavGroup[] = [
     label: '文章管理',
     collapsible: true,
     items: [
-      { label: '文章列表', path: '/collections/cases', icon: 'pages' },
       { label: '分类管理', path: '/collections/case-categories', icon: 'menu' },
+      { label: '文章列表', path: '/collections/cases', icon: 'pages' },
     ],
   },
   {
