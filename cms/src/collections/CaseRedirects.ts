@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 export const CaseRedirects: CollectionConfig = {
   slug: 'case-redirects',
-  labels: { singular: '案例重定向', plural: '案例重定向' },
+  labels: { singular: '文章重定向', plural: '文章重定向' },
   access: { read: () => true },
   admin: {
     useAsTitle: 'from',

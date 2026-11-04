@@ -9,8 +9,8 @@ const itemFields = (): Field[] => [
     label: '链接类型',
     options: [
       { label: '内部页面', value: 'page' },
-      { label: '案例汇总', value: 'caseIndex' },
-      { label: '案例分类', value: 'caseCategory' },
+      { label: '文章汇总', value: 'caseIndex' },
+      { label: '文章分类', value: 'caseCategory' },
       { label: '外链', value: 'external' },
     ],
   },
@@ -25,7 +25,7 @@ const itemFields = (): Field[] => [
     name: 'caseCategory',
     type: 'relationship',
     relationTo: 'case-categories',
-    label: '案例分类',
+    label: '文章分类',
     admin: { condition: (_data, siblingData) => siblingData?.linkType === 'caseCategory' },
   },
   {

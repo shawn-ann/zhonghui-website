@@ -8,17 +8,19 @@ const slugField = {
   required: true,
   unique: true,
   index: true,
-  admin: { description: 'URL 段，只能使用小写字母、数字和连字符，如 study-case' },
+  label: 'URL 别名',
+  admin: { description: '分类链接的最后一段，只能使用小写字母、数字和连字符，如 study-case' },
   validate: (value: unknown) => validateCaseSlug(value),
 }
 
 export const CaseCategories: CollectionConfig = {
   slug: 'case-categories',
-  labels: { singular: '案例分类', plural: '案例分类' },
+  labels: { singular: '文章分类', plural: '文章分类' },
   access: { read: () => true },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'order', 'pageSize'],
+    description: '文章分类决定列表页与文章的所属栏目。',
   },
   hooks: {
     afterChange: [
@@ -49,8 +51,8 @@ export const CaseCategories: CollectionConfig = {
   fields: [
     { name: 'title', type: 'text', required: true, label: '分类名称' },
     slugField,
-    { name: 'banner', type: 'upload', relationTo: 'media', label: '列表页 Banner' },
-    { name: 'subtitle', type: 'text', label: '列表页副标题' },
+    { name: 'banner', type: 'upload', relationTo: 'media', label: '分类页 Banner' },
+    { name: 'subtitle', type: 'text', label: '分类页副标题' },
     {
       name: 'pageSize',
       type: 'number',
@@ -58,10 +60,10 @@ export const CaseCategories: CollectionConfig = {
       defaultValue: 12,
       min: 1,
       max: 48,
-      label: '每页条数',
+      label: '每页文章数',
     },
     { name: 'order', type: 'number', defaultValue: 0, label: '排序（越小越前）' },
-    { name: 'seoTitle', type: 'text', label: 'SEO 标题（可选）' },
-    { name: 'seoDescription', type: 'textarea', label: 'SEO 描述（可选）' },
+    { name: 'seoTitle', type: 'text', hidden: true },
+    { name: 'seoDescription', type: 'textarea', hidden: true },
   ],
 }

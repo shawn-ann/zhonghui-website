@@ -335,6 +335,29 @@ html.admin-shell .nav {
   color: var(--zc-sidebar-text);
   white-space: nowrap;
 }
+.zc-nav-parent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 38px;
+  margin-bottom: 3px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--zc-sidebar-text);
+  font: inherit;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.zc-nav-parent:hover { background: var(--zc-sidebar-hover); color: #fff; }
+.zc-nav-parent[aria-expanded="true"] { color: #fff; }
+.zc-nav-parent svg:first-child { flex: none; opacity: .8; }
+.zc-nav-chevron { margin-left: auto; opacity: .7; }
+.zc-nav-children { margin-left: 17px; padding-left: 8px; border-left: 1px solid rgba(255,255,255,.08); }
+.zc-nav-children .zc-nav-item { height: 34px; font-size: 13px; }
 .zc-nav-item:hover { background: var(--zc-sidebar-hover); color: #fff; }
 .zc-nav-item.is-active { background: var(--zc-sidebar-active); color: #fff; font-weight: 600; }
 .zc-nav-item.is-active::before {
@@ -441,7 +464,10 @@ html.admin-shell.zc-sidebar-collapsed .zc-nav-label {
   overflow: hidden;
   color: transparent;
 }
-html.admin-shell.zc-sidebar-collapsed .zc-nav-item { justify-content: center; padding: 0; }
+html.admin-shell.zc-sidebar-collapsed .zc-nav-item,
+html.admin-shell.zc-sidebar-collapsed .zc-nav-parent { justify-content: center; padding: 0; }
+html.admin-shell.zc-sidebar-collapsed .zc-nav-chevron { display: none; }
+html.admin-shell.zc-sidebar-collapsed .zc-nav-children { margin-left: 0; padding-left: 0; border-left: 0; }
 html.admin-shell.zc-sidebar-collapsed .zc-nav-text,
 html.admin-shell.zc-sidebar-collapsed .zc-account-name,
 html.admin-shell.zc-sidebar-collapsed .zc-account-chev { display: none; }

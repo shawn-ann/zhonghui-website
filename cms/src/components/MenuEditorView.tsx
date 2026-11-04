@@ -79,7 +79,7 @@ export default function MenuEditorView() {
       ])
       if (!menuRes.ok) throw new Error(`加载菜单失败：${menuRes.status}`)
       if (!pagesRes.ok) throw new Error(`加载页面失败：${pagesRes.status}`)
-      if (!categoriesRes.ok) throw new Error(`加载案例分类失败：${categoriesRes.status}`)
+      if (!categoriesRes.ok) throw new Error(`加载文章分类失败：${categoriesRes.status}`)
       const menu = await menuRes.json()
       const pageData = await pagesRes.json()
       const categoryData = await categoriesRes.json()
@@ -104,10 +104,10 @@ export default function MenuEditorView() {
   const categoryMap = useMemo(() => new Map(categories.map((c) => [String(c.id), c])), [categories])
 
   const linkText = (item: MenuItem): string => {
-    if (item.linkType === 'caseIndex') return '案例汇总（/blog/）'
+    if (item.linkType === 'caseIndex') return '文章汇总（/blog/）'
     if (item.linkType === 'caseCategory') {
       const c = item.categoryId != null ? categoryMap.get(String(item.categoryId)) : undefined
-      return c ? `${c.title}（/blog/${c.slug}/）` : '未选择案例分类'
+      return c ? `${c.title}（/blog/${c.slug}/）` : '未选择文章分类'
     }
     if (item.linkType === 'external') return item.externalUrl || '未填写外链'
     const p = item.pageId != null ? pageMap.get(String(item.pageId)) : undefined
@@ -215,7 +215,7 @@ export default function MenuEditorView() {
     const label = modal.label.trim()
     if (!label) { notify('error', '名称不能为空'); return }
     if (modal.linkType === 'page' && modal.pageId == null) { notify('error', '请选择内部页面'); return }
-    if (modal.linkType === 'caseCategory' && modal.categoryId == null) { notify('error', '请选择案例分类'); return }
+    if (modal.linkType === 'caseCategory' && modal.categoryId == null) { notify('error', '请选择文章分类'); return }
     if (modal.linkType === 'external' && !modal.externalUrl?.trim()) { notify('error', '请填写外链地址'); return }
     const item: MenuItem = {
       label,
@@ -357,8 +357,8 @@ export default function MenuEditorView() {
                 onChange={(e) => setModal({ ...modal, linkType: e.target.value as LinkType })}
               >
                 <option value="page">内部页面</option>
-                <option value="caseIndex">案例汇总（/blog/）</option>
-                <option value="caseCategory">案例分类</option>
+                <option value="caseIndex">文章汇总（/blog/）</option>
+                <option value="caseCategory">文章分类</option>
                 <option value="external">外链</option>
               </select>
             </label>
@@ -375,7 +375,7 @@ export default function MenuEditorView() {
             ) : null}
             {modal.linkType === 'caseCategory' ? (
               <label className="me-field">
-                <span>案例分类</span>
+                <span>文章分类</span>
                 <select value={modal.categoryId ?? ''} onChange={(e) => setModal({ ...modal, categoryId: e.target.value })}>
                   <option value="">选择分类…</option>
                   {categories.map((c) => (

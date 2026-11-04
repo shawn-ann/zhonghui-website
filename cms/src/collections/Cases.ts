@@ -5,12 +5,13 @@ import { casePath } from '../generate/redirects'
 
 export const Cases: CollectionConfig = {
   slug: 'cases',
-  labels: { singular: '案例', plural: '案例' },
+  labels: { singular: '文章', plural: '文章' },
   access: { read: () => true },
   versions: { drafts: true },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'publishedAt', '_status'],
+    description: '管理文章内容；选择文章分类、封面并填写正文后发布。',
   },
   hooks: {
     beforeChange: [
@@ -36,14 +37,15 @@ export const Cases: CollectionConfig = {
     ],
   },
   fields: [
-    { name: 'title', type: 'text', required: true, label: '标题' },
+    { name: 'title', type: 'text', required: true, label: '文章标题' },
     {
       name: 'slug',
       type: 'text',
       required: true,
       unique: true,
       index: true,
-      admin: { description: '详情 URL 段，如 xiaocao；发布后修改会生成重定向' },
+      label: 'URL 别名',
+      admin: { description: '文章链接的最后一段，如 xiaocao；发布后修改会自动生成旧链接跳转' },
       validate: (value: unknown) => validateCaseSlug(value),
     },
     {
@@ -51,25 +53,27 @@ export const Cases: CollectionConfig = {
       type: 'relationship',
       relationTo: 'case-categories',
       required: true,
-      label: '所属分类',
+      label: '文章分类',
+      admin: { position: 'sidebar' },
     },
     {
       name: 'cover',
       type: 'upload',
       relationTo: 'media',
       required: true,
-      label: '封面大图',
+      label: '封面图',
+      admin: { position: 'sidebar' },
     },
     {
       name: 'publishedAt',
       type: 'date',
       required: true,
       label: '发布日期',
-      admin: { date: { pickerAppearance: 'dayOnly' } },
+      admin: { position: 'sidebar', date: { pickerAppearance: 'dayOnly', displayFormat: 'yyyy-MM-dd' } },
     },
     { name: 'body', type: 'richText', required: true, label: '正文' },
     { name: 'publishedPath', type: 'text', hidden: true, admin: { readOnly: true } },
-    { name: 'seoTitle', type: 'text', label: 'SEO 标题（可选）' },
-    { name: 'seoDescription', type: 'textarea', label: 'SEO 描述（可选）' },
+    { name: 'seoTitle', type: 'text', hidden: true },
+    { name: 'seoDescription', type: 'textarea', hidden: true },
   ],
 }

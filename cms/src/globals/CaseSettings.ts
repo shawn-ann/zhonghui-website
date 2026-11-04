@@ -2,8 +2,9 @@ import type { GlobalConfig } from 'payload'
 
 export const CaseSettings: GlobalConfig = {
   slug: 'case-settings',
-  label: '案例汇总设置',
+  label: '文章设置',
   access: { read: () => true },
+  admin: { description: '配置文章汇总页的标题、Banner 和每页文章数。' },
   fields: [
     { name: 'indexTitle', type: 'text', defaultValue: '案例分享', label: '汇总页标题' },
     {
@@ -19,7 +20,7 @@ export const CaseSettings: GlobalConfig = {
       defaultValue: 12,
       min: 1,
       max: 48,
-      label: '汇总页每页条数',
+      label: '每页文章数',
     },
   ],
 }

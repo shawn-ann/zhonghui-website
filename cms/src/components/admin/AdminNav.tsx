@@ -8,18 +8,25 @@ import { AdminIcon, type AdminIconName } from './icons'
 const SIDEBAR_KEY = 'zhonghui.admin.sidebar'
 
 type NavItem = { label: string; path: string; icon: AdminIconName }
+type NavGroup = { label: string; items: NavItem[]; collapsible?: boolean }
 
-const GROUPS: { label: string; items: NavItem[] }[] = [
+const GROUPS: NavGroup[] = [
   {
     label: '内容',
     items: [
       { label: '页面', path: '/collections/pages', icon: 'pages' },
-      { label: '案例分类', path: '/collections/case-categories', icon: 'menu' },
-      { label: '案例', path: '/collections/cases', icon: 'pages' },
-      { label: '案例设置', path: '/globals/case-settings', icon: 'settings' },
       { label: '媒体库', path: '/collections/media', icon: 'media' },
       { label: '菜单', path: '/globals/menu', icon: 'menu' },
       { label: '站点设置', path: '/globals/site-settings', icon: 'settings' },
+    ],
+  },
+  {
+    label: '文章管理',
+    collapsible: true,
+    items: [
+      { label: '文章列表', path: '/collections/cases', icon: 'pages' },
+      { label: '分类管理', path: '/collections/case-categories', icon: 'menu' },
+      { label: '文章设置', path: '/globals/case-settings', icon: 'settings' },
     ],
   },
   {
@@ -34,6 +41,7 @@ export default function AdminNav() {
   const { user, logOut } = useAuth()
   const [collapsed, setCollapsed] = useState(false)
   const [accountOpen, setAccountOpen] = useState(false)
+  const [openGroups, setOpenGroups] = useState<Set<string>>(() => new Set(['文章管理']))
   const accountRef = useRef<HTMLDivElement>(null)
 
   const adminRoute = config.routes.admin || '/admin'
@@ -55,6 +63,9 @@ export default function AdminNav() {
   useEffect(() => {
     document.documentElement.classList.remove('zc-nav-open')
     setAccountOpen(false)
+    if (pathname?.includes('/collections/cases') || pathname?.includes('/case-categories') || pathname?.includes('/case-settings')) {
+      setOpenGroups((current) => new Set(current).add('文章管理'))
+    }
   }, [pathname])
 
   useEffect(() => {
@@ -126,29 +137,52 @@ export default function AdminNav() {
       </div>
 
       <nav className="zc-nav" aria-label="后台导航">
-        {GROUPS.map((group) => (
-          <div className="zc-nav-group" key={group.label}>
-            <div className="zc-nav-label">{group.label}</div>
-            {group.items.map((item) => {
-              const href = `${adminRoute}${item.path}`
-              const active = pathname === href || Boolean(pathname?.startsWith(`${href}/`))
-              return (
-                <Link
-                  aria-current={active ? 'page' : undefined}
-                  className={`zc-nav-item${active ? ' is-active' : ''}`}
-                  href={href}
-                  key={item.path}
-                  onClick={closeMobile}
-                  prefetch={false}
-                  title={item.label}
+        {GROUPS.map((group) => {
+          const open = !group.collapsible || openGroups.has(group.label)
+          return (
+            <div className={`zc-nav-group${group.collapsible ? ' is-collapsible' : ''}`} key={group.label}>
+              {group.collapsible ? (
+                <button
+                  aria-expanded={open}
+                  className="zc-nav-parent"
+                  onClick={() => setOpenGroups((current) => {
+                    const next = new Set(current)
+                    if (next.has(group.label)) next.delete(group.label)
+                    else next.add(group.label)
+                    return next
+                  })}
+                  type="button"
                 >
-                  <AdminIcon name={item.icon} />
-                  <span className="zc-nav-text">{item.label}</span>
-                </Link>
-              )
-            })}
-          </div>
-        ))}
+                  <AdminIcon name="pages" />
+                  <span className="zc-nav-text">{group.label}</span>
+                  <AdminIcon className="zc-nav-chevron" name={open ? 'chevronDown' : 'chevronRight'} size={14} />
+                </button>
+              ) : <div className="zc-nav-label">{group.label}</div>}
+              {open ? (
+                <div className={group.collapsible ? 'zc-nav-children' : undefined}>
+                  {group.items.map((item) => {
+                    const href = `${adminRoute}${item.path}`
+                    const active = pathname === href || Boolean(pathname?.startsWith(`${href}/`))
+                    return (
+                      <Link
+                        aria-current={active ? 'page' : undefined}
+                        className={`zc-nav-item${active ? ' is-active' : ''}`}
+                        href={href}
+                        key={item.path}
+                        onClick={closeMobile}
+                        prefetch={false}
+                        title={item.label}
+                      >
+                        <AdminIcon name={item.icon} />
+                        <span className="zc-nav-text">{item.label}</span>
+                      </Link>
+                    )
+                  })}
+                </div>
+              ) : null}
+            </div>
+          )
+        })}
       </nav>
 
       <div className="zc-sidebar-foot">

@@ -3904,6 +3904,8 @@ export interface Page {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * 文章分类决定列表页与文章的所属栏目。
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "case-categories".
  */
@@ -3911,7 +3913,7 @@ export interface CaseCategory {
   id: number;
   title: string;
   /**
-   * URL 段，只能使用小写字母、数字和连字符，如 study-case
+   * 分类链接的最后一段，只能使用小写字母、数字和连字符，如 study-case
    */
   slug: string;
   banner?: (number | null) | Media;
@@ -3924,6 +3926,8 @@ export interface CaseCategory {
   createdAt: string;
 }
 /**
+ * 管理文章内容；选择文章分类、封面并填写正文后发布。
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cases".
  */
@@ -3931,7 +3935,7 @@ export interface Case {
   id: number;
   title: string;
   /**
-   * 详情 URL 段，如 xiaocao；发布后修改会生成重定向
+   * 文章链接的最后一段，如 xiaocao；发布后修改会自动生成旧链接跳转
    */
   slug: string;
   category: number | CaseCategory;
@@ -6579,6 +6583,8 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
+ * 配置文章汇总页的标题、Banner 和每页文章数。
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "case-settings".
  */
