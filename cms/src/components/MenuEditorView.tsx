@@ -5,7 +5,7 @@ import { AdminPageHeader } from './admin/AdminPageHeader'
 
 interface PageOption { id: number | string; title: string; route: string; status?: string }
 interface CategoryOption { id: number | string; title: string; slug: string }
-type LinkType = 'page' | 'caseIndex' | 'caseCategory' | 'external'
+type LinkType = 'page' | 'caseCategory' | 'external'
 interface MenuItem {
   id?: number | string
   label: string
@@ -27,7 +27,7 @@ const pageIdValue = (value: number | string | undefined) =>
   typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : value
 
 const linkTypeOf = (i: any): LinkType => {
-  if (i?.linkType === 'caseIndex' || i?.linkType === 'caseCategory' || i?.linkType === 'external') return i.linkType
+  if (i?.linkType === 'caseCategory' || i?.linkType === 'external') return i.linkType
   return 'page'
 }
 
@@ -104,7 +104,6 @@ export default function MenuEditorView() {
   const categoryMap = useMemo(() => new Map(categories.map((c) => [String(c.id), c])), [categories])
 
   const linkText = (item: MenuItem): string => {
-    if (item.linkType === 'caseIndex') return '文章汇总（/blog/）'
     if (item.linkType === 'caseCategory') {
       const c = item.categoryId != null ? categoryMap.get(String(item.categoryId)) : undefined
       return c ? `${c.title}（/blog/${c.slug}/）` : '未选择文章分类'
@@ -357,7 +356,6 @@ export default function MenuEditorView() {
                 onChange={(e) => setModal({ ...modal, linkType: e.target.value as LinkType })}
               >
                 <option value="page">内部页面</option>
-                <option value="caseIndex">文章汇总（/blog/）</option>
                 <option value="caseCategory">文章分类</option>
                 <option value="external">外链</option>
               </select>

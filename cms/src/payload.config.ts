@@ -13,7 +13,6 @@ import { Cases } from './collections/Cases'
 import { CaseRedirects } from './collections/CaseRedirects'
 import { Menu } from './globals/Menu'
 import { SiteSettings } from './globals/SiteSettings'
-import { CaseSettings } from './globals/CaseSettings'
 import { getBuildStatus, startBuild } from './build/manager'
 
 const srcDir = path.resolve(process.cwd(), 'src')
@@ -51,7 +50,7 @@ export default buildConfig({
     fallbackLanguage: 'zh',
   },
   collections: [Users, Media, Pages, CaseCategories, Cases, CaseRedirects],
-  globals: [Menu, SiteSettings, CaseSettings],
+  globals: [Menu, SiteSettings],
   endpoints: [
     {
       path: '/rebuild',

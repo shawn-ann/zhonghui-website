@@ -1,7 +1,7 @@
 import { lexicalToHtml } from '../render/richText'
 import { normalizeColumnRatio } from '../render/columnRatio'
 import { effectiveRowColumns } from '../render/gridRows'
-import type { Block, CaseCategory, CaseIndexSettings, CaseItem, PageDoc, SiteData } from '../render/types'
+import type { Block, CaseCategory, CaseItem, PageDoc, SiteData } from '../render/types'
 import { buildSiteConfig } from '../site/config'
 import { buildCasePages } from './casePages'
 
@@ -285,15 +285,6 @@ function mapCaseItem(raw: Record<string, any>, categories: Map<string, CaseCateg
   }
 }
 
-function mapCaseSettings(raw: any): CaseIndexSettings {
-  return {
-    indexTitle: raw?.indexTitle || '案例分享',
-    indexSubtitle: raw?.indexSubtitle || '每一段旅程，都值得被记录',
-    indexBanner: resolveMedia(raw?.indexBanner) || undefined,
-    indexPageSize: Math.max(1, Math.trunc(Number(raw?.indexPageSize) || 12)),
-  }
-}
-
 export async function loadSiteData(payload: {
   find: (args: any) => Promise<{ docs: any[] }>
   findGlobal?: (args: any) => Promise<any>
@@ -322,15 +313,13 @@ export async function loadSiteData(payload: {
     .filter((x): x is CaseItem => x !== null)
   let menuRaw: any = null
   let settingsRaw: any = null
-  let caseSettingsRaw: any = null
   if (payload.findGlobal) {
-    ;[menuRaw, settingsRaw, caseSettingsRaw] = await Promise.all([
+    ;[menuRaw, settingsRaw] = await Promise.all([
       payload.findGlobal({ slug: 'menu', depth: 1 }).catch(() => null),
       payload.findGlobal({ slug: 'site-settings', depth: 1 }).catch(() => null),
-      payload.findGlobal({ slug: 'case-settings', depth: 1 }).catch(() => null),
     ])
   }
-  const casePages = buildCasePages(categories, cases, mapCaseSettings(caseSettingsRaw))
+  const casePages = buildCasePages(categories, cases)
   const categoryRoutes = new Map(categories.map((category) => [String(category.id), `/blog/${category.slug}/`]))
   const redirects = redirectRes.docs
     .map((raw) => ({ from: String(raw?.from ?? '').trim(), to: String(raw?.to ?? '').trim() }))

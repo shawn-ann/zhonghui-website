@@ -60,14 +60,13 @@ describe('loadSiteData', () => {
         }
         return { docs: [] }
       },
-      findGlobal: async ({ slug }: any) => slug === 'case-settings'
-        ? { indexTitle: '案例分享', indexSubtitle: '故事', indexPageSize: 12 }
-        : {},
+      findGlobal: async () => ({}),
     }
     const data = await loadSiteData(payload as any)
     expect(data.pages.map((p) => p.route)).toEqual(expect.arrayContaining([
-      '/blog/', '/blog/study-case/', '/blog/study-case/xiaocao/',
+      '/blog/study-case/', '/blog/study-case/xiaocao/',
     ]))
+    expect(data.pages.find((p) => p.route === '/blog/')).toBeUndefined()
     expect(data.pages.find((p) => p.route.includes('/draft/'))).toBeUndefined()
     expect(data.redirects).toEqual([{ from: '/blog/old/xiaocao/', to: '/blog/study-case/xiaocao/' }])
   })

@@ -26,7 +26,6 @@ const GROUPS: NavGroup[] = [
     items: [
       { label: '文章列表', path: '/collections/cases', icon: 'pages' },
       { label: '分类管理', path: '/collections/case-categories', icon: 'menu' },
-      { label: '汇总页设置', path: '/globals/case-settings', icon: 'settings' },
     ],
   },
   {
@@ -63,7 +62,7 @@ export default function AdminNav() {
   useEffect(() => {
     document.documentElement.classList.remove('zc-nav-open')
     setAccountOpen(false)
-    if (pathname?.includes('/collections/cases') || pathname?.includes('/case-categories') || pathname?.includes('/case-settings')) {
+    if (pathname?.includes('/collections/cases') || pathname?.includes('/case-categories')) {
       setOpenGroups((current) => new Set(current).add('文章管理'))
     }
   }, [pathname])

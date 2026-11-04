@@ -9,7 +9,7 @@ const category = { id: 1, title: '案例分享', slug: 'study-case', pageSize: 1
 
 const listPage = (overrides: Partial<PageDoc> = {}): PageDoc => ({
   title: '案例分享',
-  route: '/blog/',
+  route: '/blog/study-case/',
   blocks: [],
   template: {
     kind: 'caseList',
@@ -18,7 +18,7 @@ const listPage = (overrides: Partial<PageDoc> = {}): PageDoc => ({
       categorySlug: 'study-case', categoryTitle: '案例分享', cover: '/media/a.jpg',
       publishedAt: '2025-07-02', body: null,
     }],
-    page: 1, pageCount: 2, pageSize: 12, basePath: '/blog/',
+    page: 1, pageCount: 2, pageSize: 12, basePath: '/blog/study-case/',
     title: '案例分享', subtitle: '每一段旅程', banner: '/media/banner.jpg',
   },
   ...overrides,

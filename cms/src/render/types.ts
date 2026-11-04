@@ -258,13 +258,6 @@ export interface CaseItem {
   seoDescription?: string
 }
 
-export interface CaseIndexSettings {
-  indexTitle: string
-  indexSubtitle: string
-  indexBanner?: string
-  indexPageSize: number
-}
-
 export interface CaseListTemplate {
   kind: 'caseList'
   category?: CaseCategory

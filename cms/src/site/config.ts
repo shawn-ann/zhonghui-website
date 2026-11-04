@@ -39,8 +39,7 @@ function resolveMenu(
   return items.flatMap((item) => {
     const type = item?.linkType || 'page'
     let link: string | undefined
-    if (type === 'caseIndex') link = '/blog/'
-    else if (type === 'caseCategory') {
+    if (type === 'caseCategory') {
       const category = item?.caseCategory
       const id = category && typeof category === 'object' ? category.id : category
       link = id != null ? categoryRoutes?.get(String(id)) : undefined

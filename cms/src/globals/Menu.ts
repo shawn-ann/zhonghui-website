@@ -9,7 +9,6 @@ const itemFields = (): Field[] => [
     label: '链接类型',
     options: [
       { label: '内部页面', value: 'page' },
-      { label: '文章汇总', value: 'caseIndex' },
       { label: '文章分类', value: 'caseCategory' },
       { label: '外链', value: 'external' },
     ],

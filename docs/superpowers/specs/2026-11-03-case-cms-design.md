@@ -25,7 +25,7 @@
 - 列表卡片只显示封面图和标题。
 - 详情页用封面作为顶部长图，叠加标题和日期，下接富文本正文。
 - 分类的 Banner、副标题、每页条数可独立配置。
-- 导航中可选择“案例汇总”或某个案例分类作为链接。
+- 导航中只能选择某个案例分类作为链接。
 - 分类或案例换 slug 时保留旧链接重定向。
 
 ### 非目标
@@ -48,7 +48,7 @@
 1. **潜在学员/家长**：从导航或首页进入 `/blog/`，浏览全部案例；点击卡片进入详情，看封面、日期和完整故事。
 2. **运营新增分类**：在后台创建分类，填写名称、slug、Banner、副标题、每页条数；保存后自动拥有 `/blog/{slug}/` 列表页。
 3. **运营发布案例**：选择分类，填标题、slug、封面、日期，写富文本正文；列表和详情自动更新。
-4. **运营调整导航**：在菜单编辑器中选择“案例汇总”或某个分类，菜单链接自动解析到对应列表。
+4. **运营调整导航**：在菜单编辑器中选择某个分类，菜单链接自动解析到对应列表。
 5. **案例换分类或改 slug**：旧 URL 自动重定向到新 URL。
 
 ## 4. 方案选择
@@ -78,8 +78,6 @@
 ## 5. 信息架构与 URL
 
 ```text
-/blog/                              全部案例（跨分类，按日期倒序）
-/blog/page/{n}/                     全部案例分页
 /blog/{categorySlug}/               分类列表
 /blog/{categorySlug}/page/{n}/      分类分页
 /blog/{categorySlug}/{caseSlug}/    案例详情
@@ -122,16 +120,7 @@
 
 列表排序：`publishedAt` 降序；同日期按 `createdAt` 降序，保证稳定。
 
-### 6.3 案例汇总设置 `caseSettings`（global）
-
-| 字段 | 类型 | 默认 | 说明 |
-|---|---|---|---|
-| `indexTitle` | text | 案例分享 | `/blog/` 标题 |
-| `indexSubtitle` | text | 每一段旅程，都值得被记录 | `/blog/` 副标题 |
-| `indexBanner` | upload(media) | 空 | `/blog/` Banner 图 |
-| `indexPageSize` | number | 12 | `/blog/` 每页条数 |
-
-### 6.4 重定向 `caseRedirects`
+### 6.3 重定向 `caseRedirects`
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
@@ -150,22 +139,7 @@
 
 ## 7. 页面设计
 
-### 7.1 `/blog/` 全部案例
-
-```text
-导航
-Banner（案例汇总设置：标题、副标题、Banner 图）
-案例宫格（4 列 × N 行）
-分页
-页脚
-```
-
-- 宫格 4 列；≤1000px 3 列或 4 列按现有响应式规则；≤600px 2 列。
-- 卡片：1:1 封面图，底部半透明玫红遮罩 + 白色标题；不显示日期、摘要、分类。
-- 分页：页码按钮 + 当前页信息；每页条数取 `indexPageSize`。
-- 空状态：显示「暂无案例」。
-
-### 7.2 `/blog/{分类}/` 分类列表
+### 7.1 `/blog/{分类}/` 分类列表
 
 ```text
 导航
@@ -204,7 +178,6 @@ Banner（分类标题、副标题、分类 Banner 图）
 2. 创建案例：标题、slug、分类、封面、发布日期、富文本正文。
 3. 发布后由现有生成流程重建静态站。
 4. 菜单编辑器中选择链接类型：
-   - 案例汇总 → `/blog/`
    - 案例分类 → `/blog/{分类slug}/`
    - 普通页面 → 现有 Page
    - 外链 → 现有外链（如已有）
@@ -213,14 +186,14 @@ Banner（分类标题、副标题、分类 Banner 图）
 
 现有菜单项只关联 `pages`。扩展为：
 
-- `linkType`: `page`（默认）/ `caseIndex` / `caseCategory` / `external`
+- `linkType`: `page`（默认）/ `caseCategory` / `external`
 - `page`: 原有 Page 关系，`linkType=page` 时使用
 - `caseCategory`: 关联 `caseCategories`，`linkType=caseCategory` 时使用
 - `externalUrl`: `linkType=external` 时使用
 
 菜单不自动插入分类；运营显式添加，避免分类增加导致导航自动变长。
 
-导航激活态：分类列表与详情页应让对应分类菜单项高亮；`/blog/` 汇总页高亮“案例汇总”项。
+导航激活态：分类列表与详情页应让对应分类菜单项高亮。
 
 ## 9. 生成与渲染架构
 
@@ -230,10 +203,9 @@ Banner（分类标题、副标题、分类 Banner 图）
 
 - `caseCategories`（按 `order`、`title`；分类无草稿状态）
 - `cases`（published，按 `publishedAt` 降序）
-- `caseSettings` global
 - `caseRedirects`
 
-输出 `SiteData` 增加 `caseCategories`、`cases`、`caseSettings`、`caseRedirects`，或在加载阶段直接合成 `PageDoc[]`。
+输出 `SiteData` 增加 `caseCategories`、`cases`、`caseRedirects`，或在加载阶段直接合成 `PageDoc[]`。
 
 推荐：加载阶段合成页面，复用现有 `pages` 生成管线：
 
@@ -260,13 +232,12 @@ Banner（分类标题、副标题、分类 Banner 图）
 生成器按以下规则输出文件：
 
 ```text
-/blog/index.html
-/blog/page/2/index.html
 /blog/study-case/index.html
 /blog/study-case/page/2/index.html
 /blog/study-case/xiaocao/index.html
 ```
 
+- 不生成 `/blog/` 汇总页。
 - 不从第 1 页生成 `/page/1/`。
 - 分类列表页数 = `ceil(该分类案例数 / pageSize)`。
 - `/blog/` 页数 = `ceil(全部案例数 / indexPageSize)`。
@@ -288,11 +259,9 @@ Banner（分类标题、副标题、分类 Banner 图）
 |---|---|
 | `cases` 集合 | 自定义文章类型 `case` |
 | `caseCategories` 集合 | 分类法 `case_category` |
-| `/blog/` | 文章类型归档 `archive-case.php` |
 | `/blog/{分类}/` | 分类归档 `taxonomy-case_category.php` |
 | `/blog/{分类}/{slug}/` | 单篇模板 `single-case.php` |
 | 分类 Banner/副标题 | Term Meta / ACF 分类字段 |
-| `caseSettings` | 主题选项/自定义器 |
 | 菜单选择分类 | 菜单项关联分类术语 |
 | `caseRedirects` | Redirection 插件/301 规则 |
 
@@ -306,12 +275,12 @@ Banner（分类标题、副标题、分类 Banner 图）
 ## 12. 验收标准
 
 - 新增分类后，不新增页面文件即可访问 `/blog/{slug}/`。
-- `/blog/` 汇总所有分类，分类页只显示本分类。
-- 列表按日期倒序；分页条数按分类/汇总配置。
+- 每个分类有独立列表页，只显示本分类。
+- 列表按日期倒序；分页条数按分类配置。
 - 卡片只显示封面 + 标题。
 - 详情页只有封面大图 + 标题/日期 + 富文本；无辅助导航。
 - 案例换分类后，旧详情 URL 可跳转到新 URL。
-- 菜单可选择“案例汇总”或分类，链接正确且激活态正确。
+- 菜单可选择分类，链接正确且激活态正确。
 - 手机端列表 2 列、详情 Hero 自适应，无横向滚动。
 - `tsc`、测试、`build:generator` 通过。
 

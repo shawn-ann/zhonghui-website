@@ -98,12 +98,10 @@ export interface Config {
   globals: {
     menu: Menu;
     'site-settings': SiteSetting;
-    'case-settings': CaseSetting;
   };
   globalsSelect: {
     menu: MenuSelect<false> | MenuSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
-    'case-settings': CaseSettingsSelect<false> | CaseSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -6531,14 +6529,14 @@ export interface Menu {
   items?:
     | {
         label: string;
-        linkType?: ('page' | 'caseIndex' | 'caseCategory' | 'external') | null;
+        linkType?: ('page' | 'caseCategory' | 'external') | null;
         page?: (number | null) | Page;
         caseCategory?: (number | null) | CaseCategory;
         externalUrl?: string | null;
         children?:
           | {
               label: string;
-              linkType?: ('page' | 'caseIndex' | 'caseCategory' | 'external') | null;
+              linkType?: ('page' | 'caseCategory' | 'external') | null;
               page?: (number | null) | Page;
               caseCategory?: (number | null) | CaseCategory;
               externalUrl?: string | null;
@@ -6579,21 +6577,6 @@ export interface SiteSetting {
   langCurrentLabel?: string | null;
   langOtherLabel?: string | null;
   langOtherUrl?: string | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * 配置文章汇总页的标题、Banner 和每页文章数。
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "case-settings".
- */
-export interface CaseSetting {
-  id: number;
-  indexTitle?: string | null;
-  indexSubtitle?: string | null;
-  indexBanner?: (number | null) | Media;
-  indexPageSize?: number | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -6653,19 +6636,6 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   langCurrentLabel?: T;
   langOtherLabel?: T;
   langOtherUrl?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "case-settings_select".
- */
-export interface CaseSettingsSelect<T extends boolean = true> {
-  indexTitle?: T;
-  indexSubtitle?: T;
-  indexBanner?: T;
-  indexPageSize?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

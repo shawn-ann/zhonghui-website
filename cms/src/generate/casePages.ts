@@ -1,6 +1,5 @@
 import type {
   CaseCategory,
-  CaseIndexSettings,
   CaseItem,
   CaseListTemplate,
   PageDoc,
@@ -65,20 +64,9 @@ function listPage(
 export function buildCasePages(
   categories: CaseCategory[],
   items: CaseItem[],
-  settings: CaseIndexSettings,
 ): PageDoc[] {
   const pages: PageDoc[] = []
   const all = sorted(items)
-  const indexSize = Math.max(1, Math.trunc(settings.indexPageSize) || 12)
-  const indexPages = paginateCases(all, indexSize)
-  indexPages.forEach((pageItems, index) => {
-    pages.push(listPage(
-      '/blog/', index + 1, indexPages.length, indexSize, pageItems,
-      settings.indexTitle || '案例分享', settings.indexSubtitle, settings.indexBanner,
-      undefined, { title: settings.indexTitle },
-    ))
-  })
-
   const categoryById = new Map(categories.map((category) => [String(category.id), category]))
   for (const category of categories) {
     const categoryItems = all.filter((item) => String(item.categoryId) === String(category.id))
@@ -88,7 +76,7 @@ export function buildCasePages(
     chunks.forEach((pageItems, index) => {
       pages.push(listPage(
         basePath, index + 1, chunks.length, size, pageItems,
-        category.title, category.subtitle, category.banner || settings.indexBanner, category,
+        category.title, category.subtitle, category.banner, category,
         { title: category.seoTitle, description: category.seoDescription },
       ))
     })

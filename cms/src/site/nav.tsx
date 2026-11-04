@@ -3,7 +3,6 @@ import type { MenuNode, SiteSettings } from '../render/types'
 
 function isActiveLink(link: string, activeRoute: string): boolean {
   if (link === activeRoute) return true
-  if (link === '/blog/') return activeRoute.startsWith('/blog/page/')
   return link !== '/' && activeRoute.startsWith(link)
 }
 
