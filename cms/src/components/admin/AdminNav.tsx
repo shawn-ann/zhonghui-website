@@ -14,6 +14,9 @@ const GROUPS: { label: string; items: NavItem[] }[] = [
     label: '内容',
     items: [
       { label: '页面', path: '/collections/pages', icon: 'pages' },
+      { label: '案例分类', path: '/collections/case-categories', icon: 'menu' },
+      { label: '案例', path: '/collections/cases', icon: 'pages' },
+      { label: '案例设置', path: '/globals/case-settings', icon: 'settings' },
       { label: '媒体库', path: '/collections/media', icon: 'media' },
       { label: '菜单', path: '/globals/menu', icon: 'menu' },
       { label: '站点设置', path: '/globals/site-settings', icon: 'settings' },
