@@ -2,7 +2,7 @@ import type { GlobalConfig } from 'payload'
 
 export const CaseSettings: GlobalConfig = {
   slug: 'case-settings',
-  label: '文章设置',
+  label: '汇总页设置',
   access: { read: () => true },
   admin: { description: '配置文章汇总页的标题、Banner 和每页文章数。' },
   fields: [

@@ -531,7 +531,7 @@ html.admin-shell .collection-list { padding-bottom: 26px; }
 html.admin-shell .doc-header {
   margin: 26px 32px 0;
   max-width: 1360px;
-  border-bottom: 1px solid var(--zc-border);
+  border-bottom: 0;
   background: transparent;
 }
 

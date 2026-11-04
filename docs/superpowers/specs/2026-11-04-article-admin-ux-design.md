@@ -25,7 +25,7 @@
 文章管理
 ├── 文章列表    /admin/collections/cases
 ├── 分类管理    /admin/collections/case-categories
-└── 文章设置    /admin/globals/case-settings
+└── 汇总页设置  /admin/globals/case-settings
 ```
 
 - 进入任一子页面时父菜单自动展开。

@@ -51,7 +51,13 @@ export const CaseCategories: CollectionConfig = {
   fields: [
     { name: 'title', type: 'text', required: true, label: '分类名称' },
     slugField,
-    { name: 'banner', type: 'upload', relationTo: 'media', label: '分类页 Banner' },
+    {
+      name: 'banner',
+      type: 'upload',
+      relationTo: 'media',
+      label: '分类页 Banner',
+      admin: { components: { Field: '/components/admin/MediaPickerField' } },
+    },
     { name: 'subtitle', type: 'text', label: '分类页副标题' },
     {
       name: 'pageSize',

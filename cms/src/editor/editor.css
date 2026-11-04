@@ -22,7 +22,7 @@
   height: 56px;
   padding: 0 18px;
   background: #fff;
-  border-bottom: 1px solid var(--zc-border, #ede4e8);
+  border-bottom: 0;
   color: var(--zc-text, #332b2f);
   flex: 0 0 auto;
   position: relative;
