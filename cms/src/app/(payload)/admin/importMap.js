@@ -24,6 +24,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { default as default_f84bc8909d8c33d18d058cbb414dc978 } from '../../../components/PageEditorView'
 import { default as default_2cffe5512ab00a409c609c9de6027dd0 } from '../../../components/PagesListView'
 import { default as default_00d2043d6a905117a42ed0b37918a470 } from '../../../components/admin/MediaPickerField'
+import { default as default_18cd036d77eabff6fb4f3a7b46ae2e06 } from '../../../components/admin/ArticleBodyField'
 import { default as default_e370300bac7fefe2e17bbf10b0e9c408 } from '../../../components/MenuEditorView'
 import { default as default_078419d98ad8d8f4ad9d5f83c0e09b49 } from '../../../components/SiteSettingsView'
 import { default as default_231477f0faa4368be46fd47ffb9da4d9 } from '../../../components/admin/AdminNav'
@@ -61,6 +62,7 @@ export const importMap = {
   "/components/PageEditorView#default": default_f84bc8909d8c33d18d058cbb414dc978,
   "/components/PagesListView#default": default_2cffe5512ab00a409c609c9de6027dd0,
   "/components/admin/MediaPickerField#default": default_00d2043d6a905117a42ed0b37918a470,
+  "/components/admin/ArticleBodyField#default": default_18cd036d77eabff6fb4f3a7b46ae2e06,
   "/components/MenuEditorView#default": default_e370300bac7fefe2e17bbf10b0e9c408,
   "/components/SiteSettingsView#default": default_078419d98ad8d8f4ad9d5f83c0e09b49,
   "/components/admin/AdminNav#default": default_231477f0faa4368be46fd47ffb9da4d9,
