@@ -21,6 +21,11 @@ export const CaseCategories: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'pageSize'],
     description: '文章分类决定列表页与文章的所属栏目。',
+    components: {
+      edit: {
+        beforeDocumentControls: ['/components/admin/CollectionPreviewLink'],
+      },
+    },
   },
   hooks: {
     afterChange: [
