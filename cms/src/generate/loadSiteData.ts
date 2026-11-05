@@ -245,7 +245,7 @@ export function resolveMedia(m: unknown): string {
   return ''
 }
 
-function mapCaseCategory(raw: Record<string, any>): CaseCategory | null {
+export function mapCaseCategory(raw: Record<string, any>): CaseCategory | null {
   const slug = String(raw?.slug ?? '').trim()
   const title = String(raw?.title ?? '').trim()
   if (!slug || !title) return null
@@ -261,8 +261,12 @@ function mapCaseCategory(raw: Record<string, any>): CaseCategory | null {
   }
 }
 
-function mapCaseItem(raw: Record<string, any>, categories: Map<string, CaseCategory>): CaseItem | null {
-  if (raw?._status && raw._status !== 'published') return null
+export function mapCaseItem(
+  raw: Record<string, any>,
+  categories: Map<string, CaseCategory>,
+  options: { allowDraft?: boolean } = {},
+): CaseItem | null {
+  if (!options.allowDraft && raw?._status && raw._status !== 'published') return null
   const slug = String(raw?.slug ?? '').trim()
   const title = String(raw?.title ?? '').trim()
   const categoryId = raw?.category && typeof raw.category === 'object' ? raw.category.id : raw?.category
