@@ -22,6 +22,9 @@ export const CaseCategories: CollectionConfig = {
     defaultColumns: ['title', 'slug', 'pageSize'],
     description: '文章分类决定列表页与文章的所属栏目。',
     components: {
+      views: {
+        list: { Component: '/components/admin/CategoryListView' },
+      },
       edit: {
         beforeDocumentControls: ['/components/admin/CollectionPreviewLink'],
       },
