@@ -16,15 +16,21 @@ async function loadPreview(id: string) {
   if (!user) return null
   try {
     const doc = await payload.findByID({ collection: 'pages', id, draft: true })
-    const pages = await payload.find({ collection: 'pages', limit: 1000, depth: 0, draft: true })
+    const [pages, categories] = await Promise.all([
+      payload.find({ collection: 'pages', limit: 1000, depth: 0, draft: true }),
+      payload.find({ collection: 'case-categories', limit: 1000, depth: 0 }),
+    ])
     const routes = new Map<string, string>(
       pages.docs.map((d: any) => [String(d.id), String(d.route ?? '')]),
+    )
+    const categoryRoutes = new Map<string, string>(
+      categories.docs.map((c: any) => [String(c.id), `/blog/${c.slug}/`]),
     )
     const [menuRaw, settingsRaw] = await Promise.all([
       payload.findGlobal({ slug: 'menu', depth: 1 }).catch(() => null),
       payload.findGlobal({ slug: 'site-settings', depth: 1 }).catch(() => null),
     ])
-    return { doc, site: buildSiteConfig(menuRaw, settingsRaw, routes) }
+    return { doc, site: buildSiteConfig(menuRaw, settingsRaw, routes, categoryRoutes) }
   } catch {
     return null
   }
