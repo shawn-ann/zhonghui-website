@@ -3941,7 +3941,7 @@ export interface Case {
   slug: string;
   category: number | CaseCategory;
   cover: number | Media;
-  publishedAt: string;
+  publishedAt?: string | null;
   body: {
     root: {
       type: string;

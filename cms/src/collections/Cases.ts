@@ -2,12 +2,14 @@ import type { CollectionConfig } from 'payload'
 import { validateCaseSlug } from './caseSlug'
 import { categorySlugOf, upsertRedirect } from './redirectHooks'
 import { casePath } from '../generate/redirects'
+import { resolvePublishedAt } from './publishedAt'
 
 export const Cases: CollectionConfig = {
   slug: 'cases',
   labels: { singular: '文章', plural: '文章' },
   access: { read: () => true },
   versions: { drafts: true },
+  defaultSort: '-publishedAt',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'publishedAt', '_status'],
@@ -20,6 +22,15 @@ export const Cases: CollectionConfig = {
   },
   hooks: {
     beforeChange: [
+      ({ data, originalDoc, operation }) => {
+        data.publishedAt = resolvePublishedAt({
+          operation,
+          current: (originalDoc as any)?.publishedAt,
+          incoming: data.publishedAt,
+          createdAt: (originalDoc as any)?.createdAt,
+        })
+        return data
+      },
       async ({ data, originalDoc, req }) => {
         if (data._status !== 'published') return data
         const categorySlug = await categorySlugOf(req.payload, data.category)
@@ -59,7 +70,7 @@ export const Cases: CollectionConfig = {
       relationTo: 'case-categories',
       required: true,
       label: '文章分类',
-      admin: { position: 'sidebar' },
+      admin: { position: 'sidebar', allowCreate: false, allowEdit: false },
     },
     {
       name: 'cover',
@@ -72,9 +83,8 @@ export const Cases: CollectionConfig = {
     {
       name: 'publishedAt',
       type: 'date',
-      required: true,
       label: '发布日期',
-      admin: { position: 'sidebar', date: { pickerAppearance: 'dayOnly', displayFormat: 'yyyy-MM-dd' } },
+      admin: { hidden: true },
     },
     {
       name: 'body',
