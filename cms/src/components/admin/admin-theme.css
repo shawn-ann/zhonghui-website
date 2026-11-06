@@ -574,7 +574,17 @@ html.admin-shell:has(.collection-edit--cases) .doc-header { display: none !impor
   background: #fff; border-bottom: 1px solid var(--zc-border);
 }
 .collection-edit--cases .doc-controls__wrapper { align-items: center; }
-.collection-edit--cases .doc-controls__meta { font-size: 12px; color: var(--zc-muted); }
+.collection-edit--cases .doc-controls__meta { display: none; }
+.collection-edit--cases .zc-doc-meta {
+  display: flex; align-items: center; gap: 14px;
+  margin-right: auto; font-size: 12px; color: var(--zc-muted);
+}
+.collection-edit--cases .zc-doc-status {
+  display: inline-flex; align-items: center; padding: 3px 9px;
+  border-radius: 999px; font-size: 11.5px;
+}
+.collection-edit--cases .zc-doc-status.is-published { background: #eaf6ee; color: #1b7a3a; }
+.collection-edit--cases .zc-doc-status.is-draft { background: #fff6e5; color: #9a5b00; }
 
 .collection-edit--cases .document-fields { align-items: stretch; }
 .collection-edit--cases .document-fields__main { padding: 26px 32px 40px; }

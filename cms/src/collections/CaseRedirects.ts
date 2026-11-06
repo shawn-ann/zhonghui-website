@@ -11,6 +11,6 @@ export const CaseRedirects: CollectionConfig = {
   fields: [
     { name: 'from', type: 'text', required: true, unique: true, index: true, label: '旧路径' },
     { name: 'to', type: 'text', required: true, label: '新路径' },
-    { name: 'createdAt', type: 'date', required: true, label: '创建时间' },
+    { name: 'createdAt', type: 'date', required: true, label: '创建时间', admin: { components: { Cell: '/components/admin/BeijingTimeCell' } } },
   ],
 }

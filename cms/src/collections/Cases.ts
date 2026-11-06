@@ -16,7 +16,7 @@ export const Cases: CollectionConfig = {
     description: '管理文章内容；选择文章分类、封面并填写正文后发布。',
     components: {
       edit: {
-        beforeDocumentControls: ['/components/admin/CollectionPreviewLink'],
+        beforeDocumentControls: ['/components/admin/ArticleDocumentMeta', '/components/admin/CollectionPreviewLink'],
       },
     },
   },

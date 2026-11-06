@@ -150,10 +150,11 @@
 
 所有后台时间与日志统一使用北京时间、格式 `YYYY/MM/DD HH:mm:ss`（示例 `2026/01/01 12:12:30`）：
 
-- Payload 全局（作用于文档页「最后修改时间 / 已创建」、日期字段、列表日期列等）：
+- Payload 全局（影响日期选择器与可配置日期的显示格式）：
   - `admin.timezones.defaultTimezone = 'Asia/Shanghai'`
   - `admin.dateFormat = 'yyyy/MM/dd HH:mm:ss'`
-- 自定义组件（页面列表的更新时间、重定向记录、后续新增 UI）统一调用 `cms/src/lib/datetime.ts` 的 `formatBeijingTime(value)`，内部用 `Intl.DateTimeFormat` 指定 `Asia/Shanghai` 与 `YYYY/MM/DD HH:mm:ss`。
+  - 注意：Payload 3.90 的文档信息区（最后修改 / 已创建）和列表日期单元格不会读取该时区，仍按浏览器本地时区显示；这些位置必须用自定义组件。
+- 自定义组件统一调用 `cms/src/lib/datetime.ts` 的 `formatBeijingTime(value)`（内部用 `Intl.DateTimeFormat` 指定 `Asia/Shanghai` 与 `YYYY/MM/DD HH:mm:ss`），包括：页面列表更新时间（`PagesListView`）、文章文档信息区（`ArticleDocumentMeta`）、重定向记录时间（`BeijingTimeCell`）、发布日期列（`PublishedAtCell` 按日历日显示）。
 - 服务端日志：容器设置 `TZ=Asia/Shanghai`（`deploy/docker-compose.local.yml`、`deploy/docker-compose.yml` 的 cms / builder 服务），让框架输出与控制台日志也走北京时间。
 - 文章列表的发布日期按同一格式展示（`2026/11/06 00:00:00`）；前台公开站点仍按日期显示，不在本次范围。
 - 不修改数据库存储格式；`publishedAt` 仍是 UTC 零点（见 5.6）。

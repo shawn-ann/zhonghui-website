@@ -1,5 +1,5 @@
 'use client'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
@@ -105,6 +105,27 @@ function Toolbar() {
   )
 }
 
+const EMPTY_STATE = {
+  root: {
+    type: 'root', version: 1, direction: null, format: '', indent: 0,
+    children: [{
+      type: 'paragraph', version: 1, direction: null, format: '', indent: 0, textFormat: 0, children: [],
+    }],
+  },
+}
+
+/** 表单被整体重置（如“恢复到已发布版本”）时，把外部值同步回编辑器，避免旧内容覆盖新内容。 */
+function ValueSyncPlugin({ value }: { value: unknown }) {
+  const [editor] = useLexicalComposerContext()
+  useEffect(() => {
+    const next = value && typeof value === 'object' ? value : EMPTY_STATE
+    const current = editor.getEditorState().toJSON()
+    if (JSON.stringify(next) === JSON.stringify(current)) return
+    editor.setEditorState(editor.parseEditorState(JSON.stringify(next)))
+  }, [editor, value])
+  return null
+}
+
 function Editor({
   value,
   onChange,
@@ -135,6 +156,7 @@ function Editor({
           placeholder={<div className="rt-placeholder">在这里编辑富文本内容…</div>}
           ErrorBoundary={({ children }) => <>{children}</>}
         />
+        <ValueSyncPlugin value={value} />
         <HistoryPlugin />
         <ListPlugin />
         <LinkPlugin />
