@@ -26,6 +26,8 @@ import { default as default_2cffe5512ab00a409c609c9de6027dd0 } from '../../../co
 import { default as default_00d2043d6a905117a42ed0b37918a470 } from '../../../components/admin/MediaPickerField'
 import { default as default_27837e50b727e958016c013ad3b22e32 } from '../../../components/admin/CollectionPreviewLink'
 import { default as default_82b483ff09918e7862fccfb8f41ae622 } from '../../../components/admin/CategoryListView'
+import { default as default_d66ddfc75b0270bf9636e30c2125444d } from '../../../components/admin/SlugField'
+import { default as default_cd0c7ef50c25bcae15b622b2990b1de2 } from '../../../components/admin/ArticleCoverField'
 import { default as default_18cd036d77eabff6fb4f3a7b46ae2e06 } from '../../../components/admin/ArticleBodyField'
 import { default as default_e370300bac7fefe2e17bbf10b0e9c408 } from '../../../components/MenuEditorView'
 import { default as default_078419d98ad8d8f4ad9d5f83c0e09b49 } from '../../../components/SiteSettingsView'
@@ -66,6 +68,8 @@ export const importMap = {
   "/components/admin/MediaPickerField#default": default_00d2043d6a905117a42ed0b37918a470,
   "/components/admin/CollectionPreviewLink#default": default_27837e50b727e958016c013ad3b22e32,
   "/components/admin/CategoryListView#default": default_82b483ff09918e7862fccfb8f41ae622,
+  "/components/admin/SlugField#default": default_d66ddfc75b0270bf9636e30c2125444d,
+  "/components/admin/ArticleCoverField#default": default_cd0c7ef50c25bcae15b622b2990b1de2,
   "/components/admin/ArticleBodyField#default": default_18cd036d77eabff6fb4f3a7b46ae2e06,
   "/components/MenuEditorView#default": default_e370300bac7fefe2e17bbf10b0e9c408,
   "/components/SiteSettingsView#default": default_078419d98ad8d8f4ad9d5f83c0e09b49,
