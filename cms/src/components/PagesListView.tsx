@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import './pages-list.css'
 import { AdminPageHeader } from './admin/AdminPageHeader'
+import { formatBeijingTime } from '../lib/datetime'
 
 interface PageRow {
   id: number | string
@@ -184,7 +185,7 @@ export default function PagesListView() {
                     {page._status === 'published' ? '已发布' : '草稿'}
                   </span>
                 </td>
-                <td>{page.updatedAt ? new Date(page.updatedAt).toLocaleString() : '—'}</td>
+                <td>{page.updatedAt ? formatBeijingTime(page.updatedAt) : '—'}</td>
                 <td className="pl-actions">
                   <button type="button" onClick={() => setModal({ mode: 'edit', page, title: page.title, route: page.route })}>编辑</button>
                   <a href={`/admin/collections/pages/${page.id}`}>配置</a>

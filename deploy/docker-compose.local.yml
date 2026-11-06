@@ -14,6 +14,7 @@ services:
       NEXT_TELEMETRY_DISABLED: "1"
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://www.localhost:8080}
       BUILDER_URL: http://builder:4000
+      TZ: Asia/Shanghai
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -37,6 +38,7 @@ services:
       SITE_KEEP_RELEASES: "5"
       NODE_ENV: production
       BUILDER_PORT: "4000"
+      TZ: Asia/Shanghai
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

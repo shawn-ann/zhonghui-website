@@ -33,6 +33,8 @@ export default buildConfig({
       description: '中惠文化官网管理后台',
       icons: [{ rel: 'icon', type: 'image/jpeg', url: '/favicon.jpg' }],
     },
+    timezones: { defaultTimezone: 'Asia/Shanghai' },
+    dateFormat: 'yyyy/MM/dd HH:mm:ss',
     components: {
       Nav: '/components/admin/AdminNav',
       header: ['/components/admin/AdminMobileBar'],

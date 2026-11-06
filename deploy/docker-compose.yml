@@ -33,6 +33,7 @@ services:
       SITE_RELEASES_DIR: /app/releases
       SITE_KEEP_RELEASES: "5"
       NODE_ENV: production
+      TZ: Asia/Shanghai
     volumes:
       - cms-media:/app/media
       - site-releases:/app/releases
@@ -56,6 +57,7 @@ services:
       SITE_KEEP_RELEASES: "5"
       BUILDER_URL: http://builder:4000
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.zhonghui.com}
+      TZ: Asia/Shanghai
     volumes:
       - cms-media:/app/media
       - site-releases:/app/releases
