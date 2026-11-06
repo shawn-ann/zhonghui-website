@@ -566,7 +566,7 @@ html.admin-shell .table tbody tr:hover { background: #fdf8fa; }
 /* 文章编辑页：左写作 / 右属性 */
 html.admin-shell:has(.collection-edit--cases) .doc-header { display: none !important; }
 
-.collection-edit--cases .collection-edit__form { background: var(--zc-bg); }
+.collection-edit--cases .collection-edit__form { background: #fff; }
 
 .collection-edit--cases .doc-controls {
   position: sticky; top: 0; z-index: 30;

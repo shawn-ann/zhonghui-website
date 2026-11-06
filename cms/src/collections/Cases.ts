@@ -55,6 +55,14 @@ export const Cases: CollectionConfig = {
   fields: [
     { name: 'title', type: 'text', required: true, label: '文章标题', admin: { placeholder: '输入文章标题' } },
     {
+      name: 'category',
+      type: 'relationship',
+      relationTo: 'case-categories',
+      required: true,
+      label: '文章分类',
+      admin: { allowCreate: false, allowEdit: false, components: { Cell: '/components/admin/CategoryCell' } },
+    },
+    {
       name: 'slug',
       type: 'text',
       required: true,
@@ -63,14 +71,6 @@ export const Cases: CollectionConfig = {
       label: 'URL 别名',
       admin: { components: { Field: '/components/admin/SlugField' } },
       validate: (value: unknown) => validateCaseSlug(value),
-    },
-    {
-      name: 'category',
-      type: 'relationship',
-      relationTo: 'case-categories',
-      required: true,
-      label: '文章分类',
-      admin: { position: 'sidebar', allowCreate: false, allowEdit: false, components: { Cell: '/components/admin/CategoryCell' } },
     },
     {
       name: 'cover',

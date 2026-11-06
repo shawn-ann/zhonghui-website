@@ -10,7 +10,13 @@ describe('Cases admin config', () => {
   })
 
   it('only allows picking an existing category', () => {
-    expect(field('category').admin).toMatchObject({ allowCreate: false, allowEdit: false, position: 'sidebar' })
+    expect(field('category').admin).toMatchObject({ allowCreate: false, allowEdit: false })
+  })
+
+  it('places the category picker above the URL field in the main column', () => {
+    const names = Cases.fields.filter((item) => 'name' in item).map((item: any) => item.name)
+    expect(names.indexOf('category')).toBeLessThan(names.indexOf('slug'))
+    expect(field('category').admin?.position).toBeUndefined()
   })
 
   it('gives the title input a visible placeholder on create', () => {
