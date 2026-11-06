@@ -3,6 +3,8 @@ import { safeUrl } from '../render/primitives'
 import { hrefOf } from './assets'
 import LexicalContent from './LexicalContent'
 
+const CASE_BANNER_PATTERN = '/assets/pattern-box-5.svg'
+
 function dateText(value: string): string {
   return String(value || '').slice(0, 10)
 }
@@ -112,7 +114,7 @@ export function CaseDetailView({ page }: { page: PageDoc }) {
   const banner = safeUrl(template?.category?.banner)
   return (
     <>
-      <section className="case-banner">
+      <section className="case-banner case-banner--detail">
         <div className="container case-banner-grid">
           <div className="case-banner-text">
             <h1>{title}</h1>
@@ -120,7 +122,8 @@ export function CaseDetailView({ page }: { page: PageDoc }) {
           </div>
           {banner ? (
             <div className="case-banner-media">
-              <img src={banner} alt={title} />
+              <img className="case-banner-pattern" src={CASE_BANNER_PATTERN} alt="" />
+              <img className="case-banner-photo" src={banner} alt={title} />
             </div>
           ) : null}
         </div>
@@ -129,7 +132,6 @@ export function CaseDetailView({ page }: { page: PageDoc }) {
         <div className="container case-article">
           <h1 className="case-detail-title">{title}</h1>
           {item?.publishedAt ? <div className="case-detail-meta">📅 {dateText(item.publishedAt)}</div> : null}
-          {cover ? <div className="case-detail-cover" style={{ backgroundImage: `url('${cover}')` }} /> : null}
           <div className="article-body richtext">
             <LexicalContent data={item?.body} />
           </div>

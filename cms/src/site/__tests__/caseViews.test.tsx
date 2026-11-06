@@ -74,16 +74,16 @@ describe('case views', () => {
     expect(html).toContain('aria-current="page"')
   })
 
-  it('renders the category-style banner and a wide article card', () => {
+  it('renders the category-style banner with a decorative background and no cover in the body', () => {
     const html = render(<CaseDetailView page={detailPage()} />)
     expect(html).toContain('case-banner')
     expect(html).toContain('/media/category-banner.jpg')
+    expect(html).toContain('case-banner-pattern')
     expect(html).toContain('中惠文化 · 真实案例分享')
     expect(html).toContain('case-detail-title')
-    expect(html).toContain('case-detail-cover')
-    expect(html).toContain('/media/cover.jpg')
     expect(html).toContain('2025-07-02')
     expect(html).toContain('article-body')
+    expect(html).not.toContain('case-detail-cover')
     expect(html).not.toContain('case-detail-hero')
   })
 })

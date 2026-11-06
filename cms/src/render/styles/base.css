@@ -317,9 +317,14 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   color: var(--gray-blue); font-size: 14px; margin-top: 12px;
   padding-bottom: 22px; border-bottom: 1px solid var(--border);
 }
-.case-detail-cover {
-  height: 340px; margin: 28px 0; border-radius: 12px;
-  background-size: cover; background-position: center; background-color: var(--border);
+.case-banner--detail .case-banner-media { position: relative; min-height: 340px; }
+.case-banner--detail .case-banner-pattern {
+  position: absolute; top: -45px; right: 10px; width: 80%; height: auto;
+  display: block; z-index: 0; border-radius: 0;
+}
+.case-banner--detail .case-banner-photo {
+  position: relative; z-index: 1; width: 88%; height: auto;
+  display: block; border-radius: 12px;
 }
 .case-article .richtext { color: var(--dark-text); }
 @media (max-width: 1000px) {
@@ -333,7 +338,9 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   .case-banner-text .sub { font-size: 17px; }
   .case-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .case-detail-title { font-size: 24px; }
-  .case-detail-cover { height: 200px; margin: 20px 0; }
+  .case-banner-media { min-height: 0; }
+  .case-banner--detail .case-banner-photo { position: static; width: 100%; margin-top: 24px; }
+  .case-banner-media .case-banner-pattern { display: none; }
   .case-article { padding: 26px 20px; border-radius: 10px; }
 }
 .image-text p { font-size: 14px; color: var(--sub-color, var(--gray-blue)); margin-top: 6px; }
