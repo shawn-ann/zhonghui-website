@@ -70,7 +70,7 @@ export const Cases: CollectionConfig = {
       relationTo: 'case-categories',
       required: true,
       label: '文章分类',
-      admin: { position: 'sidebar', allowCreate: false, allowEdit: false },
+      admin: { position: 'sidebar', allowCreate: false, allowEdit: false, components: { Cell: '/components/admin/CategoryCell' } },
     },
     {
       name: 'cover',
@@ -84,7 +84,7 @@ export const Cases: CollectionConfig = {
       name: 'publishedAt',
       type: 'date',
       label: '发布日期',
-      admin: { hidden: true },
+      admin: { hidden: true, components: { Cell: '/components/admin/PublishedAtCell' } },
     },
     {
       name: 'body',

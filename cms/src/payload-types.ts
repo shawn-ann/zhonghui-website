@@ -3935,9 +3935,6 @@ export interface CaseCategory {
 export interface Case {
   id: number;
   title: string;
-  /**
-   * 文章链接的最后一段，如 xiaocao；发布后修改会自动生成旧链接跳转
-   */
   slug: string;
   category: number | CaseCategory;
   cover: number | Media;
