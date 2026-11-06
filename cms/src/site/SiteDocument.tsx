@@ -20,13 +20,19 @@ export const PREVIEW_LOCK_JS =
   "document.addEventListener('click',function(e){var t=e.target;if(t&&t.closest&&t.closest('a'))e.preventDefault()},true)"
 export const PREVIEW_LOCK_LINKS = `<script>${PREVIEW_LOCK_JS}</script>`
 
-export function SiteBody({ page, site = DEFAULT_SITE_CONFIG, editor = false }: { page: PageDoc; site?: SiteConfig; editor?: boolean }) {
+export function SiteBody({ page, site = DEFAULT_SITE_CONFIG, editor = false, caseListHref }: {
+  page: PageDoc
+  site?: SiteConfig
+  editor?: boolean
+  /** 预览用：列表分页链接指向预览自身的页码。 */
+  caseListHref?: (page: number) => string
+}) {
   return (
     <>
       <SiteNav activeRoute={page.route} menu={site.menu} settings={site.settings} />
       <main id="page">
         {page.template?.kind === 'caseList'
-          ? <CaseListView page={page} />
+          ? <CaseListView page={page} hrefForPage={caseListHref} />
           : page.template?.kind === 'caseDetail'
             ? <CaseDetailView page={page} />
             : page.blocks.map((b, i) => (

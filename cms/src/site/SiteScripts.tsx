@@ -21,7 +21,10 @@ export function SiteScripts({ lockLinks = false }: { lockLinks?: boolean }) {
     if (lockLinks) {
       const lock = (e: MouseEvent) => {
         const target = e.target as HTMLElement | null
-        if (target?.closest?.('a')) e.preventDefault()
+        const link = target?.closest?.('a')
+        // 预览内的分页链接（data-preview-nav）放行，其余链接保持锁定。
+        if (!link || link.hasAttribute('data-preview-nav')) return
+        e.preventDefault()
       }
       document.addEventListener('click', lock, true)
       void loadScript('/assets/swiper-bundle.min.js').then(() => loadScript('/assets/main.js'))

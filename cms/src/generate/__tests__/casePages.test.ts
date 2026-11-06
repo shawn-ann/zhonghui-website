@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildCasePages, paginateCases } from '../casePages'
+import { buildCasePages, caseListPageAt, paginateCases } from '../casePages'
 import type { CaseCategory, CaseItem } from '../../render/types'
 
 const category: CaseCategory = {
@@ -60,5 +60,24 @@ describe('buildCasePages', () => {
     expect(pages.find((p) => p.route === '/blog/study-case/')?.template).toMatchObject({
       banner: '/media/banner.jpg', subtitle: '真实故事',
     })
+  })
+})
+
+describe('caseListPageAt', () => {
+  const pages = buildCasePages([category], [
+    item('a', '2025-07-02'),
+    item('b', '2025-07-05'),
+    item('c', '2025-06-30'),
+  ])
+
+  it('picks a list page by 1-based page number', () => {
+    expect(caseListPageAt(pages, 1)?.route).toBe('/blog/study-case/')
+    expect(caseListPageAt(pages, 2)?.route).toBe('/blog/study-case/page/2/')
+  })
+
+  it('clamps out-of-range and invalid page numbers', () => {
+    expect(caseListPageAt(pages, 0)?.route).toBe('/blog/study-case/')
+    expect(caseListPageAt(pages, 99)?.route).toBe('/blog/study-case/page/2/')
+    expect(caseListPageAt(pages, Number.NaN)?.route).toBe('/blog/study-case/')
   })
 })

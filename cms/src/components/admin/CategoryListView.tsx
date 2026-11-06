@@ -235,6 +235,7 @@ export default function CategoryListView() {
                   value={form.pageSize}
                   onChange={(e) => patch({ pageSize: Number(e.target.value) || 1 })}
                 />
+                <small>列表每行 4 列，建议填 4 的倍数（如 8、12、16），避免最后一行空缺。</small>
               </label>
 
               {error ? <p className="zc-error">{error}</p> : null}

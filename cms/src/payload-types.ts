@@ -3916,6 +3916,9 @@ export interface CaseCategory {
   slug: string;
   banner?: (number | null) | Media;
   subtitle?: string | null;
+  /**
+   * 列表每行 4 列，建议填 4 的倍数（如 8、12、16），避免最后一行空缺。
+   */
   pageSize: number;
   order?: number | null;
   seoTitle?: string | null;

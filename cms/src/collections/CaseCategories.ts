@@ -75,6 +75,7 @@ export const CaseCategories: CollectionConfig = {
       min: 1,
       max: 48,
       label: '每页文章数',
+      admin: { description: '列表每行 4 列，建议填 4 的倍数（如 8、12、16），避免最后一行空缺。' },
     },
     // 旧字段：排序已移除，保留列以避免生产 schema 删除数据。
     { name: 'order', type: 'number', defaultValue: 0, hidden: true },

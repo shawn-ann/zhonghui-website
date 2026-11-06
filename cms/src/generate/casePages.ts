@@ -96,3 +96,11 @@ export function buildCasePages(
 
   return pages
 }
+
+/** 预览用：按 1 起页码取某个分类的列表页，越界或非法值夹到首/尾页。 */
+export function caseListPageAt(pages: PageDoc[], requested: number): PageDoc | undefined {
+  const list = pages.filter((page) => page.template?.kind === 'caseList')
+  if (!list.length) return undefined
+  const index = Math.min(Math.max(1, Math.trunc(requested) || 1), list.length) - 1
+  return list[index]
+}

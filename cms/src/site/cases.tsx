@@ -23,23 +23,32 @@ function pageNumbers(page: number, pageCount: number): (number | '…')[] {
   return out
 }
 
-export function CasePagination({ page, pageCount, basePath }: { page: number; pageCount: number; basePath: string }) {
+export function CasePagination({ page, pageCount, basePath, hrefForPage }: {
+  page: number
+  pageCount: number
+  basePath: string
+  /** 预览等场景可自定义目标地址；给了它就会给分页链接打上 data-preview-nav，放行预览的链接锁。 */
+  hrefForPage?: (page: number) => string
+}) {
   if (pageCount <= 1) return null
+  const linkFor = hrefForPage ?? ((n: number) => pageHref(basePath, n))
+  const previewNav = hrefForPage ? { 'data-preview-nav': '' } : {}
   return (
     <nav className="case-pagination" aria-label="案例分页">
       {page > 1
-        ? <a className="case-page-btn" href={pageHref(basePath, page - 1)} rel="prev">‹</a>
+        ? <a className="case-page-btn" href={linkFor(page - 1)} {...previewNav} rel="prev">‹</a>
         : <span className="case-page-btn is-disabled">‹</span>}
       {pageNumbers(page, pageCount).map((n, i) => n === '…'
         ? <span className="case-page-gap" key={`gap-${i}`}>…</span>
         : <a
             key={n}
             className={`case-page-btn${n === page ? ' is-active' : ''}`}
-            href={pageHref(basePath, n)}
+            href={linkFor(n)}
             aria-current={n === page ? 'page' : undefined}
+            {...previewNav}
           >{n}</a>)}
       {page < pageCount
-        ? <a className="case-page-btn" href={pageHref(basePath, page + 1)} rel="next">›</a>
+        ? <a className="case-page-btn" href={linkFor(page + 1)} {...previewNav} rel="next">›</a>
         : <span className="case-page-btn is-disabled">›</span>}
       <span className="case-page-info">第 {page} / {pageCount} 页</span>
     </nav>
@@ -59,7 +68,11 @@ function CaseCard({ item }: { item: CaseItem }) {
   )
 }
 
-export function CaseListView({ page }: { page: PageDoc }) {
+export function CaseListView({ page, hrefForPage }: {
+  page: PageDoc
+  /** 预览等场景可自定义分页目标地址，见 CasePagination。 */
+  hrefForPage?: (page: number) => string
+}) {
   const template = page.template as CaseListTemplate
   const banner = safeUrl(template.banner)
   return (
@@ -84,7 +97,7 @@ export function CaseListView({ page }: { page: PageDoc }) {
               {template.items.map((item) => <CaseCard item={item} key={item.id ?? item.slug} />)}
             </div>
           ) : <p className="case-empty">暂无案例</p>}
-          <CasePagination page={template.page} pageCount={template.pageCount} basePath={template.basePath} />
+          <CasePagination page={template.page} pageCount={template.pageCount} basePath={template.basePath} hrefForPage={hrefForPage} />
         </div>
       </section>
     </>

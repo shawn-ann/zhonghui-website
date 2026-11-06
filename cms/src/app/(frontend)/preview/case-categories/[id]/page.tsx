@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { headers } from 'next/headers'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { buildCasePages } from '@/generate/casePages'
+import { buildCasePages, caseListPageAt } from '@/generate/casePages'
 import { mapCaseCategory, mapCaseItem } from '@/generate/loadSiteData'
 import { buildSiteConfig } from '@/site/config'
 import type { CaseCategory } from '@/render/types'
@@ -11,7 +11,7 @@ import { SiteScripts } from '@/site/SiteScripts'
 
 export const dynamic = 'force-dynamic'
 
-async function loadPreview(id: string) {
+async function loadPreview(id: string, requestedPage = 1) {
   const payload = await getPayload({ config })
   const { user } = await payload.auth({ headers: await headers() })
   if (!user) return null
@@ -38,7 +38,7 @@ async function loadPreview(id: string) {
     const items = casesRes.docs
       .map((raw) => mapCaseItem(raw, categoryMap))
       .filter((item): item is NonNullable<typeof item> => item !== null)
-    const page = buildCasePages([category], items).find((p) => p.route === `/blog/${category.slug}/`)
+    const page = caseListPageAt(buildCasePages([category], items), requestedPage)
     if (!page) return null
     const categoryRoutes = new Map(categories.map((c) => [String(c.id), `/blog/${c.slug}/`]))
     return { page, site: buildSiteConfig(menuRaw, settingsRaw, new Map(), categoryRoutes) }
@@ -53,13 +53,21 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return data ? { title: data.page.title } : {}
 }
 
-export default async function CategoryPreviewPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function CategoryPreviewPage({ params, searchParams }: {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ page?: string | string[] }>
+}) {
   const { id } = await params
-  const data = await loadPreview(id)
+  const query = await searchParams
+  const rawPage = Array.isArray(query.page) ? query.page[0] : query.page
+  const requested = Number(rawPage)
+  const data = await loadPreview(id, Number.isFinite(requested) ? requested : 1)
   if (!data) notFound()
+  const previewBase = `/preview/case-categories/${id}`
+  const hrefForPage = (page: number) => page <= 1 ? previewBase : `${previewBase}?page=${page}`
   return (
     <>
-      <SiteBody page={data.page} site={data.site} />
+      <SiteBody page={data.page} site={data.site} caseListHref={hrefForPage} />
       <SiteScripts lockLinks />
     </>
   )

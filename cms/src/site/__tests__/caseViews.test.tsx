@@ -5,7 +5,7 @@ import type { PageDoc } from '../../render/types'
 
 const render = (node: React.ReactNode) => renderToStaticMarkup(node)
 
-const category = { id: 1, title: '案例分享', slug: 'study-case', pageSize: 12, order: 0 }
+const category = { id: 1, title: '案例分享', slug: 'study-case', pageSize: 12 }
 
 const listPage = (overrides: Partial<PageDoc> = {}): PageDoc => ({
   title: '案例分享',
@@ -57,6 +57,21 @@ describe('case views', () => {
     const html = render(<CaseListView page={page} />)
     expect(html).toContain('暂无案例')
     expect(html).not.toContain('case-pagination')
+  })
+
+  it('hides the pagination when everything fits on one page', () => {
+    const page = listPage()
+    ;(page.template as any).pageCount = 1
+    const html = render(<CaseListView page={page} />)
+    expect(html).not.toContain('case-pagination')
+  })
+
+  it('renders preview pagination links that the preview link lock lets through', () => {
+    const hrefForPage = (n: number) => `/preview/case-categories/7?page=${n}`
+    const html = render(<CaseListView page={listPage()} hrefForPage={hrefForPage} />)
+    expect(html).toContain('href="/preview/case-categories/7?page=2"')
+    expect(html).toContain('data-preview-nav')
+    expect(html).toContain('aria-current="page"')
   })
 
   it('renders the cover hero with title and date', () => {
