@@ -61,7 +61,7 @@ export const Cases: CollectionConfig = {
       unique: true,
       index: true,
       label: 'URL 别名',
-      admin: { description: '文章链接的最后一段，如 xiaocao；发布后修改会自动生成旧链接跳转' },
+      admin: { components: { Field: '/components/admin/SlugField' } },
       validate: (value: unknown) => validateCaseSlug(value),
     },
     {
@@ -78,7 +78,7 @@ export const Cases: CollectionConfig = {
       relationTo: 'media',
       required: true,
       label: '封面图',
-      admin: { position: 'sidebar' },
+      admin: { position: 'sidebar', components: { Field: '/components/admin/ArticleCoverField' } },
     },
     {
       name: 'publishedAt',
