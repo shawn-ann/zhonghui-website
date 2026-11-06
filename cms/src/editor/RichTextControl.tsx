@@ -153,12 +153,23 @@ export default function RichTextControl({
   label,
   value,
   onChange,
+  inline = false,
 }: {
   label: string
   value: unknown
   onChange: (value: unknown) => void
+  inline?: boolean
 }) {
   const [open, setOpen] = useState(false)
+
+  if (inline) {
+    return (
+      <div className="ed-ctl rt-control rt-inline">
+        <span>{label}</span>
+        <Editor value={value} onChange={onChange} />
+      </div>
+    )
+  }
 
   return (
     <div className="ed-ctl rt-control">

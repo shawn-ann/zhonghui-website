@@ -13,6 +13,7 @@ export default function ArticleBodyField({ path, field }: { path: string; field:
   return (
     <div className="field-type article-body-field">
       <RichTextControl
+        inline
         label={label}
         value={value}
         onChange={(next) => setValue(next)}
