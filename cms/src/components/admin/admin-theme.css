@@ -598,7 +598,7 @@ html.admin-shell:has(.collection-edit--cases) .doc-header { display: none !impor
 
 .collection-edit--cases #field-title {
   font-size: 28px; font-weight: 700; line-height: 1.25;
-  border: 0; border-bottom: 1px solid transparent; border-radius: 0;
+  border: 0; border-bottom: 1px solid var(--zc-border); border-radius: 0;
   padding: 6px 0; background: transparent; box-shadow: none;
 }
 .collection-edit--cases #field-title:focus {

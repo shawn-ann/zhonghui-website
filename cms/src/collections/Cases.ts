@@ -53,7 +53,7 @@ export const Cases: CollectionConfig = {
     ],
   },
   fields: [
-    { name: 'title', type: 'text', required: true, label: '文章标题' },
+    { name: 'title', type: 'text', required: true, label: '文章标题', admin: { placeholder: '输入文章标题' } },
     {
       name: 'slug',
       type: 'text',

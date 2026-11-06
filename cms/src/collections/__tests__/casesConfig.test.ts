@@ -13,6 +13,10 @@ describe('Cases admin config', () => {
     expect(field('category').admin).toMatchObject({ allowCreate: false, allowEdit: false, position: 'sidebar' })
   })
 
+  it('gives the title input a visible placeholder on create', () => {
+    expect(field('title').admin?.placeholder).toBe('输入文章标题')
+  })
+
   it('hides the published date from the form', () => {
     expect(field('publishedAt').admin?.hidden).toBe(true)
     expect(field('publishedAt').required).toBeFalsy()
