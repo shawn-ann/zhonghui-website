@@ -17,7 +17,7 @@ async function loadPreview(id: string) {
   try {
     const [raw, categoriesRes, menuRaw, settingsRaw] = await Promise.all([
       payload.findByID({ collection: 'cases', id, draft: true, depth: 1 }) as Promise<Record<string, any>>,
-      payload.find({ collection: 'case-categories', limit: 1000, depth: 0, sort: 'title' }),
+      payload.find({ collection: 'case-categories', limit: 1000, depth: 1, sort: 'title' }),
       payload.findGlobal({ slug: 'menu', depth: 1 }).catch(() => null),
       payload.findGlobal({ slug: 'site-settings', depth: 1 }).catch(() => null),
     ])

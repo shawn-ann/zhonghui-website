@@ -5,7 +5,7 @@ import type { PageDoc } from '../../render/types'
 
 const render = (node: React.ReactNode) => renderToStaticMarkup(node)
 
-const category = { id: 1, title: '案例分享', slug: 'study-case', pageSize: 12 }
+const category = { id: 1, title: '案例分享', slug: 'study-case', pageSize: 12, banner: '/media/category-banner.jpg' }
 
 const listPage = (overrides: Partial<PageDoc> = {}): PageDoc => ({
   title: '案例分享',
@@ -74,12 +74,16 @@ describe('case views', () => {
     expect(html).toContain('aria-current="page"')
   })
 
-  it('renders the cover hero with title and date', () => {
+  it('renders the category-style banner and a wide article card', () => {
     const html = render(<CaseDetailView page={detailPage()} />)
-    expect(html).toContain('case-detail-hero')
-    expect(html).toContain('小曹同学的赴美之旅')
+    expect(html).toContain('case-banner')
+    expect(html).toContain('/media/category-banner.jpg')
+    expect(html).toContain('中惠文化 · 真实案例分享')
+    expect(html).toContain('case-detail-title')
+    expect(html).toContain('case-detail-cover')
+    expect(html).toContain('/media/cover.jpg')
     expect(html).toContain('2025-07-02')
     expect(html).toContain('article-body')
-    expect(html).not.toContain('返回列表')
+    expect(html).not.toContain('case-detail-hero')
   })
 })

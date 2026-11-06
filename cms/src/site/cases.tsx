@@ -107,21 +107,29 @@ export function CaseListView({ page, hrefForPage }: {
 export function CaseDetailView({ page }: { page: PageDoc }) {
   const template = page.template as CaseDetailTemplate
   const item = template?.item
+  const title = item?.title || page.title
   const cover = safeUrl(item?.cover)
+  const banner = safeUrl(template?.category?.banner)
   return (
     <>
-      <section
-        className={`case-detail-hero${cover ? '' : ' is-empty-cover'}`}
-        style={cover ? { backgroundImage: `url('${cover}')` } : undefined}
-      >
-        <div className="case-detail-overlay" />
-        <div className="container case-detail-head">
-          <h1>{item?.title || page.title}</h1>
-          {item?.publishedAt ? <div className="case-detail-meta">{dateText(item.publishedAt)}</div> : null}
+      <section className="case-banner">
+        <div className="container case-banner-grid">
+          <div className="case-banner-text">
+            <h1>{title}</h1>
+            <p className="sub">中惠文化 · 真实案例分享</p>
+          </div>
+          {banner ? (
+            <div className="case-banner-media">
+              <img src={banner} alt={title} />
+            </div>
+          ) : null}
         </div>
       </section>
       <section className="section section-alt case-detail-section">
         <div className="container case-article">
+          <h1 className="case-detail-title">{title}</h1>
+          {item?.publishedAt ? <div className="case-detail-meta">📅 {dateText(item.publishedAt)}</div> : null}
+          {cover ? <div className="case-detail-cover" style={{ backgroundImage: `url('${cover}')` }} /> : null}
           <div className="article-body richtext">
             <LexicalContent data={item?.body} />
           </div>
