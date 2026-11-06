@@ -1,5 +1,6 @@
 'use client'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { formatBeijingTime } from '../lib/datetime'
 import './menu-editor.css'
 import { AdminPageHeader } from './admin/AdminPageHeader'
 
@@ -151,7 +152,7 @@ export default function MenuEditorView() {
         const saved = data.result ?? data.doc ?? data
         if (v === version.current) {
           setItems(normalizeItems(saved.items))
-          setSavedAt(new Date().toLocaleTimeString())
+          setSavedAt(formatBeijingTime(new Date()))
           setSaveState('saved')
         }
       }
