@@ -124,12 +124,14 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
       { key: 'desc', label: '说明（可选）', control: 'textarea' },
     ] },
   ] },
-  faq: { type: 'faq', label: '常见问答', defaults: () => ({ type: 'faq', collapsible: false, items: [{ q: '问题', a: '答案' }] }), fields: [
+  entries: { type: 'entries', label: '文本条目', defaults: () => ({ type: 'entries', collapsible: false, labelPrefix: 'Q：', textPrefix: 'A：', items: [{ label: '标签', text: '正文' }] }), fields: [
     { key: 'title', label: '标题（可选）', control: 'text' },
     { key: 'collapsible', label: '折叠显示', control: 'boolean' },
-    { key: 'items', label: '问答', control: 'repeater', addLabel: '添加问答', titleKey: 'q', subtitleKey: 'a', itemFields: [
-      { key: 'q', label: '问题', control: 'text' },
-      { key: 'a', label: '答案', control: 'textarea' },
+    { key: 'labelPrefix', label: '标签前缀', control: 'text' },
+    { key: 'textPrefix', label: '正文前缀', control: 'text' },
+    { key: 'items', label: '条目', control: 'repeater', addLabel: '添加条目', titleKey: 'label', subtitleKey: 'text', itemFields: [
+      { key: 'label', label: '标签', control: 'text' },
+      { key: 'text', label: '正文', control: 'textarea' },
     ] },
   ] },
   iconList: { type: 'iconList', label: '图标列表', defaults: () => ({ type: 'iconList', iconPosition: 'left', items: [{ icon: '', title: '标题', desc: '说明' }] }), fields: [
@@ -222,7 +224,7 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
 export const LAYOUT_TYPES = ['section', 'grid', 'gridRow', 'gridCell', 'hscroll', 'stack'] as const
 
 /** 分栏：版面级内容。 */
-export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'faq', 'steps', 'iconList', 'hscroll', 'stack']
+export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'entries', 'steps', 'iconList', 'hscroll', 'stack']
 /** 网格：卡片/文本级内容。 */
 export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack', 'steps']
 
@@ -263,7 +265,7 @@ export function blockSummary(b: Block): string {
     case 'banner': return b.title || '横幅'
     case 'richtext': return '富文本'
     case 'infoList': return `信息列表 · ${b.items.length} 条`
-    case 'faq': return `常见问答 · ${b.items.length} 条`
+    case 'entries': return `文本条目 · ${b.items.length} 条`
     case 'steps': return `流程 · ${b.steps.length} 步`
     case 'iconList': return `图标列表 · ${b.items.length} 条`
     case 'hscroll': return `横向滚动 · ${b.children?.length || 0} 张`

@@ -186,11 +186,13 @@ export interface StepsBlock extends BlockBase {
   steps: { title: string; desc?: string }[]
 }
 
-export interface FaqBlock extends BlockBase {
-  type: 'faq'
+export interface EntriesBlock extends BlockBase {
+  type: 'entries'
   title?: string
   collapsible?: boolean
-  items: { q: string; a: string }[]
+  labelPrefix?: string
+  textPrefix?: string
+  items: { label: string; text: string }[]
 }
 
 export interface HscrollBlock extends BlockBase {
@@ -242,7 +244,7 @@ export type Block =
   | IconCardBlock
   | InfoListBlock
   | IconListBlock
-  | FaqBlock
+  | EntriesBlock
   | StepsBlock
   | HscrollBlock
   | StackBlock

@@ -45,7 +45,7 @@
 | `gallery` | 图集 | 图片网格 |
 | `slider` | 轮播 | 图片轮播 |
 | `infoList` | 信息列表 | 标签/说明条目列表 |
-| `faq` | 常见问答 | 问题/答案卡片，可折叠 |
+| `entries` | 文本条目 | 标签/正文卡片，前缀可配置，可折叠 |
 | `steps` | 流程步骤 | 编号步骤 + 可选侧图 |
 | `iconList` | 图标列表 | 图标/标题/说明列表 |
 
@@ -57,7 +57,7 @@
 
 ```text
 heading, text, grid, gallery, banner, slider, richtext,
-infoList, faq, steps, iconList, hscroll, stack
+infoList, entries, steps, iconList, hscroll, stack
 ```
 
 规则：
@@ -311,17 +311,20 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 | `iconPosition` | select | left | left/right/alternate |
 | `iconColor` | text | 空 | 单色蒙版颜色 |
 
-### 5.13 常见问答 `faq`
+### 5.13 文本条目 `entries`
 
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
 | `title` | text | 空 | 可选标题 |
 | `collapsible` | boolean | false | 是否用 `<details>` 折叠 |
-| `items` | repeater | — | q（问题）+ a（答案） |
+| `labelPrefix` | text | `Q：` | 标签前缀，留空则不显示 |
+| `textPrefix` | text | `A：` | 正文前缀，留空则不显示 |
+| `items` | repeater | — | label（标签）+ text（正文） |
 
-- 静态模式渲染浅粉卡片（`#FFF7FA`、10px 圆角），问句玫红加粗；渲染时自动加 `Q：` / `A：` 前缀。
+- 静态模式渲染浅粉卡片（`#FFF7FA`、10px 圆角），标签玫红加粗。
+- 前缀可改成「问：/答：」「术语：/释义：」等任意文本。
 - `collapsible` 开启时使用原生 `<details>/<summary>`，无额外 JS。
-- 列表中只能放在 `section` 下。
+- 只能放在 `section` 下。
 
 ### 5.14 流程步骤 `steps`
 
@@ -347,7 +350,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 ### 6.1 重复项
 
-`infoList` / `faq` / `steps` / `iconList` 使用统一手风琴控件：
+`infoList` / `entries` / `steps` / `iconList` 使用统一手风琴控件：
 
 - 默认只展开当前条目，其余折叠为摘要
 - 行头：拖拽手柄、序号/缩略图、主标题、说明摘要、复制、删除、展开箭头

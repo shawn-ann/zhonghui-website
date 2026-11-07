@@ -1,7 +1,7 @@
 import { Fragment, type CSSProperties } from 'react'
 import { safeUrl } from '../render/primitives'
 import type {
-  BannerBlock, Block, ButtonBlock, FaqBlock, GalleryBlock, GridBlock, GridCellBlock, GridRowBlock,
+  BannerBlock, Block, ButtonBlock, EntriesBlock, GalleryBlock, GridBlock, GridCellBlock, GridRowBlock,
   HeadingBlock, IconCardBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock,
   HscrollBlock, RichTextBlock, SectionBlock, SliderBlock, StackBlock, StepsBlock, TextBlock,
 } from '../render/types'
@@ -466,24 +466,26 @@ export function StepsView({ b, editor = false }: { b: StepsBlock; editor?: boole
   )
 }
 
-export function FaqView({ b, editor = false }: { b: FaqBlock; editor?: boolean }) {
+export function EntriesView({ b, editor = false }: { b: EntriesBlock; editor?: boolean }) {
   const items = b.items || []
   if (editor && items.length === 0) {
-    return <EmptyEditorBlock b={b} label="常见问答" tip="在右侧添加问答" variant="wide" />
+    return <EmptyEditorBlock b={b} label="文本条目" tip="在右侧添加条目" variant="wide" />
   }
+  const labelPrefix = b.labelPrefix ?? 'Q：'
+  const textPrefix = b.textPrefix ?? 'A：'
   return (
     <div className="container" data-bid={b._id}>
-      {b.title ? <h3 className="faq-title">{b.title}</h3> : null}
-      <div className="faq-list">
+      {b.title ? <h3 className="entries-title">{b.title}</h3> : null}
+      <div className="entries-list">
         {items.map((item, i) => b.collapsible ? (
-          <details className="faq-item" key={i}>
-            <summary className="faq-q">Q：{item.q}</summary>
-            <div className="faq-a">A：{item.a}</div>
+          <details className="entries-item" key={i}>
+            <summary className="entries-label">{labelPrefix}{item.label}</summary>
+            <div className="entries-text">{textPrefix}{item.text}</div>
           </details>
         ) : (
-          <div className="faq-item" key={i}>
-            <div className="faq-q">Q：{item.q}</div>
-            <div className="faq-a">A：{item.a}</div>
+          <div className="entries-item" key={i}>
+            <div className="entries-label">{labelPrefix}{item.label}</div>
+            <div className="entries-text">{textPrefix}{item.text}</div>
           </div>
         ))}
       </div>
@@ -580,7 +582,7 @@ export function blockNode(b: Block, editor = false): React.ReactNode {
     case 'banner': return <BannerView b={b} editor={editor} />
     case 'infoList': return <InfoListView b={b} />
     case 'steps': return <StepsView b={b} />
-    case 'faq': return <FaqView b={b} />
+    case 'entries': return <EntriesView b={b} />
     case 'iconList': return <IconListView b={b} />
     case 'hscroll': return <HscrollView b={b} editor={editor} />
     case 'stack': return <StackView b={b} editor={editor} />

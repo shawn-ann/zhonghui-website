@@ -84,7 +84,7 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
       </div>
     </div>
   ),
-  faq: (
+  entries: (
     <div style={{ height: 44, display: 'flex', flexDirection: 'column', gap: 4, padding: 6 }}>
       <div style={{ background: '#fbeaf1', borderRadius: 3, padding: 4 }}><div style={line('70%')} /><div style={line('50%')} /></div>
       <div style={{ background: '#fbeaf1', borderRadius: 3, padding: 4 }}><div style={line('65%')} /><div style={line('45%')} /></div>

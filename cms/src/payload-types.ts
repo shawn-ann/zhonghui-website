@@ -1734,14 +1734,16 @@ export interface Page {
                   | {
                       title?: string | null;
                       collapsible?: boolean | null;
+                      labelPrefix?: string | null;
+                      textPrefix?: string | null;
                       items: {
-                        q: string;
-                        a: string;
+                        label: string;
+                        text: string;
                         id?: string | null;
                       }[];
                       id?: string | null;
                       blockName?: string | null;
-                      blockType: 'faq';
+                      blockType: 'entries';
                     }
                   | {
                       title?: string | null;
@@ -3701,14 +3703,16 @@ export interface Page {
         | {
             title?: string | null;
             collapsible?: boolean | null;
+            labelPrefix?: string | null;
+            textPrefix?: string | null;
             items: {
-              q: string;
-              a: string;
+              label: string;
+              text: string;
               id?: string | null;
             }[];
             id?: string | null;
             blockName?: string | null;
-            blockType: 'faq';
+            blockType: 'entries';
           }
         | {
             title?: string | null;
@@ -5218,16 +5222,18 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
-                    faq?:
+                    entries?:
                       | T
                       | {
                           title?: T;
                           collapsible?: T;
+                          labelPrefix?: T;
+                          textPrefix?: T;
                           items?:
                             | T
                             | {
-                                q?: T;
-                                a?: T;
+                                label?: T;
+                                text?: T;
                                 id?: T;
                               };
                           id?: T;
@@ -6490,16 +6496,18 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        faq?:
+        entries?:
           | T
           | {
               title?: T;
               collapsible?: T;
+              labelPrefix?: T;
+              textPrefix?: T;
               items?:
                 | T
                 | {
-                    q?: T;
-                    a?: T;
+                    label?: T;
+                    text?: T;
                     id?: T;
                   };
               id?: T;

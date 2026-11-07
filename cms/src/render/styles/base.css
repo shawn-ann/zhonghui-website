@@ -436,7 +436,7 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   .hscroll-inner::before { top: 180px; }
   .hscroll-item .it-img { height: 180px; }
   .info-list { padding: 18px; }
-  .faq-item { padding: 14px 16px; }
+  .entries-item { padding: 14px 16px; }
   .info-item { font-size: 14px; }
 }
 
@@ -458,15 +458,15 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .step-body { flex: 1; min-width: 0; }
 .step-title { color: var(--dark-text); font-size: 15px; line-height: 1.8; }
 .step-desc { margin: 4px 0 0; color: var(--gray-blue); font-size: 14px; line-height: 1.7; }
-.faq-title { margin: 0 0 20px; color: var(--deep-blue); font-size: 22px; font-weight: 700; line-height: 1.4; }
-.faq-list { display: flex; flex-direction: column; gap: 12px; }
-.faq-item { background: #FFF7FA; border-radius: 10px; padding: 16px 20px; }
-.faq-q { color: var(--deep-blue); font-size: 15px; font-weight: 700; line-height: 1.6; }
-.faq-a { margin-top: 6px; color: var(--dark-text); font-size: 15px; line-height: 1.85; white-space: pre-line; }
-details.faq-item summary { cursor: pointer; list-style: none; position: relative; padding-right: 24px; }
-details.faq-item summary::-webkit-details-marker { display: none; }
-details.faq-item summary::after { content: '＋'; position: absolute; right: 0; top: 0; color: var(--accent); font-weight: 600; }
-details.faq-item[open] summary::after { content: '－'; }
+.entries-title { margin: 0 0 20px; color: var(--deep-blue); font-size: 22px; font-weight: 700; line-height: 1.4; }
+.entries-list { display: flex; flex-direction: column; gap: 12px; }
+.entries-item { background: #FFF7FA; border-radius: 10px; padding: 16px 20px; }
+.entries-label { color: var(--deep-blue); font-size: 15px; font-weight: 700; line-height: 1.6; }
+.entries-text { margin-top: 6px; color: var(--dark-text); font-size: 15px; line-height: 1.85; white-space: pre-line; }
+details.entries-item summary { cursor: pointer; list-style: none; position: relative; padding-right: 24px; }
+details.entries-item summary::-webkit-details-marker { display: none; }
+details.entries-item summary::after { content: '＋'; position: absolute; right: 0; top: 0; color: var(--accent); font-weight: 600; }
+details.entries-item[open] summary::after { content: '－'; }
 .info-list-title { margin: 0 0 11px; color: var(--deep-blue); font-size: 20px; line-height: 1.4; }
 .info-list-title.is-center { text-align: center; }
 .section-content > * { min-width: 0; }

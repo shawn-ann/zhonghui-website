@@ -11,7 +11,7 @@ describe('component categories', () => {
     expect(isLayout('image')).toBe(false)
   })
   it('allowed children: section = layout blocks; grid = cards/text', () => {
-    expect(allowedChildTypes('section')).toEqual(['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'faq', 'steps', 'iconList', 'hscroll', 'stack'])
+    expect(allowedChildTypes('section')).toEqual(['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'entries', 'steps', 'iconList', 'hscroll', 'stack'])
     expect(allowedChildTypes('grid')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack', 'steps'])
     expect(allowedChildTypes('grid', 'rows')).toEqual(['gridRow'])
     expect(allowedChildTypes('gridRow')).toEqual(['gridCell'])

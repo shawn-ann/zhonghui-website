@@ -188,10 +188,12 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.connector = b.connector !== false
       out.steps = (b.steps || []).map((s) => ({ title: s.title || '', desc: s.desc || '' }))
       break
-    case 'faq':
+    case 'entries':
       if (b.title !== undefined) out.title = b.title
       out.collapsible = b.collapsible === true
-      out.items = (b.items || []).map((i) => ({ q: i.q || '', a: i.a || '' }))
+      out.labelPrefix = b.labelPrefix ?? 'Q：'
+      out.textPrefix = b.textPrefix ?? 'A：'
+      out.items = (b.items || []).map((i) => ({ label: i.label || '', text: i.text || '' }))
       break
     case 'iconList':
       out.items = (b.items || []).map((i, index) => ({
