@@ -53,6 +53,8 @@ const richText = (children: any[]) => ({
 })
 
 const titleBg = await ensureMedia('title-bg.jpg', '标题带背景')
+const bannerImg = await ensureMedia('about-hero.jpg', '赴美营地辅导员 Banner')
+const bannerPattern = await ensureMedia('pattern-box-5.svg', 'Banner 装饰图')
 const introImg = await ensureMedia('iccp-intro.jpg', '赴美营地辅导员项目介绍')
 await ensureMedia('memory-2.jpg', '营地活动图 1')
 await ensureMedia('memory-3.jpg', '营地活动图 2')
@@ -64,6 +66,7 @@ const strip = (title: string, en: string) => ({
   bgImage: titleBg.url,
   paddingY: 'none',
   paddingCustom: 12,
+  contentGap: 1,
   children: [{
     blockType: 'heading', title, subtitle: en, align: 'center', padding: 0,
     titleColor: '#8A0E4B', subtitleColor: '#9A9A9A',
@@ -75,7 +78,7 @@ const contentSection = (children: any[]) => ({ blockType: 'section', paddingY: '
 const intro = {
   blockType: 'section',
   paddingY: 'md',
-  bgGradient: 'linear-gradient(124deg, #6E0B3E 0%, #A11254 50%, #C2185B 100%)',
+  paddingCustom: 48,
   children: [{
     blockType: 'grid',
     layout: 'flow',
@@ -83,6 +86,7 @@ const intro = {
     gap: 'lg',
     columnRatio: '2:3',
     alignItems: 'center',
+    bgColor: '#A11254',
     children: [
       {
         blockType: 'text',
@@ -96,13 +100,28 @@ const intro = {
         bodyColor: '#FFFFFF',
         align: 'left',
         fontSize: 16,
+        padding: 40,
       },
-      { blockType: 'image', media: introImg.id, aspectRatio: 'auto', fit: 'cover' },
+      { blockType: 'image', media: introImg.id, aspectRatio: 'auto', fit: 'cover', padding: 40 },
     ],
   }],
 }
 
+const banner = {
+  blockType: 'section',
+  paddingY: 'none',
+  children: [{
+    blockType: 'banner',
+    variant: 'split',
+    title: '赴美营地辅导员',
+    sub: '沉浸全英文环境 · 收获成长与历练',
+    image: bannerImg.id,
+    pattern: bannerPattern.id,
+  }],
+}
+
 const blocks: any[] = [
+  banner,
   strip('赴美营地辅导员项目介绍', 'International Camp Counselor Program'),
   intro,
   strip('户外类型', 'Outdoor Type'),
