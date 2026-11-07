@@ -5,6 +5,26 @@ import LexicalContent from './LexicalContent'
 
 const CASE_BANNER_PATTERN = '/assets/pattern-box-5.svg'
 
+/** 分类页 / 文章详情共用页头：与页面 banner 块同一套结构与尺寸。 */
+function CaseBanner({ title, subtitle, image }: { title: string; subtitle?: string; image?: string }) {
+  return (
+    <div className="banner banner--split">
+      <div className="container banner-grid">
+        <div className="banner-text">
+          <h1>{title}</h1>
+          {subtitle ? <p className="sub">{subtitle}</p> : null}
+        </div>
+        {image ? (
+          <div className="banner-media">
+            <img className="banner-pattern" src={CASE_BANNER_PATTERN} alt="" />
+            <img className="banner-photo" src={image} alt={title} />
+          </div>
+        ) : null}
+      </div>
+    </div>
+  )
+}
+
 function dateText(value: string): string {
   return String(value || '').slice(0, 10)
 }
@@ -79,19 +99,7 @@ export function CaseListView({ page, hrefForPage }: {
   const banner = safeUrl(template.banner)
   return (
     <>
-      <section className="case-banner">
-        <div className="container case-banner-grid">
-          <div className="case-banner-text">
-            <h1>{template.title}</h1>
-            {template.subtitle ? <p className="sub">{template.subtitle}</p> : null}
-          </div>
-          {banner ? (
-            <div className="case-banner-media">
-              <img src={banner} alt={template.title} />
-            </div>
-          ) : null}
-        </div>
-      </section>
+      <CaseBanner title={template.title} subtitle={template.subtitle} image={banner} />
       <section className="section case-list-section">
         <div className="container">
           <h2 className="case-list-title">{template.title}</h2>
@@ -115,20 +123,7 @@ export function CaseDetailView({ page }: { page: PageDoc }) {
   const banner = safeUrl(template?.category?.banner)
   return (
     <>
-      <section className="case-banner case-banner--detail">
-        <div className="container case-banner-grid">
-          <div className="case-banner-text">
-            <h1>{title}</h1>
-            <p className="sub">中惠文化 · 真实案例分享</p>
-          </div>
-          {banner ? (
-            <div className="case-banner-media">
-              <img className="case-banner-pattern" src={CASE_BANNER_PATTERN} alt="" />
-              <img className="case-banner-photo" src={banner} alt={title} />
-            </div>
-          ) : null}
-        </div>
-      </section>
+      <CaseBanner title={title} subtitle="中惠文化 · 真实案例分享" image={banner} />
       <section className="section section-alt case-detail-section">
         <div className="container case-article">
           <h1 className="case-detail-title">{title}</h1>

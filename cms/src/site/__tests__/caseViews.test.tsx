@@ -42,6 +42,9 @@ const detailPage = (): PageDoc => ({
 describe('case views', () => {
   it('renders a card grid with title over the cover and no date/summary', () => {
     const html = render(<CaseListView page={listPage()} />)
+    expect(html).toContain('banner--split')
+    expect(html).toContain('banner-pattern')
+    expect(html).toContain('/assets/pattern-box-5.svg')
     expect(html).toContain('case-grid')
     expect(html).toContain('小曹同学的赴美之旅')
     expect(html).toContain('/blog/study-case/xiaocao/')
@@ -85,14 +88,15 @@ describe('case views', () => {
 
   it('renders the category-style banner with a decorative background and no cover in the body', () => {
     const html = render(<CaseDetailView page={detailPage()} />)
-    expect(html).toContain('case-banner')
+    expect(html).toContain('banner--split')
     expect(html).toContain('/media/category-banner.jpg')
-    expect(html).toContain('case-banner-pattern')
+    expect(html).toContain('banner-pattern')
     expect(html).toContain('中惠文化 · 真实案例分享')
     expect(html).toContain('case-detail-title')
     expect(html).toContain('2025-07-02')
     expect(html).toContain('article-body')
     expect(html).not.toContain('case-detail-cover')
     expect(html).not.toContain('case-detail-hero')
+    expect(html).not.toContain('case-banner')
   })
 })
