@@ -84,6 +84,15 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
       </div>
     </div>
   ),
+  zigzag: (
+    <div style={{ height: 44, padding: 6, position: 'relative' }}>
+      <div style={{ position: 'absolute', left: '50%', top: 6, bottom: 6, width: 2, background: '#f3b9d2' }} />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}><div style={{ ...line('55%'), margin: 0 }} /><span style={{ width: 10, height: 10, borderRadius: '50%', background: '#E60039' }} /></div>
+        <div style={{ display: 'flex', gap: 4, alignItems: 'center', justifyContent: 'flex-end' }}><span style={{ width: 10, height: 10, borderRadius: '50%', background: '#E60039' }} /><div style={{ ...line('55%'), margin: 0 }} /></div>
+      </div>
+    </div>
+  ),
   entries: (
     <div style={{ height: 44, display: 'flex', flexDirection: 'column', gap: 4, padding: 6 }}>
       <div style={{ background: '#fbeaf1', borderRadius: 3, padding: 4 }}><div style={line('70%')} /><div style={line('50%')} /></div>

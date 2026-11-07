@@ -458,6 +458,16 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .step-body { flex: 1; min-width: 0; }
 .step-title { color: var(--dark-text); font-size: 15px; line-height: 1.8; }
 .step-desc { margin: 4px 0 0; color: var(--gray-blue); font-size: 14px; line-height: 1.7; }
+.zigzag-title { margin: 0 0 20px; color: var(--deep-blue); font-size: 22px; font-weight: 700; line-height: 1.4; }
+.zigzag { position: relative; display: flex; flex-direction: column; gap: 24px; padding: 8px 0; }
+.zigzag::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-1px); background: linear-gradient(#F0E3EA, #F3B9D2, #F0E3EA); }
+.zigzag.no-line::before { display: none; }
+.zigzag-row { position: relative; display: grid; grid-template-columns: 1fr 84px 1fr; align-items: center; }
+.zigzag-text { grid-column: 1; justify-self: end; max-width: 430px; padding-right: 16px; text-align: right; color: var(--dark-text); font-size: 15px; line-height: 1.9; }
+.zigzag-row.is-right .zigzag-text { grid-column: 3; justify-self: start; padding-right: 0; padding-left: 16px; text-align: left; }
+.zigzag-node { grid-column: 2; justify-self: center; width: 64px; height: 64px; border-radius: 50%; background: var(--light-blue); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+.zigzag-glyph { width: 36px; height: 36px; background-color: var(--accent); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; }
+.zigzag-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
 .entries-title { margin: 0 0 20px; color: var(--deep-blue); font-size: 22px; font-weight: 700; line-height: 1.4; }
 .entries-list { display: flex; flex-direction: column; gap: 12px; }
 .entries-item { background: #FFF7FA; border-radius: 10px; padding: 16px 20px; }

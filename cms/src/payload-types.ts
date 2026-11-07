@@ -1745,6 +1745,19 @@ export interface Page {
                     }
                   | {
                       title?: string | null;
+                      showLine?: boolean | null;
+                      items: {
+                        icon?: (number | null) | Media;
+                        text: string;
+                        side?: ('auto' | 'left' | 'right') | null;
+                        id?: string | null;
+                      }[];
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'zigzag';
+                    }
+                  | {
+                      title?: string | null;
                       start?: number | null;
                       connector?: boolean | null;
                       steps: {
@@ -3712,6 +3725,19 @@ export interface Page {
           }
         | {
             title?: string | null;
+            showLine?: boolean | null;
+            items: {
+              icon?: (number | null) | Media;
+              text: string;
+              side?: ('auto' | 'left' | 'right') | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'zigzag';
+          }
+        | {
+            title?: string | null;
             start?: number | null;
             connector?: boolean | null;
             steps: {
@@ -5233,6 +5259,22 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
+                    zigzag?:
+                      | T
+                      | {
+                          title?: T;
+                          showLine?: T;
+                          items?:
+                            | T
+                            | {
+                                icon?: T;
+                                text?: T;
+                                side?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
                     steps?:
                       | T
                       | {
@@ -6500,6 +6542,22 @@ export interface PagesSelect<T extends boolean = true> {
                 | {
                     label?: T;
                     text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        zigzag?:
+          | T
+          | {
+              title?: T;
+              showLine?: T;
+              items?:
+                | T
+                | {
+                    icon?: T;
+                    text?: T;
+                    side?: T;
                     id?: T;
                   };
               id?: T;

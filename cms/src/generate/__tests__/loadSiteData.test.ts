@@ -1,6 +1,19 @@
 import { describe, it, expect } from 'vitest'
 import { mapPageDoc, mapBlock, loadSiteData } from '../loadSiteData'
 
+describe('zigzag block mapping', () => {
+  it('maps icon, text and side', () => {
+    const block = mapBlock(
+      { blockType: 'zigzag', showLine: false, items: [{ icon: { url: '/media/z.svg' }, text: '文案', side: 'right' }] } as any,
+      (m: any) => (typeof m === 'object' ? m.url : m),
+    )
+    expect(block).toMatchObject({
+      type: 'zigzag', showLine: false,
+      items: [{ icon: '/media/z.svg', text: '文案', side: 'right' }],
+    })
+  })
+})
+
 describe('entries block mapping', () => {
   it('maps label + text items with prefixes', () => {
     const block = mapBlock(

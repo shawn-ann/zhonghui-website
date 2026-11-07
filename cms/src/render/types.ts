@@ -186,6 +186,13 @@ export interface StepsBlock extends BlockBase {
   steps: { title: string; desc?: string }[]
 }
 
+export interface ZigzagBlock extends BlockBase {
+  type: 'zigzag'
+  title?: string
+  showLine?: boolean
+  items: { icon?: string; text: string; side?: 'auto' | 'left' | 'right' }[]
+}
+
 export interface EntriesBlock extends BlockBase {
   type: 'entries'
   title?: string
@@ -243,6 +250,7 @@ export type Block =
   | InfoListBlock
   | IconListBlock
   | EntriesBlock
+  | ZigzagBlock
   | StepsBlock
   | HscrollBlock
   | StackBlock

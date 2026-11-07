@@ -57,6 +57,10 @@ const bannerImg = await ensureMedia('about-hero.jpg', '赴美营地辅导员 Ban
 const bannerPattern = await ensureMedia('pattern-box-5.svg', 'Banner 装饰图')
 const introImg = await ensureMedia('iccp-intro.jpg', '赴美营地辅导员项目介绍')
 const stepsImg = await ensureMedia('prog-iccp.jpg', '报名流程配图')
+const iconDumbbell = await ensureMedia('dumbbell.svg', '工作内容图标：哑铃')
+const iconBall = await ensureMedia('ball.svg', '工作内容图标：球')
+const iconTent = await ensureMedia('tent.svg', '工作内容图标：帐篷')
+const iconHeart = await ensureMedia('heart.svg', '工作内容图标：爱心')
 await ensureMedia('memory-2.jpg', '营地活动图 1')
 await ensureMedia('memory-3.jpg', '营地活动图 2')
 await ensureMedia('memory-5.jpg', '营地活动图 3')
@@ -125,6 +129,17 @@ const blocks: any[] = [
   banner,
   strip('赴美营地辅导员项目介绍', 'International Camp Counselor Program'),
   intro,
+  strip('工作内容', 'Job Content'),
+  contentSection([{
+    blockType: 'zigzag',
+    showLine: true,
+    items: [
+      { icon: iconDumbbell.id, text: '在营地教育活动中，是营员的家人、辅导员，也是营地老师的助手，陪伴并引导他们的日常' },
+      { icon: iconBall.id, text: '负责营员各类室内及户外体育、竞技运动的安全与辅导，并维护活动秩序' },
+      { icon: iconTent.id, text: '组织孩子参与各类活动（如体育、艺术、表演艺术、水上运动、游泳、攀岩、马术和露营等）' },
+      { icon: iconHeart.id, text: '监督管理孩子的健康与安全，照料日常生活，帮助他们建立友谊' },
+    ],
+  }]),
   strip('户外类型', 'Outdoor Type'),
   contentSection([{
     blockType: 'richtext',

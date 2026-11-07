@@ -21,6 +21,15 @@ describe('collectMediaUrls', () => {
     expect([...collectMediaUrls(d)]).toContain('/api/media/file/grid-cell.jpg')
   })
 
+  it('collects zigzag icons', () => {
+    const d = {
+      pages: [{ title: 't', route: '/', blocks: [{
+        type: 'zigzag', items: [{ icon: '/api/media/file/zig.svg', text: 'A' }],
+      }] }],
+    } as any
+    expect([...collectMediaUrls(d)]).toContain('/api/media/file/zig.svg')
+  })
+
   it('collects iconList icons', () => {
     const d = {
       pages: [{

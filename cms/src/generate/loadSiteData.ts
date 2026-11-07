@@ -193,6 +193,17 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
           desc: s.desc || undefined,
         })),
       }
+    case 'zigzag':
+      return {
+        type: 'zigzag',
+        title: raw.title || undefined,
+        showLine: raw.showLine !== false,
+        items: arr<Record<string, any>>(raw.items).map((i) => ({
+          icon: resolveMedia(i.icon) || undefined,
+          text: String(i.text ?? ''),
+          side: ['left', 'right'].includes(i.side) ? i.side : 'auto',
+        })),
+      }
     case 'entries':
       return {
         type: 'entries',

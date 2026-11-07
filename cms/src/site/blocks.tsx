@@ -3,7 +3,7 @@ import { safeUrl } from '../render/primitives'
 import type {
   BannerBlock, Block, ButtonBlock, EntriesBlock, GalleryBlock, GridBlock, GridCellBlock, GridRowBlock,
   HeadingBlock, IconCardBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock,
-  HscrollBlock, RichTextBlock, SectionBlock, SliderBlock, StackBlock, StepsBlock, TextBlock,
+  HscrollBlock, RichTextBlock, SectionBlock, SliderBlock, StackBlock, StepsBlock, TextBlock, ZigzagBlock,
 } from '../render/types'
 import { bgCss, bgImageCss } from './bg'
 import { lexicalToHtml } from '../render/richText'
@@ -466,6 +466,39 @@ export function StepsView({ b, editor = false }: { b: StepsBlock; editor?: boole
   )
 }
 
+export function ZigzagView({ b, editor = false }: { b: ZigzagBlock; editor?: boolean }) {
+  const items = b.items || []
+  if (editor && items.length === 0) {
+    return <EmptyEditorBlock b={b} label="交替图文" tip="在右侧添加条目" variant="wide" />
+  }
+  return (
+    <div className="container" data-bid={b._id}>
+      {b.title ? <h3 className="zigzag-title">{b.title}</h3> : null}
+      <div className={`zigzag${b.showLine === false ? ' no-line' : ''}`}>
+        {items.map((item, i) => {
+          const side = item.side === 'left' || item.side === 'right'
+            ? item.side
+            : i % 2 === 0 ? 'left' : 'right'
+          const icon = safeUrl(item.icon)
+          return (
+            <div className={`zigzag-row is-${side}`} key={i}>
+              <div className="zigzag-text">{item.text}</div>
+              <span className="zigzag-node">
+                {icon ? (
+                  <span
+                    className="zigzag-glyph"
+                    style={{ WebkitMaskImage: `url('${icon}')`, maskImage: `url('${icon}')` }}
+                  />
+                ) : <span className="zigzag-dot" />}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 export function EntriesView({ b, editor = false }: { b: EntriesBlock; editor?: boolean }) {
   const items = b.items || []
   if (editor && items.length === 0) {
@@ -581,6 +614,7 @@ export function blockNode(b: Block, editor = false): React.ReactNode {
     case 'infoList': return <InfoListView b={b} />
     case 'steps': return <StepsView b={b} />
     case 'entries': return <EntriesView b={b} />
+    case 'zigzag': return <ZigzagView b={b} />
     case 'iconList': return <IconListView b={b} />
     case 'hscroll': return <HscrollView b={b} editor={editor} />
     case 'stack': return <StackView b={b} editor={editor} />

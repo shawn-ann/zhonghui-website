@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { blockNode } from '../../site/blocks'
 import { lexicalToHtml } from '../richText'
-import type { EntriesBlock, GridBlock, HscrollBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, StackBlock, StepsBlock, TextBlock } from '../types'
+import type { EntriesBlock, GridBlock, HscrollBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, StackBlock, StepsBlock, TextBlock, ZigzagBlock } from '../types'
 
 const render = (b: any) => renderToStaticMarkup(blockNode(b)!)
 
@@ -116,6 +116,29 @@ describe('content component extensions', () => {
     expect(html).toContain('info-item')
     expect(html).not.toContain('info-dot')
     expect(html).toContain('食宿')
+  })
+
+  it('renders alternating zigzag rows around a center line', () => {
+    const b: ZigzagBlock = {
+      type: 'zigzag',
+      _id: 'zigzag',
+      showLine: true,
+      items: [
+        { icon: '/media/a.svg', text: '第一段' },
+        { icon: '/media/b.svg', text: '第二段', side: 'right' },
+        { text: '第三段' },
+      ],
+    }
+    const html = render(b)
+    expect(html).toContain('zigzag')
+    expect(html).toContain('zigzag-row is-left')
+    expect(html).toContain('zigzag-row is-right')
+    expect(html).toContain('/media/a.svg')
+    expect(html).toContain('第二段')
+    expect(html).not.toContain('no-line')
+
+    const plain = render({ ...b, showLine: false })
+    expect(plain).toContain('no-line')
   })
 
   it('renders numbered steps without any side image', () => {

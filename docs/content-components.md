@@ -46,6 +46,7 @@
 | `slider` | 轮播 | 图片轮播 |
 | `infoList` | 信息列表 | 标签/说明条目列表 |
 | `entries` | 文本条目 | 标签/正文卡片，前缀可配置，可折叠 |
+| `zigzag` | 交替图文 | 中轴线 + 左右交替图文条目 |
 | `steps` | 流程步骤 | 编号步骤 + 可选侧图 |
 | `iconList` | 图标列表 | 图标/标题/说明列表 |
 
@@ -57,7 +58,7 @@
 
 ```text
 heading, text, grid, gallery, banner, slider, richtext,
-infoList, entries, steps, iconList, hscroll, stack
+infoList, entries, zigzag, steps, iconList, hscroll, stack
 ```
 
 规则：
@@ -324,7 +325,19 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 - `collapsible` 开启时使用原生 `<details>/<summary>`，无额外 JS。
 - 只能放在 `section` 下。
 
-### 5.14 流程步骤 `steps`
+### 5.14 交替图文 `zigzag`
+
+| 字段 | 类型 | 默认 | 说明 |
+|---|---|---|---|
+| `title` | text | 空 | 可选标题 |
+| `showLine` | boolean | true | 显示中轴线 |
+| `items` | repeater | — | icon（可选）+ text + side（auto/left/right） |
+
+- 默认按顺序左右交替，可用 `side` 强制某一侧。
+- 中间渐变轴线 + 圆点；有图标时显示图标（媒体库 SVG 单色遮罩），无图标显示圆点。
+- 移动端改为单列并隐藏中轴线。
+
+### 5.15 流程步骤 `steps`
 
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
@@ -336,7 +349,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 - 数字徽标使用主题强调色（`--accent`），每条底部虚线分隔。
 - 组件只渲染步骤列表，不含配图；需要「左图右流程」时放在 `grid` 里，与 `image` 组合（如 `columnRatio: 5:6`）。
 
-### 5.15 其它
+### 5.16 其它
 
 - `button`：`label`、`linkType`/`internalPage`/`externalUrl`、`style`
 - `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/单图/图集节点（可配置 1–4 列）；历史 `padding` 保留兼容
@@ -348,7 +361,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 ### 6.1 重复项
 
-`infoList` / `entries` / `steps` / `iconList` 使用统一手风琴控件：
+`infoList` / `entries` / `zigzag` / `steps` / `iconList` 使用统一手风琴控件：
 
 - 默认只展开当前条目，其余折叠为摘要
 - 行头：拖拽手柄、序号/缩略图、主标题、说明摘要、复制、删除、展开箭头

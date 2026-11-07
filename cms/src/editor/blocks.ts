@@ -124,6 +124,14 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
       { key: 'desc', label: '说明（可选）', control: 'textarea' },
     ] },
   ] },
+  zigzag: { type: 'zigzag', label: '交替图文', defaults: () => ({ type: 'zigzag', showLine: true, items: [{ text: '第一条' }, { text: '第二条' }] }), fields: [
+    { key: 'title', label: '标题（可选）', control: 'text' },
+    { key: 'showLine', label: '显示中轴线', control: 'boolean' },
+    { key: 'items', label: '条目', control: 'repeater', addLabel: '添加条目', titleKey: 'text', itemFields: [
+      { key: 'icon', label: '图标（可选）', control: 'media' },
+      { key: 'text', label: '文本', control: 'textarea' },
+    ] },
+  ] },
   entries: { type: 'entries', label: '文本条目', defaults: () => ({ type: 'entries', collapsible: false, items: [{ label: '标签', text: '正文' }] }), fields: [
     { key: 'title', label: '标题（可选）', control: 'text' },
     { key: 'collapsible', label: '折叠显示', control: 'boolean' },
@@ -222,7 +230,7 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
 export const LAYOUT_TYPES = ['section', 'grid', 'gridRow', 'gridCell', 'hscroll', 'stack'] as const
 
 /** 分栏：版面级内容。 */
-export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'entries', 'steps', 'iconList', 'hscroll', 'stack']
+export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'entries', 'zigzag', 'steps', 'iconList', 'hscroll', 'stack']
 /** 网格：卡片/文本级内容。 */
 export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack', 'steps']
 
@@ -264,6 +272,7 @@ export function blockSummary(b: Block): string {
     case 'richtext': return '富文本'
     case 'infoList': return `信息列表 · ${b.items.length} 条`
     case 'entries': return `文本条目 · ${b.items.length} 条`
+    case 'zigzag': return `交替图文 · ${b.items.length} 条`
     case 'steps': return `流程 · ${b.steps.length} 步`
     case 'iconList': return `图标列表 · ${b.items.length} 条`
     case 'hscroll': return `横向滚动 · ${b.children?.length || 0} 张`

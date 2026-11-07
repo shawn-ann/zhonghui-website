@@ -188,6 +188,15 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.connector = b.connector !== false
       out.steps = (b.steps || []).map((s) => ({ title: s.title || '', desc: s.desc || '' }))
       break
+    case 'zigzag':
+      if (b.title !== undefined) out.title = b.title
+      out.showLine = b.showLine !== false
+      out.items = (b.items || []).map((i, index) => ({
+        icon: resolveMediaId(i.icon, urlToId, raw?.items?.[index]?.icon),
+        text: i.text || '',
+        side: ['left', 'right'].includes(i.side as string) ? i.side : 'auto',
+      }))
+      break
     case 'entries':
       if (b.title !== undefined) out.title = b.title
       out.collapsible = b.collapsible === true

@@ -16,12 +16,13 @@ import { IconCardBlock } from './IconCard'
 import { makeSection } from './Section'
 import { InfoListBlock } from './InfoList'
 import { EntriesBlock } from './Entries'
+import { ZigzagBlock } from './Zigzag'
 import { StepsBlock } from './Steps'
 import { IconListBlock } from './IconList'
 import { HscrollBlock } from './Hscroll'
 import { StackBlock } from './Stack'
 
-export const sectionChildren: Block[] = [HeadingBlock, TextBlock, Grid, GalleryBlock, BannerBlock, SliderBlock, RichTextBlock, InfoListBlock, EntriesBlock, StepsBlock, IconListBlock, HscrollBlock, StackBlock]
+export const sectionChildren: Block[] = [HeadingBlock, TextBlock, Grid, GalleryBlock, BannerBlock, SliderBlock, RichTextBlock, InfoListBlock, EntriesBlock, ZigzagBlock, StepsBlock, IconListBlock, HscrollBlock, StackBlock]
 
 export const SectionBlock = makeSection(sectionChildren)
 
@@ -42,6 +43,7 @@ export const pageBlocks: Block[] = [
   IconCardBlock,
   InfoListBlock,
   EntriesBlock,
+  ZigzagBlock,
   StepsBlock,
   IconListBlock,
   HscrollBlock,
