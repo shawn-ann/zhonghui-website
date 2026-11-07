@@ -59,6 +59,15 @@ describe('case views', () => {
     expect(html).not.toContain('case-pagination')
   })
 
+  it('puts the category title above the card grid', () => {
+    const html = render(<CaseListView page={listPage()} />)
+    const title = html.indexOf('case-list-title')
+    const grid = html.indexOf('case-grid')
+    expect(title).toBeGreaterThan(-1)
+    expect(title).toBeLessThan(grid)
+    expect(html).toContain('案例分享')
+  })
+
   it('hides the pagination when everything fits on one page', () => {
     const page = listPage()
     ;(page.template as any).pageCount = 1

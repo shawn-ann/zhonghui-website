@@ -278,6 +278,7 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .case-banner-media { flex: 1; max-width: 520px; }
 .case-banner-media img { width: 100%; height: auto; display: block; border-radius: 12px; }
 .case-list-section { background: var(--light-blue); }
+.case-list-title { text-align: center; margin: 0 0 34px; font-size: 30px; line-height: 1.35; font-weight: 700; color: var(--deep-blue); }
 .case-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
 .case-card {
   position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden;
@@ -337,6 +338,7 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   .case-banner-text h1 { font-size: 30px; }
   .case-banner-text .sub { font-size: 17px; }
   .case-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .case-list-title { font-size: 24px; margin-bottom: 24px; }
   .case-detail-title { font-size: 24px; }
   .case-banner-media { min-height: 0; }
   .case-banner--detail .case-banner-photo { position: static; width: 100%; margin-top: 24px; }

@@ -94,6 +94,7 @@ export function CaseListView({ page, hrefForPage }: {
       </section>
       <section className="section case-list-section">
         <div className="container">
+          <h2 className="case-list-title">{template.title}</h2>
           {template.items.length ? (
             <div className="case-grid">
               {template.items.map((item) => <CaseCard item={item} key={item.id ?? item.slug} />)}
