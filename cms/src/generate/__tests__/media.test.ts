@@ -6,6 +6,24 @@ describe('collectMediaUrls', () => {
     const d = { pages: [{ title: 't', route: '/', blocks: [{ type: 'richtext', html: '<p><img src="/api/media/file/rt.jpg"></p>' }] }] } as any
     expect([...collectMediaUrls(d)]).toContain('/api/media/file/rt.jpg')
   })
+  it('collects media inside hscroll and stack containers', () => {
+    const d = {
+      pages: [{
+        title: 'about', route: '/about/', blocks: [
+          { type: 'hscroll', timeline: true, children: [
+            { type: 'imageText', media: '/api/media/file/timeline-1.jpg', title: '2002' },
+            { type: 'grid', children: [{ type: 'image', media: '/api/media/file/timeline-2.jpg' }] },
+          ] },
+          { type: 'stack', gap: 'md', children: [{ type: 'image', media: '/api/media/file/stack.jpg' }] },
+        ],
+      }],
+    } as any
+    const urls = [...collectMediaUrls(d)]
+    expect(urls).toEqual(expect.arrayContaining([
+      '/api/media/file/timeline-1.jpg', '/api/media/file/timeline-2.jpg', '/api/media/file/stack.jpg',
+    ]))
+  })
+
   it('collects template banners, covers and body images', () => {
     const d = {
       pages: [

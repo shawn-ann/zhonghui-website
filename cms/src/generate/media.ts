@@ -20,6 +20,8 @@ export function collectMediaUrls(data: SiteData): Set<string> {
         case 'slider': b.images.forEach(add); break
         case 'grid': walk(b.children); add(b.bgImage); break
         case 'section': walk(b.children); add(b.bgImage); break
+        case 'hscroll': walk(b.children); break
+        case 'stack': walk(b.children); add(b.bgImage); break
         case 'richtext': {
           const matches = b.html.match(/\/api\/media\/file\/[^"'\s)]+/g)
           if (matches) matches.forEach(add)
