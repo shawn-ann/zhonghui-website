@@ -46,11 +46,15 @@ function resolveMenu(
     } else if (type === 'external') link = item?.externalUrl || undefined
     else link = pageRoute(item?.page, routes)
 
-    if (!link) return []
+    const children = resolveMenu(item?.children, routes, categoryRoutes)
+    if (!link) {
+      if (!children.length) return []
+      return [{ label: String(item?.label ?? ''), link: '', children }]
+    }
     return [{
       label: String(item?.label ?? ''),
       link,
-      children: resolveMenu(item?.children, routes, categoryRoutes),
+      children,
     }]
   })
 }

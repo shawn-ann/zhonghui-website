@@ -23,6 +23,19 @@ describe('buildSiteConfig', () => {
     ])
   })
 
+  it('keeps a linkless parent when it has children', () => {
+    const site = buildSiteConfig({
+      items: [{
+        label: '赴美J1交流项目', linkType: 'none',
+        children: [{ label: 'ICCP赴美营地辅导员', page: { id: 5, route: '/project-iccp/' } }],
+      }],
+    }, null)
+    expect(site.menu).toEqual([{
+      label: '赴美J1交流项目', link: '',
+      children: [{ label: 'ICCP赴美营地辅导员', link: '/project-iccp/', children: [] }],
+    }])
+  })
+
   it('resolves case category and external menu links', () => {
     const site = buildSiteConfig({
       items: [

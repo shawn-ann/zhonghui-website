@@ -6,7 +6,7 @@ import { AdminPageHeader } from './admin/AdminPageHeader'
 
 interface PageOption { id: number | string; title: string; route: string; status?: string }
 interface CategoryOption { id: number | string; title: string; slug: string }
-type LinkType = 'page' | 'caseCategory' | 'external'
+type LinkType = 'page' | 'caseCategory' | 'external' | 'none'
 interface MenuItem {
   id?: number | string
   label: string
@@ -28,7 +28,7 @@ const pageIdValue = (value: number | string | undefined) =>
   typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : value
 
 const linkTypeOf = (i: any): LinkType => {
-  if (i?.linkType === 'caseCategory' || i?.linkType === 'external') return i.linkType
+  if (i?.linkType === 'caseCategory' || i?.linkType === 'external' || i?.linkType === 'none') return i.linkType
   return 'page'
 }
 
@@ -110,6 +110,7 @@ export default function MenuEditorView() {
       return c ? `${c.title}（/blog/${c.slug}/）` : '未选择文章分类'
     }
     if (item.linkType === 'external') return item.externalUrl || '未填写外链'
+    if (item.linkType === 'none') return '不跳转（仅作父级）'
     const p = item.pageId != null ? pageMap.get(String(item.pageId)) : undefined
     return p ? `${p.title}（${p.route}）` : '未选择页面'
   }
@@ -359,6 +360,7 @@ export default function MenuEditorView() {
                 <option value="page">内部页面</option>
                 <option value="caseCategory">文章分类</option>
                 <option value="external">外链</option>
+                <option value="none">无链接（仅作父级）</option>
               </select>
             </label>
             {modal.linkType === 'page' ? (

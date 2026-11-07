@@ -366,8 +366,19 @@ describe('site chrome', () => {
       { label: '赴美J1交流项目', link: '/project-iccp/', children: [{ label: 'SWT 赴美带薪实习', link: '/project-swt/' }] },
     ]
     const html = render(<SiteNav activeRoute="/about/" menu={menu} settings={DEFAULT_SETTINGS} />)
-    expect(html).toContain('class="active">关于中惠')
+    expect(html).toContain('<li class="active"><a href="/about/">关于中惠</a></li>')
     expect(html).toContain('SWT 赴美带薪实习')
+  })
+
+  it('renders a linkless parent as a non-navigating label', () => {
+    const menu = [
+      { label: '赴美J1交流项目', link: '', children: [{ label: 'ICCP赴美营地辅导员', link: '/project-iccp/' }] },
+    ]
+    const html = render(<SiteNav activeRoute="/project-iccp/" menu={menu} settings={DEFAULT_SETTINGS} />)
+    expect(html).toContain('class="nav-no-link"')
+    expect(html).toContain('<li class="active">')
+    expect(html).toContain('ICCP赴美营地辅导员')
+    expect(html).not.toContain('href=""')
   })
 
   it('renders footer info', () => {

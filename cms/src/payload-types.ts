@@ -6893,14 +6893,14 @@ export interface Menu {
   items?:
     | {
         label: string;
-        linkType?: ('page' | 'caseCategory' | 'external') | null;
+        linkType?: ('page' | 'caseCategory' | 'external' | 'none') | null;
         page?: (number | null) | Page;
         caseCategory?: (number | null) | CaseCategory;
         externalUrl?: string | null;
         children?:
           | {
               label: string;
-              linkType?: ('page' | 'caseCategory' | 'external') | null;
+              linkType?: ('page' | 'caseCategory' | 'external' | 'none') | null;
               page?: (number | null) | Page;
               caseCategory?: (number | null) | CaseCategory;
               externalUrl?: string | null;

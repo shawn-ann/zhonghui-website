@@ -34,10 +34,12 @@ header {
 .logo { display: flex; align-items: center; gap: 10px; }
 .logo img { display: block; height: 88px; width: auto; }
 .nav-menu { display: flex; list-style: none; gap: 24px; align-items: center; }
-.nav-menu a { font-size: 16px; color: #E60039; font-weight: 600; position: relative; padding: 6px 0; }
+.nav-menu a, .nav-menu .nav-no-link { font-size: 16px; color: #E60039; font-weight: 600; position: relative; padding: 6px 0; }
 .nav-menu a.active { color: #E60039; }
+.nav-menu .nav-no-link { cursor: default; user-select: none; }
 .nav-menu li { position: relative; }
-.nav-menu li.active > a::after {
+.nav-menu li.active > a::after,
+.nav-menu li.active > .nav-no-link::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
   height: 3px; border-radius: 2px; background: #E60039;
 }

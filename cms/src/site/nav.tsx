@@ -7,16 +7,26 @@ function isActiveLink(link: string, activeRoute: string): boolean {
 }
 
 function NavItem({ item, activeRoute }: { item: MenuNode; activeRoute: string }) {
-  const active = isActiveLink(item.link, activeRoute)
+  const hasChildren = Boolean(item.children?.length)
+  const active = item.link
+    ? isActiveLink(item.link, activeRoute)
+    : Boolean(item.children?.some((c) => c.link && isActiveLink(c.link, activeRoute)))
+  const label = (
+    <>
+      {item.label}
+      {hasChildren ? <span className="caret"> ▾</span> : null}
+    </>
+  )
   return (
-    <li>
-      <a href={hrefOf(item.link)} {...(active ? { className: 'active' } : {})}>
-        {item.label}
-        {item.children?.length ? <span className="caret"> ▾</span> : null}
-      </a>
-      {item.children?.length ? (
+    <li className={active ? 'active' : undefined}>
+      {item.link ? (
+        <a href={hrefOf(item.link)}>{label}</a>
+      ) : (
+        <span className="nav-no-link" role="button" tabIndex={0}>{label}</span>
+      )}
+      {hasChildren ? (
         <div className="dropdown">
-          {item.children.map((c) => (
+          {item.children!.map((c) => (
             <a key={`${c.label}-${c.link}`} href={hrefOf(c.link)}>{c.label}</a>
           ))}
         </div>

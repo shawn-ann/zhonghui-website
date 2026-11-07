@@ -11,6 +11,7 @@ const itemFields = (): Field[] => [
       { label: '内部页面', value: 'page' },
       { label: '文章分类', value: 'caseCategory' },
       { label: '外链', value: 'external' },
+      { label: '无链接（仅作父级）', value: 'none' },
     ],
   },
   {
