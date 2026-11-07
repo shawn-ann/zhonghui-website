@@ -1,7 +1,7 @@
 import { Fragment, type CSSProperties } from 'react'
 import { safeUrl } from '../render/primitives'
 import type {
-  BannerBlock, Block, ButtonBlock, GalleryBlock, GridBlock, GridCellBlock, GridRowBlock,
+  BannerBlock, Block, ButtonBlock, FaqBlock, GalleryBlock, GridBlock, GridCellBlock, GridRowBlock,
   HeadingBlock, IconCardBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock,
   HscrollBlock, RichTextBlock, SectionBlock, SliderBlock, StackBlock, TextBlock,
 } from '../render/types'
@@ -439,6 +439,31 @@ export function InfoListView({ b }: { b: InfoListBlock }) {
   )
 }
 
+export function FaqView({ b, editor = false }: { b: FaqBlock; editor?: boolean }) {
+  const items = b.items || []
+  if (editor && items.length === 0) {
+    return <EmptyEditorBlock b={b} label="常见问答" tip="在右侧添加问答" variant="wide" />
+  }
+  return (
+    <div className="container" data-bid={b._id}>
+      {b.title ? <h3 className="faq-title">{b.title}</h3> : null}
+      <div className="faq-list">
+        {items.map((item, i) => b.collapsible ? (
+          <details className="faq-item" key={i}>
+            <summary className="faq-q">{item.q}</summary>
+            <div className="faq-a">{item.a}</div>
+          </details>
+        ) : (
+          <div className="faq-item" key={i}>
+            <div className="faq-q">{item.q}</div>
+            <div className="faq-a">{item.a}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export function IconListView({ b }: { b: IconListBlock }) {
   const pos = b.iconPosition || 'left'
   return (
@@ -527,6 +552,7 @@ export function blockNode(b: Block, editor = false): React.ReactNode {
     case 'gridCell': return <GridCellView b={b} editor={editor} />
     case 'banner': return <BannerView b={b} editor={editor} />
     case 'infoList': return <InfoListView b={b} />
+    case 'faq': return <FaqView b={b} />
     case 'iconList': return <IconListView b={b} />
     case 'hscroll': return <HscrollView b={b} editor={editor} />
     case 'stack': return <StackView b={b} editor={editor} />

@@ -1693,6 +1693,18 @@ export interface Page {
                       blockType: 'infoList';
                     }
                   | {
+                      title?: string | null;
+                      collapsible?: boolean | null;
+                      items: {
+                        q: string;
+                        a: string;
+                        id?: string | null;
+                      }[];
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'faq';
+                    }
+                  | {
                       items: {
                         icon: number | Media;
                         title: string;
@@ -3596,6 +3608,18 @@ export interface Page {
             blockType: 'infoList';
           }
         | {
+            title?: string | null;
+            collapsible?: boolean | null;
+            items: {
+              q: string;
+              a: string;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq';
+          }
+        | {
             items: {
               icon: number | Media;
               title: string;
@@ -5042,6 +5066,21 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
+                    faq?:
+                      | T
+                      | {
+                          title?: T;
+                          collapsible?: T;
+                          items?:
+                            | T
+                            | {
+                                q?: T;
+                                a?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
                     iconList?:
                       | T
                       | {
@@ -6232,6 +6271,21 @@ export interface PagesSelect<T extends boolean = true> {
                     id?: T;
                   };
               showDots?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              title?: T;
+              collapsible?: T;
+              items?:
+                | T
+                | {
+                    q?: T;
+                    a?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

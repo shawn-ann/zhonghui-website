@@ -74,6 +74,12 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
       <div style={line('90%')} /><div style={line('80%')} /><div style={line('88%')} /><div style={line('70%')} />
     </div>
   ),
+  faq: (
+    <div style={{ height: 44, display: 'flex', flexDirection: 'column', gap: 4, padding: 6 }}>
+      <div style={{ background: '#fbeaf1', borderRadius: 3, padding: 4 }}><div style={line('70%')} /><div style={line('50%')} /></div>
+      <div style={{ background: '#fbeaf1', borderRadius: 3, padding: 4 }}><div style={line('65%')} /><div style={line('45%')} /></div>
+    </div>
+  ),
   iconList: (
     <div style={{ height: 44, display: 'flex', flexDirection: 'column', gap: 5, padding: 7 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}><span style={{ width: 12, height: 12, borderRadius: '50%', border: '2px solid #E60039' }} /><span style={{ ...line('50%'), margin: 0 }} /></div>

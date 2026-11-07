@@ -182,6 +182,16 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         })),
         showDots: raw.showDots !== false,
       }
+    case 'faq':
+      return {
+        type: 'faq',
+        title: raw.title || undefined,
+        collapsible: raw.collapsible === true,
+        items: arr<Record<string, any>>(raw.items).map((i) => ({
+          q: String(i.q ?? ''),
+          a: String(i.a ?? ''),
+        })),
+      }
     case 'iconList':
       return {
         type: 'iconList',

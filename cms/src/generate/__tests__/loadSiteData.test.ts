@@ -1,6 +1,21 @@
 import { describe, it, expect } from 'vitest'
 import { mapPageDoc, mapBlock, loadSiteData } from '../loadSiteData'
 
+describe('faq block mapping', () => {
+  it('maps question and answer items', () => {
+    const block = mapBlock(
+      { blockType: 'faq', title: '常见疑问', collapsible: true, items: [{ q: '包食宿吗？', a: '提供免费食宿。' }] } as any,
+      (m: any) => m,
+    )
+    expect(block).toMatchObject({
+      type: 'faq',
+      title: '常见疑问',
+      collapsible: true,
+      items: [{ q: '包食宿吗？', a: '提供免费食宿。' }],
+    })
+  })
+})
+
 describe('mapPageDoc', () => {
   it('maps a payload page + blocks to PageDoc', () => {
     const raw = {

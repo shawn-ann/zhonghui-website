@@ -45,6 +45,7 @@
 | `gallery` | 图集 | 图片网格 |
 | `slider` | 轮播 | 图片轮播 |
 | `infoList` | 信息列表 | 标签/说明条目列表 |
+| `faq` | 常见问答 | 问题/答案卡片，可折叠 |
 | `iconList` | 图标列表 | 图标/标题/说明列表 |
 
 ## 3. 放置规则
@@ -55,7 +56,7 @@
 
 ```text
 heading, text, grid, gallery, banner, slider, richtext,
-infoList, iconList, hscroll, stack
+infoList, faq, iconList, hscroll, stack
 ```
 
 规则：
@@ -309,7 +310,19 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 | `iconPosition` | select | left | left/right/alternate |
 | `iconColor` | text | 空 | 单色蒙版颜色 |
 
-### 5.13 其它
+### 5.13 常见问答 `faq`
+
+| 字段 | 类型 | 默认 | 说明 |
+|---|---|---|---|
+| `title` | text | 空 | 可选标题 |
+| `collapsible` | boolean | false | 是否用 `<details>` 折叠 |
+| `items` | repeater | — | q（问题）+ a（答案） |
+
+- 静态模式渲染浅粉卡片（`#FFF7FA`、10px 圆角），问句玫红加粗。
+- `collapsible` 开启时使用原生 `<details>/<summary>`，无额外 JS。
+- 列表中只能放在 `section` 下。
+
+### 5.14 其它
 
 - `button`：`label`、`linkType`/`internalPage`/`externalUrl`、`style`
 - `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/单图/图集节点（可配置 1–4 列）；历史 `padding` 保留兼容
@@ -321,7 +334,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 ### 6.1 重复项
 
-`infoList` / `iconList` 使用统一手风琴控件：
+`infoList` / `faq` / `iconList` 使用统一手风琴控件：
 
 - 默认只展开当前条目，其余折叠为摘要
 - 行头：拖拽手柄、序号/缩略图、主标题、说明摘要、复制、删除、展开箭头

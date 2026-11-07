@@ -178,6 +178,13 @@ export interface IconListBlock extends BlockBase {
   iconColor?: string
 }
 
+export interface FaqBlock extends BlockBase {
+  type: 'faq'
+  title?: string
+  collapsible?: boolean
+  items: { q: string; a: string }[]
+}
+
 export interface HscrollBlock extends BlockBase {
   type: 'hscroll'
   timeline: boolean
@@ -227,6 +234,7 @@ export type Block =
   | IconCardBlock
   | InfoListBlock
   | IconListBlock
+  | FaqBlock
   | HscrollBlock
   | StackBlock
   | SectionBlock

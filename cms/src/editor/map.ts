@@ -182,6 +182,11 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.items = (b.items || []).map((i) => ({ label: i.label || '', desc: i.desc || '' }))
       out.showDots = b.showDots !== false
       break
+    case 'faq':
+      if (b.title !== undefined) out.title = b.title
+      out.collapsible = b.collapsible === true
+      out.items = (b.items || []).map((i) => ({ q: i.q || '', a: i.a || '' }))
+      break
     case 'iconList':
       out.items = (b.items || []).map((i, index) => ({
         icon: resolveMediaId(i.icon, urlToId, raw?.items?.[index]?.icon),

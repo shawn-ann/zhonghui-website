@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { blockNode } from '../../site/blocks'
 import { lexicalToHtml } from '../richText'
-import type { GridBlock, HscrollBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, StackBlock, TextBlock } from '../types'
+import type { FaqBlock, GridBlock, HscrollBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, StackBlock, TextBlock } from '../types'
 
 const render = (b: any) => renderToStaticMarkup(blockNode(b)!)
 
@@ -116,6 +116,29 @@ describe('content component extensions', () => {
     expect(html).toContain('info-item')
     expect(html).not.toContain('info-dot')
     expect(html).toContain('食宿')
+  })
+
+  it('renders FAQ cards and collapsible details', () => {
+    const card: FaqBlock = {
+      type: 'faq',
+      _id: 'faq',
+      title: '常见疑问',
+      collapsible: false,
+      items: [
+        { q: '项目期间包食宿吗？', a: '是的，营地期间提供免费住宿及三餐。' },
+        { q: '项目结束后能旅游吗？', a: '项目结束后有 30 天的合法停留期。' },
+      ],
+    }
+    const html = render(card)
+    expect(html).toContain('faq-list')
+    expect(html).toContain('faq-title')
+    expect(html).toContain('项目期间包食宿吗？')
+    expect(html).not.toContain('<details')
+
+    const collapsed = render({ ...card, collapsible: true })
+    expect(collapsed).toContain('<details')
+    expect(collapsed).toContain('<summary')
+    expect(collapsed).toContain('项目结束后能旅游吗？')
   })
 
   it('renders icon list alternate and hscroll children', () => {
