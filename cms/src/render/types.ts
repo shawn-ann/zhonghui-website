@@ -181,8 +181,6 @@ export interface IconListBlock extends BlockBase {
 export interface StepsBlock extends BlockBase {
   type: 'steps'
   title?: string
-  image?: string
-  layout?: 'image-left' | 'image-right' | 'none'
   start?: number
   connector?: boolean
   steps: { title: string; desc?: string }[]

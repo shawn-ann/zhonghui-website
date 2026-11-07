@@ -115,10 +115,8 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     ] },
     { key: 'showDots', label: '显示圆点', control: 'boolean' },
   ] },
-  steps: { type: 'steps', label: '流程步骤', defaults: () => ({ type: 'steps', layout: 'image-left', start: 1, connector: true, steps: [{ title: '第一步' }] }), fields: [
+  steps: { type: 'steps', label: '流程步骤', defaults: () => ({ type: 'steps', start: 1, connector: true, steps: [{ title: '第一步' }] }), fields: [
     { key: 'title', label: '标题（可选）', control: 'text' },
-    { key: 'image', label: '配图（可选）', control: 'media' },
-    { key: 'layout', label: '布局', control: 'select', options: [{ label: '图片在左', value: 'image-left' }, { label: '图片在右', value: 'image-right' }, { label: '无图', value: 'none' }] },
     { key: 'start', label: '起始编号', control: 'number' },
     { key: 'connector', label: '显示虚线分隔', control: 'boolean' },
     { key: 'steps', label: '步骤', control: 'repeater', addLabel: '添加步骤', titleKey: 'title', subtitleKey: 'desc', itemFields: [
@@ -226,7 +224,7 @@ export const LAYOUT_TYPES = ['section', 'grid', 'gridRow', 'gridCell', 'hscroll'
 /** 分栏：版面级内容。 */
 export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'faq', 'steps', 'iconList', 'hscroll', 'stack']
 /** 网格：卡片/文本级内容。 */
-export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack']
+export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack', 'steps']
 
 export function isLayout(type: Block['type']): boolean {
   return (LAYOUT_TYPES as readonly string[]).includes(type)

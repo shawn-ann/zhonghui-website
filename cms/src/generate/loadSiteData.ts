@@ -186,8 +186,6 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
       return {
         type: 'steps',
         title: raw.title || undefined,
-        image: resolveMedia(raw.image),
-        layout: ['image-left', 'image-right', 'none'].includes(raw.layout) ? raw.layout : 'image-left',
         start: Number.isFinite(Number(raw.start)) ? Math.max(0, Math.trunc(Number(raw.start))) : 1,
         connector: raw.connector !== false,
         steps: arr<Record<string, any>>(raw.steps).map((s) => ({

@@ -12,10 +12,10 @@ describe('component categories', () => {
   })
   it('allowed children: section = layout blocks; grid = cards/text', () => {
     expect(allowedChildTypes('section')).toEqual(['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'faq', 'steps', 'iconList', 'hscroll', 'stack'])
-    expect(allowedChildTypes('grid')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack'])
+    expect(allowedChildTypes('grid')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack', 'steps'])
     expect(allowedChildTypes('grid', 'rows')).toEqual(['gridRow'])
     expect(allowedChildTypes('gridRow')).toEqual(['gridCell'])
-    expect(allowedChildTypes('gridCell')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack'])
+    expect(allowedChildTypes('gridCell')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack', 'steps'])
     expect(allowedChildTypes('hscroll')).toEqual(['imageText'])
     expect(allowedChildTypes('stack')).toEqual(['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'gallery', 'richtext'])
     expect(allowedChildTypes('image')).toEqual([])

@@ -118,12 +118,10 @@ describe('content component extensions', () => {
     expect(html).toContain('食宿')
   })
 
-  it('renders numbered steps with an image and connector', () => {
+  it('renders numbered steps without any side image', () => {
     const b: StepsBlock = {
       type: 'steps',
       _id: 'steps',
-      image: '/media/step.jpg',
-      layout: 'image-left',
       start: 3,
       connector: true,
       steps: [
@@ -132,17 +130,16 @@ describe('content component extensions', () => {
       ],
     }
     const html = render(b)
-    expect(html).toContain('steps-row')
-    expect(html).toContain('steps-media')
-    expect(html).toContain('/media/step.jpg')
+    expect(html).toContain('steps')
+    expect(html).not.toContain('steps-row')
+    expect(html).not.toContain('steps-media')
     expect(html).toContain('>3<')
     expect(html).toContain('>4<')
     expect(html).toContain('确认报名')
     expect(html).toContain('step-desc')
     expect(html).not.toContain('no-connector')
 
-    const plain = render({ ...b, image: undefined, layout: 'none', connector: false })
-    expect(plain).not.toContain('steps-media')
+    const plain = render({ ...b, connector: false })
     expect(plain).toContain('no-connector')
   })
 

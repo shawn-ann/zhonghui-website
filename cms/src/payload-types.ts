@@ -691,6 +691,21 @@ export interface Page {
                                 blockType: 'stack';
                               }
                             | {
+                                title?: string | null;
+                                image?: (number | null) | Media;
+                                layout?: ('image-left' | 'image-right' | 'none') | null;
+                                start?: number | null;
+                                connector?: boolean | null;
+                                steps: {
+                                  title: string;
+                                  desc?: string | null;
+                                  id?: string | null;
+                                }[];
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'steps';
+                              }
+                            | {
                                 columns?: number | null;
                                 gap?: ('sm' | 'md' | 'lg') | null;
                                 /**
@@ -1125,6 +1140,21 @@ export interface Page {
                                                 id?: string | null;
                                                 blockName?: string | null;
                                                 blockType: 'stack';
+                                              }
+                                            | {
+                                                title?: string | null;
+                                                image?: (number | null) | Media;
+                                                layout?: ('image-left' | 'image-right' | 'none') | null;
+                                                start?: number | null;
+                                                connector?: boolean | null;
+                                                steps: {
+                                                  title: string;
+                                                  desc?: string | null;
+                                                  id?: string | null;
+                                                }[];
+                                                id?: string | null;
+                                                blockName?: string | null;
+                                                blockType: 'steps';
                                               }
                                           )[]
                                         | null;
@@ -1571,6 +1601,21 @@ export interface Page {
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'stack';
+                                        }
+                                      | {
+                                          title?: string | null;
+                                          image?: (number | null) | Media;
+                                          layout?: ('image-left' | 'image-right' | 'none') | null;
+                                          start?: number | null;
+                                          connector?: boolean | null;
+                                          steps: {
+                                            title: string;
+                                            desc?: string | null;
+                                            id?: string | null;
+                                          }[];
+                                          id?: string | null;
+                                          blockName?: string | null;
+                                          blockType: 'steps';
                                         }
                                     )[]
                                   | null;
@@ -2474,6 +2519,21 @@ export interface Page {
                       blockType: 'stack';
                     }
                   | {
+                      title?: string | null;
+                      image?: (number | null) | Media;
+                      layout?: ('image-left' | 'image-right' | 'none') | null;
+                      start?: number | null;
+                      connector?: boolean | null;
+                      steps: {
+                        title: string;
+                        desc?: string | null;
+                        id?: string | null;
+                      }[];
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'steps';
+                    }
+                  | {
                       columns?: number | null;
                       gap?: ('sm' | 'md' | 'lg') | null;
                       /**
@@ -2901,6 +2961,21 @@ export interface Page {
                                       id?: string | null;
                                       blockName?: string | null;
                                       blockType: 'stack';
+                                    }
+                                  | {
+                                      title?: string | null;
+                                      image?: (number | null) | Media;
+                                      layout?: ('image-left' | 'image-right' | 'none') | null;
+                                      start?: number | null;
+                                      connector?: boolean | null;
+                                      steps: {
+                                        title: string;
+                                        desc?: string | null;
+                                        id?: string | null;
+                                      }[];
+                                      id?: string | null;
+                                      blockName?: string | null;
+                                      blockType: 'steps';
                                     }
                                 )[]
                               | null;
@@ -3340,6 +3415,21 @@ export interface Page {
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'stack';
+                              }
+                            | {
+                                title?: string | null;
+                                image?: (number | null) | Media;
+                                layout?: ('image-left' | 'image-right' | 'none') | null;
+                                start?: number | null;
+                                connector?: boolean | null;
+                                steps: {
+                                  title: string;
+                                  desc?: string | null;
+                                  id?: string | null;
+                                }[];
+                                id?: string | null;
+                                blockName?: string | null;
+                                blockType: 'steps';
                               }
                           )[]
                         | null;
@@ -4472,6 +4562,24 @@ export interface PagesSelect<T extends boolean = true> {
                                       id?: T;
                                       blockName?: T;
                                     };
+                                steps?:
+                                  | T
+                                  | {
+                                      title?: T;
+                                      image?: T;
+                                      layout?: T;
+                                      start?: T;
+                                      connector?: T;
+                                      steps?:
+                                        | T
+                                        | {
+                                            title?: T;
+                                            desc?: T;
+                                            id?: T;
+                                          };
+                                      id?: T;
+                                      blockName?: T;
+                                    };
                                 gridRow?:
                                   | T
                                   | {
@@ -4735,6 +4843,24 @@ export interface PagesSelect<T extends boolean = true> {
                                                                           id?: T;
                                                                           blockName?: T;
                                                                         };
+                                                                  };
+                                                              id?: T;
+                                                              blockName?: T;
+                                                            };
+                                                        steps?:
+                                                          | T
+                                                          | {
+                                                              title?: T;
+                                                              image?: T;
+                                                              layout?: T;
+                                                              start?: T;
+                                                              connector?: T;
+                                                              steps?:
+                                                                | T
+                                                                | {
+                                                                    title?: T;
+                                                                    desc?: T;
+                                                                    id?: T;
                                                                   };
                                                               id?: T;
                                                               blockName?: T;
@@ -5006,6 +5132,24 @@ export interface PagesSelect<T extends boolean = true> {
                                                               id?: T;
                                                               blockName?: T;
                                                             };
+                                                      };
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            steps?:
+                                              | T
+                                              | {
+                                                  title?: T;
+                                                  image?: T;
+                                                  layout?: T;
+                                                  start?: T;
+                                                  connector?: T;
+                                                  steps?:
+                                                    | T
+                                                    | {
+                                                        title?: T;
+                                                        desc?: T;
+                                                        id?: T;
                                                       };
                                                   id?: T;
                                                   blockName?: T;
@@ -5604,6 +5748,24 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
+                    steps?:
+                      | T
+                      | {
+                          title?: T;
+                          image?: T;
+                          layout?: T;
+                          start?: T;
+                          connector?: T;
+                          steps?:
+                            | T
+                            | {
+                                title?: T;
+                                desc?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
                     gridRow?:
                       | T
                       | {
@@ -5867,6 +6029,24 @@ export interface PagesSelect<T extends boolean = true> {
                                                               id?: T;
                                                               blockName?: T;
                                                             };
+                                                      };
+                                                  id?: T;
+                                                  blockName?: T;
+                                                };
+                                            steps?:
+                                              | T
+                                              | {
+                                                  title?: T;
+                                                  image?: T;
+                                                  layout?: T;
+                                                  start?: T;
+                                                  connector?: T;
+                                                  steps?:
+                                                    | T
+                                                    | {
+                                                        title?: T;
+                                                        desc?: T;
+                                                        id?: T;
                                                       };
                                                   id?: T;
                                                   blockName?: T;
@@ -6138,6 +6318,24 @@ export interface PagesSelect<T extends boolean = true> {
                                                   id?: T;
                                                   blockName?: T;
                                                 };
+                                          };
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                                steps?:
+                                  | T
+                                  | {
+                                      title?: T;
+                                      image?: T;
+                                      layout?: T;
+                                      start?: T;
+                                      connector?: T;
+                                      steps?:
+                                        | T
+                                        | {
+                                            title?: T;
+                                            desc?: T;
+                                            id?: T;
                                           };
                                       id?: T;
                                       blockName?: T;

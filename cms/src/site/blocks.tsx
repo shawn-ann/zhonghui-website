@@ -444,8 +444,6 @@ export function StepsView({ b, editor = false }: { b: StepsBlock; editor?: boole
   if (editor && steps.length === 0) {
     return <EmptyEditorBlock b={b} label="流程步骤" tip="在右侧添加步骤" variant="wide" />
   }
-  const layout = b.layout || 'image-left'
-  const image = safeUrl(b.image)
   const start = Number.isFinite(Number(b.start)) ? Math.max(0, Math.trunc(Number(b.start))) : 1
   const list = (
     <ol className={`steps${b.connector === false ? ' no-connector' : ''}`} start={start}>
@@ -463,12 +461,7 @@ export function StepsView({ b, editor = false }: { b: StepsBlock; editor?: boole
   return (
     <div className="container" data-bid={b._id}>
       {b.title ? <h3 className="steps-title">{b.title}</h3> : null}
-      {image && layout !== 'none' ? (
-        <div className={`steps-row is-${layout}`}>
-          <div className="steps-media"><img src={image} alt="" /></div>
-          <div className="steps-col">{list}</div>
-        </div>
-      ) : list}
+      {list}
     </div>
   )
 }

@@ -72,7 +72,7 @@ infoList, faq, steps, iconList, hscroll, stack
 允许的子组件：
 
 ```text
-heading, text, image, imageText, iconCard, button, stack
+heading, text, image, imageText, iconCard, button, stack, steps
 ```
 
 按行布局时子组件为 `gridRow`，`gridRow` 内为 `gridCell`。
@@ -328,15 +328,12 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
 | `title` | text | 空 | 可选标题 |
-| `image` | upload | 空 | 可选配图；有图时左右分栏 |
-| `layout` | select | image-left | image-left / image-right / none |
 | `start` | number | 1 | 起始编号 |
 | `connector` | boolean | true | 显示虚线分隔 |
 | `steps` | repeater | — | title + desc（可选） |
 
 - 数字徽标使用主题强调色（`--accent`），每条底部虚线分隔。
-- 移动端自动改为上下堆叠。
-- 配图会随静态构建一起拷贝到 `assets/media`。
+- 组件只渲染步骤列表，不含配图；需要「左图右流程」时放在 `grid` 里，与 `image` 组合（如 `columnRatio: 5:6`）。
 
 ### 5.15 其它
 
