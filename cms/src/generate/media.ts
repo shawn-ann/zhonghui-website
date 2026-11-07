@@ -19,9 +19,12 @@ export function collectMediaUrls(data: SiteData): Set<string> {
         case 'gallery': b.images.forEach(add); break
         case 'slider': b.images.forEach(add); break
         case 'grid': walk(b.children); add(b.bgImage); break
+        case 'gridRow': walk(b.children); break
+        case 'gridCell': walk(b.children); break
         case 'section': walk(b.children); add(b.bgImage); break
         case 'hscroll': walk(b.children); break
         case 'stack': walk(b.children); add(b.bgImage); break
+        case 'iconList': b.items.forEach((item) => add(item.icon)); break
         case 'richtext': {
           const matches = b.html.match(/\/api\/media\/file\/[^"'\s)]+/g)
           if (matches) matches.forEach(add)

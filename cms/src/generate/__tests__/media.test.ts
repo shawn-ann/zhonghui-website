@@ -6,6 +6,38 @@ describe('collectMediaUrls', () => {
     const d = { pages: [{ title: 't', route: '/', blocks: [{ type: 'richtext', html: '<p><img src="/api/media/file/rt.jpg"></p>' }] }] } as any
     expect([...collectMediaUrls(d)]).toContain('/api/media/file/rt.jpg')
   })
+  it('collects media inside grid rows and cells', () => {
+    const d = {
+      pages: [{
+        title: 't', route: '/', blocks: [{
+          type: 'grid', columns: 6, layout: 'rows', children: [{
+            type: 'gridRow', columns: 2, children: [{
+              type: 'gridCell', children: [{ type: 'image', media: '/api/media/file/grid-cell.jpg' }],
+            }],
+          }],
+        }],
+      }],
+    } as any
+    expect([...collectMediaUrls(d)]).toContain('/api/media/file/grid-cell.jpg')
+  })
+
+  it('collects iconList icons', () => {
+    const d = {
+      pages: [{
+        title: 'about', route: '/about/', blocks: [{
+          type: 'iconList', iconPosition: 'alternate', items: [
+            { icon: '/api/media/file/layers.svg', title: '项目齐全' },
+            { icon: '/api/media/file/star.svg', title: '真实案例见证' },
+          ],
+        }],
+      }],
+    } as any
+    const urls = [...collectMediaUrls(d)]
+    expect(urls).toEqual(expect.arrayContaining([
+      '/api/media/file/layers.svg', '/api/media/file/star.svg',
+    ]))
+  })
+
   it('collects media inside hscroll and stack containers', () => {
     const d = {
       pages: [{
