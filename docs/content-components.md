@@ -46,6 +46,7 @@
 | `slider` | 轮播 | 图片轮播 |
 | `infoList` | 信息列表 | 标签/说明条目列表 |
 | `faq` | 常见问答 | 问题/答案卡片，可折叠 |
+| `steps` | 流程步骤 | 编号步骤 + 可选侧图 |
 | `iconList` | 图标列表 | 图标/标题/说明列表 |
 
 ## 3. 放置规则
@@ -56,7 +57,7 @@
 
 ```text
 heading, text, grid, gallery, banner, slider, richtext,
-infoList, faq, iconList, hscroll, stack
+infoList, faq, steps, iconList, hscroll, stack
 ```
 
 规则：
@@ -322,7 +323,22 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 - `collapsible` 开启时使用原生 `<details>/<summary>`，无额外 JS。
 - 列表中只能放在 `section` 下。
 
-### 5.14 其它
+### 5.14 流程步骤 `steps`
+
+| 字段 | 类型 | 默认 | 说明 |
+|---|---|---|---|
+| `title` | text | 空 | 可选标题 |
+| `image` | upload | 空 | 可选配图；有图时左右分栏 |
+| `layout` | select | image-left | image-left / image-right / none |
+| `start` | number | 1 | 起始编号 |
+| `connector` | boolean | true | 显示虚线分隔 |
+| `steps` | repeater | — | title + desc（可选） |
+
+- 数字徽标使用主题强调色（`--accent`），每条底部虚线分隔。
+- 移动端自动改为上下堆叠。
+- 配图会随静态构建一起拷贝到 `assets/media`。
+
+### 5.15 其它
 
 - `button`：`label`、`linkType`/`internalPage`/`externalUrl`、`style`
 - `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/单图/图集节点（可配置 1–4 列）；历史 `padding` 保留兼容
@@ -334,7 +350,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 ### 6.1 重复项
 
-`infoList` / `faq` / `iconList` 使用统一手风琴控件：
+`infoList` / `faq` / `steps` / `iconList` 使用统一手风琴控件：
 
 - 默认只展开当前条目，其余折叠为摘要
 - 行头：拖拽手柄、序号/缩略图、主标题、说明摘要、复制、删除、展开箭头

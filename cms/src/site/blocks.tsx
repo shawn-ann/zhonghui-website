@@ -3,7 +3,7 @@ import { safeUrl } from '../render/primitives'
 import type {
   BannerBlock, Block, ButtonBlock, FaqBlock, GalleryBlock, GridBlock, GridCellBlock, GridRowBlock,
   HeadingBlock, IconCardBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock,
-  HscrollBlock, RichTextBlock, SectionBlock, SliderBlock, StackBlock, TextBlock,
+  HscrollBlock, RichTextBlock, SectionBlock, SliderBlock, StackBlock, StepsBlock, TextBlock,
 } from '../render/types'
 import { bgCss, bgImageCss } from './bg'
 import { lexicalToHtml } from '../render/richText'
@@ -439,6 +439,40 @@ export function InfoListView({ b }: { b: InfoListBlock }) {
   )
 }
 
+export function StepsView({ b, editor = false }: { b: StepsBlock; editor?: boolean }) {
+  const steps = b.steps || []
+  if (editor && steps.length === 0) {
+    return <EmptyEditorBlock b={b} label="流程步骤" tip="在右侧添加步骤" variant="wide" />
+  }
+  const layout = b.layout || 'image-left'
+  const image = safeUrl(b.image)
+  const start = Number.isFinite(Number(b.start)) ? Math.max(0, Math.trunc(Number(b.start))) : 1
+  const list = (
+    <ol className={`steps${b.connector === false ? ' no-connector' : ''}`} start={start}>
+      {steps.map((step, i) => (
+        <li className="step-item" key={i}>
+          <span className="step-n">{start + i}</span>
+          <div className="step-body">
+            <div className="step-title">{step.title}</div>
+            {step.desc ? <p className="step-desc">{step.desc}</p> : null}
+          </div>
+        </li>
+      ))}
+    </ol>
+  )
+  return (
+    <div className="container" data-bid={b._id}>
+      {b.title ? <h3 className="steps-title">{b.title}</h3> : null}
+      {image && layout !== 'none' ? (
+        <div className={`steps-row is-${layout}`}>
+          <div className="steps-media"><img src={image} alt="" /></div>
+          <div className="steps-col">{list}</div>
+        </div>
+      ) : list}
+    </div>
+  )
+}
+
 export function FaqView({ b, editor = false }: { b: FaqBlock; editor?: boolean }) {
   const items = b.items || []
   if (editor && items.length === 0) {
@@ -552,6 +586,7 @@ export function blockNode(b: Block, editor = false): React.ReactNode {
     case 'gridCell': return <GridCellView b={b} editor={editor} />
     case 'banner': return <BannerView b={b} editor={editor} />
     case 'infoList': return <InfoListView b={b} />
+    case 'steps': return <StepsView b={b} />
     case 'faq': return <FaqView b={b} />
     case 'iconList': return <IconListView b={b} />
     case 'hscroll': return <HscrollView b={b} editor={editor} />

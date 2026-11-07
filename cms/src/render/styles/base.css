@@ -437,6 +437,8 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   .hscroll-item .it-img { height: 180px; }
   .info-list { padding: 18px; }
   .faq-item { padding: 14px 16px; }
+  .steps-row, .steps-row.is-image-right { flex-direction: column; gap: 24px; }
+  .steps-media { flex-basis: auto; width: 100%; }
   .info-item { font-size: 14px; }
 }
 
@@ -449,6 +451,20 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .stack-item > .container { width: 100%; max-width: none; margin: 0; padding: 0; }
 .image-block.has-ratio { overflow: hidden; }
 .image-block.has-ratio img { display: block; }
+.steps-title { margin: 0 0 20px; color: var(--deep-blue); font-size: 22px; font-weight: 700; line-height: 1.4; }
+.steps-row { display: flex; gap: 48px; align-items: flex-start; }
+.steps-row.is-image-right { flex-direction: row-reverse; }
+.steps-media { flex: 0 0 46%; }
+.steps-media img { width: 100%; display: block; border-radius: 12px; box-shadow: 0 12px 30px rgba(138,14,75,.16); }
+.steps-col { flex: 1; min-width: 0; }
+.steps { list-style: none; margin: 0; padding: 0; }
+.step-item { display: flex; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px dashed var(--border); }
+.step-item:last-child { border-bottom: none; }
+.steps.no-connector .step-item { border-bottom: none; }
+.step-n { flex: 0 0 28px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; line-height: 1; }
+.step-body { flex: 1; min-width: 0; }
+.step-title { color: var(--dark-text); font-size: 15px; line-height: 1.8; }
+.step-desc { margin: 4px 0 0; color: var(--gray-blue); font-size: 14px; line-height: 1.7; }
 .faq-title { margin: 0 0 20px; color: var(--deep-blue); font-size: 22px; font-weight: 700; line-height: 1.4; }
 .faq-list { display: flex; flex-direction: column; gap: 12px; }
 .faq-item { background: #FFF7FA; border-radius: 10px; padding: 16px 20px; }

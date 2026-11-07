@@ -1705,6 +1705,21 @@ export interface Page {
                       blockType: 'faq';
                     }
                   | {
+                      title?: string | null;
+                      image?: (number | null) | Media;
+                      layout?: ('image-left' | 'image-right' | 'none') | null;
+                      start?: number | null;
+                      connector?: boolean | null;
+                      steps: {
+                        title: string;
+                        desc?: string | null;
+                        id?: string | null;
+                      }[];
+                      id?: string | null;
+                      blockName?: string | null;
+                      blockType: 'steps';
+                    }
+                  | {
                       items: {
                         icon: number | Media;
                         title: string;
@@ -3620,6 +3635,21 @@ export interface Page {
             blockType: 'faq';
           }
         | {
+            title?: string | null;
+            image?: (number | null) | Media;
+            layout?: ('image-left' | 'image-right' | 'none') | null;
+            start?: number | null;
+            connector?: boolean | null;
+            steps: {
+              title: string;
+              desc?: string | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'steps';
+          }
+        | {
             items: {
               icon: number | Media;
               title: string;
@@ -5081,6 +5111,24 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
+                    steps?:
+                      | T
+                      | {
+                          title?: T;
+                          image?: T;
+                          layout?: T;
+                          start?: T;
+                          connector?: T;
+                          steps?:
+                            | T
+                            | {
+                                title?: T;
+                                desc?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
                     iconList?:
                       | T
                       | {
@@ -6284,6 +6332,24 @@ export interface PagesSelect<T extends boolean = true> {
                 | {
                     q?: T;
                     a?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        steps?:
+          | T
+          | {
+              title?: T;
+              image?: T;
+              layout?: T;
+              start?: T;
+              connector?: T;
+              steps?:
+                | T
+                | {
+                    title?: T;
+                    desc?: T;
                     id?: T;
                   };
               id?: T;

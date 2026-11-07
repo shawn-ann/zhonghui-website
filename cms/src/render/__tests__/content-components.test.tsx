@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { blockNode } from '../../site/blocks'
 import { lexicalToHtml } from '../richText'
-import type { FaqBlock, GridBlock, HscrollBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, StackBlock, TextBlock } from '../types'
+import type { FaqBlock, GridBlock, HscrollBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, StackBlock, StepsBlock, TextBlock } from '../types'
 
 const render = (b: any) => renderToStaticMarkup(blockNode(b)!)
 
@@ -116,6 +116,34 @@ describe('content component extensions', () => {
     expect(html).toContain('info-item')
     expect(html).not.toContain('info-dot')
     expect(html).toContain('食宿')
+  })
+
+  it('renders numbered steps with an image and connector', () => {
+    const b: StepsBlock = {
+      type: 'steps',
+      _id: 'steps',
+      image: '/media/step.jpg',
+      layout: 'image-left',
+      start: 3,
+      connector: true,
+      steps: [
+        { title: '确认报名' },
+        { title: '填写在线表格', desc: '在线完成并提交' },
+      ],
+    }
+    const html = render(b)
+    expect(html).toContain('steps-row')
+    expect(html).toContain('steps-media')
+    expect(html).toContain('/media/step.jpg')
+    expect(html).toContain('>3<')
+    expect(html).toContain('>4<')
+    expect(html).toContain('确认报名')
+    expect(html).toContain('step-desc')
+    expect(html).not.toContain('no-connector')
+
+    const plain = render({ ...b, image: undefined, layout: 'none', connector: false })
+    expect(plain).not.toContain('steps-media')
+    expect(plain).toContain('no-connector')
   })
 
   it('renders FAQ cards and collapsible details', () => {

@@ -21,6 +21,15 @@ describe('collectMediaUrls', () => {
     expect([...collectMediaUrls(d)]).toContain('/api/media/file/grid-cell.jpg')
   })
 
+  it('collects the steps image', () => {
+    const d = {
+      pages: [{ title: 't', route: '/', blocks: [{
+        type: 'steps', image: '/api/media/file/steps.jpg', steps: [{ title: 'A' }],
+      }] }],
+    } as any
+    expect([...collectMediaUrls(d)]).toContain('/api/media/file/steps.jpg')
+  })
+
   it('collects iconList icons', () => {
     const d = {
       pages: [{

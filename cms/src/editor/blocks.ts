@@ -115,6 +115,17 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     ] },
     { key: 'showDots', label: '显示圆点', control: 'boolean' },
   ] },
+  steps: { type: 'steps', label: '流程步骤', defaults: () => ({ type: 'steps', layout: 'image-left', start: 1, connector: true, steps: [{ title: '第一步' }] }), fields: [
+    { key: 'title', label: '标题（可选）', control: 'text' },
+    { key: 'image', label: '配图（可选）', control: 'media' },
+    { key: 'layout', label: '布局', control: 'select', options: [{ label: '图片在左', value: 'image-left' }, { label: '图片在右', value: 'image-right' }, { label: '无图', value: 'none' }] },
+    { key: 'start', label: '起始编号', control: 'number' },
+    { key: 'connector', label: '显示虚线分隔', control: 'boolean' },
+    { key: 'steps', label: '步骤', control: 'repeater', addLabel: '添加步骤', titleKey: 'title', subtitleKey: 'desc', itemFields: [
+      { key: 'title', label: '步骤', control: 'text' },
+      { key: 'desc', label: '说明（可选）', control: 'textarea' },
+    ] },
+  ] },
   faq: { type: 'faq', label: '常见问答', defaults: () => ({ type: 'faq', collapsible: false, items: [{ q: '问题', a: '答案' }] }), fields: [
     { key: 'title', label: '标题（可选）', control: 'text' },
     { key: 'collapsible', label: '折叠显示', control: 'boolean' },
@@ -213,7 +224,7 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
 export const LAYOUT_TYPES = ['section', 'grid', 'gridRow', 'gridCell', 'hscroll', 'stack'] as const
 
 /** 分栏：版面级内容。 */
-export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'faq', 'iconList', 'hscroll', 'stack']
+export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'faq', 'steps', 'iconList', 'hscroll', 'stack']
 /** 网格：卡片/文本级内容。 */
 export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack']
 
@@ -255,6 +266,7 @@ export function blockSummary(b: Block): string {
     case 'richtext': return '富文本'
     case 'infoList': return `信息列表 · ${b.items.length} 条`
     case 'faq': return `常见问答 · ${b.items.length} 条`
+    case 'steps': return `流程 · ${b.steps.length} 步`
     case 'iconList': return `图标列表 · ${b.items.length} 条`
     case 'hscroll': return `横向滚动 · ${b.children?.length || 0} 张`
     case 'stack': return `纵向容器 · ${b.children?.length || 0} 项`

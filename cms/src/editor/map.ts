@@ -182,6 +182,14 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.items = (b.items || []).map((i) => ({ label: i.label || '', desc: i.desc || '' }))
       out.showDots = b.showDots !== false
       break
+    case 'steps':
+      if (b.title !== undefined) out.title = b.title
+      out.image = resolveMediaId(b.image, urlToId, raw?.image)
+      out.layout = b.layout || 'image-left'
+      out.start = Number.isFinite(Number(b.start)) ? Math.max(0, Math.trunc(Number(b.start))) : 1
+      out.connector = b.connector !== false
+      out.steps = (b.steps || []).map((s) => ({ title: s.title || '', desc: s.desc || '' }))
+      break
     case 'faq':
       if (b.title !== undefined) out.title = b.title
       out.collapsible = b.collapsible === true

@@ -178,6 +178,16 @@ export interface IconListBlock extends BlockBase {
   iconColor?: string
 }
 
+export interface StepsBlock extends BlockBase {
+  type: 'steps'
+  title?: string
+  image?: string
+  layout?: 'image-left' | 'image-right' | 'none'
+  start?: number
+  connector?: boolean
+  steps: { title: string; desc?: string }[]
+}
+
 export interface FaqBlock extends BlockBase {
   type: 'faq'
   title?: string
@@ -235,6 +245,7 @@ export type Block =
   | InfoListBlock
   | IconListBlock
   | FaqBlock
+  | StepsBlock
   | HscrollBlock
   | StackBlock
   | SectionBlock

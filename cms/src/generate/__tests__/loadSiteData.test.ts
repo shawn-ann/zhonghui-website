@@ -16,6 +16,22 @@ describe('faq block mapping', () => {
   })
 })
 
+describe('steps block mapping', () => {
+  it('maps image, layout and numbered items', () => {
+    const block = mapBlock(
+      {
+        blockType: 'steps', image: { url: '/media/steps.jpg' }, layout: 'image-right',
+        start: 2, connector: false, steps: [{ title: '确认报名', desc: '说明' }],
+      } as any,
+      (m: any) => (typeof m === 'object' ? m.url : m),
+    )
+    expect(block).toMatchObject({
+      type: 'steps', image: '/media/steps.jpg', layout: 'image-right',
+      start: 2, connector: false, steps: [{ title: '确认报名', desc: '说明' }],
+    })
+  })
+})
+
 describe('mapPageDoc', () => {
   it('maps a payload page + blocks to PageDoc', () => {
     const raw = {

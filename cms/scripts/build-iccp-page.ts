@@ -56,6 +56,7 @@ const titleBg = await ensureMedia('title-bg.jpg', '标题带背景')
 const bannerImg = await ensureMedia('about-hero.jpg', '赴美营地辅导员 Banner')
 const bannerPattern = await ensureMedia('pattern-box-5.svg', 'Banner 装饰图')
 const introImg = await ensureMedia('iccp-intro.jpg', '赴美营地辅导员项目介绍')
+const stepsImg = await ensureMedia('prog-iccp.jpg', '报名流程配图')
 await ensureMedia('memory-2.jpg', '营地活动图 1')
 await ensureMedia('memory-3.jpg', '营地活动图 2')
 await ensureMedia('memory-5.jpg', '营地活动图 3')
@@ -178,6 +179,27 @@ const blocks: any[] = [
       { q: '需要什么样的经验？', a: '喜欢与孩子相处、有照顾儿童的经验更佳；具备良好的英语沟通能力即可报名。' },
       { q: '一般工作在什么时间？', a: '每年 6 月上旬开始、8 月中下旬结束，工作时长约 63 天，每周休息一天。' },
       { q: '项目结束后能旅游吗？', a: '项目结束后有 30 天的合法停留期，可在美国境内自由旅行。' },
+    ],
+  }]),
+  strip('报名流程', 'The Program Process'),
+  contentSection([{
+    blockType: 'steps',
+    image: stepsImg.id,
+    layout: 'image-left',
+    start: 1,
+    connector: true,
+    steps: [
+      { title: '确认报名' },
+      { title: '填写在线表格' },
+      { title: '中惠面试并填写面试报告' },
+      { title: '中惠审核后提交' },
+      { title: '项目举办方决定是否接受申请' },
+      { title: '匹配' },
+      { title: '确认匹配' },
+      { title: '匹配确认函' },
+      { title: '在线培训' },
+      { title: '签证申请' },
+      { title: '抵达' },
     ],
   }]),
 ]

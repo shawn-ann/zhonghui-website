@@ -74,6 +74,16 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
       <div style={line('90%')} /><div style={line('80%')} /><div style={line('88%')} /><div style={line('70%')} />
     </div>
   ),
+  steps: (
+    <div style={{ height: 44, display: 'flex', gap: 5, padding: 6 }}>
+      <div style={{ width: '40%', background: 'linear-gradient(135deg,#e3c9d4,#f3e6ec)', borderRadius: 3 }} />
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 9, height: 9, borderRadius: '50%', background: '#E60039' }} /><span style={{ ...line('60%'), margin: 0 }} /></div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 9, height: 9, borderRadius: '50%', background: '#E60039' }} /><span style={{ ...line('50%'), margin: 0 }} /></div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}><span style={{ width: 9, height: 9, borderRadius: '50%', background: '#E60039' }} /><span style={{ ...line('55%'), margin: 0 }} /></div>
+      </div>
+    </div>
+  ),
   faq: (
     <div style={{ height: 44, display: 'flex', flexDirection: 'column', gap: 4, padding: 6 }}>
       <div style={{ background: '#fbeaf1', borderRadius: 3, padding: 4 }}><div style={line('70%')} /><div style={line('50%')} /></div>
