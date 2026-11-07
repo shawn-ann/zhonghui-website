@@ -1,0 +1,174 @@
+import 'dotenv/config'
+import path from 'path'
+import { getPayload } from 'payload'
+import config from '../src/payload.config'
+
+const payload = await getPayload({ config })
+
+const img = (file: string) => path.resolve(process.cwd(), '../img', file)
+
+const existingMedia = await payload.find({ collection: 'media', limit: 2000, depth: 0 })
+const mediaByName = new Map<string, number | string>()
+for (const doc of existingMedia.docs as any[]) {
+  if (doc.filename) mediaByName.set(String(doc.filename), doc.id)
+}
+
+async function ensureMedia(filename: string, alt: string): Promise<{ id: number | string; url: string }> {
+  const found = mediaByName.get(filename)
+  if (found != null) return { id: found, url: `/api/media/file/${filename}` }
+  const doc: any = await payload.create({
+    collection: 'media',
+    data: { alt },
+    filePath: img(filename),
+  })
+  mediaByName.set(filename, doc.id)
+  return { id: doc.id, url: doc.url || `/api/media/file/${filename}` }
+}
+
+const textNode = (text: string) => ({
+  detail: 0, format: 0, mode: 'normal', style: '', text, type: 'text', version: 1,
+})
+const paragraph = (text: string) => ({
+  children: [textNode(text)], direction: 'ltr', format: '', indent: 0,
+  type: 'paragraph', version: 1, textFormat: 0,
+})
+const heading = (tag: 'h2' | 'h3', text: string) => ({
+  children: [textNode(text)], direction: 'ltr', format: '', indent: 0,
+  type: 'heading', version: 1, tag,
+})
+const listItem = (text: string) => ({
+  children: [textNode(text)], direction: 'ltr', format: '', indent: 0,
+  type: 'listitem', version: 1, value: 1,
+})
+const bulletList = (items: string[]) => ({
+  children: items.map(listItem), direction: 'ltr', format: '', indent: 0,
+  type: 'list', version: 1, listType: 'bullet', start: 1, tag: 'ul',
+})
+const imageRow = (files: string[]) => ({
+  type: 'image-row', version: 1, columns: 4,
+  images: files.map((file) => ({ src: `/api/media/file/${file}`, alt: '' })),
+})
+const richText = (children: any[]) => ({
+  root: { children, direction: 'ltr', format: '', indent: 0, type: 'root', version: 1 },
+})
+
+const titleBg = await ensureMedia('title-bg.jpg', '标题带背景')
+const introImg = await ensureMedia('iccp-intro.jpg', '赴美营地辅导员项目介绍')
+await ensureMedia('memory-2.jpg', '营地活动图 1')
+await ensureMedia('memory-3.jpg', '营地活动图 2')
+await ensureMedia('memory-5.jpg', '营地活动图 3')
+await ensureMedia('memory-6.jpg', '营地活动图 4')
+
+const strip = (title: string, en: string) => ({
+  blockType: 'section',
+  bgImage: titleBg.url,
+  paddingY: 'none',
+  paddingCustom: 12,
+  children: [{
+    blockType: 'heading', title, subtitle: en, align: 'center', padding: 0,
+    titleColor: '#8A0E4B', subtitleColor: '#9A9A9A',
+  }],
+})
+
+const contentSection = (children: any[]) => ({ blockType: 'section', paddingY: 'md', paddingCustom: 48, children })
+
+const intro = {
+  blockType: 'section',
+  paddingY: 'md',
+  bgGradient: 'linear-gradient(124deg, #6E0B3E 0%, #A11254 50%, #C2185B 100%)',
+  children: [{
+    blockType: 'grid',
+    layout: 'flow',
+    columns: 2,
+    gap: 'lg',
+    columnRatio: '2:3',
+    alignItems: 'center',
+    children: [
+      {
+        blockType: 'text',
+        title: '项目介绍',
+        body: [
+          '美国夏令营辅导员项目是美国国务院制定的交流访问项目。',
+          '考虑到大多数在读生或刚毕业学生经济能力有限，营地辅导员项目从学生角度出发，每年为世界各地上万名符合条件的年轻人提供在营地工作的机会及相关能力培训。',
+          '在获得收入、获得宝贵的海外工作经验与培训经历的同时，还为语言能力及综合素质的提升创造了机会。工作结束后，还可畅游美国整整一个月！',
+        ].join('\n\n'),
+        titleColor: '#FFFFFF',
+        bodyColor: '#FFFFFF',
+        align: 'left',
+        fontSize: 16,
+      },
+      { blockType: 'image', media: introImg.id, aspectRatio: 'auto', fit: 'cover' },
+    ],
+  }],
+}
+
+const blocks: any[] = [
+  strip('赴美营地辅导员项目介绍', 'International Camp Counselor Program'),
+  intro,
+  strip('户外类型', 'Outdoor Type'),
+  contentSection([{
+    blockType: 'richtext',
+    content: richText([
+      paragraph('营地辅导员的岗位遍布美国各地，多为寄宿制夏令营，活动涵盖体育、艺术、表演、水上运动、攀岩、马术、露营等。'),
+      bulletList([
+        '多数营地位于美国东北部，但几乎在每个州都有营地',
+        '营地位于远离主要城市的边境偏僻区域',
+        '学员可在美国任何地区工作，多数营地临近湖泊、河流、山脉或森林',
+        '美国的夏令营位于一些最美丽的地方',
+        '参与者不应只考虑特定区域，应保持开放的心态，准备好冒险',
+      ]),
+      imageRow(['memory-2.jpg', 'memory-3.jpg', 'memory-5.jpg', 'memory-6.jpg']),
+    ]),
+  }]),
+  strip('项目优势', 'Our Advantages'),
+  contentSection([{
+    blockType: 'richtext',
+    content: richText([
+      bulletList([
+        '合法性：美国政府依据法案制定的教育文化交流项目，已有 40 余年成熟运作经验',
+        '可靠性：美国国务院指定项目，全程美国政府监管',
+        '安全性：合法营地辅导员岗位，合作营地经验丰富；费用含医疗与意外保险，驻美办公室协调员及时解决问题',
+        '提升英语听说、领导力、自理与协调能力，对从事教育事业尤为有帮助',
+        '项目结束后有 30 天合法旅行期，可自由游历美国',
+      ]),
+    ]),
+  }]),
+  strip('申请条件', 'Application Requirements'),
+  contentSection([{
+    blockType: 'richtext',
+    content: richText([
+      bulletList([
+        '英语水平：良好的英语沟通及书写能力',
+        '年龄：18–28 岁',
+        '项目参加者：学生、教师、青年工作者或具有专门技能者（可提供资格证明）',
+        '身体素质：身心健康',
+        '背景：无犯罪记录',
+        '环境适应：可适应集体生活、远离城市 9 周的乡村环境',
+        '项目时间：6 月 1 日至 9 月 1 日期间可参与项目',
+        '态度：积极、灵活、「愿意尝试」，对儿童工作感兴趣',
+      ]),
+    ]),
+  }]),
+]
+
+const route = '/project-iccp/'
+const found = await payload.find({
+  collection: 'pages',
+  where: { route: { equals: route } },
+  limit: 1,
+  depth: 0,
+})
+
+const data: any = {
+  title: '赴美营地辅导员',
+  route,
+  blocks,
+  _status: 'published',
+}
+
+const page: any = found.docs[0]
+  ? await payload.update({ collection: 'pages', id: found.docs[0].id, data, draft: false })
+  : await payload.create({ collection: 'pages', data })
+
+console.log(JSON.stringify({ id: page.id, route: page.route, blocks: blocks.length }, null, 2))
+process.exit(0)
