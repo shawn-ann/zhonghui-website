@@ -318,7 +318,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 | `collapsible` | boolean | false | 是否用 `<details>` 折叠 |
 | `items` | repeater | — | q（问题）+ a（答案） |
 
-- 静态模式渲染浅粉卡片（`#FFF7FA`、10px 圆角），问句玫红加粗。
+- 静态模式渲染浅粉卡片（`#FFF7FA`、10px 圆角），问句玫红加粗；渲染时自动加 `Q：` / `A：` 前缀。
 - `collapsible` 开启时使用原生 `<details>/<summary>`，无额外 JS。
 - 列表中只能放在 `section` 下。
 

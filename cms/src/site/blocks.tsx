@@ -450,13 +450,13 @@ export function FaqView({ b, editor = false }: { b: FaqBlock; editor?: boolean }
       <div className="faq-list">
         {items.map((item, i) => b.collapsible ? (
           <details className="faq-item" key={i}>
-            <summary className="faq-q">{item.q}</summary>
-            <div className="faq-a">{item.a}</div>
+            <summary className="faq-q">Q：{item.q}</summary>
+            <div className="faq-a">A：{item.a}</div>
           </details>
         ) : (
           <div className="faq-item" key={i}>
-            <div className="faq-q">{item.q}</div>
-            <div className="faq-a">{item.a}</div>
+            <div className="faq-q">Q：{item.q}</div>
+            <div className="faq-a">A：{item.a}</div>
           </div>
         ))}
       </div>

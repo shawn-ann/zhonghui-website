@@ -132,13 +132,14 @@ describe('content component extensions', () => {
     const html = render(card)
     expect(html).toContain('faq-list')
     expect(html).toContain('faq-title')
-    expect(html).toContain('项目期间包食宿吗？')
+    expect(html).toContain('Q：项目期间包食宿吗？')
+    expect(html).toContain('A：是的，营地期间提供免费住宿及三餐。')
     expect(html).not.toContain('<details')
 
     const collapsed = render({ ...card, collapsible: true })
     expect(collapsed).toContain('<details')
     expect(collapsed).toContain('<summary')
-    expect(collapsed).toContain('项目结束后能旅游吗？')
+    expect(collapsed).toContain('Q：项目结束后能旅游吗？')
   })
 
   it('renders icon list alternate and hscroll children', () => {
