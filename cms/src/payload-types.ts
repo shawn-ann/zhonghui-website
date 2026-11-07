@@ -692,8 +692,6 @@ export interface Page {
                               }
                             | {
                                 title?: string | null;
-                                image?: (number | null) | Media;
-                                layout?: ('image-left' | 'image-right' | 'none') | null;
                                 start?: number | null;
                                 connector?: boolean | null;
                                 steps: {
@@ -1143,8 +1141,6 @@ export interface Page {
                                               }
                                             | {
                                                 title?: string | null;
-                                                image?: (number | null) | Media;
-                                                layout?: ('image-left' | 'image-right' | 'none') | null;
                                                 start?: number | null;
                                                 connector?: boolean | null;
                                                 steps: {
@@ -1604,8 +1600,6 @@ export interface Page {
                                         }
                                       | {
                                           title?: string | null;
-                                          image?: (number | null) | Media;
-                                          layout?: ('image-left' | 'image-right' | 'none') | null;
                                           start?: number | null;
                                           connector?: boolean | null;
                                           steps: {
@@ -1751,8 +1745,6 @@ export interface Page {
                     }
                   | {
                       title?: string | null;
-                      image?: (number | null) | Media;
-                      layout?: ('image-left' | 'image-right' | 'none') | null;
                       start?: number | null;
                       connector?: boolean | null;
                       steps: {
@@ -2520,8 +2512,6 @@ export interface Page {
                     }
                   | {
                       title?: string | null;
-                      image?: (number | null) | Media;
-                      layout?: ('image-left' | 'image-right' | 'none') | null;
                       start?: number | null;
                       connector?: boolean | null;
                       steps: {
@@ -2964,8 +2954,6 @@ export interface Page {
                                     }
                                   | {
                                       title?: string | null;
-                                      image?: (number | null) | Media;
-                                      layout?: ('image-left' | 'image-right' | 'none') | null;
                                       start?: number | null;
                                       connector?: boolean | null;
                                       steps: {
@@ -3418,8 +3406,6 @@ export interface Page {
                               }
                             | {
                                 title?: string | null;
-                                image?: (number | null) | Media;
-                                layout?: ('image-left' | 'image-right' | 'none') | null;
                                 start?: number | null;
                                 connector?: boolean | null;
                                 steps: {
@@ -3726,8 +3712,6 @@ export interface Page {
           }
         | {
             title?: string | null;
-            image?: (number | null) | Media;
-            layout?: ('image-left' | 'image-right' | 'none') | null;
             start?: number | null;
             connector?: boolean | null;
             steps: {
@@ -4566,8 +4550,6 @@ export interface PagesSelect<T extends boolean = true> {
                                   | T
                                   | {
                                       title?: T;
-                                      image?: T;
-                                      layout?: T;
                                       start?: T;
                                       connector?: T;
                                       steps?:
@@ -4851,8 +4833,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                           | T
                                                           | {
                                                               title?: T;
-                                                              image?: T;
-                                                              layout?: T;
                                                               start?: T;
                                                               connector?: T;
                                                               steps?:
@@ -5140,8 +5120,6 @@ export interface PagesSelect<T extends boolean = true> {
                                               | T
                                               | {
                                                   title?: T;
-                                                  image?: T;
-                                                  layout?: T;
                                                   start?: T;
                                                   connector?: T;
                                                   steps?:
@@ -5259,8 +5237,6 @@ export interface PagesSelect<T extends boolean = true> {
                       | T
                       | {
                           title?: T;
-                          image?: T;
-                          layout?: T;
                           start?: T;
                           connector?: T;
                           steps?:
@@ -5752,8 +5728,6 @@ export interface PagesSelect<T extends boolean = true> {
                       | T
                       | {
                           title?: T;
-                          image?: T;
-                          layout?: T;
                           start?: T;
                           connector?: T;
                           steps?:
@@ -6037,8 +6011,6 @@ export interface PagesSelect<T extends boolean = true> {
                                               | T
                                               | {
                                                   title?: T;
-                                                  image?: T;
-                                                  layout?: T;
                                                   start?: T;
                                                   connector?: T;
                                                   steps?:
@@ -6326,8 +6298,6 @@ export interface PagesSelect<T extends boolean = true> {
                                   | T
                                   | {
                                       title?: T;
-                                      image?: T;
-                                      layout?: T;
                                       start?: T;
                                       connector?: T;
                                       steps?:
@@ -6539,8 +6509,6 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               title?: T;
-              image?: T;
-              layout?: T;
               start?: T;
               connector?: T;
               steps?:
