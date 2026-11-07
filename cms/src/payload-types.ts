@@ -3935,8 +3935,8 @@ export interface CaseCategory {
 export interface Case {
   id: number;
   title: string;
-  slug: string;
   category: number | CaseCategory;
+  slug: string;
   cover: number | Media;
   publishedAt?: string | null;
   body: {
@@ -6458,8 +6458,8 @@ export interface CaseCategoriesSelect<T extends boolean = true> {
  */
 export interface CasesSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   category?: T;
+  slug?: T;
   cover?: T;
   publishedAt?: T;
   body?: T;
