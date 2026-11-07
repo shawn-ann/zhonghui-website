@@ -50,6 +50,7 @@ export function makeGrid(slug: string, label: string, cellComponents: Block[]): 
       { name: 'children', type: 'blocks', blocks: cellComponents },
       { name: 'bgImage', type: 'text', admin: { description: '背景图片 URL' } },
       { name: 'bgColor', type: 'text', admin: { description: '背景颜色，如 #FFF1F6' } },
+      { name: 'padding', type: 'number', min: 0, defaultValue: 0, label: '内容内边距(px)', admin: { description: '给带背景的网格留白' } },
       // 旧字段：迁移后不再使用，保留以避免触发删列迁移。
       { name: 'bg', type: 'text', admin: { hidden: true } },
       { name: 'alt', type: 'checkbox', defaultValue: false, admin: { hidden: true } },

@@ -165,6 +165,7 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.alignItems !== undefined) out.alignItems = b.alignItems
       if (b.bgImage !== undefined) out.bgImage = b.bgImage
       if (b.bgColor !== undefined) out.bgColor = b.bgColor
+      if (b.padding !== undefined) out.padding = b.padding
       out.children = editorToPayloadBlocks(b.children || [], urlToId)
       break
     case 'gridRow':

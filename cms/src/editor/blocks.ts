@@ -90,6 +90,7 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
     { key: 'alignItems', label: '垂直对齐', control: 'select', options: [{ label: '拉伸等高', value: 'stretch' }, { label: '顶部对齐', value: 'start' }, { label: '居中', value: 'center' }, { label: '底部对齐', value: 'end' }] },
     { key: 'bgImage', label: '背景图片', control: 'media' },
     { key: 'bgColor', label: '背景颜色', control: 'color' },
+    { key: 'padding', label: '内容内边距(px)', control: 'number' },
   ] },
   gridRow: { type: 'gridRow', label: '行', defaults: () => ({
     type: 'gridRow', columns: 3, gap: 'md', columnRatio: '1:1:1',

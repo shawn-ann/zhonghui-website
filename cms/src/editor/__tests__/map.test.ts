@@ -67,9 +67,10 @@ describe('editorToPayloadBlocks', () => {
   })
 
   it('serializes nested grid children', () => {
-    const ed: any = [{ type: 'grid', columns: 2, gap: 'md', _id: 'g1', children: [{ type: 'text', body: 'x', _id: 't2' }] }]
+    const ed: any = [{ type: 'grid', columns: 2, gap: 'md', padding: 48, _id: 'g1', children: [{ type: 'text', body: 'x', _id: 't2' }] }]
     const back = editorToPayloadBlocks(ed, new Map())
     expect(back[0].blockType).toBe('grid')
+    expect(back[0].padding).toBe(48)
     expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', id: 't2' })
   })
 

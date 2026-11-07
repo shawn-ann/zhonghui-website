@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import { mapPageDoc, mapBlock, loadSiteData } from '../loadSiteData'
 
+describe('grid padding mapping', () => {
+  it('maps the band padding', () => {
+    const block = mapBlock({ blockType: 'grid', columns: 2, padding: 48, children: [] } as any, (m: any) => m)
+    expect(block).toMatchObject({ type: 'grid', padding: 48 })
+  })
+})
+
 describe('zigzag block mapping', () => {
   it('maps icon, text and side', () => {
     const block = mapBlock(

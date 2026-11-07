@@ -149,6 +149,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         alignItems: ['stretch', 'start', 'center', 'end'].includes(raw.alignItems) ? raw.alignItems : 'stretch',
         bgImage: raw.bgImage || undefined,
         bgColor: raw.bgColor || undefined,
+        padding: raw.padding ? Math.max(0, Math.trunc(Number(raw.padding))) : undefined,
         children,
       }
     }

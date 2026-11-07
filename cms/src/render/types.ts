@@ -40,6 +40,8 @@ export interface GridBlock extends BlockBase {
   bgImage?: string
   /** 背景颜色（CSS 颜色值） */
   bgColor?: string
+  /** 内容内边距(px)，用于给带背景的网格留白 */
+  padding?: number
   children: Block[]
 }
 

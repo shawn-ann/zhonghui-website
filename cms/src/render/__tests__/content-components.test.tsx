@@ -102,6 +102,16 @@ describe('content component extensions', () => {
     expect(html).toContain('aspect-ratio:16 / 9')
   })
 
+  it('applies background and padding to the grid band', () => {
+    const b: GridBlock = {
+      type: 'grid', _id: 'g', columns: 2, gap: 'lg', bgColor: '#A11254', padding: 48,
+      children: [{ type: 'text', _id: 't', body: 'x' }],
+    }
+    const html = render(b)
+    expect(html).toContain('background-color:#A11254')
+    expect(html).toContain('padding:48px')
+  })
+
   it('renders info list with and without dots', () => {
     const b: InfoListBlock = {
       type: 'infoList',

@@ -1621,6 +1621,10 @@ export interface Page {
                                  * 背景颜色，如 #FFF1F6
                                  */
                                 bgColor?: string | null;
+                                /**
+                                 * 给带背景的网格留白
+                                 */
+                                padding?: number | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 id?: string | null;
@@ -1637,6 +1641,10 @@ export interface Page {
                        * 背景颜色，如 #FFF1F6
                        */
                       bgColor?: string | null;
+                      /**
+                       * 给带背景的网格留白
+                       */
+                      padding?: number | null;
                       bg?: string | null;
                       alt?: boolean | null;
                       id?: string | null;
@@ -3440,6 +3448,10 @@ export interface Page {
                        * 背景颜色，如 #FFF1F6
                        */
                       bgColor?: string | null;
+                      /**
+                       * 给带背景的网格留白
+                       */
+                      padding?: number | null;
                       bg?: string | null;
                       alt?: boolean | null;
                       id?: string | null;
@@ -3456,6 +3468,10 @@ export interface Page {
              * 背景颜色，如 #FFF1F6
              */
             bgColor?: string | null;
+            /**
+             * 给带背景的网格留白
+             */
+            padding?: number | null;
             bg?: string | null;
             alt?: boolean | null;
             id?: string | null;
@@ -5161,6 +5177,7 @@ export interface PagesSelect<T extends boolean = true> {
                                           };
                                       bgImage?: T;
                                       bgColor?: T;
+                                      padding?: T;
                                       bg?: T;
                                       alt?: T;
                                       id?: T;
@@ -5169,6 +5186,7 @@ export interface PagesSelect<T extends boolean = true> {
                               };
                           bgImage?: T;
                           bgColor?: T;
+                          padding?: T;
                           bg?: T;
                           alt?: T;
                           id?: T;
@@ -6355,6 +6373,7 @@ export interface PagesSelect<T extends boolean = true> {
                               };
                           bgImage?: T;
                           bgColor?: T;
+                          padding?: T;
                           bg?: T;
                           alt?: T;
                           id?: T;
@@ -6363,6 +6382,7 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               bgImage?: T;
               bgColor?: T;
+              padding?: T;
               bg?: T;
               alt?: T;
               id?: T;

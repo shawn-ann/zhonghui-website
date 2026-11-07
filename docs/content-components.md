@@ -82,6 +82,7 @@ heading, text, image, imageText, iconCard, button, stack, steps
 - `layout`：`flow`（默认，自动换行）/ `rows`（按行，显式格子）。
 - `columnRatio` 使用正整数比例，段数必须等于列数，如 `1:1`、`1:2:1`；默认按列数生成等宽比例。
 - `alignItems`：`stretch`（默认）/ `start` / `center` / `end`。
+- `padding`：内容内边距(px)，用于给带背景的网格（色带）留白；背景覆盖整个 1152 内容宽度。
 - 网格单元格内的视觉卡片由子组件自己负责，网格不设置卡片高度。
 
 #### 流式（`layout: flow`）

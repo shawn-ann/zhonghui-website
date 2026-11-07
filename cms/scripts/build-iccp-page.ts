@@ -92,6 +92,7 @@ const intro = {
     columnRatio: '2:3',
     alignItems: 'center',
     bgColor: '#A11254',
+    padding: 48,
     children: [
       {
         blockType: 'text',
@@ -105,9 +106,8 @@ const intro = {
         bodyColor: '#FFFFFF',
         align: 'left',
         fontSize: 16,
-        padding: 40,
       },
-      { blockType: 'image', media: introImg.id, aspectRatio: 'auto', fit: 'cover', padding: 40 },
+      { blockType: 'image', media: introImg.id, aspectRatio: 'auto', fit: 'cover' },
     ],
   }],
 }

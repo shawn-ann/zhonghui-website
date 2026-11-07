@@ -136,9 +136,10 @@ export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean
     ...(ratio ? { gridTemplateColumns: ratio } : {}),
     ...(b.alignItems && b.alignItems !== 'stretch' ? { alignItems: b.alignItems } : {}),
   }
-  const style = {
+  const bandStyle = {
     ...(b.bgColor ? { backgroundColor: b.bgColor } : {}),
     ...bgImageCss(b.bgImage),
+    ...(b.padding ? { padding: `${b.padding}px` } : {}),
   }
   const children = b.children || []
   const rows = children.filter((c) => c.type === 'gridRow')
@@ -147,8 +148,8 @@ export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean
   // 数据混合时退回流式，避免直接子块被静默丢弃。
   if (b.layout === 'rows' && rows.length && rows.length === children.length) {
     return (
-      <div className="container" data-bid={b._id} style={style}>
-        <div className={`grid-rows grid-gap-${gap}`}>
+      <div className="container" data-bid={b._id}>
+        <div className={`grid-rows grid-gap-${gap}`} style={bandStyle}>
           {rows.map((c, i) => (
             <Fragment key={c._id ?? i}>{blockNode(c, editor)}</Fragment>
           ))}
@@ -170,8 +171,8 @@ export function GridView({ b, editor = false }: { b: GridBlock; editor?: boolean
       ? cols
       : (cols - (children.length % cols)) % cols
   return (
-    <div className="container" data-bid={b._id} style={style}>
-      <div className={`grid grid-cols-${cols} grid-gap-${gap}`} style={ratioStyle}>
+    <div className="container" data-bid={b._id}>
+      <div className={`grid grid-cols-${cols} grid-gap-${gap}`} style={{ ...bandStyle, ...ratioStyle }}>
         {children.map((c, i) => (
           <div className="grid-cell" key={c._id ?? i}>{blockNode(c, editor)}</div>
         ))}
