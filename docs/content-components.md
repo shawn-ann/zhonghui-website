@@ -334,6 +334,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 | `items` | repeater | — | icon（可选）+ text + side（auto/left/right） |
 
 - 默认按顺序左右交替，可用 `side` 强制某一侧。
+- 图标 96px 贴着中轴线放置，文字在外侧半栏左对齐，与中心线之间留 120px。
 - 中间渐变轴线 + 圆点；有图标时显示图标（媒体库 SVG 单色遮罩），无图标显示圆点。
 - 移动端改为单列并隐藏中轴线。
 

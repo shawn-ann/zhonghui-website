@@ -135,6 +135,7 @@ describe('content component extensions', () => {
     expect(html).toContain('zigzag-row is-right')
     expect(html).toContain('/media/a.svg')
     expect(html).toContain('第二段')
+    expect((html.match(/zigzag-dot/g) || []).length).toBe(3)
     expect(html).not.toContain('no-line')
 
     const plain = render({ ...b, showLine: false })

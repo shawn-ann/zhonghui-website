@@ -483,14 +483,15 @@ export function ZigzagView({ b, editor = false }: { b: ZigzagBlock; editor?: boo
           return (
             <div className={`zigzag-row is-${side}`} key={i}>
               <div className="zigzag-text">{item.text}</div>
-              <span className="zigzag-node">
-                {icon ? (
+              {icon ? (
+                <span className="zigzag-node">
                   <span
                     className="zigzag-glyph"
                     style={{ WebkitMaskImage: `url('${icon}')`, maskImage: `url('${icon}')` }}
                   />
-                ) : <span className="zigzag-dot" />}
-              </span>
+                </span>
+              ) : null}
+              <span className="zigzag-dot" />
             </div>
           )
         })}

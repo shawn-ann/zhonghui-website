@@ -459,15 +459,17 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .step-title { color: var(--dark-text); font-size: 15px; line-height: 1.8; }
 .step-desc { margin: 4px 0 0; color: var(--gray-blue); font-size: 14px; line-height: 1.7; }
 .zigzag-title { margin: 0 0 20px; color: var(--deep-blue); font-size: 22px; font-weight: 700; line-height: 1.4; }
-.zigzag { position: relative; display: flex; flex-direction: column; gap: 24px; padding: 8px 0; }
-.zigzag::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-1px); background: linear-gradient(#F0E3EA, #F3B9D2, #F0E3EA); }
+.zigzag { position: relative; display: block; }
+.zigzag::before { content: ''; position: absolute; left: 50%; top: 10px; bottom: 10px; width: 2px; transform: translateX(-1px); background: linear-gradient(#F0E3EA, #F3B9D2, #F0E3EA); }
 .zigzag.no-line::before { display: none; }
-.zigzag-row { position: relative; display: grid; grid-template-columns: 1fr 84px 1fr; align-items: center; }
-.zigzag-text { grid-column: 1; justify-self: end; max-width: 430px; padding-right: 16px; text-align: right; color: var(--dark-text); font-size: 15px; line-height: 1.9; }
-.zigzag-row.is-right .zigzag-text { grid-column: 3; justify-self: start; padding-right: 0; padding-left: 16px; text-align: left; }
-.zigzag-node { grid-column: 2; justify-self: center; width: 64px; height: 64px; border-radius: 50%; background: var(--light-blue); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
-.zigzag-glyph { width: 36px; height: 36px; background-color: var(--accent); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; }
-.zigzag-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
+.zigzag-row { position: relative; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 34px 0; }
+.zigzag-text { grid-column: 1; padding-right: 120px; text-align: left; color: var(--dark-text); font-size: 15px; line-height: 1.9; }
+.zigzag-row.is-right .zigzag-text { grid-column: 2; padding-right: 0; padding-left: 120px; }
+.zigzag-node { position: absolute; top: 50%; transform: translateY(-50%); width: 96px; height: 96px; display: flex; align-items: center; justify-content: center; z-index: 1; }
+.zigzag-row.is-left .zigzag-node { right: calc(50% + 12px); }
+.zigzag-row.is-right .zigzag-node { left: calc(50% + 12px); }
+.zigzag-glyph { width: 96px; height: 96px; background-color: var(--accent); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; }
+.zigzag-dot { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 20px; height: 20px; border-radius: 50%; background: var(--accent); z-index: 2; }
 .entries-title { margin: 0 0 20px; color: var(--deep-blue); font-size: 22px; font-weight: 700; line-height: 1.4; }
 .entries-list { display: flex; flex-direction: column; gap: 12px; }
 .entries-item { background: #FFF7FA; border-radius: 10px; padding: 16px 20px; }
