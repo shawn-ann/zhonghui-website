@@ -4,16 +4,14 @@ import { mapPageDoc, mapBlock, loadSiteData } from '../loadSiteData'
 describe('entries block mapping', () => {
   it('maps label + text items with prefixes', () => {
     const block = mapBlock(
-      { blockType: 'entries', title: '常见疑问', collapsible: true, labelPrefix: '问：', textPrefix: '答：', items: [{ label: '包食宿吗？', text: '提供免费食宿。' }] } as any,
+      { blockType: 'entries', title: '常见疑问', collapsible: true, items: [{ label: '问：包食宿吗？', text: '答：提供免费食宿。' }] } as any,
       (m: any) => m,
     )
     expect(block).toMatchObject({
       type: 'entries',
       title: '常见疑问',
       collapsible: true,
-      labelPrefix: '问：',
-      textPrefix: '答：',
-      items: [{ label: '包食宿吗？', text: '提供免费食宿。' }],
+      items: [{ label: '问：包食宿吗？', text: '答：提供免费食宿。' }],
     })
   })
 })

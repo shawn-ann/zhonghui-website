@@ -190,8 +190,6 @@ export interface EntriesBlock extends BlockBase {
   type: 'entries'
   title?: string
   collapsible?: boolean
-  labelPrefix?: string
-  textPrefix?: string
   items: { label: string; text: string }[]
 }
 

@@ -124,11 +124,9 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
       { key: 'desc', label: '说明（可选）', control: 'textarea' },
     ] },
   ] },
-  entries: { type: 'entries', label: '文本条目', defaults: () => ({ type: 'entries', collapsible: false, labelPrefix: 'Q：', textPrefix: 'A：', items: [{ label: '标签', text: '正文' }] }), fields: [
+  entries: { type: 'entries', label: '文本条目', defaults: () => ({ type: 'entries', collapsible: false, items: [{ label: '标签', text: '正文' }] }), fields: [
     { key: 'title', label: '标题（可选）', control: 'text' },
     { key: 'collapsible', label: '折叠显示', control: 'boolean' },
-    { key: 'labelPrefix', label: '标签前缀', control: 'text' },
-    { key: 'textPrefix', label: '正文前缀', control: 'text' },
     { key: 'items', label: '条目', control: 'repeater', addLabel: '添加条目', titleKey: 'label', subtitleKey: 'text', itemFields: [
       { key: 'label', label: '标签', control: 'text' },
       { key: 'text', label: '正文', control: 'textarea' },

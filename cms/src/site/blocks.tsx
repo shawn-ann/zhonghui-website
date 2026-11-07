@@ -471,21 +471,19 @@ export function EntriesView({ b, editor = false }: { b: EntriesBlock; editor?: b
   if (editor && items.length === 0) {
     return <EmptyEditorBlock b={b} label="文本条目" tip="在右侧添加条目" variant="wide" />
   }
-  const labelPrefix = b.labelPrefix ?? 'Q：'
-  const textPrefix = b.textPrefix ?? 'A：'
   return (
     <div className="container" data-bid={b._id}>
       {b.title ? <h3 className="entries-title">{b.title}</h3> : null}
       <div className="entries-list">
         {items.map((item, i) => b.collapsible ? (
           <details className="entries-item" key={i}>
-            <summary className="entries-label">{labelPrefix}{item.label}</summary>
-            <div className="entries-text">{textPrefix}{item.text}</div>
+            <summary className="entries-label">{item.label}</summary>
+            <div className="entries-text">{item.text}</div>
           </details>
         ) : (
           <div className="entries-item" key={i}>
-            <div className="entries-label">{labelPrefix}{item.label}</div>
-            <div className="entries-text">{textPrefix}{item.text}</div>
+            <div className="entries-label">{item.label}</div>
+            <div className="entries-text">{item.text}</div>
           </div>
         ))}
       </div>

@@ -191,8 +191,6 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
     case 'entries':
       if (b.title !== undefined) out.title = b.title
       out.collapsible = b.collapsible === true
-      out.labelPrefix = b.labelPrefix ?? 'Q：'
-      out.textPrefix = b.textPrefix ?? 'A：'
       out.items = (b.items || []).map((i) => ({ label: i.label || '', text: i.text || '' }))
       break
     case 'iconList':

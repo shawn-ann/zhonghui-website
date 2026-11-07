@@ -198,8 +198,6 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         type: 'entries',
         title: raw.title || undefined,
         collapsible: raw.collapsible === true,
-        labelPrefix: raw.labelPrefix ?? 'Q：',
-        textPrefix: raw.textPrefix ?? 'A：',
         items: arr<Record<string, any>>(raw.items).map((i) => ({
           label: String(i.label ?? ''),
           text: String(i.text ?? ''),

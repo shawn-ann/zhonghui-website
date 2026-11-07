@@ -143,15 +143,15 @@ describe('content component extensions', () => {
     expect(plain).toContain('no-connector')
   })
 
-  it('renders text entries with configurable prefixes and collapse', () => {
+  it('renders text entries and collapsible details', () => {
     const card: EntriesBlock = {
       type: 'entries',
       _id: 'entries',
       title: '常见疑问',
       collapsible: false,
       items: [
-        { label: '项目期间包食宿吗？', text: '是的，营地期间提供免费住宿及三餐。' },
-        { label: '项目结束后能旅游吗？', text: '项目结束后有 30 天的合法停留期。' },
+        { label: 'Q：项目期间包食宿吗？', text: 'A：是的，营地期间提供免费住宿及三餐。' },
+        { label: 'Q：项目结束后能旅游吗？', text: 'A：项目结束后有 30 天的合法停留期。' },
       ],
     }
     const html = render(card)
@@ -160,10 +160,6 @@ describe('content component extensions', () => {
     expect(html).toContain('Q：项目期间包食宿吗？')
     expect(html).toContain('A：是的，营地期间提供免费住宿及三餐。')
     expect(html).not.toContain('<details')
-
-    const custom = render({ ...card, labelPrefix: '术语：', textPrefix: '释义：' })
-    expect(custom).toContain('术语：项目期间包食宿吗？')
-    expect(custom).toContain('释义：是的')
 
     const collapsed = render({ ...card, collapsible: true })
     expect(collapsed).toContain('<details')

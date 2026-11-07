@@ -1734,8 +1734,6 @@ export interface Page {
                   | {
                       title?: string | null;
                       collapsible?: boolean | null;
-                      labelPrefix?: string | null;
-                      textPrefix?: string | null;
                       items: {
                         label: string;
                         text: string;
@@ -3703,8 +3701,6 @@ export interface Page {
         | {
             title?: string | null;
             collapsible?: boolean | null;
-            labelPrefix?: string | null;
-            textPrefix?: string | null;
             items: {
               label: string;
               text: string;
@@ -5227,8 +5223,6 @@ export interface PagesSelect<T extends boolean = true> {
                       | {
                           title?: T;
                           collapsible?: T;
-                          labelPrefix?: T;
-                          textPrefix?: T;
                           items?:
                             | T
                             | {
@@ -6501,8 +6495,6 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               title?: T;
               collapsible?: T;
-              labelPrefix?: T;
-              textPrefix?: T;
               items?:
                 | T
                 | {

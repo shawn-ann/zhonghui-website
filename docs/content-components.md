@@ -317,12 +317,10 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 |---|---|---|---|
 | `title` | text | 空 | 可选标题 |
 | `collapsible` | boolean | false | 是否用 `<details>` 折叠 |
-| `labelPrefix` | text | `Q：` | 标签前缀，留空则不显示 |
-| `textPrefix` | text | `A：` | 正文前缀，留空则不显示 |
 | `items` | repeater | — | label（标签）+ text（正文） |
 
 - 静态模式渲染浅粉卡片（`#FFF7FA`、10px 圆角），标签玫红加粗。
-- 前缀可改成「问：/答：」「术语：/释义：」等任意文本。
+- 需要「Q：/A：」「问：/答：」等前缀时直接写在标签和正文里，组件不再单独配置。
 - `collapsible` 开启时使用原生 `<details>/<summary>`，无额外 JS。
 - 只能放在 `section` 下。
 
