@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import { getPayload } from 'payload'
 import config from '../src/payload.config'
+import { seedMenu } from './lib/menu'
 import path from 'path'
 
 const payload = await getPayload({ config })
@@ -182,10 +183,7 @@ const home = await payload.create({
     blocks,
   },
 })
-await payload.updateGlobal({
-  slug: 'menu',
-  data: { items: [{ label: '首页', page: home.id }] },
-})
+await seedMenu(payload, home.id)
 
 await payload.updateGlobal({
   slug: 'site-settings',

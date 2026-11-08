@@ -30,7 +30,8 @@
     "build:swt": "tsx scripts/build-swt-page.ts",
     "build:itp": "tsx scripts/build-itp-page.ts",
     "menu:projects": "tsx scripts/update-project-menu.ts",
-    "link:home-stories": "tsx scripts/link-home-stories.ts"
+    "link:home-stories": "tsx scripts/link-home-stories.ts",
+    "seed:menu": "tsx scripts/seed-menu.ts"
   },
   "dependencies": {
     "@lexical/link": "^0.50.0",
