@@ -245,7 +245,6 @@ export function allowedChildTypes(parent: Block['type'], layout?: string): Block
 export function blockSummary(b: Block): string {
   switch (b.type) {
     case 'heading': return b.title || '标题'
-    case 'text': return b.title || b.body || '文本'
     case 'image': return b.altText || '图片'
     case 'imageText': return b.title || '图文卡片'
     case 'iconCard': return b.title || '图标卡片'
@@ -257,7 +256,7 @@ export function blockSummary(b: Block): string {
     case 'gridCell': return b.children?.length ? blockSummary(b.children[0]) : '空格子'
     case 'section': {
       const first = (b.children || [])[0]
-      const titled = first && (first.type === 'heading' || first.type === 'text') ? (first as { title?: string }).title : ''
+      const titled = first && first.type === 'heading' ? first.title : ''
       return titled || '分栏'
     }
     case 'banner': return b.title || '横幅'

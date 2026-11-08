@@ -3,7 +3,7 @@ import { safeUrl } from '../render/primitives'
 import type {
   BannerBlock, Block, ButtonBlock, EntriesBlock, GalleryBlock, GridBlock, GridCellBlock, GridRowBlock,
   HeadingBlock, IconCardBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock,
-  HscrollBlock, RichTextBlock, SectionBlock, SliderBlock, StackBlock, StepsBlock, TextBlock, ZigzagBlock,
+  HscrollBlock, RichTextBlock, SectionBlock, SliderBlock, StackBlock, StepsBlock, ZigzagBlock,
 } from '../render/types'
 import { bgCss, bgImageCss } from './bg'
 import { lexicalToHtml } from '../render/richText'
@@ -242,28 +242,6 @@ export function HeadingView({ b, editor = false }: { b: HeadingBlock; editor?: b
       <div className="section-heading" style={{ textAlign: b.align === 'left' ? 'left' : 'center', ...padStyle(b.padding) }}>
         {b.title ? <h2>{b.title}</h2> : null}
         {b.subtitle ? <p className="subtitle">{b.subtitle}</p> : null}
-      </div>
-    </div>
-  )
-}
-
-export function TextView({ b, editor = false }: { b: TextBlock; editor?: boolean }) {
-  if (editor && !b.title && !b.body) {
-    return <EmptyEditorBlock b={b} label="文本" tip="在右侧填写正文" />
-  }
-  const textStyle = {
-    textAlign: b.align === 'center' ? 'center' as const : 'left' as const,
-    ...(b.fontSize ? { fontSize: `${b.fontSize}px` } : {}),
-    ...(b.fontWeight ? { fontWeight: b.fontWeight } : {}),
-    ...(b.maxWidth ? { maxWidth: `${b.maxWidth}px`, marginLeft: 'auto', marginRight: 'auto' } : {}),
-    ...(b.marginTop ? { marginTop: `${b.marginTop}px` } : {}),
-    ...padStyle(b.padding),
-  }
-  return (
-    <div className="container" data-bid={b._id} style={textColorVars(b.titleColor, b.bodyColor)}>
-      <div className="text-block" style={textStyle}>
-        {b.title ? <h2 data-field="title">{b.title}</h2> : null}
-        <p data-field="body">{lines(b.body)}</p>
       </div>
     </div>
   )
@@ -621,7 +599,6 @@ export function blockNode(b: Block, editor = false): React.ReactNode {
     case 'hscroll': return <HscrollView b={b} editor={editor} />
     case 'stack': return <StackView b={b} editor={editor} />
     case 'heading': return <HeadingView b={b} editor={editor} />
-    case 'text': return <TextView b={b} editor={editor} />
     case 'image': return <ImageView b={b} editor={editor} />
     case 'imageText': return <ImageTextView b={b} editor={editor} />
     case 'iconCard': return <IconCardView b={b} editor={editor} />

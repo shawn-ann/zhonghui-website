@@ -61,10 +61,10 @@ describe('editor api', () => {
       id: 1,
       title: 'T',
       route: '/',
-      blocks: [{ id: 7, blockType: 'text', body: 'hi' }],
+      blocks: [{ id: 7, blockType: 'heading', title: 'hi' }],
     })
-    expect(doc.blocks[0].type).toBe('text')
+    expect(doc.blocks[0].type).toBe('heading')
     expect((doc.blocks[0] as any)._id).toBe('7')
-    expect((doc.blocks[0] as any).body).toBe('hi')
+    expect((doc.blocks[0] as any).title).toBe('hi')
   })
 })

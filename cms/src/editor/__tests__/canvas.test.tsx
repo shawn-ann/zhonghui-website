@@ -9,8 +9,8 @@ const doc: EditorDoc = {
   title: 'T',
   route: '/',
   blocks: [
-    { type: 'text', body: 'x', _id: 'b1' },
-    { type: 'text', body: 'y', _id: 'b2' },
+    { type: 'heading', title: 'x', _id: 'b1' },
+    { type: 'heading', title: 'y', _id: 'b2' },
   ],
 }
 

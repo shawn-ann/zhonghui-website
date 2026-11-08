@@ -10,14 +10,6 @@ import { DEFAULT_SETTINGS } from '../config'
 const render = (node: React.ReactNode) => renderToStaticMarkup(node)
 
 describe('site blocks', () => {
-  it('renders text with data hooks and alignment', () => {
-    const html = render(blockNode({ type: 'text', _id: 'b1', title: 'T', body: 'B', align: 'center' })!)
-    expect(html).toContain('data-bid="b1"')
-    expect(html).toContain('data-field="title"')
-    expect(html).toContain('data-field="body"')
-    expect(html).toContain('text-align:center')
-  })
-
   it('renders heading and section padding/background', () => {
     const heading = render(blockNode({ type: 'heading', _id: 'h1', title: 'H', subtitle: 'S' })!)
     expect(heading).toContain('<h2>H</h2>')
@@ -40,12 +32,6 @@ describe('site blocks', () => {
     })!)
     expect(heading).toContain('--title-color:#FFFFFF')
     expect(heading).toContain('--sub-color:#8A0E4B')
-
-    const text = render(blockNode({
-      type: 'text', _id: 't', body: 'body', titleColor: '#FFFFFF', bodyColor: '#333333',
-    })!)
-    expect(text).toContain('--title-color:#FFFFFF')
-    expect(text).toContain('--sub-color:#333333')
 
     const banner = render(blockNode({
       type: 'banner', _id: 'b', variant: 'split', title: 'T', sub: 'S',
@@ -134,8 +120,8 @@ describe('site blocks', () => {
       type: 'grid', _id: 'g1', layout: 'rows', columns: 6, children: [
         row([
           cell(), cell(),
-          cell([{ type: 'text', _id: 't1', body: '二维码 A' }]),
-          cell([{ type: 'text', _id: 't2', body: '二维码 B' }]),
+          cell([{ type: 'heading', _id: 't1', title: '二维码 A' }]),
+          cell([{ type: 'heading', _id: 't2', title: '二维码 B' }]),
           cell(), cell(),
         ]),
       ],
@@ -148,7 +134,7 @@ describe('site blocks', () => {
 
   it('renders every populated row cell even when columns is understated', () => {
     const cells: any[] = Array.from({ length: 5 }, (_, i) => ({
-      type: 'gridCell', _id: `c${i}`, children: [{ type: 'text', _id: `t${i}`, body: String(i) }],
+      type: 'gridCell', _id: `c${i}`, children: [{ type: 'heading', _id: `t${i}`, title: String(i) }],
     }))
     const html = render(blockNode({
       type: 'grid', _id: 'g', layout: 'rows', columns: 3,
@@ -161,7 +147,7 @@ describe('site blocks', () => {
   it('falls back to flow when rows mode has no rows', () => {
     const html = render(blockNode({
       type: 'grid', _id: 'g', layout: 'rows', columns: 3,
-      children: [{ type: 'text', _id: 't', body: 'direct' }],
+      children: [{ type: 'heading', _id: 't', title: 'direct' }],
     })!)
     expect(html).not.toContain('grid-rows')
     expect(html).toContain('direct')
@@ -172,7 +158,7 @@ describe('site blocks', () => {
       type: 'grid', _id: 'g', layout: 'rows', columns: 3,
       children: [
         { type: 'gridRow', _id: 'r', columns: 3, children: [] },
-        { type: 'text', _id: 't', body: 'mixed' },
+        { type: 'heading', _id: 't', title: 'mixed' },
       ],
     })!)
     expect(html).toContain('mixed')
@@ -187,7 +173,7 @@ describe('site blocks', () => {
 
   it('keeps legacy flow grids when layout is absent', () => {
     const legacy = render(blockNode({
-      type: 'grid', _id: 'g0', columns: 3, children: [{ type: 'text', _id: 't0', body: 'x' }],
+      type: 'grid', _id: 'g0', columns: 3, children: [{ type: 'heading', _id: 't0', title: 'x' }],
     })!)
     expect(legacy).not.toContain('grid-rows')
     expect(legacy).toContain('grid-cols-3')
@@ -196,7 +182,7 @@ describe('site blocks', () => {
   it('wraps flow grids into multiple rows by column count', () => {
     const grid = (columns: number, count: number) => render(blockNode({
       type: 'grid', _id: `g${columns}-${count}`, columns,
-      children: Array.from({ length: count }, (_, i) => ({ type: 'text' as const, _id: `t${i}`, body: String(i) })),
+      children: Array.from({ length: count }, (_, i) => ({ type: 'heading' as const, _id: `t${i}`, title: String(i) })),
     })!)
     expect((grid(3, 6).match(/class="grid-cell/g) || []).length).toBe(6)
     expect((grid(3, 9).match(/class="grid-cell/g) || []).length).toBe(9)
@@ -263,7 +249,7 @@ describe('site blocks', () => {
   it('renders grid cells, nested blocks and background', () => {
     const html = render(blockNode({
       type: 'grid', _id: 'g1', columns: 5, gap: 'lg', bgColor: '#FFF1F6', bgImage: '/g.jpg',
-      children: [{ type: 'text', _id: 't1', body: 'x' }],
+      children: [{ type: 'heading', _id: 't1', title: 'x' }],
     })!)
     expect(html).toContain('grid grid-cols-5 grid-gap-lg')
     expect(html).toContain('class="grid-cell"')
@@ -287,15 +273,15 @@ describe('site blocks', () => {
 
   it('pads the last row with placeholders', () => {
     const one = render(blockNode({
-      type: 'grid', _id: 'g1', columns: 3, children: [{ type: 'text', _id: 't1', body: 'x' }],
+      type: 'grid', _id: 'g1', columns: 3, children: [{ type: 'heading', _id: 't1', title: 'x' }],
     }, true))
     expect((one.match(/ed-grid-empty-cell/g) || []).length).toBe(2)
     expect(one).toContain('ed-grid-hint')
 
     const full = render(blockNode({
       type: 'grid', _id: 'g2', columns: 2, children: [
-        { type: 'text', _id: 't1', body: 'x' },
-        { type: 'text', _id: 't2', body: 'y' },
+        { type: 'heading', _id: 't1', title: 'x' },
+        { type: 'heading', _id: 't2', title: 'y' },
       ],
     }, true))
     expect(full).not.toContain('ed-grid-empty-cell')
@@ -303,7 +289,6 @@ describe('site blocks', () => {
 
   it('renders empty component placeholders only in editor mode', () => {
     const cases: [Block, string][] = [
-      [{ type: 'text', _id: 't', body: '' }, '文本'],
       [{ type: 'image', _id: 'i', media: '' }, '图片'],
       [{ type: 'imageText', _id: 'it', media: '' }, '图文卡片'],
       [{ type: 'iconCard', _id: 'ic', icon: '' }, '图标卡片'],
@@ -353,7 +338,7 @@ describe('site blocks', () => {
   })
 
   it('wraps legacy top-level blocks in a section', () => {
-    const html = render(<TopBlock b={{ type: 'text', body: 'x', alt: true } as Block} />)
+    const html = render(<TopBlock b={{ type: 'heading', title: 'x', alt: true } as Block} />)
     expect(html).toContain('class="section section-alt"')
   })
 })
@@ -406,7 +391,7 @@ describe('SiteDocument', () => {
   const page: PageDoc = {
     title: '首页',
     route: '/',
-      blocks: [{ type: 'text', body: 'hi' }],
+      blocks: [{ type: 'heading', title: 'hi' }],
   }
 
   it('external mode links assets and scripts', () => {

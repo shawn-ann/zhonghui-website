@@ -65,22 +65,6 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         children,
       }
     }
-    case 'text':
-      return {
-        type: 'text',
-        title: raw.title || undefined,
-        body: String(raw.body ?? ''),
-        titleColor: raw.titleColor || undefined,
-        bodyColor: raw.bodyColor || undefined,
-        align: raw.align === 'center' ? 'center' : 'left',
-        padding: raw.padding || undefined,
-        fontSize: raw.fontSize > 0 ? Number(raw.fontSize) : undefined,
-        fontWeight: ['400', '600', '700'].includes(raw.fontWeight) ? raw.fontWeight : undefined,
-        maxWidth: raw.maxWidth > 0 ? Number(raw.maxWidth) : undefined,
-        marginTop: raw.marginTop > 0 ? Number(raw.marginTop) : undefined,
-        bg,
-        alt,
-      }
     case 'image':
       return {
         type: 'image',

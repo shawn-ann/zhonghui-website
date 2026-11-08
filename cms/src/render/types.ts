@@ -60,21 +60,6 @@ export interface GridCellBlock extends BlockBase {
   children: Block[]
 }
 
-/** @deprecated 文本组件已停用，仅保留渲染兼容历史内容。 */
-export interface TextBlock extends BlockBase {
-  type: 'text'
-  title?: string
-  body: string
-  titleColor?: string
-  bodyColor?: string
-  align?: 'left' | 'center'
-  padding?: number
-  fontSize?: number
-  fontWeight?: '400' | '600' | '700'
-  maxWidth?: number
-  marginTop?: number
-}
-
 export interface ImageBlock extends BlockBase {
   type: 'image'
   media: string
@@ -252,7 +237,6 @@ export type Block =
   | GridBlock
   | GridRowBlock
   | GridCellBlock
-  | TextBlock
   | ImageBlock
   | ImageTextBlock
   | ButtonBlock

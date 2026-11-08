@@ -7,11 +7,6 @@ import type { Block } from '../types'
 describe('PropertyPanel', () => {
   const block: Block = { type: 'heading', title: 't', _id: 'b1' }
 
-  it('shows the disabled notice for the retired text block', () => {
-    render(<PropertyPanel block={{ type: 'text', body: 'hi', _id: 't1' }} onChange={() => {}} />)
-    expect(screen.getByText('该组件已停用（历史内容仍会正常显示）')).toBeTruthy()
-  })
-
   it('editing 标题 calls onChange with the new title', () => {
     const onChange = vi.fn()
     render(<PropertyPanel block={block} onChange={onChange} />)

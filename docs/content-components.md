@@ -157,7 +157,7 @@ heading, image, imageText, iconCard, button, gallery, richtext
 
 ### 4.2 正文
 
-- 文本组件已停用，正文统一使用「富文本」。
+- 正文统一使用「富文本」。
 - 段落对齐（左/中/右）在富文本工具栏设置；文字颜色也在工具栏设置。
 - 富文本自然支持多段落，不再使用 `\n` 换行。
 
@@ -276,23 +276,19 @@ heading, image, imageText, iconCard, button, gallery, richtext
 
 `title`、`subtitle`、`titleColor`、`subtitleColor`、`align`（center/left）。历史 `padding` 保留渲染兼容，不再出现在编辑器。
 
-### 5.7 文本 `text`（已停用）
-
-组件库不再提供。仅保留历史数据渲染兼容，新内容请使用富文本。
-
-### 5.8 图片 `image`
+### 5.7 图片 `image`
 
 `media`、`altText`、`linkType`/`internalPage`/`caseItem`/`externalUrl`、`aspectRatio`、`fit`。
 
-### 5.9 图文卡片 `imageText`
+### 5.8 图文卡片 `imageText`
 
 `media`、`title`、`subtitle`、`subtitleColor`、`desc`、`imageRatio`、`imageFit`、`variant`、`titleColor`、`descColor`、`linkType`/`internalPage`/`caseItem`/`externalUrl`。`imageFit` 支持 `cover`（默认，裁剪填充）/ `contain`（完整显示，二维码等场景使用）。`variant` 支持 `default`（标准白卡）/ `qr`（透明卡片 + 白色二维码框 + 背景上的标题，适合深色/图片背景）。历史 `padding` 保留渲染兼容。
 
-### 5.10 图标卡片 `iconCard`
+### 5.9 图标卡片 `iconCard`
 
 `icon`、`iconColor`、`iconFrame`、`iconSize`、`title`、`desc`、`titleColor`、`descColor`、`bgImage`、`bgColor`、`variant`、`linkType`/`internalPage`/`caseItem`/`externalUrl`。`variant` 支持 `default` / `compact`，`compact` 用于 5 列社交矩阵等紧凑场景。`iconFrame` 支持 `circle`（默认圆形边框）/ `none`（无边框）；`iconSize` 为图标像素尺寸，留空时默认 60px、compact 30px。
 
-### 5.11 信息列表 `infoList`
+### 5.10 信息列表 `infoList`
 
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
@@ -301,7 +297,7 @@ heading, image, imageText, iconCard, button, gallery, richtext
 | `items` | repeater | — | label + desc |
 | `showDots` | boolean | true | 显示圆点 |
 
-### 5.12 图标列表 `iconList`
+### 5.11 图标列表 `iconList`
 
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
@@ -309,7 +305,7 @@ heading, image, imageText, iconCard, button, gallery, richtext
 | `iconPosition` | select | left | left/right/alternate |
 | `iconColor` | text | 空 | 单色蒙版颜色 |
 
-### 5.13 文本条目 `entries`
+### 5.12 文本条目 `entries`
 
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
@@ -322,7 +318,7 @@ heading, image, imageText, iconCard, button, gallery, richtext
 - `collapsible` 开启时使用原生 `<details>/<summary>`，无额外 JS。
 - 只能放在 `section` 下。
 
-### 5.14 交替图文 `zigzag`
+### 5.13 交替图文 `zigzag`
 
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
@@ -335,7 +331,7 @@ heading, image, imageText, iconCard, button, gallery, richtext
 - 中间渐变轴线 + 圆点；有图标时显示图标（媒体库 SVG 单色遮罩），无图标显示圆点。
 - 移动端改为单列并隐藏中轴线。
 
-### 5.15 流程步骤 `steps`
+### 5.14 流程步骤 `steps`
 
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
@@ -347,7 +343,7 @@ heading, image, imageText, iconCard, button, gallery, richtext
 - 数字徽标使用主题强调色（`--accent`），每条底部虚线分隔。
 - 组件只渲染步骤列表，不含配图；需要「左图右流程」时放在 `grid` 里，与 `image` 组合（如 `columnRatio: 5:6`）。
 
-### 5.16 其它
+### 5.15 其它
 
 - `button`：`label`、`linkType`/`internalPage`/`caseItem`/`externalUrl`、`style`
 - `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/单图/图集节点（可配置 1–4 列）；编辑器工具栏支持文字颜色（内联样式）和段落对齐；历史 `padding` 保留兼容

@@ -5,7 +5,7 @@ import type { PageDoc } from '../types'
 const page: PageDoc = {
   title: '关于',
   route: '/about/',
-  blocks: [{ type: 'text', body: '你好' }],
+  blocks: [{ type: 'heading', title: '你好' }],
 }
 
 describe('renderPage', () => {

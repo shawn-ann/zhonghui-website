@@ -91,18 +91,6 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       out.image = resolveMediaId(b.image, urlToId, raw?.image)
       out.pattern = resolveMediaId(b.pattern, urlToId, raw?.pattern)
       break
-    case 'text':
-      if (b.title !== undefined) out.title = b.title
-      out.body = b.body
-      if (b.titleColor !== undefined) out.titleColor = b.titleColor
-      if (b.bodyColor !== undefined) out.bodyColor = b.bodyColor
-      out.align = b.align ?? 'left'
-      if (b.fontSize !== undefined) out.fontSize = b.fontSize
-      if (b.fontWeight !== undefined) out.fontWeight = b.fontWeight
-      if (b.maxWidth !== undefined) out.maxWidth = b.maxWidth
-      if (b.marginTop !== undefined) out.marginTop = b.marginTop
-      if (b.padding && b.padding > 0) out.padding = b.padding
-      break
     case 'image':
       out.media = resolveMediaId(b.media, urlToId, raw?.media)
       if (b.altText !== undefined) out.altText = b.altText

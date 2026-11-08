@@ -231,8 +231,6 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .foot-contact:hover { color: #ffffff; }
 
 /* ===== 旧版 P1 区块 ===== */
-.text-block h2 { font-size: 32px; color: var(--title-color, var(--deep-blue)); margin-bottom: 16px; }
-.text-block p { color: var(--sub-color, inherit); }
 .image-block img { max-width: 100%; height: auto; display: block; }
 
 /* P2 新增区块样式 */
@@ -356,7 +354,6 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 
 /* 背景图 section：标题/副标题白字（自定义颜色优先） */
 .on-image .section-heading h2,
-.on-image .text-block h2 { color: var(--title-color, #fff); }
 .on-image .section-heading .subtitle { color: var(--sub-color, #fff); }
 
 /* 图文卡片图片等高 */

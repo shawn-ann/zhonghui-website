@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import type { GridBlock, GridCellBlock, GridRowBlock } from '../../render/types'
 import { convertGridLayout, resizeRowCells } from '../gridLayout'
 
-const text = (body: string) => ({ type: 'text' as const, _id: body, body })
+const text = (body: string) => ({ type: 'heading' as const, _id: body, title: body })
 const cell = (children: any[] = []): GridCellBlock => ({ type: 'gridCell', _id: `c-${Math.random()}`, children })
 
 describe('gridLayout', () => {

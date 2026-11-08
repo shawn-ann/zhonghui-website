@@ -2,12 +2,12 @@ import { describe, it, expect } from 'vitest'
 import { docToEditorDoc, editorToPayloadBlocks } from '../map'
 
 describe('editorToPayloadBlocks', () => {
-  it('round-trips a text block', () => {
-    const raw = { id: 2, title: '首页', route: '/', _status: 'published', blocks: [{ id: 't1', blockType: 'text', body: 'hi', align: 'center' }] }
+  it('round-trips a heading block', () => {
+    const raw = { id: 2, title: '首页', route: '/', _status: 'published', blocks: [{ id: 't1', blockType: 'heading', title: 'hi', align: 'center' }] }
     const ed = docToEditorDoc(raw)
-    expect(ed.blocks[0]).toMatchObject({ type: 'text', body: 'hi', _id: 't1' })
+    expect(ed.blocks[0]).toMatchObject({ type: 'heading', title: 'hi', _id: 't1' })
     const back = editorToPayloadBlocks(ed.blocks, new Map())
-    expect(back[0]).toMatchObject({ blockType: 'text', body: 'hi', align: 'center', id: 't1' })
+    expect(back[0]).toMatchObject({ blockType: 'heading', title: 'hi', align: 'center', id: 't1' })
   })
 
   it('maps media url to id and preserves richtext content', () => {
@@ -72,11 +72,11 @@ describe('editorToPayloadBlocks', () => {
   })
 
   it('serializes nested grid children', () => {
-    const ed: any = [{ type: 'grid', columns: 2, gap: 'md', padding: 48, _id: 'g1', children: [{ type: 'text', body: 'x', _id: 't2' }] }]
+    const ed: any = [{ type: 'grid', columns: 2, gap: 'md', padding: 48, _id: 'g1', children: [{ type: 'heading', title: 'x', _id: 't2' }] }]
     const back = editorToPayloadBlocks(ed, new Map())
     expect(back[0].blockType).toBe('grid')
     expect(back[0].padding).toBe(48)
-    expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', id: 't2' })
+    expect(back[0].children[0]).toMatchObject({ blockType: 'heading', title: 'x', id: 't2' })
   })
 
   it('round-trips section paddingY and ignores legacy per-side padding', () => {
@@ -92,7 +92,7 @@ describe('editorToPayloadBlocks', () => {
         paddingRight: 10,
         paddingBottom: 120,
         paddingLeft: 20,
-        children: [{ id: 't1', blockType: 'text', body: 'x', padding: 8 }],
+        children: [{ id: 't1', blockType: 'heading', title: 'x', padding: 8 }],
       }],
     }
     const ed = docToEditorDoc(raw)
@@ -101,7 +101,7 @@ describe('editorToPayloadBlocks', () => {
     const back = editorToPayloadBlocks(ed.blocks, new Map())
     expect(back[0]).toMatchObject({ blockType: 'section', paddingY: 'none' })
     expect(back[0]).not.toHaveProperty('paddingTop')
-    expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', padding: 8 })
+    expect(back[0].children[0]).toMatchObject({ blockType: 'heading', title: 'x', padding: 8 })
   })
 
   it('defaults section paddingY to md when missing', () => {
@@ -139,7 +139,7 @@ describe('editorToPayloadBlocks', () => {
         id: 'r1', blockType: 'gridRow', columns: 2,
         children: [
           { id: 'c1', blockType: 'gridCell', children: [] },
-          { id: 'c2', blockType: 'gridCell', children: [{ id: 't1', blockType: 'text', body: 'x' }] },
+          { id: 'c2', blockType: 'gridCell', children: [{ id: 't1', blockType: 'heading', title: 'x' }] },
         ],
       }],
     }] }
@@ -147,7 +147,7 @@ describe('editorToPayloadBlocks', () => {
     const grid: any = ed.blocks[0]
     expect(grid).toMatchObject({ type: 'grid', layout: 'rows' })
     expect(grid.children[0]).toMatchObject({ type: 'gridRow', columns: 2, _id: 'r1' })
-    expect(grid.children[0].children[1].children[0]).toMatchObject({ type: 'text', body: 'x', _id: 't1' })
+    expect(grid.children[0].children[1].children[0]).toMatchObject({ type: 'heading', title: 'x', _id: 't1' })
 
     const back = editorToPayloadBlocks(ed.blocks, new Map())
     expect(back[0]).toMatchObject({ blockType: 'grid', layout: 'rows' })
@@ -157,11 +157,11 @@ describe('editorToPayloadBlocks', () => {
 
   it('round-trips grid children through the editor document', () => {
     const raw = { id: 1, title: 't', route: '/', blocks: [
-      { id: 'g1', blockType: 'grid', columns: 2, children: [{ id: 't1', blockType: 'text', body: 'x' }] },
+      { id: 'g1', blockType: 'grid', columns: 2, children: [{ id: 't1', blockType: 'heading', title: 'x' }] },
     ] }
     const ed = docToEditorDoc(raw)
-    expect((ed.blocks[0] as any).children[0]).toMatchObject({ type: 'text', body: 'x', _id: 't1' })
+    expect((ed.blocks[0] as any).children[0]).toMatchObject({ type: 'heading', title: 'x', _id: 't1' })
     const back = editorToPayloadBlocks(ed.blocks, new Map())
-    expect(back[0].children[0]).toMatchObject({ blockType: 'text', body: 'x', id: 't1' })
+    expect(back[0].children[0]).toMatchObject({ blockType: 'heading', title: 'x', id: 't1' })
   })
 })

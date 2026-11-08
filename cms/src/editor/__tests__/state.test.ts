@@ -7,16 +7,16 @@ import {
 import type { Block } from '../../render/types'
 
 describe('editor state', () => {
-  const t = (body: string, id?: string): Block => ({ type: 'text', body, _id: id })
+  const t = (body: string, id?: string): Block => ({ type: 'heading', title: body, _id: id })
   it('adds a block at index', () => {
     const blocks = [t('a'), t('b')]
-    const out = addBlock(blocks, { type: 'text', body: 'new' }, 1)
-    expect(out.map((b) => (b as any).body)).toEqual(['a', 'new', 'b'])
+    const out = addBlock(blocks, { type: 'heading', title: 'new' }, 1)
+    expect(out.map((b) => (b as any).title)).toEqual(['a', 'new', 'b'])
     expect((out[1] as any)._id).toBeTruthy()
   })
   it('moves a block', () => {
     const out = moveBlock([t('a', '1'), t('b', '2'), t('c', '3')], 0, 2)
-    expect(out.map((b) => (b as any).body)).toEqual(['b', 'c', 'a'])
+    expect(out.map((b) => (b as any).title)).toEqual(['b', 'c', 'a'])
   })
   it('removes a block', () => {
     expect(removeBlock([t('a', '1'), t('b', '2')], 0).length).toBe(1)
@@ -28,11 +28,11 @@ describe('editor state', () => {
   })
   it('updateBlockField ignores out-of-range index', () => {
     const src = [t('a','1')]
-    expect(updateBlockField(src, 9, 'body', 'x')).toEqual(src)
+    expect(updateBlockField(src, 9, 'title', 'x')).toEqual(src)
   })
   it('updates a top-level field', () => {
-    const out = updateBlockField([t('a', '1')], 0, 'body', 'A') as any[]
-    expect(out[0].body).toBe('A')
+    const out = updateBlockField([t('a', '1')], 0, 'title', 'A') as any[]
+    expect(out[0].title).toBe('A')
   })
   it('ensureIds assigns ids where missing', () => {
     const out = ensureIds([t('a'), t('b')]) as any[]
@@ -42,7 +42,7 @@ describe('editor state', () => {
 })
 
 describe('nested paths', () => {
-  const t = (body: string, id?: string): Block => ({ type: 'text', body, _id: id })
+  const t = (body: string, id?: string): Block => ({ type: 'heading', title: body, _id: id })
   const heading = (id: string): Block => ({ type: 'heading', title: id, _id: id })
   const tree = (): Block[] => [
     { type: 'section', _id: 'sec', children: [heading('h1'), heading('h2')] },
@@ -114,7 +114,7 @@ describe('nested paths', () => {
     const sec = insertInto(tree(), [0], t('new') as any)
     const secKids = (sec[0] as any).children
     expect(secKids.length).toBe(3)
-    expect(secKids[2].body).toBe('new')
+    expect(secKids[2].title).toBe('new')
     expect(secKids[2]._id).toBeTruthy()
     const grid = insertInto(tree(), [2], t('gx') as any)
     expect((grid[2] as any).children.length).toBe(3)

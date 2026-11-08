@@ -35,7 +35,7 @@ describe('StructureTree', () => {
   })
   it('moves top-level sections', () => {
     const onMove = vi.fn()
-    const two: any[] = [...blocks, { type: 'text', _id: 't2', body: 'x' }]
+    const two: any[] = [...blocks, { type: 'heading', _id: 't2', title: 'x' }]
     render(<StructureTree blocks={two} onSelect={() => {}} onDelete={() => {}} onMove={onMove} />)
     const row = screen.getAllByText('项目一览')[0].closest('.ed-tree-row') as HTMLElement
     fireEvent.click(within(row).getByTitle('下移'))

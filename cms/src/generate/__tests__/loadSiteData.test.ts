@@ -53,12 +53,12 @@ describe('mapPageDoc', () => {
     const raw = {
       title: '首页', route: '/',
       blocks: [
-        { blockType: 'text', title: 'a', body: 'b', align: 'center', bg: null, alt: false },
+        { blockType: 'heading', title: 'a', subtitle: 'b', align: 'center', bg: null, alt: false },
         { blockType: 'image', media: { url: '/media/x.jpg' }, altText: 'x', bg: null, alt: false },
       ],
     }
     const doc = mapPageDoc(raw as any, (m) => (typeof m === 'object' ? (m as any).url : m))
-    expect(doc.blocks[0]).toEqual({ type: 'text', title: 'a', body: 'b', align: 'center', bg: undefined, alt: false })
+    expect(doc.blocks[0]).toMatchObject({ type: 'heading', title: 'a', subtitle: 'b', align: 'center', bg: undefined, alt: false })
     expect(doc.blocks[1]).toEqual({
       type: 'image', media: '/media/x.jpg', altText: 'x', link: undefined,
       linkType: 'none', internalPageId: undefined, internalRoute: undefined, externalUrl: undefined,
@@ -74,7 +74,7 @@ describe('loadSiteData', () => {
       find: async (args: any) => {
         if (args.collection !== 'pages') return { docs: [] }
         captured = args
-        return { docs: [{ title: '首页', route: '/', _status: 'published', blocks: [{ blockType: 'text', body: 'home' }] }] }
+        return { docs: [{ title: '首页', route: '/', _status: 'published', blocks: [{ blockType: 'heading', title: 'home' }] }] }
       },
     }
     const data = await loadSiteData(payload as any)
@@ -122,11 +122,11 @@ describe('loadSiteData', () => {
 describe('mapPageDoc robustness', () => {
   it('skips unknown block types', () => {
     const doc = mapPageDoc(
-      { title: 't', route: '/', blocks: [{ blockType: 'richText', body: 'x' }, { blockType: 'text', body: 'ok' }] } as any,
+      { title: 't', route: '/', blocks: [{ blockType: 'richText', body: 'x' }, { blockType: 'heading', title: 'ok' }] } as any,
       () => '',
     )
     expect(doc.blocks).toHaveLength(1)
-    expect(doc.blocks[0].type).toBe('text')
+    expect(doc.blocks[0].type).toBe('heading')
   })
   it('resolves unpopulated media to empty string', () => {
     const doc = mapPageDoc({ title: 't', route: '/', blocks: [{ blockType: 'image', media: 7 }] } as any, (m) =>
@@ -146,13 +146,13 @@ describe('mapBlock', () => {
       columns: 6,
       gap: 'md',
       columnRatio: '1:1:1:1:1:1',
-      children: [{ blockType: 'gridCell', children: [{ blockType: 'text', body: 'x' }] }],
+      children: [{ blockType: 'gridCell', children: [{ blockType: 'heading', title: 'x' }] }],
     }, resolve) as any
     expect(row).toMatchObject({
       type: 'gridRow', columns: 6, gap: 'md', columnRatio: '1:1:1:1:1:1',
     })
     expect(row.children[0]).toMatchObject({ type: 'gridCell' })
-    expect(row.children[0].children[0]).toMatchObject({ type: 'text', body: 'x' })
+    expect(row.children[0].children[0]).toMatchObject({ type: 'heading', title: 'x' })
 
     const grid = mapBlock({
       blockType: 'grid', layout: 'rows', columns: 6, children: [{
@@ -169,7 +169,7 @@ describe('mapBlock', () => {
       columns: 3,
       children: Array.from({ length: 5 }, (_, i) => ({
         blockType: 'gridCell',
-        children: [{ blockType: 'text', body: String(i) }],
+        children: [{ blockType: 'heading', title: String(i) }],
       })),
     }, resolve) as any
     expect(row.columns).toBe(5)
@@ -213,10 +213,10 @@ describe('mapBlock', () => {
   })
 
   it('maps grid recursively with inner components', () => {
-    const raw = { blockType: 'grid', columns: 2, children: [{ blockType: 'text', body: 'hi' }] }
+    const raw = { blockType: 'grid', columns: 2, children: [{ blockType: 'heading', title: 'hi' }] }
     const b = mapBlock(raw, resolve) as any
     expect(b.type).toBe('grid')
-    expect(b.children[0].type).toBe('text')
+    expect(b.children[0].type).toBe('heading')
   })
   it('resolves page links for image and button', () => {
     const image = mapBlock({
@@ -265,7 +265,7 @@ describe('mapBlock', () => {
 
     const stack = mapBlock({
       blockType: 'stack', gap: 'lg', bgColor: '#FFF1F6', padding: 20,
-      children: [{ blockType: 'text', body: 'A' }, { blockType: 'text', body: 'B' }],
+      children: [{ blockType: 'heading', title: 'A' }, { blockType: 'heading', title: 'B' }],
     }, resolve) as any
     expect(stack).toMatchObject({ type: 'stack', gap: 'lg', bgColor: '#FFF1F6', padding: 20 })
     expect(stack.children).toHaveLength(2)
@@ -282,19 +282,19 @@ describe('mapBlock', () => {
     expect(mapBlock({ blockType: 'nope' }, resolve)).toBeNull()
   })
   it('drops unknown child blocks inside a grid cell', () => {
-    const raw = { blockType: 'grid', columns: 2, children: [{ blockType: 'nope' }, { blockType: 'text', body: 'x' }] }
+    const raw = { blockType: 'grid', columns: 2, children: [{ blockType: 'nope' }, { blockType: 'heading', title: 'x' }] }
     const b = mapBlock(raw, resolve) as any
     expect(b.children).toHaveLength(1)
-    expect(b.children[0].type).toBe('text')
+    expect(b.children[0].type).toBe('heading')
   })
   it('maps gridInner to a grid block', () => {
-    const raw = { blockType: 'gridInner', columns: 1, children: [{ blockType: 'text', body: 'x' }] }
+    const raw = { blockType: 'gridInner', columns: 1, children: [{ blockType: 'heading', title: 'x' }] }
     const b = mapBlock(raw, resolve) as any
     expect(b.type).toBe('grid')
   })
   it('coerces missing required strings to empty', () => {
-    const b = mapBlock({ blockType: 'text' }, resolve) as any
-    expect(b.body).toBe('')
+    const b = mapBlock({ blockType: 'heading' }, resolve) as any
+    expect(b.title).toBe('')
   })
   it('maps section paddingY and defaults to md', () => {
     const b = mapBlock({ blockType: 'section', paddingY: 'none' }, resolve) as any
@@ -313,7 +313,7 @@ describe('mapBlock', () => {
     expect(b).not.toHaveProperty('paddingRight')
   })
   it('maps content block padding', () => {
-    const b = mapBlock({ blockType: 'text', body: 'x', padding: 16 }, resolve) as any
+    const b = mapBlock({ blockType: 'heading', title: 'x', padding: 16 }, resolve) as any
     expect(b.padding).toBe(16)
   })
 })

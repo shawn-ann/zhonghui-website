@@ -3,31 +3,13 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { blockNode } from '../../site/blocks'
 import { lexicalToHtml } from '../richText'
 import LexicalContent from '../../site/LexicalContent'
-import type { EntriesBlock, GridBlock, HscrollBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, StackBlock, StepsBlock, TextBlock, ZigzagBlock } from '../types'
+import type { EntriesBlock, GridBlock, HscrollBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, StackBlock, StepsBlock, ZigzagBlock } from '../types'
 
 const render = (b: any) => renderToStaticMarkup(blockNode(b)!)
 
 describe('content component extensions', () => {
-  it('applies text font size, weight and max width', () => {
-    const b: TextBlock = {
-      type: 'text',
-      _id: 't',
-      body: '正文',
-      fontSize: 16,
-      fontWeight: '600',
-      maxWidth: 760,
-      marginTop: 14,
-      align: 'center',
-    }
-    const html = render(b)
-    expect(html).toContain('font-size:16px')
-    expect(html).toContain('font-weight:600')
-    expect(html).toContain('max-width:760px')
-    expect(html).toContain('margin-top:14px')
-  })
-
   it('applies section child gap', () => {
-    const html = render({ type: 'section', _id: 'sg', contentGap: 32, children: [{ type: 'text', body: 'A' }] })
+    const html = render({ type: 'section', _id: 'sg', contentGap: 32, children: [{ type: 'heading', title: 'A' }] })
     expect(html).toContain('class="section-content"')
     expect(html).toContain('gap:32px')
   })
@@ -73,11 +55,6 @@ describe('content component extensions', () => {
     })
     expect(html).toContain('richtext-image')
     expect(html).toContain('/api/media/file/b.jpg')
-  })
-
-  it('renders text line breaks', () => {
-    const html = render({ type: 'text', _id: 'tb', body: '第一行\n第二行' })
-    expect(html).toContain('第一行<br/>第二行')
   })
 
   it('renders grid column ratio for two columns', () => {
@@ -137,7 +114,7 @@ describe('content component extensions', () => {
   it('applies background and padding to the grid band', () => {
     const b: GridBlock = {
       type: 'grid', _id: 'g', columns: 2, gap: 'lg', bgColor: '#A11254', padding: 48,
-      children: [{ type: 'text', _id: 't', body: 'x' }],
+      children: [{ type: 'heading', _id: 't', title: 'x' }],
     }
     const html = render(b)
     expect(html).toContain('background-color:#A11254')
@@ -256,7 +233,7 @@ describe('content component extensions', () => {
   it('renders a vertical stack inside a grid cell', () => {
     const stack: StackBlock = {
       type: 'stack', _id: 's', gap: 'md', bgColor: '#FFF1F6', padding: 20,
-      children: [{ type: 'text', body: 'A' }, { type: 'text', body: 'B' }],
+      children: [{ type: 'heading', title: 'A' }, { type: 'heading', title: 'B' }],
     }
     const html = render(stack)
     expect(html).toContain('stack-gap-md')

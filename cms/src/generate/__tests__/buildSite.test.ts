@@ -5,8 +5,8 @@ import type { SiteData } from '../../render/types'
 
 const data: SiteData = {
   pages: [
-    { title: '首页', route: '/', blocks: [{ type: 'text', body: 'home' }] },
-    { title: '关于', route: '/about/', blocks: [{ type: 'text', body: 'about' }] },
+    { title: '首页', route: '/', blocks: [{ type: 'heading', title: 'home' }] },
+    { title: '关于', route: '/about/', blocks: [{ type: 'heading', title: 'about' }] },
   ],
 }
 
