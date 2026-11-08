@@ -12,12 +12,12 @@ describe('component categories', () => {
   })
   it('allowed children: section = layout blocks; grid = cards/text', () => {
     expect(allowedChildTypes('section')).toEqual(['heading', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'entries', 'zigzag', 'steps', 'iconList', 'hscroll', 'stack'])
-    expect(allowedChildTypes('grid')).toEqual(['heading', 'image', 'imageText', 'iconCard', 'button', 'stack', 'steps'])
+    expect(allowedChildTypes('grid')).toEqual(['heading', 'image', 'imageText', 'iconCard', 'stack', 'steps'])
     expect(allowedChildTypes('grid', 'rows')).toEqual(['gridRow'])
     expect(allowedChildTypes('gridRow')).toEqual(['gridCell'])
-    expect(allowedChildTypes('gridCell')).toEqual(['heading', 'image', 'imageText', 'iconCard', 'button', 'stack', 'steps'])
+    expect(allowedChildTypes('gridCell')).toEqual(['heading', 'image', 'imageText', 'iconCard', 'stack', 'steps'])
     expect(allowedChildTypes('hscroll')).toEqual(['imageText'])
-    expect(allowedChildTypes('stack')).toEqual(['heading', 'image', 'imageText', 'iconCard', 'button', 'gallery', 'richtext'])
+    expect(allowedChildTypes('stack')).toEqual(['heading', 'image', 'imageText', 'iconCard', 'gallery', 'richtext'])
     expect(allowedChildTypes('image')).toEqual([])
   })
   it('summary for text/heading', () => {
@@ -35,7 +35,6 @@ describe('component categories', () => {
     expect(makeDefaultBlock('iconCard', media)).toMatchObject({
       icon: '/i.svg', title: '图标卡片', titleColor: '#8A0E4B', descColor: '#000000',
     })
-    expect(makeDefaultBlock('button')).toMatchObject({ label: '按钮' })
     expect(makeDefaultBlock('gallery', media)).toMatchObject({ images: ['/a.jpg'] })
     expect(makeDefaultBlock('slider', media)).toMatchObject({ images: ['/a.jpg'] })
     expect(makeDefaultBlock('banner')).toMatchObject({
@@ -48,7 +47,7 @@ describe('component categories', () => {
   })
 
   it('content blocks no longer expose background settings', () => {
-    for (const t of ['image', 'imageText', 'button', 'richtext', 'gallery', 'slider'] as const) {
+    for (const t of ['image', 'imageText', 'richtext', 'gallery', 'slider'] as const) {
       const keys = BLOCKS[t].fields.map((f) => f.key)
       expect(keys).not.toContain('bg')
       expect(keys).not.toContain('alt')

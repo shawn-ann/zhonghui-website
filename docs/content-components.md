@@ -39,7 +39,6 @@
 | `image` | 图片 | 独立图片，可设比例和链接 |
 | `imageText` | 图文卡片 | 图片 + 标题/副标题/描述 + 链接 |
 | `iconCard` | 图标卡片 | 图标 + 标题 + 描述卡片 |
-| `button` | 按钮 | 独立行动按钮 |
 | `richtext` | 富文本 | Lexical 富文本内容 |
 | `gallery` | 图集 | 图片网格 |
 | `slider` | 轮播 | 图片轮播 |
@@ -72,7 +71,7 @@ infoList, entries, zigzag, steps, iconList, hscroll, stack
 允许的子组件：
 
 ```text
-heading, image, imageText, iconCard, button, stack, steps
+heading, image, imageText, iconCard, stack, steps
 ```
 
 按行布局时子组件为 `gridRow`，`gridRow` 内为 `gridCell`。
@@ -122,7 +121,7 @@ imageText
 允许的子组件：
 
 ```text
-heading, image, imageText, iconCard, button, gallery, richtext
+heading, image, imageText, iconCard, gallery, richtext
 ```
 
 - 可用于分栏直接子项，也可用于网格单元格。
@@ -182,7 +181,7 @@ heading, image, imageText, iconCard, button, gallery, richtext
 - `externalUrl`：外链
 - 隐藏字段 `link` 仅用于兼容旧数据
 
-适用于 `image`、`imageText`、`iconCard`、`button`。
+适用于 `image`、`imageText`、`iconCard`。
 
 规则：站内链接必须保存页面 ID，不能把 `.html` 路由写进内容。
 
@@ -345,7 +344,6 @@ heading, image, imageText, iconCard, button, gallery, richtext
 
 ### 5.15 其它
 
-- `button`：`label`、`linkType`/`internalPage`/`caseItem`/`externalUrl`、`style`
 - `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/单图/图集节点（可配置 1–4 列）；编辑器工具栏支持文字颜色（内联样式）和段落对齐；历史 `padding` 保留兼容
 - `gallery`：`images`、`columns`；历史 `padding` 保留兼容
 - `slider`：`images`

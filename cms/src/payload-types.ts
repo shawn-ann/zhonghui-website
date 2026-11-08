@@ -344,33 +344,6 @@ export interface Page {
                                 blockType: 'imageText';
                               }
                             | {
-                                label: string;
-                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                /**
-                                 * 静态生成时解析为该页面的路由
-                                 */
-                                internalPage?: (number | null) | Page;
-                                /**
-                                 * 选择一篇已发布文章
-                                 */
-                                caseItem?: (number | null) | Case;
-                                /**
-                                 * https://… / mailto: / tel:
-                                 */
-                                externalUrl?: string | null;
-                                link?: string | null;
-                                style?: ('primary' | 'outline') | null;
-                                bg?: string | null;
-                                alt?: boolean | null;
-                                /**
-                                 * 内容内边距(px)，默认0
-                                 */
-                                padding?: number | null;
-                                id?: string | null;
-                                blockName?: string | null;
-                                blockType: 'button';
-                              }
-                            | {
                                 icon: number | Media;
                                 title?: string | null;
                                 desc?: string | null;
@@ -570,33 +543,6 @@ export interface Page {
                                           blockType: 'iconCard';
                                         }
                                       | {
-                                          label: string;
-                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                          /**
-                                           * 静态生成时解析为该页面的路由
-                                           */
-                                          internalPage?: (number | null) | Page;
-                                          /**
-                                           * 选择一篇已发布文章
-                                           */
-                                          caseItem?: (number | null) | Case;
-                                          /**
-                                           * https://… / mailto: / tel:
-                                           */
-                                          externalUrl?: string | null;
-                                          link?: string | null;
-                                          style?: ('primary' | 'outline') | null;
-                                          bg?: string | null;
-                                          alt?: boolean | null;
-                                          /**
-                                           * 内容内边距(px)，默认0
-                                           */
-                                          padding?: number | null;
-                                          id?: string | null;
-                                          blockName?: string | null;
-                                          blockType: 'button';
-                                        }
-                                      | {
                                           images: {
                                             image: number | Media;
                                             id?: string | null;
@@ -763,33 +709,6 @@ export interface Page {
                                                 id?: string | null;
                                                 blockName?: string | null;
                                                 blockType: 'imageText';
-                                              }
-                                            | {
-                                                label: string;
-                                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                                /**
-                                                 * 静态生成时解析为该页面的路由
-                                                 */
-                                                internalPage?: (number | null) | Page;
-                                                /**
-                                                 * 选择一篇已发布文章
-                                                 */
-                                                caseItem?: (number | null) | Case;
-                                                /**
-                                                 * https://… / mailto: / tel:
-                                                 */
-                                                externalUrl?: string | null;
-                                                link?: string | null;
-                                                style?: ('primary' | 'outline') | null;
-                                                bg?: string | null;
-                                                alt?: boolean | null;
-                                                /**
-                                                 * 内容内边距(px)，默认0
-                                                 */
-                                                padding?: number | null;
-                                                id?: string | null;
-                                                blockName?: string | null;
-                                                blockType: 'button';
                                               }
                                             | {
                                                 icon: number | Media;
@@ -992,33 +911,6 @@ export interface Page {
                                                           blockType: 'iconCard';
                                                         }
                                                       | {
-                                                          label: string;
-                                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                                          /**
-                                                           * 静态生成时解析为该页面的路由
-                                                           */
-                                                          internalPage?: (number | null) | Page;
-                                                          /**
-                                                           * 选择一篇已发布文章
-                                                           */
-                                                          caseItem?: (number | null) | Case;
-                                                          /**
-                                                           * https://… / mailto: / tel:
-                                                           */
-                                                          externalUrl?: string | null;
-                                                          link?: string | null;
-                                                          style?: ('primary' | 'outline') | null;
-                                                          bg?: string | null;
-                                                          alt?: boolean | null;
-                                                          /**
-                                                           * 内容内边距(px)，默认0
-                                                           */
-                                                          padding?: number | null;
-                                                          id?: string | null;
-                                                          blockName?: string | null;
-                                                          blockType: 'button';
-                                                        }
-                                                      | {
                                                           images: {
                                                             image: number | Media;
                                                             id?: string | null;
@@ -1203,33 +1095,6 @@ export interface Page {
                                           id?: string | null;
                                           blockName?: string | null;
                                           blockType: 'imageText';
-                                        }
-                                      | {
-                                          label: string;
-                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                          /**
-                                           * 静态生成时解析为该页面的路由
-                                           */
-                                          internalPage?: (number | null) | Page;
-                                          /**
-                                           * 选择一篇已发布文章
-                                           */
-                                          caseItem?: (number | null) | Case;
-                                          /**
-                                           * https://… / mailto: / tel:
-                                           */
-                                          externalUrl?: string | null;
-                                          link?: string | null;
-                                          style?: ('primary' | 'outline') | null;
-                                          bg?: string | null;
-                                          alt?: boolean | null;
-                                          /**
-                                           * 内容内边距(px)，默认0
-                                           */
-                                          padding?: number | null;
-                                          id?: string | null;
-                                          blockName?: string | null;
-                                          blockType: 'button';
                                         }
                                       | {
                                           icon: number | Media;
@@ -1429,33 +1294,6 @@ export interface Page {
                                                     id?: string | null;
                                                     blockName?: string | null;
                                                     blockType: 'iconCard';
-                                                  }
-                                                | {
-                                                    label: string;
-                                                    linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                                    /**
-                                                     * 静态生成时解析为该页面的路由
-                                                     */
-                                                    internalPage?: (number | null) | Page;
-                                                    /**
-                                                     * 选择一篇已发布文章
-                                                     */
-                                                    caseItem?: (number | null) | Case;
-                                                    /**
-                                                     * https://… / mailto: / tel:
-                                                     */
-                                                    externalUrl?: string | null;
-                                                    link?: string | null;
-                                                    style?: ('primary' | 'outline') | null;
-                                                    bg?: string | null;
-                                                    alt?: boolean | null;
-                                                    /**
-                                                     * 内容内边距(px)，默认0
-                                                     */
-                                                    padding?: number | null;
-                                                    id?: string | null;
-                                                    blockName?: string | null;
-                                                    blockType: 'button';
                                                   }
                                                 | {
                                                     images: {
@@ -1911,33 +1749,6 @@ export interface Page {
                                 blockType: 'iconCard';
                               }
                             | {
-                                label: string;
-                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                /**
-                                 * 静态生成时解析为该页面的路由
-                                 */
-                                internalPage?: (number | null) | Page;
-                                /**
-                                 * 选择一篇已发布文章
-                                 */
-                                caseItem?: (number | null) | Case;
-                                /**
-                                 * https://… / mailto: / tel:
-                                 */
-                                externalUrl?: string | null;
-                                link?: string | null;
-                                style?: ('primary' | 'outline') | null;
-                                bg?: string | null;
-                                alt?: boolean | null;
-                                /**
-                                 * 内容内边距(px)，默认0
-                                 */
-                                padding?: number | null;
-                                id?: string | null;
-                                blockName?: string | null;
-                                blockType: 'button';
-                              }
-                            | {
                                 images: {
                                   image: number | Media;
                                   id?: string | null;
@@ -2117,33 +1928,6 @@ export interface Page {
                       id?: string | null;
                       blockName?: string | null;
                       blockType: 'imageText';
-                    }
-                  | {
-                      label: string;
-                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                      /**
-                       * 静态生成时解析为该页面的路由
-                       */
-                      internalPage?: (number | null) | Page;
-                      /**
-                       * 选择一篇已发布文章
-                       */
-                      caseItem?: (number | null) | Case;
-                      /**
-                       * https://… / mailto: / tel:
-                       */
-                      externalUrl?: string | null;
-                      link?: string | null;
-                      style?: ('primary' | 'outline') | null;
-                      bg?: string | null;
-                      alt?: boolean | null;
-                      /**
-                       * 内容内边距(px)，默认0
-                       */
-                      padding?: number | null;
-                      id?: string | null;
-                      blockName?: string | null;
-                      blockType: 'button';
                     }
                   | {
                       icon: number | Media;
@@ -2345,33 +2129,6 @@ export interface Page {
                                 blockType: 'iconCard';
                               }
                             | {
-                                label: string;
-                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                /**
-                                 * 静态生成时解析为该页面的路由
-                                 */
-                                internalPage?: (number | null) | Page;
-                                /**
-                                 * 选择一篇已发布文章
-                                 */
-                                caseItem?: (number | null) | Case;
-                                /**
-                                 * https://… / mailto: / tel:
-                                 */
-                                externalUrl?: string | null;
-                                link?: string | null;
-                                style?: ('primary' | 'outline') | null;
-                                bg?: string | null;
-                                alt?: boolean | null;
-                                /**
-                                 * 内容内边距(px)，默认0
-                                 */
-                                padding?: number | null;
-                                id?: string | null;
-                                blockName?: string | null;
-                                blockType: 'button';
-                              }
-                            | {
                                 images: {
                                   image: number | Media;
                                   id?: string | null;
@@ -2538,33 +2295,6 @@ export interface Page {
                                       id?: string | null;
                                       blockName?: string | null;
                                       blockType: 'imageText';
-                                    }
-                                  | {
-                                      label: string;
-                                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                      /**
-                                       * 静态生成时解析为该页面的路由
-                                       */
-                                      internalPage?: (number | null) | Page;
-                                      /**
-                                       * 选择一篇已发布文章
-                                       */
-                                      caseItem?: (number | null) | Case;
-                                      /**
-                                       * https://… / mailto: / tel:
-                                       */
-                                      externalUrl?: string | null;
-                                      link?: string | null;
-                                      style?: ('primary' | 'outline') | null;
-                                      bg?: string | null;
-                                      alt?: boolean | null;
-                                      /**
-                                       * 内容内边距(px)，默认0
-                                       */
-                                      padding?: number | null;
-                                      id?: string | null;
-                                      blockName?: string | null;
-                                      blockType: 'button';
                                     }
                                   | {
                                       icon: number | Media;
@@ -2766,33 +2496,6 @@ export interface Page {
                                                 blockType: 'iconCard';
                                               }
                                             | {
-                                                label: string;
-                                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                                /**
-                                                 * 静态生成时解析为该页面的路由
-                                                 */
-                                                internalPage?: (number | null) | Page;
-                                                /**
-                                                 * 选择一篇已发布文章
-                                                 */
-                                                caseItem?: (number | null) | Case;
-                                                /**
-                                                 * https://… / mailto: / tel:
-                                                 */
-                                                externalUrl?: string | null;
-                                                link?: string | null;
-                                                style?: ('primary' | 'outline') | null;
-                                                bg?: string | null;
-                                                alt?: boolean | null;
-                                                /**
-                                                 * 内容内边距(px)，默认0
-                                                 */
-                                                padding?: number | null;
-                                                id?: string | null;
-                                                blockName?: string | null;
-                                                blockType: 'button';
-                                              }
-                                            | {
                                                 images: {
                                                   image: number | Media;
                                                   id?: string | null;
@@ -2971,33 +2674,6 @@ export interface Page {
                                 id?: string | null;
                                 blockName?: string | null;
                                 blockType: 'imageText';
-                              }
-                            | {
-                                label: string;
-                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                /**
-                                 * 静态生成时解析为该页面的路由
-                                 */
-                                internalPage?: (number | null) | Page;
-                                /**
-                                 * 选择一篇已发布文章
-                                 */
-                                caseItem?: (number | null) | Case;
-                                /**
-                                 * https://… / mailto: / tel:
-                                 */
-                                externalUrl?: string | null;
-                                link?: string | null;
-                                style?: ('primary' | 'outline') | null;
-                                bg?: string | null;
-                                alt?: boolean | null;
-                                /**
-                                 * 内容内边距(px)，默认0
-                                 */
-                                padding?: number | null;
-                                id?: string | null;
-                                blockName?: string | null;
-                                blockType: 'button';
                               }
                             | {
                                 icon: number | Media;
@@ -3199,33 +2875,6 @@ export interface Page {
                                           blockType: 'iconCard';
                                         }
                                       | {
-                                          label: string;
-                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                                          /**
-                                           * 静态生成时解析为该页面的路由
-                                           */
-                                          internalPage?: (number | null) | Page;
-                                          /**
-                                           * 选择一篇已发布文章
-                                           */
-                                          caseItem?: (number | null) | Case;
-                                          /**
-                                           * https://… / mailto: / tel:
-                                           */
-                                          externalUrl?: string | null;
-                                          link?: string | null;
-                                          style?: ('primary' | 'outline') | null;
-                                          bg?: string | null;
-                                          alt?: boolean | null;
-                                          /**
-                                           * 内容内边距(px)，默认0
-                                           */
-                                          padding?: number | null;
-                                          id?: string | null;
-                                          blockName?: string | null;
-                                          blockType: 'button';
-                                        }
-                                      | {
                                           images: {
                                             image: number | Media;
                                             id?: string | null;
@@ -3424,33 +3073,6 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'imageText';
-          }
-        | {
-            label: string;
-            linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-            /**
-             * 静态生成时解析为该页面的路由
-             */
-            internalPage?: (number | null) | Page;
-            /**
-             * 选择一篇已发布文章
-             */
-            caseItem?: (number | null) | Case;
-            /**
-             * https://… / mailto: / tel:
-             */
-            externalUrl?: string | null;
-            link?: string | null;
-            style?: ('primary' | 'outline') | null;
-            bg?: string | null;
-            alt?: boolean | null;
-            /**
-             * 内容内边距(px)，默认0
-             */
-            padding?: number | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'button';
           }
         | {
             content?: {
@@ -3823,33 +3445,6 @@ export interface Page {
                       blockType: 'iconCard';
                     }
                   | {
-                      label: string;
-                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
-                      /**
-                       * 静态生成时解析为该页面的路由
-                       */
-                      internalPage?: (number | null) | Page;
-                      /**
-                       * 选择一篇已发布文章
-                       */
-                      caseItem?: (number | null) | Case;
-                      /**
-                       * https://… / mailto: / tel:
-                       */
-                      externalUrl?: string | null;
-                      link?: string | null;
-                      style?: ('primary' | 'outline') | null;
-                      bg?: string | null;
-                      alt?: boolean | null;
-                      /**
-                       * 内容内边距(px)，默认0
-                       */
-                      padding?: number | null;
-                      id?: string | null;
-                      blockName?: string | null;
-                      blockType: 'button';
-                    }
-                  | {
                       images: {
                         image: number | Media;
                         id?: string | null;
@@ -4204,22 +3799,6 @@ export interface PagesSelect<T extends boolean = true> {
                                       id?: T;
                                       blockName?: T;
                                     };
-                                button?:
-                                  | T
-                                  | {
-                                      label?: T;
-                                      linkType?: T;
-                                      internalPage?: T;
-                                      caseItem?: T;
-                                      externalUrl?: T;
-                                      link?: T;
-                                      style?: T;
-                                      bg?: T;
-                                      alt?: T;
-                                      padding?: T;
-                                      id?: T;
-                                      blockName?: T;
-                                    };
                                 iconCard?:
                                   | T
                                   | {
@@ -4325,22 +3904,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                   iconFrame?: T;
                                                   iconSize?: T;
                                                   variant?: T;
-                                                  id?: T;
-                                                  blockName?: T;
-                                                };
-                                            button?:
-                                              | T
-                                              | {
-                                                  label?: T;
-                                                  linkType?: T;
-                                                  internalPage?: T;
-                                                  caseItem?: T;
-                                                  externalUrl?: T;
-                                                  link?: T;
-                                                  style?: T;
-                                                  bg?: T;
-                                                  alt?: T;
-                                                  padding?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -4459,22 +4022,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                               id?: T;
                                                               blockName?: T;
                                                             };
-                                                        button?:
-                                                          | T
-                                                          | {
-                                                              label?: T;
-                                                              linkType?: T;
-                                                              internalPage?: T;
-                                                              caseItem?: T;
-                                                              externalUrl?: T;
-                                                              link?: T;
-                                                              style?: T;
-                                                              bg?: T;
-                                                              alt?: T;
-                                                              padding?: T;
-                                                              id?: T;
-                                                              blockName?: T;
-                                                            };
                                                         iconCard?:
                                                           | T
                                                           | {
@@ -4580,22 +4127,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                                           iconFrame?: T;
                                                                           iconSize?: T;
                                                                           variant?: T;
-                                                                          id?: T;
-                                                                          blockName?: T;
-                                                                        };
-                                                                    button?:
-                                                                      | T
-                                                                      | {
-                                                                          label?: T;
-                                                                          linkType?: T;
-                                                                          internalPage?: T;
-                                                                          caseItem?: T;
-                                                                          externalUrl?: T;
-                                                                          link?: T;
-                                                                          style?: T;
-                                                                          bg?: T;
-                                                                          alt?: T;
-                                                                          padding?: T;
                                                                           id?: T;
                                                                           blockName?: T;
                                                                         };
@@ -4718,22 +4249,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                   id?: T;
                                                   blockName?: T;
                                                 };
-                                            button?:
-                                              | T
-                                              | {
-                                                  label?: T;
-                                                  linkType?: T;
-                                                  internalPage?: T;
-                                                  caseItem?: T;
-                                                  externalUrl?: T;
-                                                  link?: T;
-                                                  style?: T;
-                                                  bg?: T;
-                                                  alt?: T;
-                                                  padding?: T;
-                                                  id?: T;
-                                                  blockName?: T;
-                                                };
                                             iconCard?:
                                               | T
                                               | {
@@ -4839,22 +4354,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                               iconFrame?: T;
                                                               iconSize?: T;
                                                               variant?: T;
-                                                              id?: T;
-                                                              blockName?: T;
-                                                            };
-                                                        button?:
-                                                          | T
-                                                          | {
-                                                              label?: T;
-                                                              linkType?: T;
-                                                              internalPage?: T;
-                                                              caseItem?: T;
-                                                              externalUrl?: T;
-                                                              link?: T;
-                                                              style?: T;
-                                                              bg?: T;
-                                                              alt?: T;
-                                                              padding?: T;
                                                               id?: T;
                                                               blockName?: T;
                                                             };
@@ -5176,22 +4675,6 @@ export interface PagesSelect<T extends boolean = true> {
                                       id?: T;
                                       blockName?: T;
                                     };
-                                button?:
-                                  | T
-                                  | {
-                                      label?: T;
-                                      linkType?: T;
-                                      internalPage?: T;
-                                      caseItem?: T;
-                                      externalUrl?: T;
-                                      link?: T;
-                                      style?: T;
-                                      bg?: T;
-                                      alt?: T;
-                                      padding?: T;
-                                      id?: T;
-                                      blockName?: T;
-                                    };
                                 gallery?:
                                   | T
                                   | {
@@ -5303,22 +4786,6 @@ export interface PagesSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
-                    button?:
-                      | T
-                      | {
-                          label?: T;
-                          linkType?: T;
-                          internalPage?: T;
-                          caseItem?: T;
-                          externalUrl?: T;
-                          link?: T;
-                          style?: T;
-                          bg?: T;
-                          alt?: T;
-                          padding?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
                     iconCard?:
                       | T
                       | {
@@ -5424,22 +4891,6 @@ export interface PagesSelect<T extends boolean = true> {
                                       iconFrame?: T;
                                       iconSize?: T;
                                       variant?: T;
-                                      id?: T;
-                                      blockName?: T;
-                                    };
-                                button?:
-                                  | T
-                                  | {
-                                      label?: T;
-                                      linkType?: T;
-                                      internalPage?: T;
-                                      caseItem?: T;
-                                      externalUrl?: T;
-                                      link?: T;
-                                      style?: T;
-                                      bg?: T;
-                                      alt?: T;
-                                      padding?: T;
                                       id?: T;
                                       blockName?: T;
                                     };
@@ -5558,22 +5009,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                   id?: T;
                                                   blockName?: T;
                                                 };
-                                            button?:
-                                              | T
-                                              | {
-                                                  label?: T;
-                                                  linkType?: T;
-                                                  internalPage?: T;
-                                                  caseItem?: T;
-                                                  externalUrl?: T;
-                                                  link?: T;
-                                                  style?: T;
-                                                  bg?: T;
-                                                  alt?: T;
-                                                  padding?: T;
-                                                  id?: T;
-                                                  blockName?: T;
-                                                };
                                             iconCard?:
                                               | T
                                               | {
@@ -5679,22 +5114,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                               iconFrame?: T;
                                                               iconSize?: T;
                                                               variant?: T;
-                                                              id?: T;
-                                                              blockName?: T;
-                                                            };
-                                                        button?:
-                                                          | T
-                                                          | {
-                                                              label?: T;
-                                                              linkType?: T;
-                                                              internalPage?: T;
-                                                              caseItem?: T;
-                                                              externalUrl?: T;
-                                                              link?: T;
-                                                              style?: T;
-                                                              bg?: T;
-                                                              alt?: T;
-                                                              padding?: T;
                                                               id?: T;
                                                               blockName?: T;
                                                             };
@@ -5817,22 +5236,6 @@ export interface PagesSelect<T extends boolean = true> {
                                       id?: T;
                                       blockName?: T;
                                     };
-                                button?:
-                                  | T
-                                  | {
-                                      label?: T;
-                                      linkType?: T;
-                                      internalPage?: T;
-                                      caseItem?: T;
-                                      externalUrl?: T;
-                                      link?: T;
-                                      style?: T;
-                                      bg?: T;
-                                      alt?: T;
-                                      padding?: T;
-                                      id?: T;
-                                      blockName?: T;
-                                    };
                                 iconCard?:
                                   | T
                                   | {
@@ -5938,22 +5341,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                   iconFrame?: T;
                                                   iconSize?: T;
                                                   variant?: T;
-                                                  id?: T;
-                                                  blockName?: T;
-                                                };
-                                            button?:
-                                              | T
-                                              | {
-                                                  label?: T;
-                                                  linkType?: T;
-                                                  internalPage?: T;
-                                                  caseItem?: T;
-                                                  externalUrl?: T;
-                                                  link?: T;
-                                                  style?: T;
-                                                  bg?: T;
-                                                  alt?: T;
-                                                  padding?: T;
                                                   id?: T;
                                                   blockName?: T;
                                                 };
@@ -6072,22 +5459,6 @@ export interface PagesSelect<T extends boolean = true> {
               caseItem?: T;
               externalUrl?: T;
               link?: T;
-              bg?: T;
-              alt?: T;
-              padding?: T;
-              id?: T;
-              blockName?: T;
-            };
-        button?:
-          | T
-          | {
-              label?: T;
-              linkType?: T;
-              internalPage?: T;
-              caseItem?: T;
-              externalUrl?: T;
-              link?: T;
-              style?: T;
               bg?: T;
               alt?: T;
               padding?: T;
@@ -6352,22 +5723,6 @@ export interface PagesSelect<T extends boolean = true> {
                           iconFrame?: T;
                           iconSize?: T;
                           variant?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    button?:
-                      | T
-                      | {
-                          label?: T;
-                          linkType?: T;
-                          internalPage?: T;
-                          caseItem?: T;
-                          externalUrl?: T;
-                          link?: T;
-                          style?: T;
-                          bg?: T;
-                          alt?: T;
-                          padding?: T;
                           id?: T;
                           blockName?: T;
                         };

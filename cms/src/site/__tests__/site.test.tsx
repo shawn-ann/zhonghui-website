@@ -292,7 +292,6 @@ describe('site blocks', () => {
       [{ type: 'image', _id: 'i', media: '' }, '图片'],
       [{ type: 'imageText', _id: 'it', media: '' }, '图文卡片'],
       [{ type: 'iconCard', _id: 'ic', icon: '' }, '图标卡片'],
-      [{ type: 'button', _id: 'b', label: '', link: '' }, '按钮'],
       [{ type: 'heading', _id: 'h', title: '' }, '标题'],
       [{ type: 'gallery', _id: 'g', images: [] }, '图集'],
       [{ type: 'slider', _id: 's', images: [] }, '轮播'],
@@ -323,11 +322,7 @@ describe('site blocks', () => {
     expect(html).toContain('border-color:#FF0000')
   })
 
-  it('renders button, gallery and slider', () => {
-    const btn = render(blockNode({ type: 'button', _id: 'b1', label: 'Go', link: '/x/', style: 'outline' })!)
-    expect(btn).toContain('class="btn btn--outline"')
-    expect(btn).toContain('href="/x/"')
-
+  it('renders gallery and slider', () => {
     const gallery = render(blockNode({ type: 'gallery', _id: 'ga1', columns: 2, images: ['/1.jpg', '/2.jpg'] })!)
     expect(gallery).toContain('gallery gallery-cols-2')
     expect((gallery.match(/gallery-item/g) || []).length).toBe(2)

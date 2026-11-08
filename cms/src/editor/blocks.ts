@@ -60,10 +60,6 @@ export const BLOCKS: Record<string, BlockMeta> = {
     { key: 'bgColor', label: '背景颜色', control: 'color' },
     { key: 'variant', label: '卡片样式', control: 'select', options: [{ label: '标准', value: 'default' }, { label: '紧凑', value: 'compact' }] },
   ] },
-  button: { type: 'button', label: '按钮', defaults: () => ({ type: 'button', label: '', link: '' }), fields: [
-    { key: 'label', label: '文字', control: 'text' }, { key: 'link', label: '链接', control: 'pageLink' },
-    { key: 'style', label: '样式', control: 'select', options: [{ label: '实心', value: 'primary' }, { label: '描边', value: 'outline' }] },
-  ] },
   richtext: { type: 'richtext', label: '富文本', defaults: () => ({ type: 'richtext', html: '' }), fields: [
     { key: 'content', label: '正文', control: 'richtext' },
   ] },
@@ -195,8 +191,6 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
         titleColor: '#8A0E4B',
         descColor: '#000000',
       }
-    case 'button':
-      return { ...base, label: '按钮' }
     case 'richtext':
       return { ...base, html: '<p>在这里编辑富文本内容。</p>' }
     case 'gallery':
@@ -224,7 +218,7 @@ export const LAYOUT_TYPES = ['section', 'grid', 'gridRow', 'gridCell', 'hscroll'
 /** 分栏：版面级内容。 */
 export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'entries', 'zigzag', 'steps', 'iconList', 'hscroll', 'stack']
 /** 网格：卡片/文本级内容。 */
-export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'image', 'imageText', 'iconCard', 'button', 'stack', 'steps']
+export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'image', 'imageText', 'iconCard', 'stack', 'steps']
 
 export function isLayout(type: Block['type']): boolean {
   return (LAYOUT_TYPES as readonly string[]).includes(type)
@@ -237,7 +231,7 @@ export function allowedChildTypes(parent: Block['type'], layout?: string): Block
   if (parent === 'gridRow') return ['gridCell']
   if (parent === 'gridCell') return [...GRID_CHILD_TYPES]
   if (parent === 'hscroll') return ['imageText']
-  if (parent === 'stack') return ['heading', 'image', 'imageText', 'iconCard', 'button', 'gallery', 'richtext']
+  if (parent === 'stack') return ['heading', 'image', 'imageText', 'iconCard', 'gallery', 'richtext']
   return []
 }
 
@@ -248,7 +242,6 @@ export function blockSummary(b: Block): string {
     case 'image': return b.altText || '图片'
     case 'imageText': return b.title || '图文卡片'
     case 'iconCard': return b.title || '图标卡片'
-    case 'button': return b.label || '按钮'
     case 'gallery': return `图集 · ${b.images.length} 张`
     case 'slider': return `轮播 · ${b.images.length} 张`
     case 'grid': return `网格 · ${b.layout === 'rows' ? '按行' : `${b.columns} 列`}`

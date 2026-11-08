@@ -127,12 +127,6 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       if (b.iconSize !== undefined) out.iconSize = b.iconSize
       if (b.variant !== undefined) out.variant = b.variant
       break
-    case 'button':
-      out.label = b.label
-      writeLink(out, b)
-      if (b.style !== undefined) out.style = b.style
-      if (b.padding && b.padding > 0) out.padding = b.padding
-      break
     case 'richtext':
       out.content = b.content ?? raw?.content ?? null
       if (b.padding && b.padding > 0) out.padding = b.padding

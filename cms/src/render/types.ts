@@ -98,20 +98,6 @@ export interface ImageTextBlock extends BlockBase {
   padding?: number
 }
 
-export interface ButtonBlock extends BlockBase {
-  type: 'button'
-  label: string
-  link: string
-  linkType?: LinkType
-  internalPageId?: string | number
-  internalRoute?: string
-  externalUrl?: string
-  caseItemId?: string | number
-  caseRoute?: string
-  style?: 'primary' | 'outline'
-  padding?: number
-}
-
 export interface RichTextBlock extends BlockBase {
   type: 'richtext'
   /**
@@ -239,7 +225,6 @@ export type Block =
   | GridCellBlock
   | ImageBlock
   | ImageTextBlock
-  | ButtonBlock
   | RichTextBlock
   | GalleryBlock
   | SliderBlock

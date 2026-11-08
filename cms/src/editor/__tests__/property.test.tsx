@@ -66,7 +66,7 @@ describe('PropertyPanel', () => {
   it('offers grid-appropriate components', () => {
     const grid: Block = { type: 'grid', _id: 'g1', columns: 3, children: [] }
     render(<PropertyPanel block={grid} onChange={() => {}} />)
-    for (const label of ['标题', '图片', '图文卡片', '图标卡片', '按钮']) {
+    for (const label of ['标题', '图片', '图文卡片', '图标卡片']) {
       expect(screen.getByTitle(`添加${label}`)).toBeTruthy()
     }
     expect(screen.queryByTitle('添加文本')).toBeNull()

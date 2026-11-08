@@ -1,7 +1,7 @@
 import { Fragment, type CSSProperties } from 'react'
 import { safeUrl } from '../render/primitives'
 import type {
-  BannerBlock, Block, ButtonBlock, EntriesBlock, GalleryBlock, GridBlock, GridCellBlock, GridRowBlock,
+  BannerBlock, Block, EntriesBlock, GalleryBlock, GridBlock, GridCellBlock, GridRowBlock,
   HeadingBlock, IconCardBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock,
   HscrollBlock, RichTextBlock, SectionBlock, SliderBlock, StackBlock, StepsBlock, ZigzagBlock,
 } from '../render/types'
@@ -348,23 +348,6 @@ export function IconCardView({ b, editor = false }: { b: IconCardBlock; editor?:
   )
 }
 
-export function ButtonView({ b, editor = false }: { b: ButtonBlock; editor?: boolean }) {
-  if (editor && !b.label) {
-    return <EmptyEditorBlock b={b} label="按钮" tip="在右侧填写文字" variant="pill" />
-  }
-  const href = safeUrl(b.link)
-  const style = b.style === 'outline' ? 'outline' : 'primary'
-  return (
-    <div className="container" data-bid={b._id}>
-      <div className="button-block" style={padStyle(b.padding)}>
-        {href
-          ? <a className={`btn btn--${style}`} href={href} data-field="label">{b.label}</a>
-          : <span className={`btn btn--${style}`} data-field="label">{b.label}</span>}
-      </div>
-    </div>
-  )
-}
-
 export function RichTextView({ b, editor = false }: { b: RichTextBlock; editor?: boolean }) {
   const live = editor && !!b.content && typeof b.content === 'object'
   const html = live ? lexicalToHtml(b.content) : b.html
@@ -602,7 +585,6 @@ export function blockNode(b: Block, editor = false): React.ReactNode {
     case 'image': return <ImageView b={b} editor={editor} />
     case 'imageText': return <ImageTextView b={b} editor={editor} />
     case 'iconCard': return <IconCardView b={b} editor={editor} />
-    case 'button': return <ButtonView b={b} editor={editor} />
     case 'richtext': return <RichTextView b={b} editor={editor} />
     case 'gallery': return <GalleryView b={b} editor={editor} />
     case 'slider': return <SliderView b={b} editor={editor} />

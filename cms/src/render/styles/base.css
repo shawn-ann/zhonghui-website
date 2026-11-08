@@ -323,9 +323,6 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 }
 .image-text p { font-size: 14px; color: var(--sub-color, var(--gray-blue)); margin-top: 6px; }
 .it-link { display:block; color: inherit; }
-.btn { display:inline-block; padding:12px 28px; border-radius:8px; font-weight:600; }
-.btn--primary { background: var(--accent); color:#fff; }
-.btn--outline { border:2px solid var(--accent); color: var(--accent); }
 .gallery { display:grid; gap:16px; }
 .gallery-cols-1 { grid-template-columns: 1fr; }
 .gallery-cols-2 { grid-template-columns: repeat(2,1fr); }

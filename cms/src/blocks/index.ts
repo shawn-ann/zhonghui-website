@@ -2,7 +2,6 @@ import type { Block } from 'payload'
 import { BannerBlock } from './Banner'
 import { ImageBlock } from './Image'
 import { ImageTextBlock } from './ImageText'
-import { ButtonBlock } from './Button'
 import { RichTextBlock } from './RichText'
 import { GalleryBlock } from './Gallery'
 import { SliderBlock } from './Slider'
@@ -34,7 +33,7 @@ export const pageBlocks: Block[] = [
   BannerBlock,
   ImageBlock,
   ImageTextBlock,
-  ButtonBlock,
+ 
   RichTextBlock,
   GalleryBlock,
   SliderBlock,

@@ -1,7 +1,6 @@
 import type { Block } from 'payload'
 import { ImageBlock } from './Image'
 import { ImageTextBlock } from './ImageText'
-import { ButtonBlock } from './Button'
 import { HeadingBlock } from './Heading'
 import { IconCardBlock } from './IconCard'
 import { StackBlock } from './Stack'
@@ -12,7 +11,7 @@ export const gridContent: Block[] = [
   HeadingBlock,
   ImageBlock,
   ImageTextBlock,
-  ButtonBlock,
+ 
   IconCardBlock,
   StackBlock,
   StepsBlock,

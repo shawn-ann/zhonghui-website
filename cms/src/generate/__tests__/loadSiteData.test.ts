@@ -218,17 +218,12 @@ describe('mapBlock', () => {
     expect(b.type).toBe('grid')
     expect(b.children[0].type).toBe('heading')
   })
-  it('resolves page links for image and button', () => {
+  it('resolves page links for image', () => {
     const image = mapBlock({
       blockType: 'image', media: { url: '/a.jpg' },
       linkType: 'internal', internalPage: { id: 7, route: '/contact/' },
     }, resolve) as any
     expect(image).toMatchObject({ link: '/contact/', linkType: 'internal', internalPageId: 7, internalRoute: '/contact/' })
-
-    const button = mapBlock({
-      blockType: 'button', label: '去', linkType: 'external', externalUrl: 'https://example.com',
-    }, resolve) as any
-    expect(button).toMatchObject({ link: 'https://example.com', linkType: 'external' })
   })
 
   it('maps gallery images to urls', () => {
