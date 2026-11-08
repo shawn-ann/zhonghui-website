@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth, useConfig } from '@payloadcms/ui'
 import { AdminIcon, type AdminIconName } from './icons'
+import BuildStatusLine from './BuildStatusLine'
 
 const SIDEBAR_KEY = 'zhonghui.admin.sidebar'
 
@@ -185,6 +186,7 @@ export default function AdminNav() {
       </nav>
 
       <div className="zc-sidebar-foot">
+        <BuildStatusLine />
         <a className="zc-foot-link" href={publicSiteUrl} rel="noreferrer" target="_blank" title="查看网站">
           <AdminIcon name="external" />
           <span className="zc-nav-text">查看网站</span>

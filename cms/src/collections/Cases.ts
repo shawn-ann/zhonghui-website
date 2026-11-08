@@ -3,6 +3,8 @@ import { validateCaseSlug } from './caseSlug'
 import { categorySlugOf, upsertRedirect } from './redirectHooks'
 import { casePath } from '../generate/redirects'
 import { resolvePublishedAt } from './publishedAt'
+import { scheduleRebuild } from '../build/scheduler'
+import { shouldRebuildPublishedChange } from '../build/triggers'
 
 export const Cases: CollectionConfig = {
   slug: 'cases',
@@ -51,6 +53,12 @@ export const Cases: CollectionConfig = {
         return { ...data, publishedPath: nextPath }
       },
     ],
+    afterChange: [({ doc, previousDoc, operation }: any) => {
+      if (shouldRebuildPublishedChange(operation, doc, previousDoc)) scheduleRebuild()
+    }],
+    afterDelete: [({ doc }: any) => {
+      if (shouldRebuildPublishedChange('delete', doc)) scheduleRebuild()
+    }],
   },
   fields: [
     { name: 'title', type: 'text', required: true, label: '文章标题', admin: { placeholder: '输入文章标题' } },

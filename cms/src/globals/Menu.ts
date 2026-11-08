@@ -1,4 +1,5 @@
 import type { Field, GlobalConfig } from 'payload'
+import { scheduleRebuild } from '../build/scheduler'
 
 const itemFields = (): Field[] => [
   { name: 'label', type: 'text', required: true, label: '名称' },
@@ -46,6 +47,9 @@ export const Menu: GlobalConfig = {
         edit: { default: { Component: '/components/MenuEditorView' } },
       },
     },
+  },
+  hooks: {
+    afterChange: [() => scheduleRebuild()],
   },
   fields: [
     {

@@ -30,6 +30,13 @@ python3 -m http.server 8321 --bind 127.0.0.1
 - 验证用 Playwright（`opencode.json` 已配 `@playwright/mcp`）。**Playwright 会拦截 `file://`，必须走 http 服务。**
 - 改完 `index.html` 后刷新页面；若样式未更新，用带随机参数的 URL（如 `?v=2`）强制重载。
 
+## 发布与自动构建
+
+- 保存已发布页面/文章、分类、菜单或站点设置后，后台会在约 4 秒防抖后**自动重建**静态站；侧栏底部显示发布状态，可点「发布」手动兜底。
+- 草稿保存不触发重建（静态站只包含已发布内容）。
+- 批量脚本修改数据时设置 `DISABLE_AUTO_REBUILD=1`，避免触发构建。
+- 修改区块/渲染器代码后需 `npm run build:generator` 并重启 builder 容器，构建服务才会加载新代码。
+
 ## 架构约定（务必遵循）
 
 - **配置驱动**：页面由 `pageConfig.blocks` 数组驱动，每块 `{ type, data, options }`。

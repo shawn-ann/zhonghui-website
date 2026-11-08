@@ -14,6 +14,7 @@ import { CaseRedirects } from './collections/CaseRedirects'
 import { Menu } from './globals/Menu'
 import { SiteSettings } from './globals/SiteSettings'
 import { getBuildStatus, startBuild } from './build/manager'
+import { getRebuildSchedulerState, resetPendingRebuild } from './build/scheduler'
 
 const srcDir = path.resolve(process.cwd(), 'src')
 
@@ -60,7 +61,7 @@ export default buildConfig({
       handler: async (req) => {
         const { user } = await req.payload.auth({ headers: req.headers })
         if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
-        return Response.json(await getBuildStatus())
+        return Response.json({ ...(await getBuildStatus()), ...getRebuildSchedulerState() })
       },
     },
     {
@@ -70,7 +71,8 @@ export default buildConfig({
         const { user } = await req.payload.auth({ headers: req.headers })
         if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
         const result = await startBuild()
-        return Response.json(result.status, { status: result.started ? 202 : 409 })
+        if (result.started) resetPendingRebuild()
+        return Response.json({ ...result.status, ...getRebuildSchedulerState() }, { status: result.started ? 202 : 409 })
       },
     },
   ],

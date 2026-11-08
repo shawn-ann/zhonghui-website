@@ -1,4 +1,5 @@
 import type { GlobalConfig } from 'payload'
+import { scheduleRebuild } from '../build/scheduler'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -10,6 +11,9 @@ export const SiteSettings: GlobalConfig = {
         edit: { default: { Component: '/components/SiteSettingsView' } },
       },
     },
+  },
+  hooks: {
+    afterChange: [() => scheduleRebuild()],
   },
   fields: [
     { name: 'logo', type: 'upload', relationTo: 'media', label: '导航 Logo' },

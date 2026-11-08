@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { validateCaseSlug } from './caseSlug'
 import { redirectCategorySlug } from './redirectHooks'
+import { scheduleRebuild } from '../build/scheduler'
 
 const slugField = {
   name: 'slug',
@@ -41,7 +42,9 @@ export const CaseCategories: CollectionConfig = {
         )
         return doc
       },
+      () => scheduleRebuild(),
     ],
+    afterDelete: [() => scheduleRebuild()],
     beforeDelete: [
       async ({ id, req }) => {
         const linked = await req.payload.find({

@@ -1,4 +1,6 @@
 import 'dotenv/config'
+
+process.env.DISABLE_AUTO_REBUILD = '1'
 import path from 'path'
 import { getPayload } from 'payload'
 import config from '../src/payload.config'

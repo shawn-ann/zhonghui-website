@@ -378,6 +378,17 @@ html.admin-shell .nav {
 .zc-nav-item svg { flex: none; opacity: .8; }
 .zc-nav-item.is-active svg { opacity: 1; }
 
+.zc-build-status { display: flex; align-items: center; gap: 8px; margin: 0 12px 10px; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,.05); color: var(--zc-sidebar-text); font-size: 12px; }
+.zc-build-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--zc-sidebar-soft); flex: none; }
+.zc-build-status.is-pending .zc-build-dot { background: #e6a23c; }
+.zc-build-status.is-ok .zc-build-dot { background: #3fbf6f; }
+.zc-build-status.is-error .zc-build-dot { background: #ff5c5c; }
+.zc-build-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.zc-build-status button { border: 0; background: transparent; color: #fff; font-size: 11px; cursor: pointer; padding: 2px 6px; border-radius: 4px; }
+.zc-build-status button:hover { background: rgba(255,255,255,.12); }
+.zc-build-status button:disabled { opacity: .5; cursor: default; }
+html.admin-shell.zc-sidebar-collapsed .zc-build-status { display: none; }
+
 .zc-sidebar-foot { flex: none; padding: 10px; border-top: 1px solid rgba(255,255,255,.06); }
 
 .zc-foot-link,
@@ -476,7 +487,18 @@ html.admin-shell.zc-sidebar-collapsed .zc-nav-children { margin-left: 0; padding
 html.admin-shell.zc-sidebar-collapsed .zc-nav-text,
 html.admin-shell.zc-sidebar-collapsed .zc-account-name,
 html.admin-shell.zc-sidebar-collapsed .zc-account-chev { display: none; }
-html.admin-shell.zc-sidebar-collapsed .zc-sidebar-foot { padding: 10px 8px; }
+html.admin-shell.zc-sidebar-collapsed .zc-build-status { display: flex; align-items: center; gap: 8px; margin: 0 12px 10px; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,.05); color: var(--zc-sidebar-text); font-size: 12px; }
+.zc-build-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--zc-sidebar-soft); flex: none; }
+.zc-build-status.is-pending .zc-build-dot { background: #e6a23c; }
+.zc-build-status.is-ok .zc-build-dot { background: #3fbf6f; }
+.zc-build-status.is-error .zc-build-dot { background: #ff5c5c; }
+.zc-build-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.zc-build-status button { border: 0; background: transparent; color: #fff; font-size: 11px; cursor: pointer; padding: 2px 6px; border-radius: 4px; }
+.zc-build-status button:hover { background: rgba(255,255,255,.12); }
+.zc-build-status button:disabled { opacity: .5; cursor: default; }
+html.admin-shell.zc-sidebar-collapsed .zc-build-status { display: none; }
+
+.zc-sidebar-foot { padding: 10px 8px; }
 html.admin-shell.zc-sidebar-collapsed .zc-foot-link,
 html.admin-shell.zc-sidebar-collapsed .zc-account { justify-content: center; padding: 0; }
 html.admin-shell.zc-sidebar-collapsed .zc-account { height: 38px; }

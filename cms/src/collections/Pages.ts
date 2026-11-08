@@ -1,4 +1,6 @@
 import type { CollectionConfig } from 'payload'
+import { scheduleRebuild } from '../build/scheduler'
+import { shouldRebuildPublishedChange } from '../build/triggers'
 import { pageBlocks } from '../blocks'
 
 export const Pages: CollectionConfig = {
@@ -16,6 +18,14 @@ export const Pages: CollectionConfig = {
         },
       },
     },
+  },
+  hooks: {
+    afterChange: [({ doc, previousDoc, operation }: any) => {
+      if (shouldRebuildPublishedChange(operation, doc, previousDoc)) scheduleRebuild()
+    }],
+    afterDelete: [({ doc }: any) => {
+      if (shouldRebuildPublishedChange('delete', doc)) scheduleRebuild()
+    }],
   },
   fields: [
     { name: 'title', type: 'text', required: true },
