@@ -35,6 +35,7 @@ export default function PagesListView() {
   const [modal, setModal] = useState<ModalState>(null)
   const [saving, setSaving] = useState(false)
   const [rebuilding, setRebuilding] = useState(false)
+  const [publishingId, setPublishingId] = useState<number | string | null>(null)
   const [toast, setToast] = useState<{ kind: 'success' | 'error'; text: string } | null>(null)
 
   const notify = (kind: 'success' | 'error', text: string) => {
@@ -148,6 +149,36 @@ export default function PagesListView() {
     }
   }
 
+  const publishPage = async (page: PageRow) => {
+    if (publishingId != null) return
+    if (!window.confirm(`确定发布页面「${page.title}」？`)) return
+    setPublishingId(page.id)
+    try {
+      const sourceRes = await fetch(`/api/pages/${page.id}?draft=true&depth=0`, { credentials: 'include' })
+      if (!sourceRes.ok) throw new Error(await errorDetail(sourceRes, '读取页面失败'))
+      const data = await sourceRes.json()
+      const doc = data.doc ?? data
+      const res = await fetch(`/api/pages/${page.id}`, {
+        method: 'PATCH',
+        headers: { 'content-type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          title: doc.title,
+          route: doc.route,
+          blocks: doc.blocks ?? [],
+          _status: 'published',
+        }),
+      })
+      if (!res.ok) throw new Error(await errorDetail(res, '发布失败'))
+      await rebuildSite()
+      await load()
+    } catch (e) {
+      notify('error', e instanceof Error ? e.message : '发布失败')
+    } finally {
+      setPublishingId(null)
+    }
+  }
+
   const removePage = async (page: PageRow) => {
     if (!window.confirm(`确定删除页面「${page.title}」？`)) return
     try {
@@ -210,6 +241,9 @@ export default function PagesListView() {
                 <td className="pl-actions">
                   <button type="button" onClick={() => setModal({ mode: 'edit', page, title: page.title, route: page.route })}>编辑</button>
                   <a href={`/admin/collections/pages/${page.id}`}>配置</a>
+                  <button type="button" disabled={publishingId === page.id} onClick={() => void publishPage(page)}>
+                    {publishingId === page.id ? '发布中…' : '发布'}
+                  </button>
                   <button type="button" onClick={() => setModal({
                     mode: 'copy',
                     page,
