@@ -54,8 +54,8 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
     </div>
   ),
   imageText: (
-    <div style={{ height: 44, padding: 4 }}>
-      <div style={{ height: '100%', background: '#fff', border: `1px solid ${BORDER}`, borderRadius: 4, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ height: 44, padding: 4, display: 'flex', justifyContent: 'center' }}>
+      <div style={{ height: '100%', width: '64%', background: '#fff', border: `1px solid ${BORDER}`, borderRadius: 4, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         <div style={{ height: '54%', background: 'linear-gradient(160deg,#f1dfe7,#dfc3d2)' }} />
         <div style={{ padding: '3px 5px', display: 'flex', flexDirection: 'column', gap: 3 }}>
           <span style={bar('55%', DEEP, 4)} />
@@ -189,8 +189,8 @@ const THUMBS: Record<Block['type'], React.ReactNode> = {
     </div>
   ),
   image: (
-    <div style={{ height: 44, padding: 5 }}>
-      <div style={{ ...pic(), height: '100%', borderRadius: 4 }} />
+    <div style={{ height: 44, padding: 5, display: 'flex', justifyContent: 'center' }}>
+      <div style={{ ...pic(), height: '100%', width: '64%', borderRadius: 4 }} />
     </div>
   ),
   richtext: (
