@@ -18,6 +18,7 @@ describe('RichTextControl inline mode', () => {
     render(<RichTextControl inline label="正文" value={null} onChange={() => {}} />)
     expect(document.querySelector('.rt-toolbar')).toBeTruthy()
     expect(document.querySelector('.rt-content')).toBeTruthy()
+    expect(document.querySelector('.rt-color input')).toBeTruthy()
     expect(document.querySelector('.rt-open')).toBeNull()
     expect(document.querySelector('.rt-modal')).toBeNull()
   })

@@ -335,13 +335,6 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .gallery-cols-4 { grid-template-columns: repeat(4,1fr); }
 .gallery-item img { width:100%; aspect-ratio:4 / 3; object-fit:cover; border-radius:10px; display:block; }
 .richtext { font-size:16px; color: var(--dark-text); line-height:1.9; }
-.richtext.has-color,
-.richtext.has-color p,
-.richtext.has-color h2,
-.richtext.has-color h3,
-.richtext.has-color li,
-.richtext.has-color blockquote,
-.richtext.has-color strong { color: var(--rt-color); }
 .richtext h2 { font-size:28px; color: var(--deep-blue); margin:24px 0 12px; }
 .richtext h3 { font-size:22px; color: var(--deep-blue); margin:20px 0 10px; }
 .richtext p { margin: 12px 0; }

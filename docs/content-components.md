@@ -354,7 +354,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 ### 5.16 其它
 
 - `button`：`label`、`linkType`/`internalPage`/`externalUrl`、`style`
-- `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/单图/图集节点（可配置 1–4 列）；`textColor` 可统一设置标题与正文颜色；历史 `padding` 保留兼容
+- `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/单图/图集节点（可配置 1–4 列）；编辑器工具栏支持文字颜色（内联样式）；历史 `padding` 保留兼容
 - `gallery`：`images`、`columns`；历史 `padding` 保留兼容
 - `slider`：`images`
 - `gridInner`：历史兼容，编辑器不提供；序列化仍保留

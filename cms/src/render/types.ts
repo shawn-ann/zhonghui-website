@@ -127,8 +127,6 @@ export interface RichTextBlock extends BlockBase {
   html: string
   /** Lexical editor state used by the visual editor. */
   content?: unknown
-  /** 可选文字颜色（标题和正文统一） */
-  textColor?: string
   padding?: number
 }
 

@@ -145,7 +145,6 @@ function serializeBlock(b: Block, urlToId: Map<string, MediaId>): any {
       break
     case 'richtext':
       out.content = b.content ?? raw?.content ?? null
-      if (b.textColor !== undefined) out.textColor = b.textColor
       if (b.padding && b.padding > 0) out.padding = b.padding
       break
     case 'section':

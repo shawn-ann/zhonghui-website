@@ -393,15 +393,11 @@ export function RichTextView({ b, editor = false }: { b: RichTextBlock; editor?:
   if (editor && richTextEmpty(html)) {
     return <EmptyEditorBlock b={b} label="富文本" tip="在右侧编辑内容" variant="wide" />
   }
-  const rtStyle = {
-    ...(b.textColor ? { '--rt-color': b.textColor } as CSSProperties : {}),
-    ...(padStyle(b.padding) || {}),
-  }
   return (
     <div className="container" data-bid={b._id}>
       {live
-        ? <div className={`richtext${b.textColor ? ' has-color' : ''}`} style={rtStyle}><LexicalContent data={b.content} /></div>
-        : <div className={`richtext${b.textColor ? ' has-color' : ''}`} style={rtStyle} dangerouslySetInnerHTML={{ __html: html || '' }} />}
+        ? <div className="richtext" style={padStyle(b.padding)}><LexicalContent data={b.content} /></div>
+        : <div className="richtext" style={padStyle(b.padding)} dangerouslySetInnerHTML={{ __html: html || '' }} />}
     </div>
   )
 }

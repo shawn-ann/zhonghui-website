@@ -11,7 +11,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { HeadingNode, QuoteNode, $createHeadingNode } from '@lexical/rich-text'
 import { ListNode, ListItemNode, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from '@lexical/list'
 import { LinkNode, AutoLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
-import { $setBlocksType } from '@lexical/selection'
+import { $patchStyleText, $setBlocksType } from '@lexical/selection'
 import { $createParagraphNode, $getNodeByKey, $getSelection, $isElementNode, $isRangeSelection, FORMAT_TEXT_COMMAND, UNDO_COMMAND, REDO_COMMAND } from 'lexical'
 import { ImageRowNode, $insertImageRow } from './ImageRowNode'
 import { ImageNode, $insertImage } from './ImageNode'
@@ -45,6 +45,14 @@ function Toolbar() {
     }, 50)
   }
 
+  const applyColor = (color: string | null) => {
+    editor.update(() => {
+      const selection = $getSelection()
+      if (!$isRangeSelection(selection)) return
+      $patchStyleText(selection, { color })
+    })
+  }
+
   const link = () => {
     const url = window.prompt('链接地址（留空取消）')
     if (url !== null) editor.dispatchCommand(TOGGLE_LINK_COMMAND, url || null)
@@ -56,6 +64,10 @@ function Toolbar() {
       <button type="button" onClick={() => format('bold')}><b>B</b></button>
       <button type="button" onClick={() => format('italic')}><i>I</i></button>
       <button type="button" onClick={() => format('underline')}><u>U</u></button>
+      <label className="rt-color" title="文字颜色">
+        <input type="color" defaultValue="#E60039" onChange={(e) => applyColor(e.target.value)} />
+      </label>
+      <button type="button" onClick={() => applyColor(null)} title="清除文字颜色">默认色</button>
       <span className="rt-divider" />
       <button type="button" onClick={() => block('h2')}>H2</button>
       <button type="button" onClick={() => block('h3')}>H3</button>

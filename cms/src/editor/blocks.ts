@@ -75,7 +75,6 @@ export const BLOCKS: Record<Block['type'], BlockMeta> = {
   ] },
   richtext: { type: 'richtext', label: '富文本', defaults: () => ({ type: 'richtext', html: '' }), fields: [
     { key: 'content', label: '正文', control: 'richtext' },
-    { key: 'textColor', label: '文字颜色', control: 'textColor' },
   ] },
   gallery: { type: 'gallery', label: '图集', defaults: () => ({ type: 'gallery', images: [] }), fields: [
     { key: 'columns', label: '列数', control: 'number' },

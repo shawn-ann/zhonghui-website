@@ -257,7 +257,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
     case 'slider':
       return { type: 'slider', images: arr<Record<string, any>>(raw.images).map((i) => resolveMedia(i.image)).filter(Boolean), bg }
     case 'richtext':
-      return { type: 'richtext', html: lexicalToHtml(raw.content), content: raw.content || undefined, textColor: raw.textColor || undefined, padding: raw.padding || undefined, bg, alt }
+      return { type: 'richtext', html: lexicalToHtml(raw.content), content: raw.content || undefined, padding: raw.padding || undefined, bg, alt }
     default:
       return null
   }

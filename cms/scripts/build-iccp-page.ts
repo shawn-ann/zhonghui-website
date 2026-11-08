@@ -27,15 +27,16 @@ async function ensureMedia(filename: string, alt: string): Promise<{ id: number 
   return { id: doc.id, url: doc.url || `/api/media/file/${filename}` }
 }
 
-const textNode = (text: string) => ({
-  detail: 0, format: 0, mode: 'normal', style: '', text, type: 'text', version: 1,
+const WHITE = 'color: #FFFFFF'
+const textNode = (text: string, style = '') => ({
+  detail: 0, format: 0, mode: 'normal', style, text, type: 'text', version: 1,
 })
-const paragraph = (text: string) => ({
-  children: [textNode(text)], direction: 'ltr', format: '', indent: 0,
+const paragraph = (text: string, style = '') => ({
+  children: [textNode(text, style)], direction: 'ltr', format: '', indent: 0,
   type: 'paragraph', version: 1, textFormat: 0,
 })
-const heading = (tag: 'h2' | 'h3', text: string) => ({
-  children: [textNode(text)], direction: 'ltr', format: '', indent: 0,
+const heading = (tag: 'h2' | 'h3', text: string, style = '') => ({
+  children: [textNode(text, style)], direction: 'ltr', format: '', indent: 0,
   type: 'heading', version: 1, tag,
 })
 const listItem = (text: string) => ({
@@ -101,12 +102,11 @@ const intro = {
         gap: 'sm',
         children: [{
           blockType: 'richtext',
-          textColor: '#FFFFFF',
           content: richText([
-            heading('h3', '项目介绍'),
-            paragraph('美国夏令营辅导员项目是美国国务院制定的交流访问项目。'),
-            paragraph('考虑到大多数在读生或刚毕业学生经济能力有限，营地辅导员项目从学生角度出发，每年为世界各地上万名符合条件的年轻人提供在营地工作的机会及相关能力培训。'),
-            paragraph('在获得收入、获得宝贵的海外工作经验与培训经历的同时，还为语言能力及综合素质的提升创造了机会。工作结束后，还可畅游美国整整一个月！'),
+            heading('h3', '项目介绍', WHITE),
+            paragraph('美国夏令营辅导员项目是美国国务院制定的交流访问项目。', WHITE),
+            paragraph('考虑到大多数在读生或刚毕业学生经济能力有限，营地辅导员项目从学生角度出发，每年为世界各地上万名符合条件的年轻人提供在营地工作的机会及相关能力培训。', WHITE),
+            paragraph('在获得收入、获得宝贵的海外工作经验与培训经历的同时，还为语言能力及综合素质的提升创造了机会。工作结束后，还可畅游美国整整一个月！', WHITE),
           ]),
         }],
       },

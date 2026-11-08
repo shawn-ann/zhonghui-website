@@ -674,10 +674,6 @@ export interface Page {
                                             };
                                             [k: string]: unknown;
                                           } | null;
-                                          /**
-                                           * 留空沿用主题色；示例 #FFFFFF
-                                           */
-                                          textColor?: string | null;
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -1127,10 +1123,6 @@ export interface Page {
                                                             };
                                                             [k: string]: unknown;
                                                           } | null;
-                                                          /**
-                                                           * 留空沿用主题色；示例 #FFFFFF
-                                                           */
-                                                          textColor?: string | null;
                                                           bg?: string | null;
                                                           alt?: boolean | null;
                                                           /**
@@ -1590,10 +1582,6 @@ export interface Page {
                                                       };
                                                       [k: string]: unknown;
                                                     } | null;
-                                                    /**
-                                                     * 留空沿用主题色；示例 #FFFFFF
-                                                     */
-                                                    textColor?: string | null;
                                                     bg?: string | null;
                                                     alt?: boolean | null;
                                                     /**
@@ -1728,10 +1716,6 @@ export interface Page {
                         };
                         [k: string]: unknown;
                       } | null;
-                      /**
-                       * 留空沿用主题色；示例 #FFFFFF
-                       */
-                      textColor?: string | null;
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -2077,10 +2061,6 @@ export interface Page {
                                   };
                                   [k: string]: unknown;
                                 } | null;
-                                /**
-                                 * 留空沿用主题色；示例 #FFFFFF
-                                 */
-                                textColor?: string | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -2535,10 +2515,6 @@ export interface Page {
                                   };
                                   [k: string]: unknown;
                                 } | null;
-                                /**
-                                 * 留空沿用主题色；示例 #FFFFFF
-                                 */
-                                textColor?: string | null;
                                 bg?: string | null;
                                 alt?: boolean | null;
                                 /**
@@ -2981,10 +2957,6 @@ export interface Page {
                                                   };
                                                   [k: string]: unknown;
                                                 } | null;
-                                                /**
-                                                 * 留空沿用主题色；示例 #FFFFFF
-                                                 */
-                                                textColor?: string | null;
                                                 bg?: string | null;
                                                 alt?: boolean | null;
                                                 /**
@@ -3437,10 +3409,6 @@ export interface Page {
                                             };
                                             [k: string]: unknown;
                                           } | null;
-                                          /**
-                                           * 留空沿用主题色；示例 #FFFFFF
-                                           */
-                                          textColor?: string | null;
                                           bg?: string | null;
                                           alt?: boolean | null;
                                           /**
@@ -3666,10 +3634,6 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
-            /**
-             * 留空沿用主题色；示例 #FFFFFF
-             */
-            textColor?: string | null;
             bg?: string | null;
             alt?: boolean | null;
             /**
@@ -4085,10 +4049,6 @@ export interface Page {
                         };
                         [k: string]: unknown;
                       } | null;
-                      /**
-                       * 留空沿用主题色；示例 #FFFFFF
-                       */
-                      textColor?: string | null;
                       bg?: string | null;
                       alt?: boolean | null;
                       /**
@@ -4618,7 +4578,6 @@ export interface PagesSelect<T extends boolean = true> {
                                               | T
                                               | {
                                                   content?: T;
-                                                  textColor?: T;
                                                   bg?: T;
                                                   alt?: T;
                                                   padding?: T;
@@ -4902,7 +4861,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                                       | T
                                                                       | {
                                                                           content?: T;
-                                                                          textColor?: T;
                                                                           bg?: T;
                                                                           alt?: T;
                                                                           padding?: T;
@@ -5190,7 +5148,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                           | T
                                                           | {
                                                               content?: T;
-                                                              textColor?: T;
                                                               bg?: T;
                                                               alt?: T;
                                                               padding?: T;
@@ -5283,7 +5240,6 @@ export interface PagesSelect<T extends boolean = true> {
                       | T
                       | {
                           content?: T;
-                          textColor?: T;
                           bg?: T;
                           alt?: T;
                           padding?: T;
@@ -5539,7 +5495,6 @@ export interface PagesSelect<T extends boolean = true> {
                                   | T
                                   | {
                                       content?: T;
-                                      textColor?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
@@ -5819,7 +5774,6 @@ export interface PagesSelect<T extends boolean = true> {
                                   | T
                                   | {
                                       content?: T;
-                                      textColor?: T;
                                       bg?: T;
                                       alt?: T;
                                       padding?: T;
@@ -6103,7 +6057,6 @@ export interface PagesSelect<T extends boolean = true> {
                                                           | T
                                                           | {
                                                               content?: T;
-                                                              textColor?: T;
                                                               bg?: T;
                                                               alt?: T;
                                                               padding?: T;
@@ -6391,7 +6344,6 @@ export interface PagesSelect<T extends boolean = true> {
                                               | T
                                               | {
                                                   content?: T;
-                                                  textColor?: T;
                                                   bg?: T;
                                                   alt?: T;
                                                   padding?: T;
@@ -6528,7 +6480,6 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               content?: T;
-              textColor?: T;
               bg?: T;
               alt?: T;
               padding?: T;
@@ -6834,7 +6785,6 @@ export interface PagesSelect<T extends boolean = true> {
                       | T
                       | {
                           content?: T;
-                          textColor?: T;
                           bg?: T;
                           alt?: T;
                           padding?: T;

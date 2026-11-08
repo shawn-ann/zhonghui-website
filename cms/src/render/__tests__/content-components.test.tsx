@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { blockNode } from '../../site/blocks'
 import { lexicalToHtml } from '../richText'
+import LexicalContent from '../../site/LexicalContent'
 import type { EntriesBlock, GridBlock, HscrollBlock, IconListBlock, ImageBlock, ImageTextBlock, InfoListBlock, StackBlock, StepsBlock, TextBlock, ZigzagBlock } from '../types'
 
 const render = (b: any) => renderToStaticMarkup(blockNode(b)!)
@@ -102,12 +103,21 @@ describe('content component extensions', () => {
     expect(html).toContain('aspect-ratio:16 / 9')
   })
 
-  it('applies a custom text color to rich text', () => {
-    const html = render({ type: 'richtext', _id: 'rt', html: '<p>x</p>', textColor: '#FFFFFF' })
-    expect(html).toContain('richtext has-color')
-    expect(html).toContain('--rt-color:#FFFFFF')
-    const plain = render({ type: 'richtext', _id: 'rt2', html: '<p>x</p>' })
-    expect(plain).not.toContain('has-color')
+  it('keeps inline text colors in rich text html and react rendering', () => {
+    const data = {
+      root: {
+        type: 'root', version: 1, direction: 'ltr', format: '', indent: 0,
+        children: [{
+          type: 'paragraph', version: 1, direction: 'ltr', format: '', indent: 0, textFormat: 0,
+          children: [{
+            type: 'text', version: 1, detail: 0, format: 0, mode: 'normal',
+            style: 'color: #FFFFFF', text: '白色文字', children: [],
+          }],
+        }],
+      },
+    }
+    expect(lexicalToHtml(data)).toContain('color: #FFFFFF')
+    expect(renderToStaticMarkup(<LexicalContent data={data} />)).toContain('color:#FFFFFF')
   })
 
   it('applies background and padding to the grid band', () => {

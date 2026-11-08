@@ -17,6 +17,20 @@ export function lexicalToHtml(data: unknown): string {
       data: data as never,
       converters: ({ defaultConverters }) => ({
         ...defaultConverters,
+        text: ({ node }) => {
+          const n = node as { text?: string; format?: number; style?: string }
+          let text = escapeAttr(String(n.text ?? ''))
+          const format = Number(n.format) || 0
+          if (format & 1) text = `<strong>${text}</strong>`
+          if (format & 2) text = `<em>${text}</em>`
+          if (format & 4) text = `<span style="text-decoration: line-through;">${text}</span>`
+          if (format & 8) text = `<span style="text-decoration: underline;">${text}</span>`
+          if (format & 16) text = `<code>${text}</code>`
+          if (format & 32) text = `<sub>${text}</sub>`
+          if (format & 64) text = `<sup>${text}</sup>`
+          if (n.style) text = `<span style="${escapeAttr(String(n.style))}">${text}</span>`
+          return text
+        },
         'rich-image': ({ node }) => {
           const src = String((node as { src?: string }).src || '')
           const alt = String((node as { alt?: string }).alt || '')

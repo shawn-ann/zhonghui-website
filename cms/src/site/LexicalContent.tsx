@@ -11,8 +11,23 @@ type LexicalNode = {
   children?: LexicalNode[]
   src?: string
   alt?: string
+  style?: string
   images?: Array<{ src?: string; alt?: string }>
   columns?: number
+}
+
+function styleFromCss(style?: string): React.CSSProperties | undefined {
+  if (!style) return undefined
+  const out: Record<string, string> = {}
+  for (const part of style.split(';')) {
+    const index = part.indexOf(':')
+    if (index <= 0) continue
+    const key = part.slice(0, index).trim()
+    const value = part.slice(index + 1).trim()
+    if (!key || !value) continue
+    out[key.replace(/-([a-z])/g, (_, char: string) => char.toUpperCase())] = value
+  }
+  return Object.keys(out).length ? (out as React.CSSProperties) : undefined
 }
 
 function text(node: LexicalNode, key: string): ReactNode {
@@ -23,6 +38,8 @@ function text(node: LexicalNode, key: string): ReactNode {
   if (format & 1) value = <strong>{value}</strong>
   if (format & 8) value = <u>{value}</u>
   if (format & 4) value = <s>{value}</s>
+  const style = styleFromCss(node.style)
+  if (style) value = <span style={style}>{value}</span>
   return <Fragment key={key}>{value}</Fragment>
 }
 
