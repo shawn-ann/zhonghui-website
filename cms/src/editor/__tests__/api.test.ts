@@ -28,10 +28,24 @@ describe('editor api', () => {
     expect(JSON.parse(fetchMock.mock.calls[0][1].body)._status).toBe('published')
   })
   it('listMedia fetches docs', async () => {
-    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ docs: [{ id: 7, url: '/m/a.jpg' }] }), { status: 200 }))
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ docs: [{ id: 7, url: '/m/a.jpg' }], hasNextPage: false }), { status: 200 }))
     vi.stubGlobal('fetch', fetchMock)
     const media = await listMedia()
     expect(media[0].url).toBe('/m/a.jpg')
+  })
+  it('listMedia follows pagination so every image is listed', async () => {
+    let call = 0
+    const fetchMock = vi.fn(async (_url: string) => {
+      call += 1
+      const body = call === 1
+        ? { docs: [{ id: 1, url: '/m/a.jpg' }], hasNextPage: true, nextPage: 2 }
+        : { docs: [{ id: 2, url: '/m/b.jpg' }], hasNextPage: false, nextPage: null }
+      return new Response(JSON.stringify(body), { status: 200 })
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    const media = await listMedia()
+    expect(media.map((m) => m.url)).toEqual(['/m/a.jpg', '/m/b.jpg'])
+    expect(fetchMock.mock.calls[1][0]).toContain('page=2')
   })
   it('docToEditorDoc maps payload block to editor model', () => {
     const doc = docToEditorDoc({

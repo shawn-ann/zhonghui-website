@@ -21,8 +21,17 @@ export async function publishPage(id: number | string, data: Partial<EditorDoc>)
 }
 export interface MediaItem { id: number | string; url?: string; alt?: string; filename?: string }
 export async function listMedia(): Promise<MediaItem[]> {
-  const data = await j(await fetch('/api/media?limit=100&depth=0', { credentials: 'include' }))
-  return data.docs as MediaItem[]
+  const all: MediaItem[] = []
+  let page = 1
+  for (;;) {
+    const data = await j(await fetch(`/api/media?limit=100&page=${page}&depth=0`, { credentials: 'include' }))
+    all.push(...((data.docs || []) as MediaItem[]))
+    if (!data.hasNextPage) break
+    const next = Number(data.nextPage ?? page + 1)
+    if (!Number.isFinite(next) || next <= page) break
+    page = next
+  }
+  return all
 }
 export interface BuildStatus {
   status: 'idle' | 'building' | 'success' | 'error'
