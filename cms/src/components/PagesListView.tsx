@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import './pages-list.css'
 import { AdminPageHeader } from './admin/AdminPageHeader'
 import { formatBeijingTime } from '../lib/datetime'
+import { normalizePageRoute, suggestCopyRoute, withoutBlockIds } from './pageCopy'
 
 interface PageRow {
   id: number | string
@@ -15,6 +16,7 @@ interface PageRow {
 type ModalState =
   | { mode: 'create'; title: string; route: string }
   | { mode: 'edit'; page: PageRow; title: string; route: string }
+  | { mode: 'copy'; page: PageRow; title: string; route: string }
   | null
 
 async function errorDetail(res: Response, fallback: string): Promise<string> {
@@ -25,13 +27,6 @@ async function errorDetail(res: Response, fallback: string): Promise<string> {
   if (nested?.message) return `${fallback}：${nested.path ? `${nested.path}：` : ''}${nested.message}`
   const detail = first?.message || first?.error || data?.message || data?.error
   return detail ? `${fallback}：${detail}` : `${fallback}：${res.status}`
-}
-
-function normalizeRoute(value: string): string {
-  const v = value.trim()
-  if (!v) return '/'
-  const clean = v.replace(/^\/+/, '').replace(/\/+$/, '')
-  return clean ? `/${clean}/` : '/'
 }
 
 export default function PagesListView() {
@@ -66,7 +61,7 @@ export default function PagesListView() {
   const saveModal = async () => {
     if (!modal || saving) return
     const title = modal.title.trim()
-    const route = normalizeRoute(modal.route)
+    const route = normalizePageRoute(modal.route)
     if (!title) { notify('error', '标题不能为空'); return }
     setSaving(true)
     try {
@@ -81,6 +76,32 @@ export default function PagesListView() {
         const data = await res.json()
         const id = data.doc?.id ?? data.id
         notify('success', '页面已创建')
+        setModal(null)
+        if (id) window.location.href = `/admin/collections/pages/${id}`
+        else await load()
+        return
+      }
+
+      if (modal.mode === 'copy') {
+        const sourceRes = await fetch(`/api/pages/${modal.page.id}?draft=true&depth=0`, { credentials: 'include' })
+        if (!sourceRes.ok) throw new Error(await errorDetail(sourceRes, '读取被复制页面失败'))
+        const sourceData = await sourceRes.json()
+        const source = sourceData.doc ?? sourceData
+        const res = await fetch('/api/pages', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            title,
+            route,
+            blocks: withoutBlockIds(source.blocks ?? []),
+            _status: 'draft',
+          }),
+        })
+        if (!res.ok) throw new Error(await errorDetail(res, '复制失败'))
+        const data = await res.json()
+        const id = data.doc?.id ?? data.id
+        notify('success', '页面已复制')
         setModal(null)
         if (id) window.location.href = `/admin/collections/pages/${id}`
         else await load()
@@ -189,6 +210,12 @@ export default function PagesListView() {
                 <td className="pl-actions">
                   <button type="button" onClick={() => setModal({ mode: 'edit', page, title: page.title, route: page.route })}>编辑</button>
                   <a href={`/admin/collections/pages/${page.id}`}>配置</a>
+                  <button type="button" onClick={() => setModal({
+                    mode: 'copy',
+                    page,
+                    title: `${page.title}（副本）`,
+                    route: suggestCopyRoute(page.route, pages),
+                  })}>复制</button>
                   <button type="button" className="pl-danger" onClick={() => removePage(page)}>删除</button>
                 </td>
               </tr>
@@ -203,9 +230,14 @@ export default function PagesListView() {
         <div className="pl-modal" onClick={() => !saving && setModal(null)}>
           <div className="pl-modal-body" onClick={(e) => e.stopPropagation()}>
             <div className="pl-modal-head">
-              <h2>{modal.mode === 'create' ? '新建页面' : '编辑页面信息'}</h2>
+              <h2>{modal.mode === 'create' ? '新建页面' : modal.mode === 'copy' ? '复制页面' : '编辑页面信息'}</h2>
               <button type="button" onClick={() => !saving && setModal(null)}>✕</button>
             </div>
+            {modal.mode === 'copy' ? (
+              <p className="pl-muted" style={{ margin: '0 0 4px' }}>
+                将完整复制「{modal.page.title}」的全部区块内容，新页面保存为草稿。
+              </p>
+            ) : null}
             <label className="pl-field">
               <span>标题</span>
               <input
