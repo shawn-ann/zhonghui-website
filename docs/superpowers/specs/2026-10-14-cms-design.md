@@ -261,8 +261,7 @@ Payload Admin 侧边栏，随数据模型生成：
    - 列表页        → dist/<route>/index.html + dist/<route>/page/N/index.html
    - 条目详情页    → dist/<ContentType>/<slug>/index.html
 4. 复制媒体到 dist/assets/，重写图片路径
-5. 产出 sitemap.xml / robots.txt
-6. 完成 → 静态文件即为线上站点
+5. 完成 → 静态文件即为线上站点
 ```
 
 - 触发方式：后台「发布站点」按钮调用 Node 生成器。站点小，**整站重建**即可（秒级）；后续可增量化。
@@ -277,7 +276,6 @@ dist/
 ├─ cases/index.html
 ├─ cases/page/2/index.html
 ├─ cases/xiaocao/index.html
-├─ sitemap.xml
 └─ assets/  (style.css, main.js, images/…)
 ```
 
@@ -323,7 +321,7 @@ dist/
 - **公开站点=纯静态**：无动态攻击面。
 - **后台与预览**：经 Nginx 反代，HTTPS；可加 **IP 白名单**、**登录限流**；`/admin` 可改为非默认路径。
 - **数据库**：PostgreSQL 仅监听本地，最小权限账号；连接密钥走环境变量。
-- **上传校验**：限制 MIME 与文件大小；**禁止上传 SVG**（防 XSS），或强制净化。
+- **上传校验**：限制 MIME 与文件大小；允许 `jpeg/png/webp/gif/svg`。SVG 通过 `<img>` 引用，脚本不会执行；仍应只上传可信来源的 SVG。
 - **响应头**：由 Nginx 统一设置安全头（HSTS、X-Content-Type-Options 等）。
 
 ---

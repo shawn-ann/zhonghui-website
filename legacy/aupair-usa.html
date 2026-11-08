@@ -111,7 +111,7 @@
     .icon-list-body p { font-size: 13.5px; color: var(--gray-blue); margin-top: 3px; line-height: 1.65; }
 
     /* ===== 页脚 ===== */
-    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
+    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('../img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
     .footer-grid { max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
     .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
     .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #f0a9c6; margin-top: 4px; }
@@ -169,7 +169,7 @@
   const pageConfig = {
     title: "美国互惠生",
     nav: {
-      logo: "img/pink_logo_with_text_1.jpg",
+      logo: "../img/pink_logo_with_text_1.jpg",
       langCurrent: "中文", langOther: "EN",
       items: [
         { label: "首页", link: "index.html" },
@@ -186,7 +186,7 @@
       ]
     },
     footer: {
-      logo: "img/footLogo.png",
+      logo: "../img/footLogo.png",
       info: [
         { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
         { label: "📞 电话：", text: "010-64159286" },
@@ -205,7 +205,7 @@
       // ① Banner（左文右图，与首页一致）
       { type: "banner",
         data: { headline: "美国互惠生", sub: "入住美国家庭 · 体验深度文化 · 提升口语" },
-        options: { image: "img/about-hero.jpg", pattern: "img/pattern-box-5.svg" } },
+        options: { image: "../img/about-hero.jpg", pattern: "../img/pattern-box-5.svg" } },
 
       // ② 项目待遇 BENEFITS
       { type: "feature-list",
@@ -224,7 +224,7 @@
             { label: "互惠生活保障", desc: "每个月可以参加由社区联络员组织的所有互惠生的聚会" },
             { label: "旅行时间", desc: "项目结束后可以在美国合法旅游 30 天" }
           ] },
-        options: { bg: "img/yinji-bg.jpg" } },
+        options: { bg: "../img/yinji-bg.jpg" } },
 
       // ③ 项目要求 REQUIREMENTS
       { type: "feature-list",

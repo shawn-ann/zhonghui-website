@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>联系我们 — 中惠文化</title>
+  <title>新西兰留学 — 中惠文化</title>
   <style>
     :root {
-      --deep-blue: #8A0E4B;      /* 标题主色：深玫 */
-      --bright-blue: #C2185B;    /* 链接/文字强调：深玫 */
-      --light-blue: #FFF1F6;     /* 浅玫瑰底 */
-      --gray-blue: #7C6B73;      /* 次要文字：暖玫灰 */
-      --dark-text: #5A4A52;      /* 正文：暖玫灰 */
+      --deep-blue: #8A0E4B;
+      --bright-blue: #C2185B;
+      --light-blue: #FFF1F6;
+      --gray-blue: #7C6B73;
+      --dark-text: #5A4A52;
       --white: #FFFFFF;
       --border: #F0E3EA;
-      --orange: #E60039;         /* 辅助强调色：品牌玫红 */
-      --accent: #E60039;         /* 图标/主强调：品牌玫红 */
+      --orange: #E60039;
+      --accent: #E60039;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -49,7 +49,7 @@
     }
     .nav-menu .caret { font-size: 10px; opacity: .8; }
     .nav-menu .dropdown {
-      position: absolute; top: 100%; left: -12px; min-width: 172px;
+      position: absolute; top: 100%; left: -12px; min-width: 190px;
       background: var(--white); border-radius: 0 0 8px 8px;
       box-shadow: 0 10px 24px rgba(138,14,75,0.18); overflow: hidden;
       opacity: 0; visibility: hidden; transform: translateY(8px);
@@ -78,75 +78,37 @@
     .banner-pattern { position: absolute; top: -45px; right: 10px; width: 80%; height: auto; display: block; z-index: 0; }
     .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; }
 
-    /* ===== 区块通用（背景交替：背景图 / 浅粉底 交替） ===== */
-    .section { padding: 72px 0; min-height: 600px; display: flex; flex-direction: column; justify-content: center; }
-    .section > .container { width: 100%; }
+    /* ===== 正文文章（浅玫瑰底 + 白卡） ===== */
+    .section { padding: 72px 0; }
     .section-alt { background: var(--light-blue); }
-    .section-title { text-align: center; margin-bottom: 36px; }
-    .section-title h2 { font-size: 30px; color: var(--deep-blue); font-weight: 700; }
-    .title-on-image h2 { color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
-
-    /* ===== 联系方式卡片 ===== */
-    .contact-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 8px 28px; box-shadow: 0 10px 30px rgba(138,14,75,0.10); }
-    .contact-row { display: flex; align-items: baseline; padding: 16px 0; border-bottom: 1px dashed var(--border); font-size: 15px; }
-    .contact-row:last-child { border-bottom: none; }
-    .contact-row .icon { margin-right: 12px; }
-    .contact-row .label { color: var(--gray-blue); width: 96px; flex-shrink: 0; }
-    .contact-row .value { color: var(--dark-text); font-weight: 500; }
-
-    /* ===== 社交媒体矩阵 ===== */
-    .social-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
-    .social-card {
-      background: var(--white); border: 1px solid var(--border); border-radius: 12px;
-      padding: 24px 12px; text-align: center; transition: transform .25s, box-shadow .25s;
-    }
-    .social-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(138,14,75,0.12); }
-    .social-logo {
-      width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 12px;
-      display: block; object-fit: cover;
-    }
-    .social-card .platform { font-size: 15px; color: var(--deep-blue); font-weight: 600; }
-    .social-card .account { font-size: 13px; color: var(--gray-blue); margin-top: 6px; }
-
-    /* ===== 二维码 ===== */
-    .qr-box-large { display: flex; gap: 40px; justify-content: center; }
-    .qr-large .qr {
-      width: 150px; height: 150px; background: var(--white); border: 1px solid var(--border);
-      border-radius: 10px; display: flex; align-items: center; justify-content: center;
-      color: var(--deep-blue); font-size: 14px; text-align: center; padding: 10px; margin-bottom: 10px;
-      box-shadow: 0 10px 30px rgba(138,14,75,0.10);
-    }
-    .qr-large p { font-size: 14px; color: #fff; text-align: center; text-shadow: 0 1px 6px rgba(0,0,0,0.35); }
-
-    /* ===== 温馨提示 ===== */
-    .notice-panel { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 6px; padding: 24px 30px; box-shadow: 0 6px 18px rgba(138,14,75,0.06); }
-    .notice-panel ol { margin-left: 20px; }
-    .notice-panel li { margin-bottom: 10px; font-size: 15px; color: var(--dark-text); }
-    .notice-panel li:last-child { margin-bottom: 0; }
+    .article { margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 40px 48px; box-shadow: 0 10px 30px rgba(138,14,75,0.06); }
+    .article h3 { font-size: 20px; color: var(--deep-blue); font-weight: 700; margin: 30px 0 12px; padding-left: 12px; border-left: 4px solid var(--accent); }
+    .article p { font-size: 15px; color: var(--dark-text); line-height: 1.9; margin-bottom: 10px; }
+    .article .img-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0; }
+    .article .img-row img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; display: block; }
 
     /* ===== 页脚 ===== */
-    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
+    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('../img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
     .footer-grid { max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
     .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
+    .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #f0a9c6; margin-top: 4px; }
     .footer-info p { font-size: 14px; margin-bottom: 12px; color: #ffd7e6; }
     .footer-info .label { color: #f0a9c6; margin-right: 8px; }
     .footer-qr { text-align: center; }
     .qr-box { display: flex; gap: 16px; justify-content: center; }
     .qr-item .qr { width: 92px; height: 92px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--deep-blue); font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px; }
-    .qr-item p { font-size: 13px; color: #ffd7e6; }
     .foot-contact { display: block; margin-top: 18px; text-align: left; color: #ffd7e6; font-size: 14px; text-decoration: none; }
     .foot-contact:hover { color: #ffffff; }
 
     @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .article { padding: 26px 22px; }
+      .article .img-row { grid-template-columns: 1fr 1fr; }
       .banner-grid { flex-direction: column; padding: 40px 0 60px; }
       .banner-text { justify-content: flex-start; padding-top: 0; }
       .banner-media { min-height: 0; }
       .banner-photo { position: static; width: 100%; margin-top: 24px; }
       .banner-pattern { display: none; }
-      .footer-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 700px) {
-      .social-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -158,15 +120,13 @@
 
   <script>
   /* =========================================================
-     CMS 配置化内容模型 —— 联系我们页
-     块组合：banner → contact-info → social → qr → notice
-     背景交替：banner 之下 背景图 / 浅粉底 交替（options.bg / options.alt）
+     CMS 配置化内容模型 —— 新西兰留学页
      ========================================================= */
 
   const pageConfig = {
-    title: "联系我们",
+    title: "新西兰留学",
     nav: {
-      logo: "img/pink_logo_with_text_1.jpg",
+      logo: "../img/pink_logo_with_text_1.jpg",
       langCurrent: "中文", langOther: "EN",
       items: [
         { label: "首页", link: "index.html" },
@@ -176,14 +136,14 @@
             { label: "SWT 赴美带薪实习", link: "project-iccp.html" },
             { label: "ITP 赴美专业实习", link: "project-iccp.html" },
             { label: "ICCP 赴美营地辅导员", link: "project-iccp.html" } ] },
-        { label: "海外留学", link: "study-abroad.html", children: [
+        { label: "海外留学", link: "study-abroad.html", active: true, children: [
             { label: "新西兰留学", link: "new-zealand.html" } ] },
         { label: "案例分享", link: "cases.html" },
-        { label: "联系我们", link: "contact.html", active: true }
+        { label: "联系我们", link: "contact.html" }
       ]
     },
     footer: {
-      logo: "img/footLogo.png",
+      logo: "../img/footLogo.png",
       info: [
         { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
         { label: "📞 电话：", text: "010-64159286" },
@@ -192,67 +152,45 @@
         { label: "🌐 英文官网：", text: "www.aupaircn.com" }
       ],
       qrcodes: [
-        { title: "公众号", text: "公众号\n二维码" },
-        { title: "咨询微信", text: "咨询微信\n二维码" },
-        { title: "视频号", text: "视频号\n二维码" }
-      ]
+        { title: "公众号",     text: "公众号\n二维码" },
+        { title: "咨询微信",   text: "咨询微信\n二维码" },
+        { title: "视频号",     text: "视频号\n二维码" }
+      ],
+      copyright: "Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号"
     },
     blocks: [
-      // ① Banner（左文右图，与首页一致）
+      // ① Banner（左文右图）
       { type: "banner",
-        data: { headline: "联系我们", sub: "欢迎随时咨询中惠文化 · 一对一专属服务" },
-        options: { image: "img/about-hero.jpg", pattern: "img/pattern-box-5.svg" } },
-      // ② 联系方式块（背景图）
-      { type: "contact-info",
-        data: { title: "联系方式",
-          items: [
-            { icon: "🌐", label: "中文官网", value: "www.chinaaupairs.com" },
-            { icon: "🌐", label: "英文官网", value: "www.aupaircn.com" },
-            { icon: "📍", label: "地址", value: "北京东城区绿景馨园东区12号楼" },
-            { icon: "📞", label: "电话", value: "010-64159286" },
-            { icon: "✉", label: "邮箱", value: "info@zhonghui.com" } ] },
-        options: { bg: "img/yinji-bg.jpg" } },
-      // ③ 社交媒体矩阵块（浅粉底）
-      { type: "social",
-        data: { title: "中惠官方账号",
-          items: [
-            { platform: "知乎", icon: "img/icon-zhihu.png", account: "中惠互惠生" },
-            { platform: "小红书", icon: "img/icon-xiaohongshu.png", account: "中惠互惠生" },
-            { platform: "Facebook", icon: "img/icon-facebook.png", account: "中惠文化" },
-            { platform: "抖音", icon: "img/icon-douyin.png", account: "中惠文化—互惠生中心" },
-            { platform: "哔哩哔哩", icon: "img/icon-bilibili.png", account: "中惠互惠生" } ] },
-        options: { alt: true } },
-      // ④ 二维码块（背景图）
-      { type: "qr",
-        data: { title: "扫码咨询",
-          items: [
-            { title: "公众号", text: "公众号\n二维码" },
-            { title: "咨询微信", text: "咨询微信\n二维码" } ] },
-        options: { bg: "img/yinji-bg.jpg" } },
-      // ⑤ 温馨提示块（浅粉底）
-      { type: "notice",
-        data: { title: "温馨提示",
-          items: [
-            "岗位匹配仅为咨询推荐服务，不保证获取录用 offer；",
-            "海外薪资、工作内容、排班由当地合作方确定，不承诺固定收益；",
-            "海外就业遵守当地法规，雇主与参与者可依法调整合作关系；",
-            "项目体验因人而异，成长收获取决于个人主动参与。" ] },
-        options: { alt: true } }
+        data: { headline: "新西兰留学", sub: "南太平洋优质教育 · 安全宜居" },
+        options: { image: "../img/about-hero.jpg", pattern: "../img/pattern-box-5.svg" } },
+
+      // ② 正文文章（浅玫瑰底 + 白卡）
+      { type: "article",
+        data: { title: "新西兰留学",
+          blocks: [
+            { p: "新西兰地处南太平洋，气候宜人、环境清新、森林资源丰富、旅游胜地遍布、风景优美、地表景观富变化，生活水平也相当高，排名联合国人类发展指数第 3 位。新西兰作为世界发达国家和世界公认的五大英语国家之一，其教育水平和教学质量一直位于世界前列。调查显示：新西兰的教育指数排名第一，并且多项指数都名列前茅，是全球教育体制最好的国家之一。此外，新西兰不但留学费用合理、移民政策好，还可作为世界顶尖名校的跳板。因此，新西兰已经日益成为广受国际学生关注的热点留学国家之一。" },
+            { imgs: [ "../img/nz-1.jpg", "../img/nz-2.jpg", "../img/nz-3.jpg" ] },
+
+            { h: "一、教学质量高，教育体制完善",
+              p: "新西兰和英国的教育制度一脉相承，教学作风严谨，注重学生综合能力的培养，教育质量达到国际一流水平。学校以公立为主，设施完备，质量卓越。新西兰八所公立大学中，有 7 所在最新的 QS 世界大学排行榜上位列 500 强；奥克兰大学、奥塔哥大学、坎特伯雷大学、维多利亚大学、梅西大学、怀卡托大学、奥克兰理工大学、林肯大学也各具特色，拥有诸多强势专业，在全世界广受赞誉。" },
+            { h: "二、社会治安好，家长的放心选择",
+              p: "如今，越来越多的中国学生选择去国外留学，随之而来的是留学生在国外的安全问题。新西兰是全球公认的世界最安全的国家之一，特别是对于选择出国读中学、甚至小学，新西兰安全的社会体系以及灵活的陪读制度，都是低龄留学生家长最放心的选择。" },
+            { h: "三、移民政策宽松，留学就业移民一步到位",
+              p: "新西兰是高福利的移民国家，移民政策宽松，持有新西兰签证可以合法在新西兰和澳大利亚工作。根据新西兰政府的最新政策，在新西兰留学的学生毕业后可以享受两次为期一年的工作签证（即开放式工作签证）的机会。而新西兰的移民政策对于申请人所学专业并没有严格的限制，任何专业的毕业生只要在毕业后找到工作，都有机会获得移民批准。这对于希望通过海外留学同时获得移民绿卡的申请人非常地有吸引力。" },
+            { imgs: [ "../img/nz-4.jpg", "../img/nz-5.jpg", "../img/nz-6.png" ] },
+
+            { h: "四、留学费用低廉，性价比极高",
+              p: "在五大英语系留学国家中，新西兰的留学花费是这几个国家中最低的。每年在新西兰读大学的花费大约为人民币 15–18 万；而对于到新西兰读博士的学生，有机会申请奖学金，即使无法获得奖学金，其学费也跟当地学生一样，仅为几千纽币。新西兰政府还允许国际学生每周打工 20 个小时，不仅可以补贴生活费，也可以接触当地文化、锻炼英文。相对于主流英语留学国家动辄 20–30 万每年的花费，学生在完成学业后还可获得工作机会及移民资格的多重收获，可谓是性价比和回报率都极高的选择。" },
+            { h: "五、无语言要求，资金担保形式灵活，签证成功率高",
+              p: "新西兰留学不强制要求标准化英文考试成绩，留学生可以选择到新西兰先读英文再读专业课，因此，没有英文成绩无论是入学申请还是办理签证都不会受到影响。即使是最好的奥克兰大学，也不会因为申请人的英文成绩不够而影响录取，这对于希望尽快出国、又想进好大学的学生来说，是极为灵活的选择。" },
+            { p: "此外，办理新西兰签证的时候除了家庭存款，也可以通过留学专有账户的形式来满足移民局的要求，形式灵活、更易获签。新西兰办理签证周期短、无需面签，通过新西兰移民局推荐的特许中介 NZSA 提交的签证申请通常 10 天就会获签。这些优势都保障了希望到新西兰读书的申请人可以顺利成行，无需为面签或拒签过于担忧和紧张。" }
+          ] },
+        options: {} }
     ]
   };
 
   // ---------------- 渲染器 ----------------
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
-
-  const bgStyle = bg => bg ? `background-image:url('${esc(bg)}');background-size:cover;background-position:center;` : "";
-  const styleAttr = s => (s && s.trim()) ? ` style="${s}"` : "";
-  // 统一外壳：背景图 → .section.on-image；纯色浅底 → .section-alt
-  function shell(b, inner) {
-    const s = bgStyle(b.options && b.options.bg);
-    const cls = s ? "section on-image" : ((b.options && b.options.alt) ? "section section-alt" : "section");
-    return `<section class="${cls}"${styleAttr(s)}><div class="container">${inner}</div></section>`;
-  }
-  const head = (d, onImg) => `<div class="section-title${onImg ? " title-on-image" : ""}"><h2>${esc(d.title)}</h2></div>`;
 
   const renderers = {
     banner(b) {
@@ -269,31 +207,20 @@
       </div>`;
       return `<section class="banner">${inner}</section>`;
     },
-    "contact-info"(b) {
-      const rows = b.data.items.map(i => `
-        <div class="contact-row"><span class="icon">${esc(i.icon)}</span><span class="label">${esc(i.label)}</span><span class="value">${esc(i.value)}</span></div>`).join("");
-      return shell(b, `${head(b.data, !!b.options.bg)}<div class="contact-card">${rows}</div>`);
-    },
-    social(b) {
-      const cards = b.data.items.map(i => `
-        <div class="social-card">
-          <img class="social-logo" src="${esc(i.icon)}" alt="${esc(i.platform)}">
-          <div class="platform">${esc(i.platform)}</div>
-          <div class="account">账号：${esc(i.account)}</div>
-        </div>`).join("");
-      return shell(b, `${head(b.data, false)}<div class="social-grid">${cards}</div>`);
-    },
-    qr(b) {
-      const boxes = b.data.items.map(q => `
-        <div class="qr-large">
-          <div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div>
-          <p>${esc(q.title)}</p>
-        </div>`).join("");
-      return shell(b, `${head(b.data, !!b.options.bg)}<div class="qr-box-large">${boxes}</div>`);
-    },
-    notice(b) {
-      const items = b.data.items.map(t => `<li>${esc(t)}</li>`).join("");
-      return shell(b, `${head(b.data, false)}<div class="notice-panel"><ol>${items}</ol></div>`);
+    article(b) {
+      const d = b.data;
+      const renderBlock = (blk) => {
+        let out = "";
+        if (blk.h) out += `<h3>${esc(blk.h)}</h3>`;
+        if (blk.p) out += `<p>${esc(blk.p)}</p>`;
+        if (blk.imgs) out += `<div class="img-row">${blk.imgs.map(src => `<img src="${esc(src)}" alt="">`).join("")}</div>`;
+        return out;
+      };
+      const content = (d.blocks || []).map(renderBlock).join("");
+      return `<section class="section section-alt"><div class="container article">
+        ${d.title ? `<h2 class="article-title">${esc(d.title)}</h2>` : ""}
+        ${content}
+      </div></section>`;
     }
   };
 

@@ -82,7 +82,5 @@ export const CaseCategories: CollectionConfig = {
     },
     // 旧字段：排序已移除，保留列以避免生产 schema 删除数据。
     { name: 'order', type: 'number', defaultValue: 0, hidden: true },
-    { name: 'seoTitle', type: 'text', hidden: true },
-    { name: 'seoDescription', type: 'textarea', hidden: true },
   ],
 }

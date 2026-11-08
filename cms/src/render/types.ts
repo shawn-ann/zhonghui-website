@@ -245,8 +245,6 @@ export interface CaseCategory {
   banner?: string
   subtitle?: string
   pageSize: number
-  seoTitle?: string
-  seoDescription?: string
 }
 
 export interface CaseItem {
@@ -260,8 +258,6 @@ export interface CaseItem {
   publishedAt: string
   createdAt?: string
   body: unknown
-  seoTitle?: string
-  seoDescription?: string
 }
 
 export interface CaseListTemplate {
@@ -288,7 +284,6 @@ export interface PageDoc {
   route: string
   blocks: Block[]
   template?: CaseListTemplate | CaseDetailTemplate
-  seo?: { title?: string; description?: string }
 }
 
 export interface MenuNode {

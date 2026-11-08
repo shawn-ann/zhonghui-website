@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>新西兰留学 — 中惠文化</title>
+  <title>海外留学 — 中惠文化</title>
   <style>
     :root {
       --deep-blue: #8A0E4B;
@@ -78,17 +78,29 @@
     .banner-pattern { position: absolute; top: -45px; right: 10px; width: 80%; height: auto; display: block; z-index: 0; }
     .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; }
 
-    /* ===== 正文文章（浅玫瑰底 + 白卡） ===== */
+    /* ===== 区块通用 ===== */
     .section { padding: 72px 0; }
     .section-alt { background: var(--light-blue); }
-    .article { margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 40px 48px; box-shadow: 0 10px 30px rgba(138,14,75,0.06); }
-    .article h3 { font-size: 20px; color: var(--deep-blue); font-weight: 700; margin: 30px 0 12px; padding-left: 12px; border-left: 4px solid var(--accent); }
-    .article p { font-size: 15px; color: var(--dark-text); line-height: 1.9; margin-bottom: 10px; }
-    .article .img-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0; }
-    .article .img-row img { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; display: block; }
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title h2 { font-size: 32px; color: var(--deep-blue); font-weight: 700; }
+    .title-on-image h2 { color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
+
+    /* ===== 留学项目：白面板（背景图之上） ===== */
+    .panel { margin: 0 auto; background: rgba(255,255,255,0.95); border-radius: 14px; padding: 36px 44px; box-shadow: 0 10px 30px rgba(138,14,75,0.10); }
+    .panel h3 { font-size: 20px; color: var(--deep-blue); font-weight: 700; margin: 26px 0 12px; padding-left: 12px; border-left: 4px solid var(--accent); }
+    .panel h3:first-child { margin-top: 0; }
+    .panel p { font-size: 15px; color: var(--dark-text); line-height: 1.9; }
+
+    /* ===== 目的地网格 ===== */
+    .dest-grid { display: grid; gap: 24px; }
+    .dest-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: block; transition: transform .25s, box-shadow .25s; }
+    .dest-card:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(138,14,75,0.14); }
+    .dest-photo { height: 180px; background-size: cover; background-position: center; }
+    .dest-body { padding: 18px 20px; }
+    .dest-body h3 { font-size: 18px; color: var(--deep-blue); font-weight: 600; }
 
     /* ===== 页脚 ===== */
-    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
+    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('../img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
     .footer-grid { max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
     .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
     .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #f0a9c6; margin-top: 4px; }
@@ -102,8 +114,7 @@
 
     @media (max-width: 900px) {
       .footer-grid { grid-template-columns: 1fr; }
-      .article { padding: 26px 22px; }
-      .article .img-row { grid-template-columns: 1fr 1fr; }
+      .dest-grid { grid-template-columns: 1fr 1fr !important; }
       .banner-grid { flex-direction: column; padding: 40px 0 60px; }
       .banner-text { justify-content: flex-start; padding-top: 0; }
       .banner-media { min-height: 0; }
@@ -120,13 +131,13 @@
 
   <script>
   /* =========================================================
-     CMS 配置化内容模型 —— 新西兰留学页
+     CMS 配置化内容模型 —— 海外留学页
      ========================================================= */
 
   const pageConfig = {
-    title: "新西兰留学",
+    title: "海外留学",
     nav: {
-      logo: "img/pink_logo_with_text_1.jpg",
+      logo: "../img/pink_logo_with_text_1.jpg",
       langCurrent: "中文", langOther: "EN",
       items: [
         { label: "首页", link: "index.html" },
@@ -143,7 +154,7 @@
       ]
     },
     footer: {
-      logo: "img/footLogo.png",
+      logo: "../img/footLogo.png",
       info: [
         { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
         { label: "📞 电话：", text: "010-64159286" },
@@ -161,31 +172,34 @@
     blocks: [
       // ① Banner（左文右图）
       { type: "banner",
-        data: { headline: "新西兰留学", sub: "南太平洋优质教育 · 安全宜居" },
-        options: { image: "img/about-hero.jpg", pattern: "img/pattern-box-5.svg" } },
+        data: { headline: "海外留学", sub: "名校申请 · 一站式规划" },
+        options: { image: "../img/about-hero.jpg", pattern: "../img/pattern-box-5.svg" } },
 
-      // ② 正文文章（浅玫瑰底 + 白卡）
-      { type: "article",
-        data: { title: "新西兰留学",
+      // ② 留学项目（背景图 + 白面板）
+      { type: "text-panel",
+        data: { title: "海外留学项目",
           blocks: [
-            { p: "新西兰地处南太平洋，气候宜人、环境清新、森林资源丰富、旅游胜地遍布、风景优美、地表景观富变化，生活水平也相当高，排名联合国人类发展指数第 3 位。新西兰作为世界发达国家和世界公认的五大英语国家之一，其教育水平和教学质量一直位于世界前列。调查显示：新西兰的教育指数排名第一，并且多项指数都名列前茅，是全球教育体制最好的国家之一。此外，新西兰不但留学费用合理、移民政策好，还可作为世界顶尖名校的跳板。因此，新西兰已经日益成为广受国际学生关注的热点留学国家之一。" },
-            { imgs: [ "img/nz-1.jpg", "img/nz-2.jpg", "img/nz-3.jpg" ] },
-
-            { h: "一、教学质量高，教育体制完善",
-              p: "新西兰和英国的教育制度一脉相承，教学作风严谨，注重学生综合能力的培养，教育质量达到国际一流水平。学校以公立为主，设施完备，质量卓越。新西兰八所公立大学中，有 7 所在最新的 QS 世界大学排行榜上位列 500 强；奥克兰大学、奥塔哥大学、坎特伯雷大学、维多利亚大学、梅西大学、怀卡托大学、奥克兰理工大学、林肯大学也各具特色，拥有诸多强势专业，在全世界广受赞誉。" },
-            { h: "二、社会治安好，家长的放心选择",
-              p: "如今，越来越多的中国学生选择去国外留学，随之而来的是留学生在国外的安全问题。新西兰是全球公认的世界最安全的国家之一，特别是对于选择出国读中学、甚至小学，新西兰安全的社会体系以及灵活的陪读制度，都是低龄留学生家长最放心的选择。" },
-            { h: "三、移民政策宽松，留学就业移民一步到位",
-              p: "新西兰是高福利的移民国家，移民政策宽松，持有新西兰签证可以合法在新西兰和澳大利亚工作。根据新西兰政府的最新政策，在新西兰留学的学生毕业后可以享受两次为期一年的工作签证（即开放式工作签证）的机会。而新西兰的移民政策对于申请人所学专业并没有严格的限制，任何专业的毕业生只要在毕业后找到工作，都有机会获得移民批准。这对于希望通过海外留学同时获得移民绿卡的申请人非常地有吸引力。" },
-            { imgs: [ "img/nz-4.jpg", "img/nz-5.jpg", "img/nz-6.png" ] },
-
-            { h: "四、留学费用低廉，性价比极高",
-              p: "在五大英语系留学国家中，新西兰的留学花费是这几个国家中最低的。每年在新西兰读大学的花费大约为人民币 15–18 万；而对于到新西兰读博士的学生，有机会申请奖学金，即使无法获得奖学金，其学费也跟当地学生一样，仅为几千纽币。新西兰政府还允许国际学生每周打工 20 个小时，不仅可以补贴生活费，也可以接触当地文化、锻炼英文。相对于主流英语留学国家动辄 20–30 万每年的花费，学生在完成学业后还可获得工作机会及移民资格的多重收获，可谓是性价比和回报率都极高的选择。" },
-            { h: "五、无语言要求，资金担保形式灵活，签证成功率高",
-              p: "新西兰留学不强制要求标准化英文考试成绩，留学生可以选择到新西兰先读英文再读专业课，因此，没有英文成绩无论是入学申请还是办理签证都不会受到影响。即使是最好的奥克兰大学，也不会因为申请人的英文成绩不够而影响录取，这对于希望尽快出国、又想进好大学的学生来说，是极为灵活的选择。" },
-            { p: "此外，办理新西兰签证的时候除了家庭存款，也可以通过留学专有账户的形式来满足移民局的要求，形式灵活、更易获签。新西兰办理签证周期短、无需面签，通过新西兰移民局推荐的特许中介 NZSA 提交的签证申请通常 10 天就会获签。这些优势都保障了希望到新西兰读书的申请人可以顺利成行，无需为面签或拒签过于担忧和紧张。" }
+            { h: "美国留学 · 奖学金计划",
+              p: "美国高校奖学金 GOCAMPUS 项目是由美国发起的一项全球性的教育扶持计划。该项目借助教育专家的思维、眼光和经验，让国际学生走出留学误区，做到择校更准、费用更低廉、毕业率更高，由最大的非营利性教育基金会 ASSE 具体执行。该项目已经执行多年，2009 年末正式进入到中国大陆地区，全球每年有 3000 名左右的学生被允许进入该计划。" },
+            { p: "可以进入该计划的学生将有机会获得美国高校的全额奖学金（吃住学全免费）或高额奖学金（最低 8 万 RMB 吃住学一整年），并将得到美国教育专家的专业评估和准确定位，推荐最适合的美国高校及专业（一般至少会推荐 9 所，并均受到中国教育部认可），保证录取。除此之外，该计划全球领事馆备案，签证通过率高，并且美国国会出专函助签，以提高学生获得签证的成功率！参加此项目的学生 100% 拿到奖学金！！！我甄选中心现引进该计划，并获得 50 个名额，大家踊跃报名吧！" },
+            { h: "英国留学",
+              p: "英国是世界第二大留学目的国，每年有超过 65 万国际学生在英国的大学、学院和寄宿中学学习，另外还有约 58 万学生在英国学习短期英语语言课程。2011 年在英国攻读高等教育的国际学生占全球总数的 13%。2011/12 年，共有 43 万 5 千国际学生在 163 所公立高等教育院校就读，还有 5 万 3 千在 159 所另外的院校就读，其中 70% 的学生读本科课程。英国是世界上最大的英语语言学习目的国，全球近一半的国际学生去英国学习英语。你不是一个人，大家踊跃报名吧！" },
+            { h: "其他留学项目",
+              p: "加拿大，西班牙研究生，德国研究生" }
           ] },
-        options: {} }
+        options: { bg: "../img/yinji-bg.jpg" } },
+
+      // ③ 热门留学目的地（浅粉底 + 卡片网格）
+      { type: "card-grid",
+        data: { title: "热门留学目的地",
+          items: [
+            { img: "../img/study-us.jpg",    title: "美国留学",    link: "#" },
+            { img: "../img/study-uk.jpg",    title: "英国留学",    link: "#" },
+            { img: "../img/study-au.jpg",    title: "澳大利亚留学", link: "#" },
+            { img: "../img/study-nz.jpg",    title: "新西兰留学",  link: "#" },
+            { img: "../img/study-other.jpg", title: "其他国家留学", link: "#" }
+          ] },
+        options: { columns: 3, alt: true } }
     ]
   };
 
@@ -207,19 +221,31 @@
       </div>`;
       return `<section class="banner">${inner}</section>`;
     },
-    article(b) {
-      const d = b.data;
-      const renderBlock = (blk) => {
+    "text-panel"(b) {
+      const d = b.data, bg = b.options.bg;
+      const secStyle = bg ? `style="background-image:url('${esc(bg)}');background-size:cover;background-position:center;"` : "";
+      const content = (d.blocks || []).map(blk => {
         let out = "";
         if (blk.h) out += `<h3>${esc(blk.h)}</h3>`;
         if (blk.p) out += `<p>${esc(blk.p)}</p>`;
-        if (blk.imgs) out += `<div class="img-row">${blk.imgs.map(src => `<img src="${esc(src)}" alt="">`).join("")}</div>`;
         return out;
-      };
-      const content = (d.blocks || []).map(renderBlock).join("");
-      return `<section class="section section-alt"><div class="container article">
-        ${d.title ? `<h2 class="article-title">${esc(d.title)}</h2>` : ""}
-        ${content}
+      }).join("");
+      return `<section class="section on-image" ${secStyle}><div class="container">
+        <div class="section-title title-on-image"><h2>${esc(d.title)}</h2></div>
+        <div class="panel">${content}</div>
+      </div></section>`;
+    },
+    "card-grid"(b) {
+      const d = b.data;
+      const cols = b.options.columns || 3;
+      const cards = (d.items || []).map(it => `<a class="dest-card" href="${esc(it.link || "#")}">
+        <div class="dest-photo" style="background-image:url('${esc(it.img)}');"></div>
+        <div class="dest-body"><h3>${esc(it.title)}</h3></div>
+      </a>`).join("");
+      const cls = b.options.alt ? "section section-alt" : "section";
+      return `<section class="${cls}"><div class="container">
+        <div class="section-title"><h2>${esc(d.title)}</h2></div>
+        <div class="dest-grid" style="grid-template-columns:repeat(${cols},1fr);">${cards}</div>
       </div></section>`;
     }
   };

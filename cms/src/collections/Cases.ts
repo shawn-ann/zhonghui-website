@@ -106,7 +106,5 @@ export const Cases: CollectionConfig = {
       admin: { components: { Field: '/components/admin/ArticleBodyField' } },
     },
     { name: 'publishedPath', type: 'text', hidden: true, admin: { readOnly: true } },
-    { name: 'seoTitle', type: 'text', hidden: true },
-    { name: 'seoDescription', type: 'textarea', hidden: true },
   ],
 }

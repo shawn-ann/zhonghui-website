@@ -3527,8 +3527,6 @@ export interface Case {
     [k: string]: unknown;
   };
   publishedPath?: string | null;
-  seoTitle?: string | null;
-  seoDescription?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -3553,8 +3551,6 @@ export interface CaseCategory {
    */
   pageSize: number;
   order?: number | null;
-  seoTitle?: string | null;
-  seoDescription?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -5772,8 +5768,6 @@ export interface CaseCategoriesSelect<T extends boolean = true> {
   subtitle?: T;
   pageSize?: T;
   order?: T;
-  seoTitle?: T;
-  seoDescription?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -5789,8 +5783,6 @@ export interface CasesSelect<T extends boolean = true> {
   publishedAt?: T;
   body?: T;
   publishedPath?: T;
-  seoTitle?: T;
-  seoDescription?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

@@ -36,7 +36,6 @@ async function loadPreview(id: string) {
       route: `/blog/${category.slug}/${item.slug}/`,
       blocks: [],
       template: { kind: 'caseDetail', item, category },
-      seo: { title: item.seoTitle || item.title, description: item.seoDescription },
     }
     const categoryRoutes = new Map(categories.map((c) => [String(c.id), `/blog/${c.slug}/`]))
     return { page, site: buildSiteConfig(menuRaw, settingsRaw, new Map(), categoryRoutes) }

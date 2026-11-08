@@ -190,7 +190,7 @@
     .memory-arrow.next { right: 16px; }
 
     /* ===== 页脚 ===== */
-    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
+    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('../img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
     .footer-grid {
       max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px;
       display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px;
@@ -246,10 +246,10 @@
     stories: [
       { title: "小曹同学的赴美之旅", tag: "SWT", link: "case-detail.html?id=xiaocao",
         intro: "从材料筹备、签证办理到异国的日常，全程尽享细致周全的一站式专属服务。",
-        cover: "img/prog-uk-study.jpg" },
+        cover: "../img/prog-uk-study.jpg" },
       { title: "小丁同学的逆袭故事", tag: "SWT", link: "case-detail.html?id=xiaoding",
         intro: "英语不占优势的他，靠每天的坚持与反复模拟，最终一签过签、如愿赴美。",
-        cover: "img/prog-iccp.jpg" },
+        cover: "../img/prog-iccp.jpg" },
       { title: "德州营地体验感悟", tag: "ICCP", link: "#",
         intro: "从安静的手工体验到特色马术训练，再到热闹的集体节庆，收获满满。",
         cover: "linear-gradient(135deg,#C2185B,#6E0B3E)" }
@@ -261,7 +261,7 @@
   const pageConfig = {
     title: "首页",
     nav: {
-      logo: "img/pink_logo_with_text_1.jpg",
+      logo: "../img/pink_logo_with_text_1.jpg",
       langCurrent: "中文", langOther: "EN",
       items: [
         { label: "首页", link: "index.html", active: true },
@@ -278,7 +278,7 @@
       ]
     },
     footer: {
-      logo: "img/footLogo.png",
+      logo: "../img/footLogo.png",
       info: [
         { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
         { label: "📞 电话：", text: "010-64159286" },
@@ -297,21 +297,21 @@
       // ① Banner 块：options.layout 选预制布局变体（split / centered）
       { type: "banner",
         data: { headline: "覆盖美国、欧洲、英国、澳洲的文化交流、工作与留学项目", sub: "无论你的目标是什么，都有合适的项目为你规划" },
-        options: { layout: "split", image: "img/banner-hero.jpg", pattern: "img/pattern-box-5.svg" } },
+        options: { layout: "split", image: "../img/banner-hero.jpg", pattern: "../img/pattern-box-5.svg" } },
 
       // ② 项目一览矩阵块：3×3 卡片，图片 + 标题 + 描述
       { type: "project-grid",
         data: { title: "项目一览",
           items: [
-            { img: "img/prog-au-pair-usa.jpg", title: "美国 AuPair", desc: "深入美国家庭，边体验边学习" },
-            { img: "img/prog-au-pair-eu.jpg",  title: "欧洲 AuPair", desc: "融入欧洲家庭，拓展国际视野" },
-            { img: "img/prog-swt.jpg",         title: "赴美 SWT",   desc: "暑假赴美带薪实习，用工作换旅行" },
-            { img: "img/prog-itp.jpg",         title: "赴美 ITP",   desc: "对口专业实习，为履历镀金" },
-            { img: "img/prog-iccp.jpg",        title: "赴美 ICCP",  desc: "在美式营地当辅导员，收获成长" },
-            { img: "img/prog-laihua.jpg",      title: "来华",        desc: "文化交流与来华项目" },
-            { img: "img/prog-uk-study.jpg",    title: "英国留学",    desc: "英伦名校，开启留学之旅" },
-            { img: "img/prog-iccp.jpg",        title: "澳洲留学",    desc: "南半球留学体验" },
-            { img: "img/prog-us-study.jpg",    title: "美国留学",    desc: "美国名校留学申请" } ] },
+            { img: "../img/prog-au-pair-usa.jpg", title: "美国 AuPair", desc: "深入美国家庭，边体验边学习" },
+            { img: "../img/prog-au-pair-eu.jpg",  title: "欧洲 AuPair", desc: "融入欧洲家庭，拓展国际视野" },
+            { img: "../img/prog-swt.jpg",         title: "赴美 SWT",   desc: "暑假赴美带薪实习，用工作换旅行" },
+            { img: "../img/prog-itp.jpg",         title: "赴美 ITP",   desc: "对口专业实习，为履历镀金" },
+            { img: "../img/prog-iccp.jpg",        title: "赴美 ICCP",  desc: "在美式营地当辅导员，收获成长" },
+            { img: "../img/prog-laihua.jpg",      title: "来华",        desc: "文化交流与来华项目" },
+            { img: "../img/prog-uk-study.jpg",    title: "英国留学",    desc: "英伦名校，开启留学之旅" },
+            { img: "../img/prog-iccp.jpg",        title: "澳洲留学",    desc: "南半球留学体验" },
+            { img: "../img/prog-us-study.jpg",    title: "美国留学",    desc: "美国名校留学申请" } ] },
         options: { columns: 3, bgHeight: 304, bg: "linear-gradient(90deg, #FC0401 0%, #F5534E 50%, #F4585E 62%, #FC1972 100%)" } },
 
       // ③ 中惠优势：2×4 图标网格
@@ -332,11 +332,11 @@
       { type: "memory-slider",
         data: { title: "中惠印记",
           images: [
-            "img/memory-1.png", "img/memory-2.jpg", "img/memory-3.jpg",
-            "img/memory-4.jpg", "img/memory-5.jpg", "img/memory-6.jpg",
-            "img/memory-7.jpg", "img/memory-8.png", "img/memory-9.jpg",
-            "img/memory-10.jpg" ] },
-        options: { bg: "img/yinji-bg.jpg" } },
+            "../img/memory-1.png", "../img/memory-2.jpg", "../img/memory-3.jpg",
+            "../img/memory-4.jpg", "../img/memory-5.jpg", "../img/memory-6.jpg",
+            "../img/memory-7.jpg", "../img/memory-8.png", "../img/memory-9.jpg",
+            "../img/memory-10.jpg" ] },
+        options: { bg: "../img/yinji-bg.jpg" } },
 
       // ⑤ 故事列表块：自动加载 stories 集合前 limit 条
       { type: "story-list",

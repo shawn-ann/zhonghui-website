@@ -278,8 +278,6 @@ export function mapCaseCategory(raw: Record<string, any>): CaseCategory | null {
     banner: resolveMedia(raw.banner) || undefined,
     subtitle: raw.subtitle || undefined,
     pageSize: Math.max(1, Math.trunc(Number(raw.pageSize) || 12)),
-    seoTitle: raw.seoTitle || undefined,
-    seoDescription: raw.seoDescription || undefined,
   }
 }
 
@@ -305,8 +303,6 @@ export function mapCaseItem(
     publishedAt: String(raw.publishedAt ?? ''),
     createdAt: raw.createdAt ? String(raw.createdAt) : undefined,
     body: raw.body ?? null,
-    seoTitle: raw.seoTitle || undefined,
-    seoDescription: raw.seoDescription || undefined,
   }
 }
 

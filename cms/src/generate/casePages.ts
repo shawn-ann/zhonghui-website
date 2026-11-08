@@ -40,7 +40,6 @@ function listPage(
   subtitle: string | undefined,
   banner: string | undefined,
   category?: CaseCategory,
-  seo?: { title?: string; description?: string },
 ): PageDoc {
   const template: CaseListTemplate = {
     kind: 'caseList',
@@ -54,7 +53,7 @@ function listPage(
     subtitle,
     banner,
   }
-  return { title, route: routeFor(basePath, page), blocks: [], template, seo }
+  return { title, route: routeFor(basePath, page), blocks: [], template }
 }
 
 /**
@@ -77,7 +76,6 @@ export function buildCasePages(
       pages.push(listPage(
         basePath, index + 1, chunks.length, size, pageItems,
         category.title, category.subtitle, category.banner, category,
-        { title: category.seoTitle, description: category.seoDescription },
       ))
     })
   }
@@ -90,7 +88,6 @@ export function buildCasePages(
       route: `/blog/${category.slug}/${item.slug}/`,
       blocks: [],
       template: { kind: 'caseDetail', item, category },
-      seo: { title: item.seoTitle || item.title, description: item.seoDescription },
     })
   }
 

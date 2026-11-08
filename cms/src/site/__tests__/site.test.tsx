@@ -87,15 +87,6 @@ describe('site blocks', () => {
     expect(html).toContain('--icon-size:44px')
   })
 
-  it('renders SEO title and description from the page template', () => {
-    const html = render(<SiteDocument
-      page={{ title: '原题', route: '/blog/x/', blocks: [], seo: { title: 'SEO 标题', description: 'SEO 描述' } }}
-      assets={{ mode: 'external' }}
-    />)
-    expect(html).toContain('<title>SEO 标题</title>')
-    expect(html).toContain('<meta name="description" content="SEO 描述"/>')
-  })
-
   it('keeps a category menu item active on case detail routes', () => {
     const nav = render(<SiteNav
       activeRoute="/blog/study-case/xiaocao/"

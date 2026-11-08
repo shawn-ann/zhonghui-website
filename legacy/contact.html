@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>案例详情 — 中惠文化</title>
+  <title>联系我们 — 中惠文化</title>
   <style>
     :root {
       --deep-blue: #8A0E4B;      /* 标题主色：深玫 */
@@ -78,34 +78,59 @@
     .banner-pattern { position: absolute; top: -45px; right: 10px; width: 80%; height: auto; display: block; z-index: 0; }
     .banner-photo { position: absolute; top: 0; left: 0; width: 88%; height: auto; display: block; z-index: 1; }
 
-    /* ===== 正文（浅玫底 + 白卡，参考 new-zealand） ===== */
-    .section { padding: 72px 0; }
+    /* ===== 区块通用（背景交替：背景图 / 浅粉底 交替） ===== */
+    .section { padding: 72px 0; min-height: 600px; display: flex; flex-direction: column; justify-content: center; }
+    .section > .container { width: 100%; }
     .section-alt { background: var(--light-blue); }
-    .article { margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 40px 48px; box-shadow: 0 10px 30px rgba(138,14,75,0.06); }
-    .article-title { font-size: 30px; color: var(--deep-blue); font-weight: 700; line-height: 1.4; }
-    .article-meta { color: var(--gray-blue); font-size: 14px; margin-top: 12px; padding-bottom: 22px; border-bottom: 1px solid var(--border); }
-    .article-cover { height: 340px; border-radius: 12px; margin: 28px 0; background-size: cover; background-position: center; }
-    .article-body { font-size: 16px; line-height: 2; color: var(--dark-text); }
-    .article-body h2 { font-size: 21px; color: var(--deep-blue); margin: 32px 0 14px; }
-    .article-body h3 { font-size: 18px; color: var(--deep-blue); margin: 24px 0 10px; }
-    .article-body p { margin-bottom: 16px; }
-    .article-body ul { margin: 0 0 16px 22px; }
-    .article-body li { margin-bottom: 8px; }
-    .article-body blockquote {
-      border-left: 4px solid var(--accent); background: var(--light-blue);
-      padding: 14px 20px; border-radius: 6px; margin: 20px 0; color: var(--deep-blue);
+    .section-title { text-align: center; margin-bottom: 36px; }
+    .section-title h2 { font-size: 30px; color: var(--deep-blue); font-weight: 700; }
+    .title-on-image h2 { color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.45); }
+
+    /* ===== 联系方式卡片 ===== */
+    .contact-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 8px 28px; box-shadow: 0 10px 30px rgba(138,14,75,0.10); }
+    .contact-row { display: flex; align-items: baseline; padding: 16px 0; border-bottom: 1px dashed var(--border); font-size: 15px; }
+    .contact-row:last-child { border-bottom: none; }
+    .contact-row .icon { margin-right: 12px; }
+    .contact-row .label { color: var(--gray-blue); width: 96px; flex-shrink: 0; }
+    .contact-row .value { color: var(--dark-text); font-weight: 500; }
+
+    /* ===== 社交媒体矩阵 ===== */
+    .social-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+    .social-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+      padding: 24px 12px; text-align: center; transition: transform .25s, box-shadow .25s;
     }
-    .article-body .img-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0; }
-    .article-body .img-row img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; display: block; }
+    .social-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(138,14,75,0.12); }
+    .social-logo {
+      width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 12px;
+      display: block; object-fit: cover;
+    }
+    .social-card .platform { font-size: 15px; color: var(--deep-blue); font-weight: 600; }
+    .social-card .account { font-size: 13px; color: var(--gray-blue); margin-top: 6px; }
+
+    /* ===== 二维码 ===== */
+    .qr-box-large { display: flex; gap: 40px; justify-content: center; }
+    .qr-large .qr {
+      width: 150px; height: 150px; background: var(--white); border: 1px solid var(--border);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      color: var(--deep-blue); font-size: 14px; text-align: center; padding: 10px; margin-bottom: 10px;
+      box-shadow: 0 10px 30px rgba(138,14,75,0.10);
+    }
+    .qr-large p { font-size: 14px; color: #fff; text-align: center; text-shadow: 0 1px 6px rgba(0,0,0,0.35); }
+
+    /* ===== 温馨提示 ===== */
+    .notice-panel { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 6px; padding: 24px 30px; box-shadow: 0 6px 18px rgba(138,14,75,0.06); }
+    .notice-panel ol { margin-left: 20px; }
+    .notice-panel li { margin-bottom: 10px; font-size: 15px; color: var(--dark-text); }
+    .notice-panel li:last-child { margin-bottom: 0; }
 
     /* ===== 页脚 ===== */
-    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
+    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('../img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
     .footer-grid { max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
     .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
     .footer-info p { font-size: 14px; margin-bottom: 12px; color: #ffd7e6; }
     .footer-info .label { color: #f0a9c6; margin-right: 8px; }
     .footer-qr { text-align: center; }
-    .footer-qr h4 { color: #fff; font-size: 16px; margin-bottom: 16px; }
     .qr-box { display: flex; gap: 16px; justify-content: center; }
     .qr-item .qr { width: 92px; height: 92px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--deep-blue); font-size: 11px; text-align: center; padding: 6px; margin-bottom: 8px; }
     .qr-item p { font-size: 13px; color: #ffd7e6; }
@@ -113,12 +138,15 @@
     .foot-contact:hover { color: #ffffff; }
 
     @media (max-width: 900px) {
-      .footer-grid { grid-template-columns: 1fr; }
       .banner-grid { flex-direction: column; padding: 40px 0 60px; }
       .banner-text { justify-content: flex-start; padding-top: 0; }
       .banner-media { min-height: 0; }
       .banner-photo { position: static; width: 100%; margin-top: 24px; }
       .banner-pattern { display: none; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .social-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -130,51 +158,15 @@
 
   <script>
   /* =========================================================
-     CMS 配置化内容模型 —— 案例详情页
-     共享详情模板：渲染单个集合项（标题 / 日期 / 头图 / 富文本正文）。
+     CMS 配置化内容模型 —— 联系我们页
+     块组合：banner → contact-info → social → qr → notice
+     背景交替：banner 之下 背景图 / 浅粉底 交替（options.bg / options.alt）
      ========================================================= */
 
-  // 内容集合（模拟后端）；详情页取其中一项
-  const collections = {
-    cases: [
-      { id: "xiaoding", title: "小丁同学的英语逆袭之路", date: "2025-07-18", cover: "url('img/prog-iccp.jpg')",
-        body: [
-          { type: "p", text: "小丁同学是一位前期入库英语被系统自动降分的 boy，提交入库的那一版视频已经是他当下最好的一版。因为入库一直没有企业，他也有过自我怀疑的瞬间。" },
-          { type: "p", text: "但是焦虑无用。丁同学每天都在练口语、磨听力，一模的时候听到他的口语，远远超出预期。仅仅几个月的时间，丁同学就给我们带来了猝不及防的惊喜。" },
-          { type: "h2", text: "一、笨拙的坚持" },
-          { type: "p", text: "丁同学直到最后匹配岗位都不断地在学习，4 月 28 日顺利一签过签。" },
-          { type: "blockquote", text: "英语不好？听不懂？那就只能反复练习。SWT 的签证问题只有这些，在不断的重复、模拟之下，小丁同学终得所愿。" },
-          { type: "imgs", items: ["img/memory-5.jpg", "img/memory-6.jpg", "img/memory-7.jpg"] },
-          { type: "h2", text: "二、越努力越幸运" },
-          { type: "p", text: "当天签证官问到了我们模拟时出现过的问题。运气何尝不是一种努力的表现形式，我们一直相信越努力越幸运——逆袭者没有魔法，只有笨拙的坚持。" }
-        ] },
-      { id: "xiaocao", title: "小曹同学的赴美之旅", date: "2025-07-02", cover: "url('img/memory-4.jpg')",
-        body: [
-          { type: "p", text: "小曹同学是中惠 24 年的 SWTer，在读大三时，便毅然选择报名中惠 SWT 赴美带薪实习项目。对她来说，这不仅是一份暑期工作，更是一次真正走出课堂、独立生活的机会。" },
-          { type: "p", text: "从报名咨询到最终成行，前后不过几个月，却让她完成了一次从忐忑到笃定的转变。" },
-          { type: "h2", text: "一、从忐忑到笃定" },
-          { type: "p", text: "最初，小曹对项目流程几乎是陌生的：什么是 DS-2019、面试会问些什么、岗位怎么匹配，她心里都没底。前期准备阶段，顾问老师陪她反复打磨简历、模拟面试，把每一个可能被问到的细节都提前演练了一遍。" },
-          { type: "p", text: "真正让她安心的，是整个过程都被安排得井井有条：材料清单逐项核对、时间节点提前提醒、遇到疑问随时能找到人解答。她笑说，原本最担心的“手忙脚乱”，最后反而成了最省心的部分。" },
-          { type: "h2", text: "二、在异国的第一份工作" },
-          { type: "p", text: "抵达美国后，小曹很快适应了工作岗位的节奏。和来自不同国家的同事一起排班、配合，从一开始的生疏到后来的默契，她学会用并不完美的英语去沟通、去解决问题，也在一次次被需要中慢慢建立起自信。" },
-          { type: "p", text: "下班之后，她和其他 J1 学员一起做饭、逛超市、计划周末的短途旅行。陌生的城市慢慢有了熟悉的街角，语言、文化、生活方式，都在日常的相处里被一点点理解。她发现，真正拉开人与人距离的从来不是语言，而是愿不愿意主动迈出那一步。" },
-          { type: "h2", text: "三、带回来的不只是一段旅程" },
-          { type: "p", text: "两个多月的时间，小曹带回来的不只是几张照片和一份工作经历，还有一个更独立、更从容的自己。她开始习惯主动开口，也更清楚自己未来想走的路。" },
-          { type: "blockquote", text: "“出发前我以为自己只是去打一份工，回来后才发现，认识这个世界的过程，也是在重新认识自己。”" },
-          { type: "p", text: "如今，她把这段经历分享给学弟学妹：如果暑假只有一次可以用来远行，那就别让胆怯替你决定。迈出第一步，剩下的路，中惠会陪你一起走。" }
-        ] }
-    ]
-  };
-
-  // 从 URL 参数取案例 id（默认第一个）
-  const params = new URLSearchParams(location.search);
-  const caseId = params.get("id") || collections.cases[0].id;
-  const article = collections.cases.find(c => c.id === caseId) || collections.cases[0];
-
   const pageConfig = {
-    title: article.title,
+    title: "联系我们",
     nav: {
-      logo: "img/pink_logo_with_text_1.jpg",
+      logo: "../img/pink_logo_with_text_1.jpg",
       langCurrent: "中文", langOther: "EN",
       items: [
         { label: "首页", link: "index.html" },
@@ -186,12 +178,12 @@
             { label: "ICCP 赴美营地辅导员", link: "project-iccp.html" } ] },
         { label: "海外留学", link: "study-abroad.html", children: [
             { label: "新西兰留学", link: "new-zealand.html" } ] },
-        { label: "案例分享", link: "cases.html", active: true },
-        { label: "联系我们", link: "contact.html" }
+        { label: "案例分享", link: "cases.html" },
+        { label: "联系我们", link: "contact.html", active: true }
       ]
     },
     footer: {
-      logo: "img/footLogo.png",
+      logo: "../img/footLogo.png",
       info: [
         { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
         { label: "📞 电话：", text: "010-64159286" },
@@ -208,21 +200,59 @@
     blocks: [
       // ① Banner（左文右图，与首页一致）
       { type: "banner",
-        data: { headline: article.title, sub: "中惠文化 · 真实案例分享" },
-        options: { image: "img/about-hero.jpg", pattern: "img/pattern-box-5.svg" } },
-      // 详情块：渲染单篇文章（标题/日期/头图/富文本正文）
-      { type: "detail",
-        data: {
-          title: article.title, date: article.date,
-          cover: article.cover,
-          body: article.body
-        },
-        options: {} }
+        data: { headline: "联系我们", sub: "欢迎随时咨询中惠文化 · 一对一专属服务" },
+        options: { image: "../img/about-hero.jpg", pattern: "../img/pattern-box-5.svg" } },
+      // ② 联系方式块（背景图）
+      { type: "contact-info",
+        data: { title: "联系方式",
+          items: [
+            { icon: "🌐", label: "中文官网", value: "www.chinaaupairs.com" },
+            { icon: "🌐", label: "英文官网", value: "www.aupaircn.com" },
+            { icon: "📍", label: "地址", value: "北京东城区绿景馨园东区12号楼" },
+            { icon: "📞", label: "电话", value: "010-64159286" },
+            { icon: "✉", label: "邮箱", value: "info@zhonghui.com" } ] },
+        options: { bg: "../img/yinji-bg.jpg" } },
+      // ③ 社交媒体矩阵块（浅粉底）
+      { type: "social",
+        data: { title: "中惠官方账号",
+          items: [
+            { platform: "知乎", icon: "../img/icon-zhihu.png", account: "中惠互惠生" },
+            { platform: "小红书", icon: "../img/icon-xiaohongshu.png", account: "中惠互惠生" },
+            { platform: "Facebook", icon: "../img/icon-facebook.png", account: "中惠文化" },
+            { platform: "抖音", icon: "../img/icon-douyin.png", account: "中惠文化—互惠生中心" },
+            { platform: "哔哩哔哩", icon: "../img/icon-bilibili.png", account: "中惠互惠生" } ] },
+        options: { alt: true } },
+      // ④ 二维码块（背景图）
+      { type: "qr",
+        data: { title: "扫码咨询",
+          items: [
+            { title: "公众号", text: "公众号\n二维码" },
+            { title: "咨询微信", text: "咨询微信\n二维码" } ] },
+        options: { bg: "../img/yinji-bg.jpg" } },
+      // ⑤ 温馨提示块（浅粉底）
+      { type: "notice",
+        data: { title: "温馨提示",
+          items: [
+            "岗位匹配仅为咨询推荐服务，不保证获取录用 offer；",
+            "海外薪资、工作内容、排班由当地合作方确定，不承诺固定收益；",
+            "海外就业遵守当地法规，雇主与参与者可依法调整合作关系；",
+            "项目体验因人而异，成长收获取决于个人主动参与。" ] },
+        options: { alt: true } }
     ]
   };
 
   // ---------------- 渲染器 ----------------
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+  const bgStyle = bg => bg ? `background-image:url('${esc(bg)}');background-size:cover;background-position:center;` : "";
+  const styleAttr = s => (s && s.trim()) ? ` style="${s}"` : "";
+  // 统一外壳：背景图 → .section.on-image；纯色浅底 → .section-alt
+  function shell(b, inner) {
+    const s = bgStyle(b.options && b.options.bg);
+    const cls = s ? "section on-image" : ((b.options && b.options.alt) ? "section section-alt" : "section");
+    return `<section class="${cls}"${styleAttr(s)}><div class="container">${inner}</div></section>`;
+  }
+  const head = (d, onImg) => `<div class="section-title${onImg ? " title-on-image" : ""}"><h2>${esc(d.title)}</h2></div>`;
 
   const renderers = {
     banner(b) {
@@ -239,22 +269,31 @@
       </div>`;
       return `<section class="banner">${inner}</section>`;
     },
-    detail(b) {
-      const d = b.data;
-      const body = (d.body || []).map(node => {
-        if (node.type === "h2") return `<h2>${esc(node.text)}</h2>`;
-        if (node.type === "h3") return `<h3>${esc(node.text)}</h3>`;
-        if (node.type === "blockquote") return `<blockquote>${esc(node.text)}</blockquote>`;
-        if (node.type === "imgs") return `<div class="img-row">${(node.items||[]).map(s=>`<img src="${esc(s)}" alt="">`).join("")}</div>`;
-        if (node.type === "ul") return `<ul>${(node.items||[]).map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`;
-        return `<p>${esc(node.text)}</p>`;
-      }).join("");
-      return `<section class="section section-alt"><div class="container article">
-        <h1 class="article-title">${esc(d.title)}</h1>
-        <div class="article-meta">📅 ${esc(d.date)}</div>
-        <div class="article-cover" style="background-image:${esc(d.cover)};"></div>
-        <div class="article-body">${body}</div>
-      </div></section>`;
+    "contact-info"(b) {
+      const rows = b.data.items.map(i => `
+        <div class="contact-row"><span class="icon">${esc(i.icon)}</span><span class="label">${esc(i.label)}</span><span class="value">${esc(i.value)}</span></div>`).join("");
+      return shell(b, `${head(b.data, !!b.options.bg)}<div class="contact-card">${rows}</div>`);
+    },
+    social(b) {
+      const cards = b.data.items.map(i => `
+        <div class="social-card">
+          <img class="social-logo" src="${esc(i.icon)}" alt="${esc(i.platform)}">
+          <div class="platform">${esc(i.platform)}</div>
+          <div class="account">账号：${esc(i.account)}</div>
+        </div>`).join("");
+      return shell(b, `${head(b.data, false)}<div class="social-grid">${cards}</div>`);
+    },
+    qr(b) {
+      const boxes = b.data.items.map(q => `
+        <div class="qr-large">
+          <div class="qr">${esc(q.text).replace(/\n/g,"<br>")}</div>
+          <p>${esc(q.title)}</p>
+        </div>`).join("");
+      return shell(b, `${head(b.data, !!b.options.bg)}<div class="qr-box-large">${boxes}</div>`);
+    },
+    notice(b) {
+      const items = b.data.items.map(t => `<li>${esc(t)}</li>`).join("");
+      return shell(b, `${head(b.data, false)}<div class="notice-panel"><ol>${items}</ol></div>`);
     }
   };
 

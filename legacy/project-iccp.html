@@ -105,7 +105,7 @@
     @keyframes marquee-scroll { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
     /* ===== 标题行（浅灰底图） ===== */
-    .title-strip { background: url('img/title-bg.jpg') center/cover no-repeat; padding: 20px 0; }
+    .title-strip { background: url('../img/title-bg.jpg') center/cover no-repeat; padding: 20px 0; }
     .strip-title { text-align: center; font-size: 30px; font-weight: 700; color: var(--deep-blue); }
     .strip-en { text-align: center; font-size: 14px; color: #9a9a9a; letter-spacing: 1px; margin-top: 8px; }
 
@@ -134,7 +134,7 @@
     .wcr-dot { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 20px; height: 20px; display: block; }
 
     /* ===== 页脚 ===== */
-    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
+    footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18,84,.62) 50%, rgba(194,24,91,.62) 100%), url('../img/footbg.jpg') center/cover no-repeat; color: #ffd7e6; }
     .footer-grid { max-width: 1200px; margin: 0 auto; padding: 130px 24px 116px; display: grid; grid-template-columns: 1.2fr 2fr 1fr; gap: 40px; }
     .footer-brand img { display: block; margin-bottom: 14px; height: 110px; width: auto; }
     .footer-brand .en { font-size: 12px; letter-spacing: 2px; color: #f0a9c6; margin-top: 4px; }
@@ -170,7 +170,7 @@
   const pageConfig = {
     title: "赴美营地辅导员",
     nav: {
-      logo: "img/pink_logo_with_text_1.jpg",
+      logo: "../img/pink_logo_with_text_1.jpg",
       langCurrent: "中文", langOther: "EN",
       items: [
         { label: "首页", link: "index.html" },
@@ -187,7 +187,7 @@
       ]
     },
     footer: {
-      logo: "img/footLogo.png",
+      logo: "../img/footLogo.png",
       info: [
         { label: "📍 地址：", text: "北京东城区绿景馨园东区12号楼" },
         { label: "📞 电话：", text: "010-64159286" },
@@ -206,7 +206,7 @@
       // ① Banner（左文右图）
       { type: "banner",
         data: { headline: "赴美营地辅导员", sub: "沉浸全英文环境 · 收获成长与历练" },
-        options: { image: "img/about-hero.jpg", pattern: "img/pattern-box-5.svg" } },
+        options: { image: "../img/about-hero.jpg", pattern: "../img/pattern-box-5.svg" } },
 
       // ② 项目介绍：通栏色带（左文右图）
       { type: "intro-band",
@@ -215,7 +215,7 @@
             "美国夏令营辅导员项目是美国国务院制定的交流访问项目。",
             "考虑到大多数在读生或刚毕业学生经济能力有限，营地辅导员项目从学生角度出发，每年为世界各地上万名符合条件的年轻人提供在营地工作的机会及相关能力培训。",
             "在获得收入、获得宝贵的海外工作经验与培训经历的同时，还为语言能力及综合素质的提升创造了机会。工作结束后，还可畅游美国整整一个月！" ],
-          img: "img/iccp-intro.jpg" },
+          img: "../img/iccp-intro.jpg" },
         options: {} },
 
       // ③ 工作内容：两列错落 + 中间装饰
@@ -234,7 +234,7 @@
         data: {
           sections: [
             { cn: "户外类型", en: "Outdoor Type",
-              images: [ "img/memory-2.jpg", "img/memory-3.jpg", "img/memory-5.jpg", "img/memory-6.jpg" ],
+              images: [ "../img/memory-2.jpg", "../img/memory-3.jpg", "../img/memory-5.jpg", "../img/memory-6.jpg" ],
               paras: [ "营地辅导员的岗位遍布美国各地，多为寄宿制夏令营，活动涵盖体育、艺术、表演、水上运动、攀岩、马术、露营等。" ],
               list: [
                 "多数营地位于美国东北部，但几乎在每个州都有营地",
@@ -267,7 +267,7 @@
               { q: "一般工作在什么时间？", a: "每年 6 月上旬开始、8 月中下旬结束，工作时长约 63 天，每周休息一天。" },
               { q: "项目结束后能旅游吗？", a: "项目结束后有 30 天的合法停留期，可在美国境内自由旅行。" } ] },
 
-            { cn: "报名流程", en: "The Program Process", img: "img/prog-iccp.jpg", steps: [
+            { cn: "报名流程", en: "The Program Process", img: "../img/prog-iccp.jpg", steps: [
               "确认报名", "填写在线表格", "中惠面试并填写面试报告", "中惠审核后提交",
               "项目举办方决定是否接受申请", "匹配", "确认匹配", "匹配确认函",
               "在线培训", "签证申请", "抵达" ] }
@@ -329,7 +329,7 @@
     },
     "work-content"(b) {
       const d = b.data;
-      const dotSrc = d.icon || "img/dot.png";
+      const dotSrc = d.icon || "../img/dot.png";
       const hexPoly = `<polygon points="50,4 90,27 90,73 50,96 10,73 10,27" stroke-width="5"/>`;
       const symbols = {
         dumbbell: `<line x1="36" y1="50" x2="64" y2="50" stroke-width="5"/><line x1="36" y1="41" x2="36" y2="59" stroke-width="6"/><line x1="64" y1="41" x2="64" y2="59" stroke-width="6"/><line x1="27" y1="45" x2="27" y2="55" stroke-width="5"/><line x1="73" y1="45" x2="73" y2="55" stroke-width="5"/>`,

@@ -89,7 +89,7 @@ case "$MODE" in
     log "生成静态站点（npm run generate）"
     npm run generate
     log "静态预览 → http://127.0.0.1:${PREVIEW_PORT}/  （Ctrl+C 停止）"
-    cd dist
+    cd releases/current
     exec python3 -m http.server "$PREVIEW_PORT" --bind 127.0.0.1
     ;;
   stop)
