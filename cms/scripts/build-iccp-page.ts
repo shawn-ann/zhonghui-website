@@ -90,15 +90,18 @@ const intro = {
     blockType: 'grid',
     layout: 'flow',
     columns: 2,
-    gap: 'md',
+    gap: 'lg',
     columnRatio: '2:3',
-    alignItems: 'start',
+    alignItems: 'center',
+    bgColor: '#A11254',
+    padding: 48,
     children: [
       {
         blockType: 'stack',
         gap: 'sm',
         children: [{
           blockType: 'richtext',
+          textColor: '#FFFFFF',
           content: richText([
             heading('h3', '项目介绍'),
             paragraph('美国夏令营辅导员项目是美国国务院制定的交流访问项目。'),

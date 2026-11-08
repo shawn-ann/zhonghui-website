@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import { mapPageDoc, mapBlock, loadSiteData } from '../loadSiteData'
 
+describe('richtext color mapping', () => {
+  it('maps the block text color', () => {
+    const block = mapBlock({ blockType: 'richtext', content: null, textColor: '#FFFFFF' } as any, (m: any) => m)
+    expect(block).toMatchObject({ type: 'richtext', textColor: '#FFFFFF' })
+  })
+})
+
 describe('grid padding mapping', () => {
   it('maps the band padding', () => {
     const block = mapBlock({ blockType: 'grid', columns: 2, padding: 48, children: [] } as any, (m: any) => m)

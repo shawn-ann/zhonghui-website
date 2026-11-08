@@ -102,6 +102,14 @@ describe('content component extensions', () => {
     expect(html).toContain('aspect-ratio:16 / 9')
   })
 
+  it('applies a custom text color to rich text', () => {
+    const html = render({ type: 'richtext', _id: 'rt', html: '<p>x</p>', textColor: '#FFFFFF' })
+    expect(html).toContain('richtext has-color')
+    expect(html).toContain('--rt-color:#FFFFFF')
+    const plain = render({ type: 'richtext', _id: 'rt2', html: '<p>x</p>' })
+    expect(plain).not.toContain('has-color')
+  })
+
   it('applies background and padding to the grid band', () => {
     const b: GridBlock = {
       type: 'grid', _id: 'g', columns: 2, gap: 'lg', bgColor: '#A11254', padding: 48,
