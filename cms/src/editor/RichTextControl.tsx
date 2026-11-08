@@ -11,15 +11,32 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { HeadingNode, QuoteNode, $createHeadingNode } from '@lexical/rich-text'
 import { ListNode, ListItemNode, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from '@lexical/list'
 import { LinkNode, AutoLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
-import { $patchStyleText, $setBlocksType } from '@lexical/selection'
+import { $getSelectionStyleValueForProperty, $patchStyleText, $setBlocksType } from '@lexical/selection'
 import { $createParagraphNode, $getNodeByKey, $getSelection, $isElementNode, $isRangeSelection, FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND, UNDO_COMMAND, REDO_COMMAND } from 'lexical'
 import { ImageRowNode, $insertImageRow } from './ImageRowNode'
 import { ImageNode, $insertImage } from './ImageNode'
 import MediaModal from './MediaModal'
+import { normalizeHexColor } from './colorValue'
 
 function Toolbar() {
   const [editor] = useLexicalComposerContext()
   const [picker, setPicker] = useState<'image' | 'gallery' | null>(null)
+  const [color, setColor] = useState('')
+  const [colorText, setColorText] = useState('')
+
+  useEffect(() => {
+    const syncColor = () => {
+      editor.getEditorState().read(() => {
+        const selection = $getSelection()
+        if (!$isRangeSelection(selection)) return
+        const value = normalizeHexColor($getSelectionStyleValueForProperty(selection, 'color', ''))
+        setColor(value)
+        setColorText(value)
+      })
+    }
+    syncColor()
+    return editor.registerUpdateListener(syncColor)
+  }, [editor])
 
   const format = (value: 'bold' | 'italic' | 'underline') => {
     editor.dispatchCommand(FORMAT_TEXT_COMMAND, value)
@@ -56,6 +73,17 @@ function Toolbar() {
     })
   }
 
+  const commitColorText = () => {
+    const next = normalizeHexColor(colorText)
+    if (next) {
+      setColor(next)
+      setColorText(next)
+      applyColor(next)
+    } else {
+      setColorText(color)
+    }
+  }
+
   const link = () => {
     const url = window.prompt('链接地址（留空取消）')
     if (url !== null) editor.dispatchCommand(TOGGLE_LINK_COMMAND, url || null)
@@ -68,9 +96,34 @@ function Toolbar() {
       <button type="button" onClick={() => format('italic')}><i>I</i></button>
       <button type="button" onClick={() => format('underline')}><u>U</u></button>
       <label className="rt-color" title="文字颜色">
-        <input type="color" defaultValue="#E60039" onChange={(e) => applyColor(e.target.value)} />
+        <input
+          type="color"
+          value={color || '#5A4A52'}
+          onChange={(e) => {
+            const next = normalizeHexColor(e.target.value)
+            setColor(next)
+            setColorText(next)
+            applyColor(next)
+          }}
+        />
+        <input
+          className="rt-color-value"
+          value={colorText}
+          placeholder="默认色"
+          aria-label="文字颜色色号"
+          spellCheck={false}
+          onChange={(e) => setColorText(e.target.value)}
+          onBlur={commitColorText}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault()
+              commitColorText()
+              e.currentTarget.blur()
+            }
+          }}
+        />
       </label>
-      <button type="button" onClick={() => applyColor(null)} title="清除文字颜色">默认色</button>
+      <button type="button" onClick={() => { setColor(''); setColorText(''); applyColor(null) }} title="清除文字颜色">默认色</button>
       <span className="rt-divider" />
       <button type="button" onClick={() => block('h2')}>H2</button>
       <button type="button" onClick={() => block('h3')}>H3</button>
