@@ -10,23 +10,30 @@ type PageRoutes = Map<string, string>
 
 const arr = <T>(v: unknown): T[] => (Array.isArray(v) ? (v as T[]) : [])
 
-function resolveBlockLink(raw: Record<string, any>, routes?: PageRoutes) {
+function resolveBlockLink(raw: Record<string, any>, routes?: PageRoutes, caseRoutes?: PageRoutes) {
   const rel = raw.internalPage
   const relObj = rel && typeof rel === 'object' ? rel : null
   const internalPageId = relObj?.id ?? (rel != null ? rel : undefined)
   const internalRoute = relObj?.route
     ?? (internalPageId != null ? routes?.get(String(internalPageId)) : undefined)
-  const linkType: 'none' | 'internal' | 'external' = raw.linkType || (raw.link ? 'external' : 'none')
+  const caseRel = raw.caseItem
+  const caseObj = caseRel && typeof caseRel === 'object' ? caseRel : null
+  const caseItemId = caseObj?.id ?? (caseRel != null ? caseRel : undefined)
+  const caseRoute = caseObj?.publishedPath
+    ?? (caseItemId != null ? caseRoutes?.get(String(caseItemId)) : undefined)
+  const linkType: 'none' | 'internal' | 'external' | 'case' = raw.linkType || (raw.link ? 'external' : 'none')
   const externalUrl = raw.externalUrl || (raw.linkType ? undefined : raw.link) || undefined
   const link = linkType === 'internal'
     ? (internalRoute || undefined)
-    : linkType === 'external'
-      ? externalUrl
-      : undefined
-  return { link, linkType, internalPageId, internalRoute, externalUrl }
+    : linkType === 'case'
+      ? (caseRoute || undefined)
+      : linkType === 'external'
+        ? externalUrl
+        : undefined
+  return { link, linkType, internalPageId, internalRoute, externalUrl, caseItemId, caseRoute }
 }
 
-export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, routes?: PageRoutes): Block | null {
+export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, routes?: PageRoutes, caseRoutes?: PageRoutes): Block | null {
   const bg = raw.bg || undefined
   const alt = !!raw.alt
   switch (raw.blockType) {
@@ -44,7 +51,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
       }
     case 'section': {
       const children = arr<Record<string, any>>(raw.children)
-        .map((c) => mapBlock(c, resolveMedia, routes))
+        .map((c) => mapBlock(c, resolveMedia, routes, caseRoutes))
         .filter((x): x is Block => x !== null)
       return {
         type: 'section',
@@ -79,7 +86,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         type: 'image',
         media: resolveMedia(raw.media),
         altText: raw.altText || undefined,
-        ...resolveBlockLink(raw, routes),
+        ...resolveBlockLink(raw, routes, caseRoutes),
         aspectRatio: ['auto', '1:1', '4:3', '3:4', '16:9'].includes(raw.aspectRatio) ? raw.aspectRatio : 'auto',
         fit: raw.fit === 'contain' ? 'contain' : 'cover',
         padding: raw.padding || undefined,
@@ -99,7 +106,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         variant: raw.variant === 'qr' ? 'qr' : undefined,
         titleColor: raw.titleColor || undefined,
         descColor: raw.descColor || undefined,
-        ...resolveBlockLink(raw, routes),
+        ...resolveBlockLink(raw, routes, caseRoutes),
         padding: raw.padding || undefined,
         bg,
         alt,
@@ -110,7 +117,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         icon: resolveMedia(raw.icon),
         title: raw.title || undefined,
         desc: raw.desc || undefined,
-        ...resolveBlockLink(raw, routes),
+        ...resolveBlockLink(raw, routes, caseRoutes),
         bgImage: raw.bgImage || undefined,
         bgColor: raw.bgColor || undefined,
         iconColor: raw.iconColor || undefined,
@@ -121,7 +128,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         variant: raw.variant === 'compact' ? 'compact' : 'default',
       }
     case 'button':
-      return { type: 'button', label: String(raw.label ?? ''), ...resolveBlockLink(raw, routes), style: raw.style === 'outline' ? 'outline' : 'primary', padding: raw.padding || undefined, bg, alt }
+      return { type: 'button', label: String(raw.label ?? ''), ...resolveBlockLink(raw, routes, caseRoutes), style: raw.style === 'outline' ? 'outline' : 'primary', padding: raw.padding || undefined, bg, alt }
     case 'banner':
       return {
         type: 'banner',
@@ -138,7 +145,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
     case 'grid':
     case 'gridInner': {
       const children = arr<Record<string, any>>(raw.children)
-        .map((child) => mapBlock(child, resolveMedia, routes))
+        .map((child) => mapBlock(child, resolveMedia, routes, caseRoutes))
         .filter((x): x is Block => x !== null)
       return {
         type: 'grid',
@@ -161,7 +168,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         gap: raw.gap === 'sm' || raw.gap === 'lg' ? raw.gap : 'md',
         columnRatio: normalizeColumnRatio(raw.columnRatio, columns),
         children: arr<Record<string, any>>(raw.children)
-          .map((child) => mapBlock(child, resolveMedia, routes))
+          .map((child) => mapBlock(child, resolveMedia, routes, caseRoutes))
           .filter((x): x is Block => x !== null),
       }
     }
@@ -169,7 +176,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
       return {
         type: 'gridCell',
         children: arr<Record<string, any>>(raw.children)
-          .map((child) => mapBlock(child, resolveMedia, routes))
+          .map((child) => mapBlock(child, resolveMedia, routes, caseRoutes))
           .filter((x): x is Block => x !== null),
       }
     case 'infoList':
@@ -234,7 +241,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         bgColor: raw.bgColor || undefined,
         padding: raw.padding > 0 ? Number(raw.padding) : undefined,
         children: arr<Record<string, any>>(raw.children)
-          .map((child) => mapBlock(child, resolveMedia, routes))
+          .map((child) => mapBlock(child, resolveMedia, routes, caseRoutes))
           .filter((x): x is Block => x !== null),
       }
     case 'hscroll':
@@ -242,7 +249,7 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
         type: 'hscroll',
         timeline: raw.timeline === true,
         children: arr<Record<string, any>>(raw.children)
-          .map((child) => mapBlock(child, resolveMedia, routes))
+          .map((child) => mapBlock(child, resolveMedia, routes, caseRoutes))
           .filter((x): x is Block => x !== null),
       }
     case 'gallery':
@@ -263,12 +270,12 @@ export function mapBlock(raw: Record<string, any>, resolveMedia: MediaResolver, 
   }
 }
 
-export function mapPageDoc(raw: Record<string, any>, resolveMedia: MediaResolver, routes?: PageRoutes): PageDoc {
+export function mapPageDoc(raw: Record<string, any>, resolveMedia: MediaResolver, routes?: PageRoutes, caseRoutes?: PageRoutes): PageDoc {
   return {
     title: String(raw.title ?? ''),
     route: String(raw.route ?? ''),
     blocks: arr<Record<string, any>>(raw.blocks)
-      .map((b) => mapBlock(b, resolveMedia, routes))
+      .map((b) => mapBlock(b, resolveMedia, routes, caseRoutes))
       .filter((x): x is Block => x !== null),
   }
 }
@@ -355,13 +362,16 @@ export async function loadSiteData(payload: {
       payload.findGlobal({ slug: 'site-settings', depth: 1 }).catch(() => null),
     ])
   }
+  const caseRoutes = new Map(
+    cases.map((item) => [String(item.id), `/blog/${item.categorySlug}/${item.slug}/`]),
+  )
   const casePages = buildCasePages(categories, cases)
   const categoryRoutes = new Map(categories.map((category) => [String(category.id), `/blog/${category.slug}/`]))
   const redirects = redirectRes.docs
     .map((raw) => ({ from: String(raw?.from ?? '').trim(), to: String(raw?.to ?? '').trim() }))
     .filter((r) => r.from && r.to)
   return {
-    pages: [...res.docs.map((d) => mapPageDoc(d, resolveMedia, routes)), ...casePages],
+    pages: [...res.docs.map((d) => mapPageDoc(d, resolveMedia, routes, caseRoutes)), ...casePages],
     site: buildSiteConfig(menuRaw, settingsRaw, routes, categoryRoutes),
     redirects,
   }

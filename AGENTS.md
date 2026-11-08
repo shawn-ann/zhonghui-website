@@ -18,7 +18,7 @@
 | `docs/superpowers/specs/`、`docs/superpowers/plans/` | 设计文档与实现计划 |
 | `中惠门户网站架构文档.md` | 站点整体架构（栏目、内容模型） |
 
-其它多页 `about.html` / `news.html` / `cases.html` / `contact.html` / `project-swt.html` 等**尚未同步**首页的新配色/菜单/页脚，属独立任务。
+正式站点由 CMS 生成；根目录 `about.html` / `cases.html` / `contact.html` / `project-swt.html` 等为旧版静态原型。资讯中心已从范围中移除。
 
 ## 本地预览与验证
 
@@ -57,8 +57,8 @@ python3 -m http.server 8321 --bind 127.0.0.1
 
 - **基准宽度 1200px**：全站各页的 `.container` 与 `.footer-grid` 一律 `max-width: 1200px`（`padding: 0 24px`），保证左右边距一致。
 - **同一页面内** `.container` 与 `.footer-grid` 宽度必须相同。
-- **文章详情页**（case-detail / news-detail）：外层容器 1200px 使菜单/页脚对齐，正文用内层窄容器（约 820px）约束阅读宽度。
-- 截至 2026-10-08：`index` / `about` / `cases` 已符合；`news` / `contact` / `project-swt` / `case-detail` / `news-detail` 待同步。详见 `docs/design-system.md` 第 7 节。
+- **文章详情页**（case-detail）：外层容器 1200px 使菜单/页脚对齐，正文用内层窄容器（约 820px）约束阅读宽度。
+- 正式站点由 CMS 生成；根目录旧版原型页不再维护。详见 `docs/design-system.md` 第 7 节。
 
 ## 区块背景交替规则（定版）
 

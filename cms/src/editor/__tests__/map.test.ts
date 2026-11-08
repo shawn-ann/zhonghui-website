@@ -33,6 +33,11 @@ describe('editorToPayloadBlocks', () => {
     expect(editorToPayloadBlocks(external, new Map())[0]).toMatchObject({
       linkType: 'external', externalUrl: 'https://x.test', internalPage: null, link: null,
     })
+
+    const article: any = [{ type: 'imageText', media: '', _id: 'i3', linkType: 'case', caseItemId: 9, caseRoute: '/blog/study-case/xiaocao/', link: '/blog/study-case/xiaocao/' }]
+    expect(editorToPayloadBlocks(article, new Map())[0]).toMatchObject({
+      linkType: 'case', caseItem: 9, internalPage: null, externalUrl: null, link: null,
+    })
   })
 
   it('maps a registered upload url to its media id', () => {

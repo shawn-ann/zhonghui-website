@@ -1,3 +1,5 @@
+export type LinkType = 'none' | 'internal' | 'external' | 'case'
+
 export interface BlockBase {
   bg?: string
   alt?: boolean
@@ -77,10 +79,12 @@ export interface ImageBlock extends BlockBase {
   media: string
   altText?: string
   link?: string
-  linkType?: 'none' | 'internal' | 'external'
+  linkType?: LinkType
   internalPageId?: string | number
   internalRoute?: string
   externalUrl?: string
+  caseItemId?: string | number
+  caseRoute?: string
   aspectRatio?: 'auto' | '1:1' | '4:3' | '3:4' | '16:9'
   fit?: 'cover' | 'contain'
   padding?: number
@@ -99,10 +103,12 @@ export interface ImageTextBlock extends BlockBase {
   descColor?: string
   imageRatio?: 'auto' | '1:1' | '4:3' | '3:4' | '16:9'
   link?: string
-  linkType?: 'none' | 'internal' | 'external'
+  linkType?: LinkType
   internalPageId?: string | number
   internalRoute?: string
   externalUrl?: string
+  caseItemId?: string | number
+  caseRoute?: string
   padding?: number
 }
 
@@ -110,10 +116,12 @@ export interface ButtonBlock extends BlockBase {
   type: 'button'
   label: string
   link: string
-  linkType?: 'none' | 'internal' | 'external'
+  linkType?: LinkType
   internalPageId?: string | number
   internalRoute?: string
   externalUrl?: string
+  caseItemId?: string | number
+  caseRoute?: string
   style?: 'primary' | 'outline'
   padding?: number
 }
@@ -150,10 +158,12 @@ export interface IconCardBlock extends BlockBase {
   titleColor?: string
   descColor?: string
   link?: string
-  linkType?: 'none' | 'internal' | 'external'
+  linkType?: LinkType
   internalPageId?: string | number
   internalRoute?: string
   externalUrl?: string
+  caseItemId?: string | number
+  caseRoute?: string
   /** 卡片背景图片（可与背景色叠加） */
   bgImage?: string
   /** 卡片背景颜色 */

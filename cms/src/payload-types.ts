@@ -322,11 +322,15 @@ export interface Page {
                             | {
                                 media: number | Media;
                                 altText?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -367,11 +371,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -389,11 +397,15 @@ export interface Page {
                               }
                             | {
                                 label: string;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -422,11 +434,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -510,11 +526,15 @@ export interface Page {
                                       | {
                                           media: number | Media;
                                           altText?: string | null;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -555,11 +575,15 @@ export interface Page {
                                            * 描述颜色，留空沿用主题色
                                            */
                                           descColor?: string | null;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -587,11 +611,15 @@ export interface Page {
                                            * 描述颜色，留空沿用主题色
                                            */
                                           descColor?: string | null;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -621,11 +649,15 @@ export interface Page {
                                         }
                                       | {
                                           label: string;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -763,11 +795,15 @@ export interface Page {
                                             | {
                                                 media: number | Media;
                                                 altText?: string | null;
-                                                linkType?: ('none' | 'internal' | 'external') | null;
+                                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                 /**
                                                  * 静态生成时解析为该页面的路由
                                                  */
                                                 internalPage?: (number | null) | Page;
+                                                /**
+                                                 * 选择一篇已发布文章
+                                                 */
+                                                caseItem?: (number | null) | Case;
                                                 /**
                                                  * https://… / mailto: / tel:
                                                  */
@@ -808,11 +844,15 @@ export interface Page {
                                                  * 描述颜色，留空沿用主题色
                                                  */
                                                 descColor?: string | null;
-                                                linkType?: ('none' | 'internal' | 'external') | null;
+                                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                 /**
                                                  * 静态生成时解析为该页面的路由
                                                  */
                                                 internalPage?: (number | null) | Page;
+                                                /**
+                                                 * 选择一篇已发布文章
+                                                 */
+                                                caseItem?: (number | null) | Case;
                                                 /**
                                                  * https://… / mailto: / tel:
                                                  */
@@ -830,11 +870,15 @@ export interface Page {
                                               }
                                             | {
                                                 label: string;
-                                                linkType?: ('none' | 'internal' | 'external') | null;
+                                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                 /**
                                                  * 静态生成时解析为该页面的路由
                                                  */
                                                 internalPage?: (number | null) | Page;
+                                                /**
+                                                 * 选择一篇已发布文章
+                                                 */
+                                                caseItem?: (number | null) | Case;
                                                 /**
                                                  * https://… / mailto: / tel:
                                                  */
@@ -863,11 +907,15 @@ export interface Page {
                                                  * 描述颜色，留空沿用主题色
                                                  */
                                                 descColor?: string | null;
-                                                linkType?: ('none' | 'internal' | 'external') | null;
+                                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                 /**
                                                  * 静态生成时解析为该页面的路由
                                                  */
                                                 internalPage?: (number | null) | Page;
+                                                /**
+                                                 * 选择一篇已发布文章
+                                                 */
+                                                caseItem?: (number | null) | Case;
                                                 /**
                                                  * https://… / mailto: / tel:
                                                  */
@@ -951,11 +999,15 @@ export interface Page {
                                                       | {
                                                           media: number | Media;
                                                           altText?: string | null;
-                                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                           /**
                                                            * 静态生成时解析为该页面的路由
                                                            */
                                                           internalPage?: (number | null) | Page;
+                                                          /**
+                                                           * 选择一篇已发布文章
+                                                           */
+                                                          caseItem?: (number | null) | Case;
                                                           /**
                                                            * https://… / mailto: / tel:
                                                            */
@@ -997,11 +1049,15 @@ export interface Page {
                                                            * 描述颜色，留空沿用主题色
                                                            */
                                                           descColor?: string | null;
-                                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                           /**
                                                            * 静态生成时解析为该页面的路由
                                                            */
                                                           internalPage?: (number | null) | Page;
+                                                          /**
+                                                           * 选择一篇已发布文章
+                                                           */
+                                                          caseItem?: (number | null) | Case;
                                                           /**
                                                            * https://… / mailto: / tel:
                                                            */
@@ -1029,11 +1085,15 @@ export interface Page {
                                                            * 描述颜色，留空沿用主题色
                                                            */
                                                           descColor?: string | null;
-                                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                           /**
                                                            * 静态生成时解析为该页面的路由
                                                            */
                                                           internalPage?: (number | null) | Page;
+                                                          /**
+                                                           * 选择一篇已发布文章
+                                                           */
+                                                          caseItem?: (number | null) | Case;
                                                           /**
                                                            * https://… / mailto: / tel:
                                                            */
@@ -1063,11 +1123,15 @@ export interface Page {
                                                         }
                                                       | {
                                                           label: string;
-                                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                           /**
                                                            * 静态生成时解析为该页面的路由
                                                            */
                                                           internalPage?: (number | null) | Page;
+                                                          /**
+                                                           * 选择一篇已发布文章
+                                                           */
+                                                          caseItem?: (number | null) | Case;
                                                           /**
                                                            * https://… / mailto: / tel:
                                                            */
@@ -1223,11 +1287,15 @@ export interface Page {
                                       | {
                                           media: number | Media;
                                           altText?: string | null;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -1268,11 +1336,15 @@ export interface Page {
                                            * 描述颜色，留空沿用主题色
                                            */
                                           descColor?: string | null;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -1290,11 +1362,15 @@ export interface Page {
                                         }
                                       | {
                                           label: string;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -1323,11 +1399,15 @@ export interface Page {
                                            * 描述颜色，留空沿用主题色
                                            */
                                           descColor?: string | null;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -1411,11 +1491,15 @@ export interface Page {
                                                 | {
                                                     media: number | Media;
                                                     altText?: string | null;
-                                                    linkType?: ('none' | 'internal' | 'external') | null;
+                                                    linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                     /**
                                                      * 静态生成时解析为该页面的路由
                                                      */
                                                     internalPage?: (number | null) | Page;
+                                                    /**
+                                                     * 选择一篇已发布文章
+                                                     */
+                                                    caseItem?: (number | null) | Case;
                                                     /**
                                                      * https://… / mailto: / tel:
                                                      */
@@ -1456,11 +1540,15 @@ export interface Page {
                                                      * 描述颜色，留空沿用主题色
                                                      */
                                                     descColor?: string | null;
-                                                    linkType?: ('none' | 'internal' | 'external') | null;
+                                                    linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                     /**
                                                      * 静态生成时解析为该页面的路由
                                                      */
                                                     internalPage?: (number | null) | Page;
+                                                    /**
+                                                     * 选择一篇已发布文章
+                                                     */
+                                                    caseItem?: (number | null) | Case;
                                                     /**
                                                      * https://… / mailto: / tel:
                                                      */
@@ -1488,11 +1576,15 @@ export interface Page {
                                                      * 描述颜色，留空沿用主题色
                                                      */
                                                     descColor?: string | null;
-                                                    linkType?: ('none' | 'internal' | 'external') | null;
+                                                    linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                     /**
                                                      * 静态生成时解析为该页面的路由
                                                      */
                                                     internalPage?: (number | null) | Page;
+                                                    /**
+                                                     * 选择一篇已发布文章
+                                                     */
+                                                    caseItem?: (number | null) | Case;
                                                     /**
                                                      * https://… / mailto: / tel:
                                                      */
@@ -1522,11 +1614,15 @@ export interface Page {
                                                   }
                                                 | {
                                                     label: string;
-                                                    linkType?: ('none' | 'internal' | 'external') | null;
+                                                    linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                     /**
                                                      * 静态生成时解析为该页面的路由
                                                      */
                                                     internalPage?: (number | null) | Page;
+                                                    /**
+                                                     * 选择一篇已发布文章
+                                                     */
+                                                    caseItem?: (number | null) | Case;
                                                     /**
                                                      * https://… / mailto: / tel:
                                                      */
@@ -1816,11 +1912,15 @@ export interface Page {
                              * 描述颜色，留空沿用主题色
                              */
                             descColor?: string | null;
-                            linkType?: ('none' | 'internal' | 'external') | null;
+                            linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                             /**
                              * 静态生成时解析为该页面的路由
                              */
                             internalPage?: (number | null) | Page;
+                            /**
+                             * 选择一篇已发布文章
+                             */
+                            caseItem?: (number | null) | Case;
                             /**
                              * https://… / mailto: / tel:
                              */
@@ -1897,11 +1997,15 @@ export interface Page {
                             | {
                                 media: number | Media;
                                 altText?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -1942,11 +2046,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -1974,11 +2082,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -2008,11 +2120,15 @@ export interface Page {
                               }
                             | {
                                 label: string;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -2163,11 +2279,15 @@ export interface Page {
                   | {
                       media: number | Media;
                       altText?: string | null;
-                      linkType?: ('none' | 'internal' | 'external') | null;
+                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                       /**
                        * 静态生成时解析为该页面的路由
                        */
                       internalPage?: (number | null) | Page;
+                      /**
+                       * 选择一篇已发布文章
+                       */
+                      caseItem?: (number | null) | Case;
                       /**
                        * https://… / mailto: / tel:
                        */
@@ -2208,11 +2328,15 @@ export interface Page {
                        * 描述颜色，留空沿用主题色
                        */
                       descColor?: string | null;
-                      linkType?: ('none' | 'internal' | 'external') | null;
+                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                       /**
                        * 静态生成时解析为该页面的路由
                        */
                       internalPage?: (number | null) | Page;
+                      /**
+                       * 选择一篇已发布文章
+                       */
+                      caseItem?: (number | null) | Case;
                       /**
                        * https://… / mailto: / tel:
                        */
@@ -2230,11 +2354,15 @@ export interface Page {
                     }
                   | {
                       label: string;
-                      linkType?: ('none' | 'internal' | 'external') | null;
+                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                       /**
                        * 静态生成时解析为该页面的路由
                        */
                       internalPage?: (number | null) | Page;
+                      /**
+                       * 选择一篇已发布文章
+                       */
+                      caseItem?: (number | null) | Case;
                       /**
                        * https://… / mailto: / tel:
                        */
@@ -2263,11 +2391,15 @@ export interface Page {
                        * 描述颜色，留空沿用主题色
                        */
                       descColor?: string | null;
-                      linkType?: ('none' | 'internal' | 'external') | null;
+                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                       /**
                        * 静态生成时解析为该页面的路由
                        */
                       internalPage?: (number | null) | Page;
+                      /**
+                       * 选择一篇已发布文章
+                       */
+                      caseItem?: (number | null) | Case;
                       /**
                        * https://… / mailto: / tel:
                        */
@@ -2351,11 +2483,15 @@ export interface Page {
                             | {
                                 media: number | Media;
                                 altText?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -2396,11 +2532,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -2428,11 +2568,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -2462,11 +2606,15 @@ export interface Page {
                               }
                             | {
                                 label: string;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -2604,11 +2752,15 @@ export interface Page {
                                   | {
                                       media: number | Media;
                                       altText?: string | null;
-                                      linkType?: ('none' | 'internal' | 'external') | null;
+                                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                       /**
                                        * 静态生成时解析为该页面的路由
                                        */
                                       internalPage?: (number | null) | Page;
+                                      /**
+                                       * 选择一篇已发布文章
+                                       */
+                                      caseItem?: (number | null) | Case;
                                       /**
                                        * https://… / mailto: / tel:
                                        */
@@ -2649,11 +2801,15 @@ export interface Page {
                                        * 描述颜色，留空沿用主题色
                                        */
                                       descColor?: string | null;
-                                      linkType?: ('none' | 'internal' | 'external') | null;
+                                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                       /**
                                        * 静态生成时解析为该页面的路由
                                        */
                                       internalPage?: (number | null) | Page;
+                                      /**
+                                       * 选择一篇已发布文章
+                                       */
+                                      caseItem?: (number | null) | Case;
                                       /**
                                        * https://… / mailto: / tel:
                                        */
@@ -2671,11 +2827,15 @@ export interface Page {
                                     }
                                   | {
                                       label: string;
-                                      linkType?: ('none' | 'internal' | 'external') | null;
+                                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                       /**
                                        * 静态生成时解析为该页面的路由
                                        */
                                       internalPage?: (number | null) | Page;
+                                      /**
+                                       * 选择一篇已发布文章
+                                       */
+                                      caseItem?: (number | null) | Case;
                                       /**
                                        * https://… / mailto: / tel:
                                        */
@@ -2704,11 +2864,15 @@ export interface Page {
                                        * 描述颜色，留空沿用主题色
                                        */
                                       descColor?: string | null;
-                                      linkType?: ('none' | 'internal' | 'external') | null;
+                                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                       /**
                                        * 静态生成时解析为该页面的路由
                                        */
                                       internalPage?: (number | null) | Page;
+                                      /**
+                                       * 选择一篇已发布文章
+                                       */
+                                      caseItem?: (number | null) | Case;
                                       /**
                                        * https://… / mailto: / tel:
                                        */
@@ -2792,11 +2956,15 @@ export interface Page {
                                             | {
                                                 media: number | Media;
                                                 altText?: string | null;
-                                                linkType?: ('none' | 'internal' | 'external') | null;
+                                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                 /**
                                                  * 静态生成时解析为该页面的路由
                                                  */
                                                 internalPage?: (number | null) | Page;
+                                                /**
+                                                 * 选择一篇已发布文章
+                                                 */
+                                                caseItem?: (number | null) | Case;
                                                 /**
                                                  * https://… / mailto: / tel:
                                                  */
@@ -2837,11 +3005,15 @@ export interface Page {
                                                  * 描述颜色，留空沿用主题色
                                                  */
                                                 descColor?: string | null;
-                                                linkType?: ('none' | 'internal' | 'external') | null;
+                                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                 /**
                                                  * 静态生成时解析为该页面的路由
                                                  */
                                                 internalPage?: (number | null) | Page;
+                                                /**
+                                                 * 选择一篇已发布文章
+                                                 */
+                                                caseItem?: (number | null) | Case;
                                                 /**
                                                  * https://… / mailto: / tel:
                                                  */
@@ -2869,11 +3041,15 @@ export interface Page {
                                                  * 描述颜色，留空沿用主题色
                                                  */
                                                 descColor?: string | null;
-                                                linkType?: ('none' | 'internal' | 'external') | null;
+                                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                 /**
                                                  * 静态生成时解析为该页面的路由
                                                  */
                                                 internalPage?: (number | null) | Page;
+                                                /**
+                                                 * 选择一篇已发布文章
+                                                 */
+                                                caseItem?: (number | null) | Case;
                                                 /**
                                                  * https://… / mailto: / tel:
                                                  */
@@ -2903,11 +3079,15 @@ export interface Page {
                                               }
                                             | {
                                                 label: string;
-                                                linkType?: ('none' | 'internal' | 'external') | null;
+                                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                                 /**
                                                  * 静态生成时解析为该页面的路由
                                                  */
                                                 internalPage?: (number | null) | Page;
+                                                /**
+                                                 * 选择一篇已发布文章
+                                                 */
+                                                caseItem?: (number | null) | Case;
                                                 /**
                                                  * https://… / mailto: / tel:
                                                  */
@@ -3057,11 +3237,15 @@ export interface Page {
                             | {
                                 media: number | Media;
                                 altText?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -3102,11 +3286,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -3124,11 +3312,15 @@ export interface Page {
                               }
                             | {
                                 label: string;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -3157,11 +3349,15 @@ export interface Page {
                                  * 描述颜色，留空沿用主题色
                                  */
                                 descColor?: string | null;
-                                linkType?: ('none' | 'internal' | 'external') | null;
+                                linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                 /**
                                  * 静态生成时解析为该页面的路由
                                  */
                                 internalPage?: (number | null) | Page;
+                                /**
+                                 * 选择一篇已发布文章
+                                 */
+                                caseItem?: (number | null) | Case;
                                 /**
                                  * https://… / mailto: / tel:
                                  */
@@ -3245,11 +3441,15 @@ export interface Page {
                                       | {
                                           media: number | Media;
                                           altText?: string | null;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -3290,11 +3490,15 @@ export interface Page {
                                            * 描述颜色，留空沿用主题色
                                            */
                                           descColor?: string | null;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -3322,11 +3526,15 @@ export interface Page {
                                            * 描述颜色，留空沿用主题色
                                            */
                                           descColor?: string | null;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -3356,11 +3564,15 @@ export interface Page {
                                         }
                                       | {
                                           label: string;
-                                          linkType?: ('none' | 'internal' | 'external') | null;
+                                          linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                                           /**
                                            * 静态生成时解析为该页面的路由
                                            */
                                           internalPage?: (number | null) | Page;
+                                          /**
+                                           * 选择一篇已发布文章
+                                           */
+                                          caseItem?: (number | null) | Case;
                                           /**
                                            * https://… / mailto: / tel:
                                            */
@@ -3530,11 +3742,15 @@ export interface Page {
         | {
             media: number | Media;
             altText?: string | null;
-            linkType?: ('none' | 'internal' | 'external') | null;
+            linkType?: ('none' | 'internal' | 'case' | 'external') | null;
             /**
              * 静态生成时解析为该页面的路由
              */
             internalPage?: (number | null) | Page;
+            /**
+             * 选择一篇已发布文章
+             */
+            caseItem?: (number | null) | Case;
             /**
              * https://… / mailto: / tel:
              */
@@ -3575,11 +3791,15 @@ export interface Page {
              * 描述颜色，留空沿用主题色
              */
             descColor?: string | null;
-            linkType?: ('none' | 'internal' | 'external') | null;
+            linkType?: ('none' | 'internal' | 'case' | 'external') | null;
             /**
              * 静态生成时解析为该页面的路由
              */
             internalPage?: (number | null) | Page;
+            /**
+             * 选择一篇已发布文章
+             */
+            caseItem?: (number | null) | Case;
             /**
              * https://… / mailto: / tel:
              */
@@ -3597,11 +3817,15 @@ export interface Page {
           }
         | {
             label: string;
-            linkType?: ('none' | 'internal' | 'external') | null;
+            linkType?: ('none' | 'internal' | 'case' | 'external') | null;
             /**
              * 静态生成时解析为该页面的路由
              */
             internalPage?: (number | null) | Page;
+            /**
+             * 选择一篇已发布文章
+             */
+            caseItem?: (number | null) | Case;
             /**
              * https://… / mailto: / tel:
              */
@@ -3682,11 +3906,15 @@ export interface Page {
              * 描述颜色，留空沿用主题色
              */
             descColor?: string | null;
-            linkType?: ('none' | 'internal' | 'external') | null;
+            linkType?: ('none' | 'internal' | 'case' | 'external') | null;
             /**
              * 静态生成时解析为该页面的路由
              */
             internalPage?: (number | null) | Page;
+            /**
+             * 选择一篇已发布文章
+             */
+            caseItem?: (number | null) | Case;
             /**
              * https://… / mailto: / tel:
              */
@@ -3804,11 +4032,15 @@ export interface Page {
                    * 描述颜色，留空沿用主题色
                    */
                   descColor?: string | null;
-                  linkType?: ('none' | 'internal' | 'external') | null;
+                  linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                   /**
                    * 静态生成时解析为该页面的路由
                    */
                   internalPage?: (number | null) | Page;
+                  /**
+                   * 选择一篇已发布文章
+                   */
+                  caseItem?: (number | null) | Case;
                   /**
                    * https://… / mailto: / tel:
                    */
@@ -3885,11 +4117,15 @@ export interface Page {
                   | {
                       media: number | Media;
                       altText?: string | null;
-                      linkType?: ('none' | 'internal' | 'external') | null;
+                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                       /**
                        * 静态生成时解析为该页面的路由
                        */
                       internalPage?: (number | null) | Page;
+                      /**
+                       * 选择一篇已发布文章
+                       */
+                      caseItem?: (number | null) | Case;
                       /**
                        * https://… / mailto: / tel:
                        */
@@ -3930,11 +4166,15 @@ export interface Page {
                        * 描述颜色，留空沿用主题色
                        */
                       descColor?: string | null;
-                      linkType?: ('none' | 'internal' | 'external') | null;
+                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                       /**
                        * 静态生成时解析为该页面的路由
                        */
                       internalPage?: (number | null) | Page;
+                      /**
+                       * 选择一篇已发布文章
+                       */
+                      caseItem?: (number | null) | Case;
                       /**
                        * https://… / mailto: / tel:
                        */
@@ -3962,11 +4202,15 @@ export interface Page {
                        * 描述颜色，留空沿用主题色
                        */
                       descColor?: string | null;
-                      linkType?: ('none' | 'internal' | 'external') | null;
+                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                       /**
                        * 静态生成时解析为该页面的路由
                        */
                       internalPage?: (number | null) | Page;
+                      /**
+                       * 选择一篇已发布文章
+                       */
+                      caseItem?: (number | null) | Case;
                       /**
                        * https://… / mailto: / tel:
                        */
@@ -3996,11 +4240,15 @@ export interface Page {
                     }
                   | {
                       label: string;
-                      linkType?: ('none' | 'internal' | 'external') | null;
+                      linkType?: ('none' | 'internal' | 'case' | 'external') | null;
                       /**
                        * 静态生成时解析为该页面的路由
                        */
                       internalPage?: (number | null) | Page;
+                      /**
+                       * 选择一篇已发布文章
+                       */
+                      caseItem?: (number | null) | Case;
                       /**
                        * https://… / mailto: / tel:
                        */
@@ -4072,31 +4320,6 @@ export interface Page {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * 文章分类决定列表页与文章的所属栏目。
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "case-categories".
- */
-export interface CaseCategory {
-  id: number;
-  title: string;
-  /**
-   * 分类链接的最后一段，只能使用小写字母、数字和连字符，如 study-case
-   */
-  slug: string;
-  banner?: (number | null) | Media;
-  subtitle?: string | null;
-  /**
-   * 列表每行 4 列，建议填 4 的倍数（如 8、12、16），避免最后一行空缺。
-   */
-  pageSize: number;
-  order?: number | null;
-  seoTitle?: string | null;
-  seoDescription?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
  * 管理文章内容；选择文章分类、封面并填写正文后发布。
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4130,6 +4353,31 @@ export interface Case {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * 文章分类决定列表页与文章的所属栏目。
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-categories".
+ */
+export interface CaseCategory {
+  id: number;
+  title: string;
+  /**
+   * 分类链接的最后一段，只能使用小写字母、数字和连字符，如 study-case
+   */
+  slug: string;
+  banner?: (number | null) | Media;
+  subtitle?: string | null;
+  /**
+   * 列表每行 4 列，建议填 4 的倍数（如 8、12、16），避免最后一行空缺。
+   */
+  pageSize: number;
+  order?: number | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4373,6 +4621,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       altText?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       aspectRatio?: T;
@@ -4398,6 +4647,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       descColor?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       bg?: T;
@@ -4412,6 +4662,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       label?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       style?: T;
@@ -4431,6 +4682,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       descColor?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       bgImage?: T;
@@ -4489,6 +4741,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   altText?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   aspectRatio?: T;
@@ -4514,6 +4767,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   descColor?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   bg?: T;
@@ -4532,6 +4786,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   descColor?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   bgImage?: T;
@@ -4549,6 +4804,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   label?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   style?: T;
@@ -4656,6 +4912,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               altText?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               aspectRatio?: T;
@@ -4681,6 +4938,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               descColor?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               bg?: T;
@@ -4695,6 +4953,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               label?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               style?: T;
@@ -4714,6 +4973,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               descColor?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               bgImage?: T;
@@ -4772,6 +5032,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                                           altText?: T;
                                                                           linkType?: T;
                                                                           internalPage?: T;
+                                                                          caseItem?: T;
                                                                           externalUrl?: T;
                                                                           link?: T;
                                                                           aspectRatio?: T;
@@ -4797,6 +5058,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                                           descColor?: T;
                                                                           linkType?: T;
                                                                           internalPage?: T;
+                                                                          caseItem?: T;
                                                                           externalUrl?: T;
                                                                           link?: T;
                                                                           bg?: T;
@@ -4815,6 +5077,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                                           descColor?: T;
                                                                           linkType?: T;
                                                                           internalPage?: T;
+                                                                          caseItem?: T;
                                                                           externalUrl?: T;
                                                                           link?: T;
                                                                           bgImage?: T;
@@ -4832,6 +5095,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                                           label?: T;
                                                                           linkType?: T;
                                                                           internalPage?: T;
+                                                                          caseItem?: T;
                                                                           externalUrl?: T;
                                                                           link?: T;
                                                                           style?: T;
@@ -4943,6 +5207,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   altText?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   aspectRatio?: T;
@@ -4968,6 +5233,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   descColor?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   bg?: T;
@@ -4982,6 +5248,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   label?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   style?: T;
@@ -5001,6 +5268,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   descColor?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   bgImage?: T;
@@ -5059,6 +5327,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               altText?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               aspectRatio?: T;
@@ -5084,6 +5353,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               descColor?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               bg?: T;
@@ -5102,6 +5372,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               descColor?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               bgImage?: T;
@@ -5119,6 +5390,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               label?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               style?: T;
@@ -5347,6 +5619,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       descColor?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       bg?: T;
@@ -5406,6 +5679,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       altText?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       aspectRatio?: T;
@@ -5431,6 +5705,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       descColor?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       bg?: T;
@@ -5449,6 +5724,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       descColor?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       bgImage?: T;
@@ -5466,6 +5742,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       label?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       style?: T;
@@ -5569,6 +5846,7 @@ export interface PagesSelect<T extends boolean = true> {
                           altText?: T;
                           linkType?: T;
                           internalPage?: T;
+                          caseItem?: T;
                           externalUrl?: T;
                           link?: T;
                           aspectRatio?: T;
@@ -5594,6 +5872,7 @@ export interface PagesSelect<T extends boolean = true> {
                           descColor?: T;
                           linkType?: T;
                           internalPage?: T;
+                          caseItem?: T;
                           externalUrl?: T;
                           link?: T;
                           bg?: T;
@@ -5608,6 +5887,7 @@ export interface PagesSelect<T extends boolean = true> {
                           label?: T;
                           linkType?: T;
                           internalPage?: T;
+                          caseItem?: T;
                           externalUrl?: T;
                           link?: T;
                           style?: T;
@@ -5627,6 +5907,7 @@ export interface PagesSelect<T extends boolean = true> {
                           descColor?: T;
                           linkType?: T;
                           internalPage?: T;
+                          caseItem?: T;
                           externalUrl?: T;
                           link?: T;
                           bgImage?: T;
@@ -5685,6 +5966,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       altText?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       aspectRatio?: T;
@@ -5710,6 +5992,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       descColor?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       bg?: T;
@@ -5728,6 +6011,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       descColor?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       bgImage?: T;
@@ -5745,6 +6029,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       label?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       style?: T;
@@ -5852,6 +6137,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   altText?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   aspectRatio?: T;
@@ -5877,6 +6163,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   descColor?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   bg?: T;
@@ -5891,6 +6178,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   label?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   style?: T;
@@ -5910,6 +6198,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   descColor?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   bgImage?: T;
@@ -5968,6 +6257,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               altText?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               aspectRatio?: T;
@@ -5993,6 +6283,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               descColor?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               bg?: T;
@@ -6011,6 +6302,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               descColor?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               bgImage?: T;
@@ -6028,6 +6320,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                               label?: T;
                                                               linkType?: T;
                                                               internalPage?: T;
+                                                              caseItem?: T;
                                                               externalUrl?: T;
                                                               link?: T;
                                                               style?: T;
@@ -6139,6 +6432,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       altText?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       aspectRatio?: T;
@@ -6164,6 +6458,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       descColor?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       bg?: T;
@@ -6178,6 +6473,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       label?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       style?: T;
@@ -6197,6 +6493,7 @@ export interface PagesSelect<T extends boolean = true> {
                                       descColor?: T;
                                       linkType?: T;
                                       internalPage?: T;
+                                      caseItem?: T;
                                       externalUrl?: T;
                                       link?: T;
                                       bgImage?: T;
@@ -6255,6 +6552,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   altText?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   aspectRatio?: T;
@@ -6280,6 +6578,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   descColor?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   bg?: T;
@@ -6298,6 +6597,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   descColor?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   bgImage?: T;
@@ -6315,6 +6615,7 @@ export interface PagesSelect<T extends boolean = true> {
                                                   label?: T;
                                                   linkType?: T;
                                                   internalPage?: T;
+                                                  caseItem?: T;
                                                   externalUrl?: T;
                                                   link?: T;
                                                   style?: T;
@@ -6428,6 +6729,7 @@ export interface PagesSelect<T extends boolean = true> {
               altText?: T;
               linkType?: T;
               internalPage?: T;
+              caseItem?: T;
               externalUrl?: T;
               link?: T;
               aspectRatio?: T;
@@ -6453,6 +6755,7 @@ export interface PagesSelect<T extends boolean = true> {
               descColor?: T;
               linkType?: T;
               internalPage?: T;
+              caseItem?: T;
               externalUrl?: T;
               link?: T;
               bg?: T;
@@ -6467,6 +6770,7 @@ export interface PagesSelect<T extends boolean = true> {
               label?: T;
               linkType?: T;
               internalPage?: T;
+              caseItem?: T;
               externalUrl?: T;
               link?: T;
               style?: T;
@@ -6525,6 +6829,7 @@ export interface PagesSelect<T extends boolean = true> {
               descColor?: T;
               linkType?: T;
               internalPage?: T;
+              caseItem?: T;
               externalUrl?: T;
               link?: T;
               bgImage?: T;
@@ -6637,6 +6942,7 @@ export interface PagesSelect<T extends boolean = true> {
                           descColor?: T;
                           linkType?: T;
                           internalPage?: T;
+                          caseItem?: T;
                           externalUrl?: T;
                           link?: T;
                           bg?: T;
@@ -6696,6 +7002,7 @@ export interface PagesSelect<T extends boolean = true> {
                           altText?: T;
                           linkType?: T;
                           internalPage?: T;
+                          caseItem?: T;
                           externalUrl?: T;
                           link?: T;
                           aspectRatio?: T;
@@ -6721,6 +7028,7 @@ export interface PagesSelect<T extends boolean = true> {
                           descColor?: T;
                           linkType?: T;
                           internalPage?: T;
+                          caseItem?: T;
                           externalUrl?: T;
                           link?: T;
                           bg?: T;
@@ -6739,6 +7047,7 @@ export interface PagesSelect<T extends boolean = true> {
                           descColor?: T;
                           linkType?: T;
                           internalPage?: T;
+                          caseItem?: T;
                           externalUrl?: T;
                           link?: T;
                           bgImage?: T;
@@ -6756,6 +7065,7 @@ export interface PagesSelect<T extends boolean = true> {
                           label?: T;
                           linkType?: T;
                           internalPage?: T;
+                          caseItem?: T;
                           externalUrl?: T;
                           link?: T;
                           style?: T;

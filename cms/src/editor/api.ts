@@ -63,6 +63,21 @@ export async function getSiteConfig(): Promise<SiteConfig> {
 }
 
 export interface PageSummary { id: number | string; title: string; route: string }
+export interface CaseSummary { id: number | string; title: string; route: string }
+export async function listCases(): Promise<CaseSummary[]> {
+  const data = await j(await fetch('/api/cases?limit=500&depth=1&where[_status][equals]=published', { credentials: 'include' }))
+  return (data.docs as any[])
+    .map((d) => {
+      const slug = String(d.slug || '')
+      const categorySlug = typeof d.category === 'object' ? String(d.category?.slug || '') : ''
+      return {
+        id: d.id,
+        title: d.title || '',
+        route: slug && categorySlug ? `/blog/${categorySlug}/${slug}/` : '',
+      }
+    })
+    .filter((d) => d.route)
+}
 export async function listPages(): Promise<PageSummary[]> {
   const data = await j(await fetch('/api/pages?limit=200&depth=0', { credentials: 'include' }))
   return (data.docs as any[])

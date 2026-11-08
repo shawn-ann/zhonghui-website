@@ -15,7 +15,7 @@
 2. **内容组件不负责页面背景**：内容组件只渲染自身内容，不带旧的 `bg` / `alt` 字段。
 3. **结构性组件与内容组件分离**：布局容器负责排列，内容组件负责内容与排版。
 4. **响应式优先于固定尺寸**：图片用比例 + `object-fit`，不写死高度；卡片高度由布局统一控制。
-5. **编辑体验优先**：列表使用重复项手风琴控件；图片使用媒体库；链接使用内部页面/外部链接选择器。
+5. **编辑体验优先**：列表使用重复项手风琴控件；图片使用媒体库；链接使用内部页面/文章详情/外部链接选择器。
 6. **默认值可兼容**：新增字段必须有安全默认值，历史页面不配置时保持原样。
 7. **组件命名通用**：按内容形态/布局命名，不使用 `milestone`、`team` 等业务专用名称。
 
@@ -181,7 +181,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 所有内容链接统一使用页面关系模型：
 
-- `linkType`：`none` / `internal` / `external`
+- `linkType`：`none` / `internal` / `case`（文章详情）/ `external`；`caseItem` 关联 `cases` 集合
 - `internalPage`：页面关系，静态生成时解析为页面 `route`
 - `externalUrl`：外链
 - 隐藏字段 `link` 仅用于兼容旧数据
@@ -286,15 +286,15 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 ### 5.8 图片 `image`
 
-`media`、`altText`、`linkType`/`internalPage`/`externalUrl`、`aspectRatio`、`fit`。
+`media`、`altText`、`linkType`/`internalPage`/`caseItem`/`externalUrl`、`aspectRatio`、`fit`。
 
 ### 5.9 图文卡片 `imageText`
 
-`media`、`title`、`subtitle`、`subtitleColor`、`desc`、`imageRatio`、`imageFit`、`variant`、`titleColor`、`descColor`、`linkType`/`internalPage`/`externalUrl`。`imageFit` 支持 `cover`（默认，裁剪填充）/ `contain`（完整显示，二维码等场景使用）。`variant` 支持 `default`（标准白卡）/ `qr`（透明卡片 + 白色二维码框 + 背景上的标题，适合深色/图片背景）。历史 `padding` 保留渲染兼容。
+`media`、`title`、`subtitle`、`subtitleColor`、`desc`、`imageRatio`、`imageFit`、`variant`、`titleColor`、`descColor`、`linkType`/`internalPage`/`caseItem`/`externalUrl`。`imageFit` 支持 `cover`（默认，裁剪填充）/ `contain`（完整显示，二维码等场景使用）。`variant` 支持 `default`（标准白卡）/ `qr`（透明卡片 + 白色二维码框 + 背景上的标题，适合深色/图片背景）。历史 `padding` 保留渲染兼容。
 
 ### 5.10 图标卡片 `iconCard`
 
-`icon`、`iconColor`、`iconFrame`、`iconSize`、`title`、`desc`、`titleColor`、`descColor`、`bgImage`、`bgColor`、`variant`、`linkType`/`internalPage`/`externalUrl`。`variant` 支持 `default` / `compact`，`compact` 用于 5 列社交矩阵等紧凑场景。`iconFrame` 支持 `circle`（默认圆形边框）/ `none`（无边框）；`iconSize` 为图标像素尺寸，留空时默认 60px、compact 30px。
+`icon`、`iconColor`、`iconFrame`、`iconSize`、`title`、`desc`、`titleColor`、`descColor`、`bgImage`、`bgColor`、`variant`、`linkType`/`internalPage`/`caseItem`/`externalUrl`。`variant` 支持 `default` / `compact`，`compact` 用于 5 列社交矩阵等紧凑场景。`iconFrame` 支持 `circle`（默认圆形边框）/ `none`（无边框）；`iconSize` 为图标像素尺寸，留空时默认 60px、compact 30px。
 
 ### 5.11 信息列表 `infoList`
 
@@ -353,7 +353,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 ### 5.16 其它
 
-- `button`：`label`、`linkType`/`internalPage`/`externalUrl`、`style`
+- `button`：`label`、`linkType`/`internalPage`/`caseItem`/`externalUrl`、`style`
 - `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/单图/图集节点（可配置 1–4 列）；编辑器工具栏支持文字颜色（内联样式）；历史 `padding` 保留兼容
 - `gallery`：`images`、`columns`；历史 `padding` 保留兼容
 - `slider`：`images`

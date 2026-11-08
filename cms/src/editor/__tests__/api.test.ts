@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { getPage, savePage, publishPage, listMedia } from '../api'
+import { getPage, savePage, publishPage, listMedia, listCases } from '../api'
 import { docToEditorDoc } from '../map'
 
 afterEach(() => vi.unstubAllGlobals())
@@ -46,6 +46,15 @@ describe('editor api', () => {
     const media = await listMedia()
     expect(media.map((m) => m.url)).toEqual(['/m/a.jpg', '/m/b.jpg'])
     expect(fetchMock.mock.calls[1][0]).toContain('page=2')
+  })
+  it('listCases resolves article detail routes', async () => {
+    const fetchMock = vi.fn(async (_url: string) => new Response(JSON.stringify({
+      docs: [{ id: 1, title: '小曹', slug: 'xiaocao', category: { slug: 'study-case' }, _status: 'published' }],
+    }), { status: 200 }))
+    vi.stubGlobal('fetch', fetchMock)
+    const cases = await listCases()
+    expect(cases).toEqual([{ id: 1, title: '小曹', route: '/blog/study-case/xiaocao/' }])
+    expect(fetchMock.mock.calls[0][0]).toContain('depth=1')
   })
   it('docToEditorDoc maps payload block to editor model', () => {
     const doc = docToEditorDoc({

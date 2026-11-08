@@ -6,7 +6,7 @@ import Canvas from './Canvas'
 import PropertyPanel from './PropertyPanel'
 import TopBar from './TopBar'
 import { BLOCKS, makeDefaultBlock, type DefaultMedia } from './blocks'
-import { getPage, savePage, publishPage, listMedia, listPages, getSiteConfig, getBuildStatus, triggerRebuild, type MediaItem, type PageSummary, type BuildStatus } from './api'
+import { getPage, savePage, publishPage, listMedia, listPages, listCases, getSiteConfig, getBuildStatus, triggerRebuild, type MediaItem, type PageSummary, type CaseSummary, type BuildStatus } from './api'
 import {
   addBlock, ensureIds, moveBlock, newId,
   findPath, getAtPath, updateAtPath, removeAtPath, insertInto,
@@ -23,6 +23,7 @@ export default function PageEditor({ id }: { id: number | string }) {
   const [selectedId, setSelectedId] = useState<string>()
   const [dirty, setDirty] = useState(false)
   const [pages, setPages] = useState<PageSummary[]>([])
+  const [cases, setCases] = useState<CaseSummary[]>([])
   const [site, setSite] = useState<SiteConfig>()
   const [build, setBuild] = useState<BuildStatus>()
   const [publishing, setPublishing] = useState(false)
@@ -39,6 +40,7 @@ export default function PageEditor({ id }: { id: number | string }) {
   useEffect(() => {
     getPage(id).then((d) => setDoc({ ...d, blocks: ensureIds(d.blocks) }))
     listPages().then(setPages).catch(() => {})
+    listCases().then(setCases).catch(() => {})
     getSiteConfig().then(setSite).catch(() => {})
     listMedia()
       .then((items) => {
@@ -251,6 +253,7 @@ export default function PageEditor({ id }: { id: number | string }) {
         <PropertyPanel
           block={selected}
           pages={pages}
+          cases={cases}
           onPatch={(values) => {
             if (selectedPath && selected) {
               update(updateAtPath(doc.blocks, selectedPath, { ...selected, ...values } as Block))

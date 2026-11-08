@@ -50,13 +50,15 @@ function resolveMediaId(value: unknown, urlToId: Map<string, MediaId>, fallback?
 function writeLink(out: any, b: Block) {
   const link = b as {
     link?: string
-    linkType?: 'none' | 'internal' | 'external'
+    linkType?: 'none' | 'internal' | 'external' | 'case'
     internalPageId?: string | number
     externalUrl?: string
+    caseItemId?: string | number
   }
   if (link.linkType !== undefined) {
     out.linkType = link.linkType
     out.internalPage = link.internalPageId ?? null
+    out.caseItem = link.caseItemId ?? null
     out.externalUrl = link.externalUrl ?? null
     out.link = null
   } else if (link.link !== undefined) {

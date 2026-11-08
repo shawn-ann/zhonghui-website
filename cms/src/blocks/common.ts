@@ -46,6 +46,7 @@ export const pageLinkFields = (): Field[] => [
     options: [
       { label: '无链接', value: 'none' },
       { label: '内部页面', value: 'internal' },
+      { label: '文章详情', value: 'case' },
       { label: '外部链接', value: 'external' },
     ],
   },
@@ -55,6 +56,16 @@ export const pageLinkFields = (): Field[] => [
     relationTo: 'pages',
     label: '内部页面',
     admin: { description: '静态生成时解析为该页面的路由' },
+  },
+  {
+    name: 'caseItem',
+    type: 'relationship',
+    relationTo: 'cases',
+    label: '文章详情',
+    admin: {
+      description: '选择一篇已发布文章',
+      condition: (_data, siblingData) => siblingData?.linkType === 'case',
+    },
   },
   { name: 'externalUrl', type: 'text', label: '外部链接', admin: { description: 'https://… / mailto: / tel:' } },
   { name: 'link', type: 'text', admin: { hidden: true } },

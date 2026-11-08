@@ -194,6 +194,20 @@ describe('mapBlock', () => {
     } as any, resolve, new Map([['9', '/cases/']]))
     expect((byId.blocks[0] as any).link).toBe('/cases/')
 
+    const article = mapBlock({
+      blockType: 'imageText', media: { url: '/a.jpg' },
+      linkType: 'case', caseItem: 12,
+    }, resolve, new Map(), new Map([['12', '/blog/study-case/xiaocao/']])) as any
+    expect(article).toMatchObject({
+      link: '/blog/study-case/xiaocao/', linkType: 'case', caseItemId: 12, caseRoute: '/blog/study-case/xiaocao/',
+    })
+
+    const articleById = mapPageDoc({
+      title: 't', route: '/',
+      blocks: [{ blockType: 'imageText', media: { url: '/a.jpg' }, linkType: 'case', caseItem: 12 }],
+    } as any, resolve, new Map(), new Map([['12', '/blog/study-case/xiaoding/']]))
+    expect((articleById.blocks[0] as any).link).toBe('/blog/study-case/xiaoding/')
+
     const legacy = mapBlock({ blockType: 'imageText', media: { url: '/a.jpg' }, link: '/legacy/' }, resolve) as any
     expect(legacy).toMatchObject({ link: '/legacy/', linkType: 'external', externalUrl: '/legacy/' })
   })

@@ -4,7 +4,7 @@ import { BLOCKS, isLayout, allowedChildTypes } from './blocks'
 import type { Block } from './types'
 import { blockChildren } from './state'
 import { TextControl, TextAreaControl, NumberControl, SelectControl, BooleanControl, LinkControl, PageLinkControl, BgControl, MediaControl, MediaListControl, ColorControl, TextColorControl, GradientControl, RatioControl } from './controls'
-import type { PageSummary } from './api'
+import type { PageSummary, CaseSummary } from './api'
 import MediaModal from './MediaModal'
 import AddChildPicker from './AddChildPicker'
 import RepeaterControl from './RepeaterControl'
@@ -12,12 +12,13 @@ import RichTextControl from './RichTextControl'
 import type { MediaItem } from './api'
 
 export default function PropertyPanel({
-  block, onChange, onPatch, pages, onPickMedia, onSelectChild, onAddChild, onRemoveChild, onMoveChild,
+  block, onChange, onPatch, pages, cases, onPickMedia, onSelectChild, onAddChild, onRemoveChild, onMoveChild,
 }: {
   block?: Block
   onChange: (key: string, value: unknown) => void
   onPatch?: (values: Record<string, unknown>) => void
   pages?: PageSummary[]
+  cases?: CaseSummary[]
   onPickMedia?: (item: MediaItem) => void
   onSelectChild?: (id: string) => void
   onAddChild?: (type: Block['type']) => void
@@ -54,11 +55,14 @@ export default function PropertyPanel({
             <PageLinkControl
               key={f.key}
               label={f.label}
-              linkType={val('linkType') as 'none' | 'internal' | 'external' | undefined}
+              linkType={val('linkType') as 'none' | 'internal' | 'external' | 'case' | undefined}
               internalPageId={val('internalPageId') as string | number | undefined}
               internalRoute={val('internalRoute') as string | undefined}
               externalUrl={val('externalUrl') as string | undefined}
+              caseItemId={val('caseItemId') as string | number | undefined}
+              caseRoute={val('caseRoute') as string | undefined}
               pages={pages ?? []}
+              cases={cases ?? []}
               onPatch={(values) => onPatch?.(values)}
             />
           )

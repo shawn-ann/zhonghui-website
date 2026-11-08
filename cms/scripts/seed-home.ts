@@ -70,6 +70,19 @@ for (const a of advantages) {
   advantageIcons[a.icon] = await upFrom(path.resolve(process.cwd(), `src/static/icons/${a.icon}.svg`), `home-icon-${a.icon}`)
 }
 
+const storyCases = await payload.find({
+  collection: 'cases',
+  where: { slug: { in: ['xiaocao', 'xiaoding'] } },
+  limit: 2,
+  depth: 0,
+}).catch(() => ({ docs: [] as any[] }))
+const storyLink = (slug: string) => {
+  const item = (storyCases.docs as any[]).find((doc) => doc.slug === slug)
+  return item
+    ? { linkType: 'case', caseItem: item.id }
+    : { linkType: 'external', externalUrl: `/blog/study-case/${slug}/` }
+}
+
 const blocks: any[] = [
   {
     blockType: 'section',
@@ -139,8 +152,7 @@ const blocks: any[] = [
             media: proj.uk,
             title: '小曹同学的赴美之旅',
             desc: '从材料筹备、签证办理到异国的日常，全程尽享细致周全的一站式专属服务。',
-            linkType: 'external',
-            externalUrl: '/cases/',
+            ...storyLink('xiaocao'),
             titleColor: '#8A0E4B',
             descColor: '#7C6B73',
           },
@@ -149,8 +161,7 @@ const blocks: any[] = [
             media: proj.iccp,
             title: '小丁同学的逆袭故事',
             desc: '英语不占优势的他，靠每天的坚持与反复模拟，最终一签过签、如愿赴美。',
-            linkType: 'external',
-            externalUrl: '/cases/',
+            ...storyLink('xiaoding'),
             titleColor: '#8A0E4B',
             descColor: '#7C6B73',
           },

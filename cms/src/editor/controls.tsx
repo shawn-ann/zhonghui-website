@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import type { PageSummary } from './api'
+import type { PageSummary, CaseSummary } from './api'
 import { clampColumns, defaultColumnRatio, normalizeColumnRatio, parseColumnRatio } from '../render/columnRatio'
 
 interface Base { label: string }
@@ -155,25 +155,39 @@ export function GradientControl({ label, value, onChange }: Base & V<string>) {
 }
 
 export function PageLinkControl({
-  label, linkType, internalPageId, internalRoute, externalUrl, pages, onPatch,
+  label, linkType, internalPageId, internalRoute, externalUrl, caseItemId, caseRoute, pages, cases = [], onPatch,
 }: {
   label: string
-  linkType?: 'none' | 'internal' | 'external'
+  linkType?: 'none' | 'internal' | 'external' | 'case'
   internalPageId?: string | number
   internalRoute?: string
   externalUrl?: string
+  caseItemId?: string | number
+  caseRoute?: string
   pages: PageSummary[]
+  cases?: CaseSummary[]
   onPatch: (values: Record<string, unknown>) => void
 }) {
   const type = linkType ?? 'none'
   const id = internalPageId != null ? String(internalPageId) : ''
   const current = pages.find((p) => String(p.id) === id)
   const route = current?.route || internalRoute || ''
-  const href = type === 'internal' ? route : type === 'external' ? (externalUrl ?? '') : ''
+  const caseId = caseItemId != null ? String(caseItemId) : ''
+  const currentCase = cases.find((c) => String(c.id) === caseId)
+  const resolvedCaseRoute = currentCase?.route || caseRoute || ''
+  const href = type === 'internal'
+    ? route
+    : type === 'case'
+      ? resolvedCaseRoute
+      : type === 'external' ? (externalUrl ?? '') : ''
   const changeType = (next: string) => {
     onPatch({
       linkType: next,
-      link: next === 'internal' ? route : next === 'external' ? (externalUrl ?? '') : '',
+      link: next === 'internal'
+        ? route
+        : next === 'case'
+          ? resolvedCaseRoute
+          : next === 'external' ? (externalUrl ?? '') : '',
     })
   }
   return (
@@ -182,6 +196,7 @@ export function PageLinkControl({
       <select value={type} onChange={(e) => changeType(e.target.value)}>
         <option value="none">无链接</option>
         <option value="internal">内部页面</option>
+        <option value="case">文章详情</option>
         <option value="external">外部链接</option>
       </select>
       {type === 'internal' ? (
@@ -205,6 +220,29 @@ export function PageLinkControl({
           </select>
         ) : (
           <p className="ed-muted">暂无已发布页面{internalRoute ? `（当前：${internalRoute}）` : ''}</p>
+        )
+      ) : null}
+      {type === 'case' ? (
+        cases.length ? (
+          <select
+            value={caseId}
+            onChange={(e) => {
+              const item = cases.find((c) => String(c.id) === e.target.value)
+              onPatch({
+                caseItemId: item?.id ?? null,
+                caseRoute: item?.route ?? '',
+                link: item?.route ?? '',
+              })
+            }}
+          >
+            <option value="">选择文章…</option>
+            {cases.map((c) => (
+              <option key={c.id} value={String(c.id)}>{c.title}（{c.route}）</option>
+            ))}
+            {caseId && !currentCase ? <option value={caseId}>当前文章（{caseRoute || '未知'}）</option> : null}
+          </select>
+        ) : (
+          <p className="ed-muted">暂无已发布文章{caseRoute ? `（当前：${caseRoute}）` : ''}</p>
         )
       ) : null}
       {type === 'external' ? (

@@ -149,20 +149,6 @@ Payload uploads 集合；图片落本地磁盘（或对象存储），供页面�
 - 语言切换 = 一个 `link` 为完整 URL 的普通菜单项。
 - 当前页高亮：生成器按当前 `route` 与 `link` 匹配，加 `.active`。
 
-#### ThemeSettings（主题令牌，对应"C 档"）
-| 字段 | 类型 | 说明 |
-|---|---|---|
-| `accent` | text/color | 主强调色（现有 `--accent`） |
-| `deepColor` | text/color | 标题色（现有 `--deep-blue`） |
-| `linkColor` | text/color | 链接色（现有 `--bright-blue`） |
-| `lightBg` | text/color | 浅底色（现有 `--light-blue`） |
-| `textColor` | text/color | 正文字色（现有 `--dark-text`） |
-| `fontFamily` | select | 字体族预设 |
-| `radius` | text | 圆角 |
-| `favicon` | upload | 站点图标 |
-
-> 命名沿用现有历史变量，改令牌 → 重新发布 → 全站统一变色（等价于现在改 `:root`）。
-
 #### SiteSettings（站点设置）
 | 字段 | 类型 | 说明 |
 |---|---|---|
@@ -373,7 +359,7 @@ dist/
 | **主流程 B · 画布编辑器** | 自定义 admin 视图：组件库(效果缩略图) + 画布拖动/嵌套 + 内联改字 + 属性面板 + iframe 预览；**取代 Pages 表单** | 画布编辑所见即所得 | 优先 |
 | **主流程 C · 发布联动** | 画布"保存草稿 / 发布"；发布触发静态生成 | 编辑→预览→发布闭环 | 优先 |
 | 集合与列表 | ContentTypes / Entries / Categories；collectionList + 分页；详情模板 | 案例列表/详情自动生成 | 延后 |
-| 站点配置 | Menu / ThemeSettings / SiteSettings；主题令牌注入；菜单高亮；语言链接 | 全站可配 | 延后 |
+| 站点配置 | Menu / SiteSettings；菜单高亮；语言链接 | 全站可配 | 延后 |
 | 汉化 | 后台字段/集合中文 label（画布属性面板、集合、设置） | 后台全中文 | 延后 |
 | 安全与部署 | 上传校验；Nginx 反代/HTTPS/限流；部署脚本 | 上线就绪 | 延后 |
 
