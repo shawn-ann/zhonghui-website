@@ -15,10 +15,10 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     { label: '咨询微信' },
     { label: '视频号' },
   ],
-  copyright: 'Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号',
+  copyright: '',
   langCurrentLabel: '中文',
   langOtherLabel: 'EN',
-  langOtherUrl: 'https://example-en.invalid/',
+  langOtherUrl: '',
 }
 
 function pageRoute(page: unknown, routes?: Map<string, string>): string | undefined {
@@ -82,7 +82,7 @@ export function buildSiteConfig(
     copyright: typeof raw.copyright === 'string' ? raw.copyright : DEFAULT_SETTINGS.copyright,
     langCurrentLabel: raw.langCurrentLabel || DEFAULT_SETTINGS.langCurrentLabel,
     langOtherLabel: raw.langOtherLabel || DEFAULT_SETTINGS.langOtherLabel,
-    langOtherUrl: raw.langOtherUrl || DEFAULT_SETTINGS.langOtherUrl,
+    langOtherUrl: typeof raw.langOtherUrl === 'string' ? raw.langOtherUrl : DEFAULT_SETTINGS.langOtherUrl,
   }
   return {
     menu: resolveMenu(menuRaw?.items, routes, categoryRoutes),

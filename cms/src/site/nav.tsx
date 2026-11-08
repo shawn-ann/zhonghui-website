@@ -55,8 +55,12 @@ export function SiteNav({
           </ul>
           <div className="nav-lang">
             <a className="active" href="#">{settings.langCurrentLabel}</a>
-            <span className="sep">|</span>
-            <a href={hrefOf(settings.langOtherUrl)}>{settings.langOtherLabel}</a>
+            {settings.langOtherUrl?.trim() ? (
+              <>
+                <span className="sep">|</span>
+                <a href={hrefOf(settings.langOtherUrl)}>{settings.langOtherLabel}</a>
+              </>
+            ) : null}
           </div>
         </div>
       </div>

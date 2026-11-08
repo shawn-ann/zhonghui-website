@@ -32,7 +32,10 @@
     "menu:projects": "tsx scripts/update-project-menu.ts",
     "link:home-stories": "tsx scripts/link-home-stories.ts",
     "seed:menu": "tsx scripts/seed-menu.ts",
-    "migrate:about-philosophy": "tsx scripts/migrate-about-philosophy.ts"
+    "migrate:about-philosophy": "tsx scripts/migrate-about-philosophy.ts",
+    "update:project-copy": "tsx scripts/update-project-copy.ts",
+    "cleanup:test-content": "tsx scripts/cleanup-test-content.ts",
+    "update:site-placeholders": "tsx scripts/update-site-placeholders.ts"
   },
   "dependencies": {
     "@lexical/link": "^0.50.0",

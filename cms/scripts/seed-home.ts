@@ -185,6 +185,15 @@ const home = await payload.create({
 })
 await seedMenu(payload, home.id)
 
+const qrMedia = await payload.find({
+  collection: 'media',
+  where: { filename: { equals: 'test.png' } },
+  limit: 1,
+  depth: 0,
+})
+const qrMediaId = (qrMedia.docs[0] as any)?.id
+const footerQrMedia = ['公众号', '咨询微信', '视频号']
+
 await payload.updateGlobal({
   slug: 'site-settings',
   data: {
@@ -195,12 +204,12 @@ await payload.updateGlobal({
       { label: '🌐 中文官网：', text: 'www.chinaaupairs.com' },
       { label: '🌐 英文官网：', text: 'www.aupaircn.com' },
     ],
-    footerQr: [{ label: '公众号' }, { label: '咨询微信' }, { label: '视频号' }],
+    footerQr: footerQrMedia.map((label) => ({ label, image: qrMediaId })),
     footerContactLabel: '联系我们',
-    copyright: 'Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号',
+    copyright: '',
     langCurrentLabel: '中文',
     langOtherLabel: 'EN',
-    langOtherUrl: 'https://example-en.invalid/',
+    langOtherUrl: '',
   },
 })
 

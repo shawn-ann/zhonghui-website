@@ -25,7 +25,7 @@ export const NAV_ITEMS: MenuItem[] = [
   { label: '联系我们', link: '/contact/' },
 ]
 
-export const LANG_LINK = 'https://example-en.invalid/'
+export const LANG_LINK = ''
 export const LOGO_SRC = '/assets/brand/logo.jpg'
 
 export const FOOTER_LOGO = '/assets/brand/footer-logo.png'
@@ -44,7 +44,7 @@ export const FOOTER_INFO: FooterInfo[] = [
 ]
 
 export const FOOTER_QR = ['公众号', '咨询微信', '视频号']
-export const FOOTER_COPYRIGHT = 'Copyright © 2026 中惠文化　·　京ICP备XXXXXXXX号'
+export const FOOTER_COPYRIGHT = ''
 
 export function hrefOf(link?: string): string {
   return safeUrl(link) || '#'

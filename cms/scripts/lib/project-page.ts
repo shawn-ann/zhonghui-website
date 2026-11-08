@@ -1,4 +1,5 @@
 import path from 'path'
+import { applyProjectCopy } from './project-copy'
 
 export interface ProjectPageConfig {
   title: string
@@ -7,6 +8,7 @@ export interface ProjectPageConfig {
   bannerSub: string
   stripTitle: string
   stripSub: string
+  replacements?: Record<string, string>
 }
 
 const WHITE = 'color: #FFFFFF'
@@ -229,6 +231,8 @@ export async function buildProjectPage(payload: any, config: ProjectPageConfig) 
     }]),
   ]
 
+  const finalBlocks = config.replacements ? applyProjectCopy(blocks, config.replacements) : blocks
+
   const found = await payload.find({
     collection: 'pages',
     where: { route: { equals: config.route } },
@@ -239,7 +243,7 @@ export async function buildProjectPage(payload: any, config: ProjectPageConfig) 
   const data: any = {
     title: config.title,
     route: config.route,
-    blocks,
+    blocks: finalBlocks,
     _status: 'published',
   }
 
@@ -247,5 +251,5 @@ export async function buildProjectPage(payload: any, config: ProjectPageConfig) 
     ? await payload.update({ collection: 'pages', id: found.docs[0].id, data, draft: false })
     : await payload.create({ collection: 'pages', data })
 
-  return { id: page.id, route: page.route, blocks: blocks.length }
+  return { id: page.id, route: page.route, blocks: finalBlocks.length }
 }

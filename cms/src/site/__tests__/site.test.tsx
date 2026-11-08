@@ -350,6 +350,11 @@ describe('site chrome', () => {
     expect(html).toContain('SWT 赴美带薪实习')
   })
 
+  it('hides the other language link when no URL is configured', () => {
+    const html = render(<SiteNav activeRoute="/" menu={[]} settings={{ ...DEFAULT_SETTINGS, langOtherUrl: '' }} />)
+    expect(html).not.toContain('>EN</a>')
+  })
+
   it('renders a linkless parent as a non-navigating label', () => {
     const menu = [
       { label: '赴美J1交流项目', link: '', children: [{ label: 'ICCP赴美营地辅导员', link: '/project-iccp/' }] },
