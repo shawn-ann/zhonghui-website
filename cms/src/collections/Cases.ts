@@ -4,7 +4,7 @@ import { categorySlugOf, upsertRedirect } from './redirectHooks'
 import { casePath } from '../generate/redirects'
 import { resolvePublishedAt } from './publishedAt'
 import { scheduleRebuild } from '../build/scheduler'
-import { shouldRebuildPublishedChange } from '../build/triggers'
+import { shouldRebuildPublishedChange, shouldRebuildPublishedDocChange } from '../build/triggers'
 
 export const Cases: CollectionConfig = {
   slug: 'cases',
@@ -53,8 +53,12 @@ export const Cases: CollectionConfig = {
         return { ...data, publishedPath: nextPath }
       },
     ],
-    afterChange: [({ doc, previousDoc, operation }: any) => {
-      if (shouldRebuildPublishedChange(operation, doc, previousDoc)) scheduleRebuild()
+    afterChange: [async ({ doc, previousDoc, operation, req }: any) => {
+      const rebuild = await shouldRebuildPublishedDocChange({
+        operation, doc, previousDoc,
+        loadPublished: () => req.payload.findByID({ collection: 'cases', id: doc.id, draft: false }),
+      })
+      if (rebuild) scheduleRebuild()
     }],
     afterDelete: [({ doc }: any) => {
       if (shouldRebuildPublishedChange('delete', doc)) scheduleRebuild()
