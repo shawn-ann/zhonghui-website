@@ -5,21 +5,19 @@ import PropertyPanel from '../PropertyPanel'
 import type { Block } from '../types'
 
 describe('PropertyPanel', () => {
-  const block: Block = { type: 'text', body: 'hi', title: 't', _id: 'b1' }
+  const block: Block = { type: 'heading', title: 't', _id: 'b1' }
 
-  it('renders Chinese labels for a text block', () => {
-    render(<PropertyPanel block={block} onChange={() => {}} />)
-    for (const label of ['正文', '对齐']) {
-      expect(screen.getByText(label)).toBeTruthy()
-    }
+  it('shows the disabled notice for the retired text block', () => {
+    render(<PropertyPanel block={{ type: 'text', body: 'hi', _id: 't1' }} onChange={() => {}} />)
+    expect(screen.getByText('该组件已停用（历史内容仍会正常显示）')).toBeTruthy()
   })
 
-  it('editing 正文 calls onChange with the new body', () => {
+  it('editing 标题 calls onChange with the new title', () => {
     const onChange = vi.fn()
     render(<PropertyPanel block={block} onChange={onChange} />)
-    const textarea = screen.getByDisplayValue('hi')
-    fireEvent.change(textarea, { target: { value: 'new body' } })
-    expect(onChange).toHaveBeenCalledWith('body', 'new body')
+    const input = screen.getByDisplayValue('t')
+    fireEvent.change(input, { target: { value: '新标题' } })
+    expect(onChange).toHaveBeenCalledWith('title', '新标题')
   })
 
   it('shows a placeholder when no block is selected', () => {
@@ -62,9 +60,10 @@ describe('PropertyPanel', () => {
     const onAddChild = vi.fn()
     const section: Block = { type: 'section', _id: 's1', children: [] }
     render(<PropertyPanel block={section} onChange={() => {}} onAddChild={onAddChild} />)
-    for (const label of ['标题', '文本', '网格', '图集', '横幅', '轮播', '富文本', '信息列表', '图标列表', '横向滚动', '纵向容器']) {
+    for (const label of ['标题', '网格', '图集', '横幅', '轮播', '富文本', '信息列表', '图标列表', '横向滚动', '纵向容器']) {
       expect(screen.getByTitle(`添加${label}`)).toBeTruthy()
     }
+    expect(screen.queryByTitle('添加文本')).toBeNull()
     fireEvent.click(screen.getByTitle('添加富文本'))
     expect(onAddChild).toHaveBeenCalledWith('richtext')
   })
@@ -72,9 +71,10 @@ describe('PropertyPanel', () => {
   it('offers grid-appropriate components', () => {
     const grid: Block = { type: 'grid', _id: 'g1', columns: 3, children: [] }
     render(<PropertyPanel block={grid} onChange={() => {}} />)
-    for (const label of ['标题', '文本', '图片', '图文卡片', '图标卡片', '按钮']) {
+    for (const label of ['标题', '图片', '图文卡片', '图标卡片', '按钮']) {
       expect(screen.getByTitle(`添加${label}`)).toBeTruthy()
     }
+    expect(screen.queryByTitle('添加文本')).toBeNull()
     expect(screen.queryByTitle('添加富文本')).toBeNull()
     expect(screen.queryByTitle('添加图集')).toBeNull()
   })

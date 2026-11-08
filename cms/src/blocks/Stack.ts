@@ -1,5 +1,4 @@
 import type { Block } from 'payload'
-import { TextBlock } from './Text'
 import { HeadingBlock } from './Heading'
 import { ImageBlock } from './Image'
 import { ImageTextBlock } from './ImageText'
@@ -28,7 +27,7 @@ export const StackBlock: Block = {
     {
       name: 'children',
       type: 'blocks',
-      blocks: [HeadingBlock, TextBlock, ImageBlock, ImageTextBlock, IconCardBlock, ButtonBlock, GalleryBlock, RichTextBlock],
+      blocks: [HeadingBlock, ImageBlock, ImageTextBlock, IconCardBlock, ButtonBlock, GalleryBlock, RichTextBlock],
       labels: { singular: '内容', plural: '内容' },
     },
   ],

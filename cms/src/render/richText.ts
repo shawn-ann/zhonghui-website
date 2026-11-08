@@ -10,6 +10,17 @@ function escapeAttr(value: string): string {
   return value.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string))
 }
 
+function alignStyle(format: unknown, providedStyleTag?: string): string {
+  const align = typeof format === 'string' ? format : ''
+  const css = ['left', 'center', 'right', 'justify'].includes(align) ? `text-align:${align}` : ''
+  if (!css) return providedStyleTag || ''
+  if (!providedStyleTag) return ` style="${css}"`
+  if (providedStyleTag.includes('style="')) {
+    return providedStyleTag.replace(/style="([^"]*)"/, (_, current: string) => `style="${current};${css}"`)
+  }
+  return `${providedStyleTag} style="${css}"`
+}
+
 export function lexicalToHtml(data: unknown): string {
   if (!data || typeof data !== 'object') return ''
   try {
@@ -30,6 +41,18 @@ export function lexicalToHtml(data: unknown): string {
           if (format & 64) text = `<sup>${text}</sup>`
           if (n.style) text = `<span style="${escapeAttr(String(n.style))}">${text}</span>`
           return text
+        },
+        paragraph: ({ node, nodesToHTML, providedStyleTag }) => {
+          const n = node as { children?: unknown[]; format?: unknown }
+          const children = nodesToHTML({ nodes: n.children as never })
+          const attrs = alignStyle(n.format, providedStyleTag)
+          return children?.length ? `<p${attrs}>${children.join('')}</p>` : `<p${attrs}><br /></p>`
+        },
+        heading: ({ node, nodesToHTML, providedStyleTag }) => {
+          const n = node as { children?: unknown[]; format?: unknown; tag?: string }
+          const children = nodesToHTML({ nodes: n.children as never }).join('')
+          const tag = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(String(n.tag)) ? String(n.tag) : 'h1'
+          return `<${tag}${alignStyle(n.format, providedStyleTag)}>${children}</${tag}>`
         },
         'rich-image': ({ node }) => {
           const src = String((node as { src?: string }).src || '')

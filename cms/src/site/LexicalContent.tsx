@@ -4,7 +4,7 @@ type LexicalNode = {
   type?: string
   version?: number
   text?: string
-  format?: number
+  format?: number | string
   tag?: string
   listType?: string
   url?: string
@@ -30,9 +30,15 @@ function styleFromCss(style?: string): React.CSSProperties | undefined {
   return Object.keys(out).length ? (out as React.CSSProperties) : undefined
 }
 
+function elementStyle(node: LexicalNode): React.CSSProperties | undefined {
+  const align = typeof node.format === 'string' ? node.format : ''
+  if (!align || align === 'left') return undefined
+  return { textAlign: align as React.CSSProperties['textAlign'] }
+}
+
 function text(node: LexicalNode, key: string): ReactNode {
   let value: ReactNode = node.text || ''
-  const format = node.format || 0
+  const format = typeof node.format === 'number' ? node.format : 0
   if (format & 16) value = <code>{value}</code>
   if (format & 2) value = <em>{value}</em>
   if (format & 1) value = <strong>{value}</strong>
@@ -54,9 +60,9 @@ function renderNode(node: LexicalNode, key: string): ReactNode {
     case 'linebreak':
       return <br key={key} />
     case 'paragraph':
-      return <p key={key}>{children(node, key)}</p>
+      return <p key={key} style={elementStyle(node)}>{children(node, key)}</p>
     case 'heading':
-      return React.createElement(node.tag || 'h2', { key }, children(node, key))
+      return React.createElement(node.tag || 'h2', { key, style: elementStyle(node) }, children(node, key))
     case 'list':
       return React.createElement(node.listType === 'number' ? 'ol' : 'ul', { key }, children(node, key))
     case 'listitem':

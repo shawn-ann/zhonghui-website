@@ -39,6 +39,20 @@ describe('content component extensions', () => {
     expect(custom).toContain('padding:120px 0')
   })
 
+  it('keeps paragraph alignment in rich text html and react rendering', () => {
+    const data = {
+      root: {
+        type: 'root', version: 1, direction: 'ltr', format: '', indent: 0,
+        children: [{
+          type: 'paragraph', version: 1, direction: 'ltr', format: 'center', indent: 0, textFormat: 0,
+          children: [{ type: 'text', version: 1, detail: 0, format: 0, mode: 'normal', style: '', text: '居中文字', children: [] }],
+        }],
+      },
+    }
+    expect(lexicalToHtml(data)).toContain('text-align:center')
+    expect(renderToStaticMarkup(<LexicalContent data={data} />)).toContain('text-align:center')
+  })
+
   it('converts rich text image rows to a gallery', () => {
     const html = lexicalToHtml({
       root: {

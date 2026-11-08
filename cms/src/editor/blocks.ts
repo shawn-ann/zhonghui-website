@@ -20,22 +20,13 @@ export interface FieldDef {
 }
 export interface BlockMeta { type: Block['type']; label: string; defaults: () => Block; fields: FieldDef[] }
 
-export const BLOCKS: Record<Block['type'], BlockMeta> = {
+export const BLOCKS: Record<string, BlockMeta> = {
   banner: { type: 'banner', label: '横幅', defaults: () => ({ type: 'banner', variant: 'split' }), fields: [
     { key: 'title', label: '标题', control: 'text' }, { key: 'sub', label: '副标题', control: 'text' },
     { key: 'titleColor', label: '标题颜色', control: 'textColor' },
     { key: 'subColor', label: '副标题颜色', control: 'textColor' },
     { key: 'variant', label: '布局变体', control: 'select', options: [{ label: '左右', value: 'split' }, { label: '整图', value: 'centered' }] },
     { key: 'image', label: '配图', control: 'media' }, { key: 'pattern', label: '装饰图', control: 'media' },
-  ] },
-  text: { type: 'text', label: '文本', defaults: () => ({ type: 'text', body: '' }), fields: [
-    { key: 'body', label: '正文', control: 'textarea' },
-    { key: 'bodyColor', label: '正文颜色', control: 'textColor' },
-    { key: 'align', label: '对齐', control: 'select', options: [{ label: '左', value: 'left' }, { label: '居中', value: 'center' }] },
-    { key: 'fontSize', label: '正文字号', control: 'number' },
-    { key: 'fontWeight', label: '正文字重', control: 'select', options: [{ label: '常规', value: '400' }, { label: '中等', value: '600' }, { label: '粗体', value: '700' }] },
-    { key: 'maxWidth', label: '最大宽度', control: 'number' },
-    { key: 'marginTop', label: '上间距', control: 'number' },
   ] },
   image: { type: 'image', label: '图片', defaults: () => ({ type: 'image', media: '', aspectRatio: 'auto', fit: 'cover' }), fields: [
     { key: 'media', label: '图片', control: 'media' }, { key: 'altText', label: '替代文本', control: 'text' },
@@ -180,10 +171,10 @@ export interface DefaultMedia {
 
 /** 新增组件时的默认内容；媒体由调用方从媒体库提供。 */
 export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}): Block {
-  const base = BLOCKS[type].defaults() as any
+  const meta = BLOCKS[type]
+  if (!meta) throw new Error(`组件已停用：${type}`)
+  const base = meta.defaults() as any
   switch (type) {
-    case 'text':
-      return { ...base, body: '在这里填写正文内容。', titleColor: '#8A0E4B', bodyColor: '#000000' }
     case 'image':
       return { ...base, media: media.image || '' }
     case 'imageText':
@@ -231,9 +222,9 @@ export function makeDefaultBlock(type: Block['type'], media: DefaultMedia = {}):
 export const LAYOUT_TYPES = ['section', 'grid', 'gridRow', 'gridCell', 'hscroll', 'stack'] as const
 
 /** 分栏：版面级内容。 */
-export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'entries', 'zigzag', 'steps', 'iconList', 'hscroll', 'stack']
+export const SECTION_CHILD_TYPES: Block['type'][] = ['heading', 'grid', 'gallery', 'banner', 'slider', 'richtext', 'infoList', 'entries', 'zigzag', 'steps', 'iconList', 'hscroll', 'stack']
 /** 网格：卡片/文本级内容。 */
-export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'stack', 'steps']
+export const GRID_CHILD_TYPES: Block['type'][] = ['heading', 'image', 'imageText', 'iconCard', 'button', 'stack', 'steps']
 
 export function isLayout(type: Block['type']): boolean {
   return (LAYOUT_TYPES as readonly string[]).includes(type)
@@ -246,7 +237,7 @@ export function allowedChildTypes(parent: Block['type'], layout?: string): Block
   if (parent === 'gridRow') return ['gridCell']
   if (parent === 'gridCell') return [...GRID_CHILD_TYPES]
   if (parent === 'hscroll') return ['imageText']
-  if (parent === 'stack') return ['heading', 'text', 'image', 'imageText', 'iconCard', 'button', 'gallery', 'richtext']
+  if (parent === 'stack') return ['heading', 'image', 'imageText', 'iconCard', 'button', 'gallery', 'richtext']
   return []
 }
 

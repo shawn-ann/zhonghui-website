@@ -12,7 +12,7 @@ import { HeadingNode, QuoteNode, $createHeadingNode } from '@lexical/rich-text'
 import { ListNode, ListItemNode, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from '@lexical/list'
 import { LinkNode, AutoLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
 import { $patchStyleText, $setBlocksType } from '@lexical/selection'
-import { $createParagraphNode, $getNodeByKey, $getSelection, $isElementNode, $isRangeSelection, FORMAT_TEXT_COMMAND, UNDO_COMMAND, REDO_COMMAND } from 'lexical'
+import { $createParagraphNode, $getNodeByKey, $getSelection, $isElementNode, $isRangeSelection, FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND, UNDO_COMMAND, REDO_COMMAND } from 'lexical'
 import { ImageRowNode, $insertImageRow } from './ImageRowNode'
 import { ImageNode, $insertImage } from './ImageNode'
 import MediaModal from './MediaModal'
@@ -33,6 +33,9 @@ function Toolbar() {
   }
   const list = (type: 'ul' | 'ol') => {
     editor.dispatchCommand(type === 'ul' ? INSERT_UNORDERED_LIST_COMMAND : INSERT_ORDERED_LIST_COMMAND, undefined)
+  }
+  const align = (value: 'left' | 'center' | 'right') => {
+    editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, value)
   }
   const focusParagraph = (key: string | null) => {
     window.setTimeout(() => {
@@ -72,6 +75,9 @@ function Toolbar() {
       <button type="button" onClick={() => block('h2')}>H2</button>
       <button type="button" onClick={() => block('h3')}>H3</button>
       <button type="button" onClick={() => block('paragraph')}>正文</button>
+      <button type="button" onClick={() => align('left')} title="左对齐">左对齐</button>
+      <button type="button" onClick={() => align('center')} title="居中">居中</button>
+      <button type="button" onClick={() => align('right')} title="右对齐">右对齐</button>
       <span className="rt-divider" />
       <button type="button" onClick={() => list('ul')}>• 列表</button>
       <button type="button" onClick={() => list('ol')}>1. 列表</button>

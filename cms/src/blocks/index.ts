@@ -1,6 +1,5 @@
 import type { Block } from 'payload'
 import { BannerBlock } from './Banner'
-import { TextBlock } from './Text'
 import { ImageBlock } from './Image'
 import { ImageTextBlock } from './ImageText'
 import { ButtonBlock } from './Button'
@@ -22,7 +21,7 @@ import { IconListBlock } from './IconList'
 import { HscrollBlock } from './Hscroll'
 import { StackBlock } from './Stack'
 
-export const sectionChildren: Block[] = [HeadingBlock, TextBlock, Grid, GalleryBlock, BannerBlock, SliderBlock, RichTextBlock, InfoListBlock, EntriesBlock, ZigzagBlock, StepsBlock, IconListBlock, HscrollBlock, StackBlock]
+export const sectionChildren: Block[] = [HeadingBlock, Grid, GalleryBlock, BannerBlock, SliderBlock, RichTextBlock, InfoListBlock, EntriesBlock, ZigzagBlock, StepsBlock, IconListBlock, HscrollBlock, StackBlock]
 
 export const SectionBlock = makeSection(sectionChildren)
 
@@ -33,7 +32,6 @@ export const pageBlocks: Block[] = [
   HeadingBlock,
   Grid,
   BannerBlock,
-  TextBlock,
   ImageBlock,
   ImageTextBlock,
   ButtonBlock,

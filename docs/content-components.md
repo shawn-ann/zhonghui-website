@@ -36,7 +36,6 @@
 |---|---|---|
 | `banner` | 横幅 | 页面顶部主视觉 |
 | `heading` | 标题 | 区块标题/副标题 |
-| `text` | 文本 | 单段正文、段落组、陈述句 |
 | `image` | 图片 | 独立图片，可设比例和链接 |
 | `imageText` | 图文卡片 | 图片 + 标题/副标题/描述 + 链接 |
 | `iconCard` | 图标卡片 | 图标 + 标题 + 描述卡片 |
@@ -57,7 +56,7 @@
 允许的直接子组件：
 
 ```text
-heading, text, grid, gallery, banner, slider, richtext,
+heading, grid, gallery, banner, slider, richtext,
 infoList, entries, zigzag, steps, iconList, hscroll, stack
 ```
 
@@ -73,7 +72,7 @@ infoList, entries, zigzag, steps, iconList, hscroll, stack
 允许的子组件：
 
 ```text
-heading, text, image, imageText, iconCard, button, stack, steps
+heading, image, imageText, iconCard, button, stack, steps
 ```
 
 按行布局时子组件为 `gridRow`，`gridRow` 内为 `gridCell`。
@@ -123,7 +122,7 @@ imageText
 允许的子组件：
 
 ```text
-heading, text, image, imageText, iconCard, button, gallery, richtext
+heading, image, imageText, iconCard, button, gallery, richtext
 ```
 
 - 可用于分栏直接子项，也可用于网格单元格。
@@ -156,14 +155,11 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 - `contentGap > 0` 时，分栏直接子项使用纵向 flex gap；首个标题的默认下边距归零，避免叠加。
 - 内容组件不再配置页面级背景；旧的 `bg`/`alt` 字段仅为历史兼容，隐藏且不渲染。
 
-### 4.2 文本
+### 4.2 正文
 
-- 新内容使用“单段文本块”：`body` 只放一段文字。
-- 标题层级优先使用字号、字重、颜色、`marginTop`，不要滥用 `title`。
-- `title` 字段保留历史兼容；新布局通常留空。
-- `body` 中的 `\n` 渲染为 `<br/>`。
-- 字段：`fontSize`、`fontWeight`（400/600/700）、`maxWidth`、`marginTop`、`align`、`bodyColor`。
-- 正文默认继承文本块字号/字重，颜色使用 `--sub-color` 变量。
+- 文本组件已停用，正文统一使用「富文本」。
+- 段落对齐（左/中/右）在富文本工具栏设置；文字颜色也在工具栏设置。
+- 富文本自然支持多段落，不再使用 `\n` 换行。
 
 ### 4.3 图片
 
@@ -280,9 +276,9 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 
 `title`、`subtitle`、`titleColor`、`subtitleColor`、`align`（center/left）。历史 `padding` 保留渲染兼容，不再出现在编辑器。
 
-### 5.7 文本 `text`
+### 5.7 文本 `text`（已停用）
 
-`body`、`bodyColor`、`align`、`fontSize`、`fontWeight`、`maxWidth`、`marginTop`。历史 `title`/`titleColor` 不再出现在编辑器中，仅保留渲染兼容。
+组件库不再提供。仅保留历史数据渲染兼容，新内容请使用富文本。
 
 ### 5.8 图片 `image`
 
@@ -354,7 +350,7 @@ heading, text, image, imageText, iconCard, button, gallery, richtext
 ### 5.16 其它
 
 - `button`：`label`、`linkType`/`internalPage`/`caseItem`/`externalUrl`、`style`
-- `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/单图/图集节点（可配置 1–4 列）；编辑器工具栏支持文字颜色（内联样式）；历史 `padding` 保留兼容
+- `richtext`：`content`（Lexical JSON），通过编辑器弹窗编辑；支持标题/段落/列表/链接/单图/图集节点（可配置 1–4 列）；编辑器工具栏支持文字颜色（内联样式）和段落对齐；历史 `padding` 保留兼容
 - `gallery`：`images`、`columns`；历史 `padding` 保留兼容
 - `slider`：`images`
 - `gridInner`：历史兼容，编辑器不提供；序列化仍保留
@@ -427,7 +423,7 @@ Payload block
 - [ ] 所有字段有安全默认值
 - [ ] 旧页面不配置新字段时行为不变
 - [ ] 图片有比例/填充规则，不写死高度
-- [ ] 文本换行可渲染
+- [ ] 富文本段落/换行可渲染
 - [ ] 链接使用页面关系或简单链接的正确模型
 - [ ] 添加编辑器缩略图和默认内容
 - [ ] 添加结构树摘要
@@ -565,7 +561,7 @@ section(bgColor=light-pink)
     )
 ```
 
-富文本编辑器以弹窗形式打开，支持粗体、斜体、下划线、H2/H3、正文、有序/无序列表、链接、单张图片、图集（1–4 列）、撤销/重做。图片和图集复用统一媒体选择器（含上传）；插入后光标自动落到下一段，可继续输入。
+富文本编辑器以弹窗形式打开，支持粗体、斜体、下划线、H2/H3、正文、左/中/右对齐、有序/无序列表、链接、单张图片、图集（1–4 列）、撤销/重做。图片和图集复用统一媒体选择器（含上传）；插入后光标自动落到下一段，可继续输入。
 
 - 点击富文本中的单图可打开单选媒体弹窗替换，当前图片自动预选。
 - 点击图集内任意图片可打开多选媒体弹窗，当前图片自动预选；取消选中即删除，选择新图即追加，确认后整组更新。

@@ -31,6 +31,9 @@ export default function PropertyPanel({
     return <aside className="ed-props"><div className="ed-label">属性</div><p className="ed-muted">未知区块（透传，保存时原样保留）</p></aside>
   }
   const meta = BLOCKS[block.type]
+  if (!meta) {
+    return <aside className="ed-props"><div className="ed-label">属性</div><p className="ed-muted">该组件已停用（历史内容仍会正常显示）</p></aside>
+  }
   const b = block as unknown as Record<string, unknown>
   const val = (k: string) => b[k]
   const isContainer = isLayout(block.type)

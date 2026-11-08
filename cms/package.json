@@ -31,7 +31,8 @@
     "build:itp": "tsx scripts/build-itp-page.ts",
     "menu:projects": "tsx scripts/update-project-menu.ts",
     "link:home-stories": "tsx scripts/link-home-stories.ts",
-    "seed:menu": "tsx scripts/seed-menu.ts"
+    "seed:menu": "tsx scripts/seed-menu.ts",
+    "migrate:about-philosophy": "tsx scripts/migrate-about-philosophy.ts"
   },
   "dependencies": {
     "@lexical/link": "^0.50.0",
