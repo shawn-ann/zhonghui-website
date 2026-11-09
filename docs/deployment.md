@@ -38,7 +38,7 @@ Docker Compose（同一台服务器）:
 ```
 cms/
   Dockerfile                生产镜像（next build + next start）
-  scripts/seed-home.ts      首页种子数据
+  seed/                     初始化配置与媒体（npm run seed:init 导入）
   src/generate/cli.ts       静态构建入口
   src/generate/release.ts   release 目录 + 原子软链
   src/build/manager.ts      构建触发/状态/日志/锁
@@ -217,11 +217,22 @@ NEXT_PUBLIC_SITE_URL=https://www.zhonghui.com
 
 `PAYLOAD_SECRET` 必须与首次初始化时一致，否则后台会话失效。`NEXT_PUBLIC_SITE_URL` 用于后台「查看网站」链接，必须指向前台域名。
 
-### 5.3 启动
+### 5.3 初始化数据并启动
+
+新环境先导入当前站点配置和媒体，再启动 CMS：
 
 ```bash
+# 先启动数据库
+docker compose up -d postgres
+
+# 导入 seed/ 中的页面、文章、菜单、设置和媒体，并生成静态站
+docker compose run --rm cms npm run seed:init
+
+# 启动 CMS / Nginx
 docker compose up -d --build
 ```
+
+`seed:init` 会使用 `NODE_ENV=development` 完成首次 Payload schema 创建，然后生成 `releases/current`。成功后切换到正常生产启动即可。
 
 生产 Compose：
 
@@ -231,9 +242,9 @@ docker compose up -d --build
 
 首次启动后：
 
-1. 打开 `http://admin.zhonghui.com/admin` 创建管理员。
-2. 在编辑器中点「发布」，生成第一个 release。
-3. 确认 `https://www.zhonghui.com/` 可访问。
+1. 打开 `http://admin.zhonghui.com/admin` 创建管理员（种子不包含用户）。
+2. 静态站已由 `seed:init` 生成，确认 `https://www.zhonghui.com/` 可访问。
+3. 后续在后台修改并发布即可。
 
 ### 5.4 TLS
 

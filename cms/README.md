@@ -75,6 +75,24 @@ npm run generate
 - 草稿内容不会进入静态站；
 - 后台保存已发布内容、分类、菜单或站点设置会自动触发重建，侧栏显示发布状态。
 
+## 初始化数据（新环境 / 生产）
+
+当前站点配置和媒体已导出到 `seed/`（见 `seed/README.md`）。新环境执行：
+
+```bash
+npm run seed:init
+```
+
+会导入媒体、分类、文章、页面、菜单、站点设置，并自动生成静态站。管理员账号不包含在种子里，首次访问 `/admin` 时创建。
+
+重新导出当前配置：
+
+```bash
+npm run seed:export
+```
+
+> 生产环境建议在 CMS 应用停止或使用一次性容器时执行 `seed:init`，完成后以生产模式启动 CMS。
+
 ## 常用命令
 
 | 命令 | 说明 |
@@ -83,6 +101,8 @@ npm run generate
 | `npm run build` | 生产构建 |
 | `npm run start` | 启动生产构建 |
 | `npm run generate` | 构建生成器并输出静态站到 `releases/` |
+| `npm run seed:export` | 从当前数据库导出初始化配置和媒体到 `seed/` |
+| `npm run seed:init` | 导入 `seed/` 并重新生成静态站 |
 | `npm run build:generator` | 仅构建静态生成器；修改渲染器/区块后需要执行并重启 builder |
 | `npm test` | 运行 Vitest 测试 |
 | `npm run test:watch` | Vitest 监听模式 |
@@ -104,7 +124,8 @@ cms/
 │  ├─ site/            # React 渲染层（页面、文章、导航、页脚）
 │  ├─ generate/        # 读取已发布数据并生成静态站
 │  └─ payload.config.ts
-├─ scripts/            # 启动、生成器构建、种子与维护脚本
+├─ scripts/            # 启动、生成器构建、初始化导入/导出脚本
+├─ seed/               # 初始化配置 manifest + 媒体文件
 ├─ generator/          # 静态生成器 bundle
 └─ releases/           # 每次生成的静态站版本（gitignore）
 ```

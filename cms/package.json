@@ -17,7 +17,9 @@
     "typecheck": "tsc --noEmit",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "build:generator": "node scripts/build-generator.mjs",
-    "generate": "npm run build:generator && cross-env NODE_ENV=production node generator/generate.mjs"
+    "generate": "npm run build:generator && cross-env NODE_ENV=production node generator/generate.mjs",
+    "seed:export": "cross-env NODE_ENV=development tsx scripts/export-seed.ts",
+    "seed:init": "cross-env NODE_ENV=development tsx scripts/init-site.ts"
   },
   "dependencies": {
     "@lexical/link": "^0.50.0",
