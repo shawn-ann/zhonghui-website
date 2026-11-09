@@ -17,16 +17,7 @@
     "typecheck": "tsc --noEmit",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "build:generator": "node scripts/build-generator.mjs",
-    "generate": "npm run build:generator && cross-env NODE_ENV=production node generator/generate.mjs",
-    "build:iccp": "tsx scripts/build-iccp-page.ts",
-    "build:swt": "tsx scripts/build-swt-page.ts",
-    "build:itp": "tsx scripts/build-itp-page.ts",
-    "menu:projects": "tsx scripts/update-project-menu.ts",
-    "link:home-stories": "tsx scripts/link-home-stories.ts",
-    "seed:menu": "tsx scripts/seed-menu.ts",
-    "update:project-copy": "tsx scripts/update-project-copy.ts",
-    "cleanup:test-content": "tsx scripts/cleanup-test-content.ts",
-    "update:site-placeholders": "tsx scripts/update-site-placeholders.ts"
+    "generate": "npm run build:generator && cross-env NODE_ENV=production node generator/generate.mjs"
   },
   "dependencies": {
     "@lexical/link": "^0.50.0",

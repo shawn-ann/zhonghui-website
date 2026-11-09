@@ -84,7 +84,6 @@ npm run generate
 | `npm run start` | 启动生产构建 |
 | `npm run generate` | 构建生成器并输出静态站到 `releases/` |
 | `npm run build:generator` | 仅构建静态生成器；修改渲染器/区块后需要执行并重启 builder |
-| `npm run seed:menu` | 按当前页面重建完整菜单 |
 | `npm test` | 运行 Vitest 测试 |
 | `npm run test:watch` | Vitest 监听模式 |
 | `npm run typecheck` | TypeScript 类型检查（`tsc --noEmit`） |
