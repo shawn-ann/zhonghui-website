@@ -27,3 +27,6 @@ debug-*.png
 
 # local deploy secrets
 deploy/.env
+
+# 旧版参考截图（仅本地查阅，不入库）
+legacy/reference-screenshots/
