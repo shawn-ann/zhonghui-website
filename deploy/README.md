@@ -1,66 +1,85 @@
 # 部署说明（同一台服务器）
 
-完整文档见 [`docs/deployment.md`](../docs/deployment.md)。本文为快速速查。
-
-本地 Compose 依赖预编译的 `cms/generator/builder.mjs`；首次或修改构建代码后执行：
-
-```bash
-cd ../cms && npm run build:generator && cd ../deploy
-docker compose -f docker-compose.local.yml restart builder
-```
+完整文档见 [`docs/deployment.md`](../docs/deployment.md)。
 
 ## 结构
 
-```
-deploy/
-  docker-compose.yml
-  nginx/zhonghui.conf
-cms/
-  Dockerfile
+```text
+用户
+  ↓ 80 / 443（宿主机 Nginx，负责证书）
+宿主机 Nginx
+  ↓ proxy_pass 127.0.0.1:8080
+Docker 内 Nginx
+  ├─ www.zhonghui.com  → 静态站 /srv/site/current
+  └─ admin.zhonghui.com → cms:3000
+
+Docker Compose：
+  postgres / builder / cms / nginx
 ```
 
-- `www.zhonghui.com` → Nginx 静态目录 `/srv/site/current`（软链到某个 release）
-- `admin.zhonghui.com` → 反代 `cms:3000`（Next + Payload）
-- 后台「发布」→ 在 `cms` 容器内构建 → 写入 `/app/releases/<时间戳>/` → 原子切换 `releases/current`
+- 宿主机 Nginx 配置：`deploy/nginx/host-zhonghui.conf`
+- 容器内 Nginx 配置：`deploy/nginx/zhonghui.conf`
+- 宿主机 Nginx 只转发到 `127.0.0.1:8080`，不直接接触 Docker 网络。
+- 后台地址仍为 `https://admin.zhonghui.com/admin`。
 
-## 首次启动
+## 首次部署
 
 ```bash
 cd deploy
-cp .env.example .env        # 填写 PAYLOAD_SECRET
-docker compose up -d --build
+
+# 1. 安装/更新宿主机 Nginx + 申请证书 + 配置自动续期（需要 root）
+sudo DOMAIN=www.zhonghui.com \
+     ADMIN_DOMAIN=admin.zhonghui.com \
+     EMAIL=ops@example.com \
+     ./setup-host-nginx.sh
+
+# 2. 启动应用容器、导入初始化数据、生成静态站
+sudo ./install.sh --install-docker
 ```
 
-DNS：
-- `www` / `admin` / 裸域 → 同一台服务器 IP
-- 裸域 301 到 `www`
+`install.sh` 会：
 
-首次进入 `https://admin.zhonghui.com/admin` 创建管理员，然后在页面编辑器点「发布」生成首个 release。
+- 按需安装 Docker（`--install-docker`）；
+- 首次运行生成 `deploy/.env`；
+- 构建镜像；
+- 启动 PostgreSQL；
+- 执行 `seed:init` 导入页面、文章、媒体、菜单和站点设置；
+- 启动 CMS / builder / 容器内 Nginx。
 
-## 本地 Compose 模拟（不连服务器）
+首次打开 `https://admin.zhonghui.com/admin` 创建管理员账号。
+
+已有数据库时不要重复导入：
 
 ```bash
-cd deploy
+sudo ./install.sh --skip-seed
+```
+
+## 证书自动续期
+
+`setup-host-nginx.sh` 会：
+
+- 安装 Certbot；
+- 用 webroot 方式为 `www` + `admin` 签发证书；
+- 写入续期后 reload Nginx 的 hook；
+- 启用 `certbot.timer`。
+
+手动检查：
+
+```bash
+sudo certbot renew --dry-run
+systemctl status certbot.timer
+```
+
+## 本地 Compose 模拟（不连生产域名）
+
+```bash
 docker compose -f docker-compose.local.yml up -d
 ```
 
 - 静态站：`http://www.localhost:8080/`
 - 后台：`http://admin.localhost:8080/admin`
-- 使用宿主机现有 Postgres（`host.docker.internal:5432`）与本地页面数据。
-- `cms` 容器首次启动会在命名卷里执行 `npm ci`（约 1–2 分钟）。
-- 后台「发布」会在容器内构建，写入宿主机 `cms/releases`；Nginx 通过绑定挂载读取。
 
-停止：`docker compose -f docker-compose.local.yml down`
-（如需恢复宿主 `npm run dev`，先执行上面的 down。）
-
-## 本地 / 手工构建
-
-```bash
-cd cms
-npm run generate            # 写入 releases/<时间戳>，并切换 dist / releases/current
-```
-
-本地预览：`./scripts/start.sh preview`
+本地不经过宿主机 Nginx，也不使用证书。
 
 ## 回滚
 
@@ -70,12 +89,9 @@ ls /srv/site                 # 查看 releases
 ln -sfn ./20261024-120000 /srv/site/current
 ```
 
-## TLS
-
-先确保 HTTP 可用，再按 `nginx/zhonghui.conf` 底部注释启用 443，并挂载证书。
-
 ## 注意
 
 - `PAYLOAD_SECRET` 必须与已有数据一致，否则后台会话失效。
-- 构建依赖 `cms` 镜像内的 `tsx` 与源码；当前 Dockerfile 保留全部依赖和源码。
+- 宿主机 Nginx 已占用 80/443；不要再把容器 nginx 映射到宿主机 80。
+- `seed:init` 使用 `NODE_ENV=development` 完成首次 Payload schema 创建，CMS 正常启动使用生产模式。
 - 每次发布都会全量构建（站点规模小，秒级）。

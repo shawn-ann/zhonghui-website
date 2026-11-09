@@ -15,21 +15,23 @@
 前后端使用独立子域名，静态站与 CMS 解耦：
 
 ```
-www.zhonghui.com      → Nginx 静态目录 /srv/site/current
-                        （软链到某次 release）
-
-admin.zhonghui.com    → Nginx 反代 cms:3000
-                        （Next.js + Payload 后台/API/预览）
-
-zhonghui.com          → 301 到 www
+www.zhonghui.com / admin.zhonghui.com
+  ↓ 80 / 443（宿主机 Nginx，负责证书和自动续期）
+宿主机 Nginx
+  ↓ proxy_pass 127.0.0.1:8080
+Docker 内 Nginx
+  ├─ www.zhonghui.com   → 静态目录 /srv/site/current
+  └─ admin.zhonghui.com → cms:3000（Next/Payload）
+zhonghui.com → 301 到 www
 
 Docker Compose（同一台服务器）:
   postgres   持久化数据库
   cms        Next/Payload，提供 /admin /api /preview
-  nginx      静态站点 + 反向代理
+  builder    常驻静态构建服务
+  nginx      容器内静态站 + 反向代理，仅绑定 127.0.0.1:8080
 ```
 
-静态站完全独立：`/assets`、`/assets/media` 都来自 release，不依赖 CMS 运行时。
+宿主机 Nginx 负责 TLS；容器内 Nginx 只处理 HTTP。静态站 `/assets`、`/assets/media` 都来自 release，不依赖 CMS 运行时。
 
 ---
 
@@ -52,7 +54,10 @@ cms/
 deploy/
   docker-compose.yml        生产 Compose
   docker-compose.local.yml  本地模拟 Compose
-  nginx/zhonghui.conf       生产 Nginx
+  install.sh                应用容器一键部署脚本
+  setup-host-nginx.sh       宿主机 Nginx + Certbot + 自动续期脚本
+  nginx/host-zhonghui.conf  宿主机 Nginx 域名配置模板
+  nginx/zhonghui.conf       容器内 Nginx 配置
   nginx/zhonghui.local.conf 本地 Nginx
   .env.example              环境变量示例
   README.md                 简版说明
@@ -222,38 +227,52 @@ NEXT_PUBLIC_SITE_URL=https://www.zhonghui.com
 新环境先导入当前站点配置和媒体，再启动 CMS：
 
 ```bash
-# 先启动数据库
-docker compose up -d postgres
+# 推荐：自动构建镜像、启动数据库、导入 seed、生成静态站并启动容器
+sudo ./install.sh --install-docker
 
-# 导入 seed/ 中的页面、文章、菜单、设置和媒体，并生成静态站
-docker compose run --rm cms npm run seed:init
-
-# 启动 CMS / Nginx
-docker compose up -d --build
+# 已有数据库时跳过 seed
+sudo ./install.sh --skip-seed
 ```
 
-`seed:init` 会使用 `NODE_ENV=development` 完成首次 Payload schema 创建，然后生成 `releases/current`。成功后切换到正常生产启动即可。
+`seed:init` 会使用 `NODE_ENV=development` 完成首次 Payload schema 创建，然后生成 `releases/current`。
 
 生产 Compose：
 
 - `postgres`：数据卷 `pgdata`
 - `cms`：Dockerfile 构建，`next start`
-- `nginx`：80 端口；静态目录 `/srv/site/current`；admin 反代
+- `builder`：常驻构建服务
+- `nginx`：仅绑定 `127.0.0.1:8080`；静态目录 `/srv/site/current`；admin 反代 cms
 
 首次启动后：
 
-1. 打开 `http://admin.zhonghui.com/admin` 创建管理员（种子不包含用户）。
+1. 打开 `https://admin.zhonghui.com/admin` 创建管理员（种子不包含用户）。
 2. 静态站已由 `seed:init` 生成，确认 `https://www.zhonghui.com/` 可访问。
 3. 后续在后台修改并发布即可。
 
-### 5.4 TLS
+### 5.4 TLS 与自动续期
 
-证书就绪后：
+宿主机 Nginx 负责 80/443、证书和续期；容器内 Nginx 不挂载证书。
 
-- 修改 `deploy/nginx/zhonghui.conf`，启用底部 443 server。
-- 挂载证书目录到 `/etc/nginx/certs`。
-- 将 80 端口改为 301 到 https。
-- `docker compose restart nginx`。
+```bash
+sudo DOMAIN=www.zhonghui.com \
+     ADMIN_DOMAIN=admin.zhonghui.com \
+     EMAIL=ops@example.com \
+     ./setup-host-nginx.sh
+```
+
+脚本会：
+
+- 写入 `deploy/nginx/host-zhonghui.conf` 到宿主机 `/etc/nginx/conf.d/zhonghui.conf`；
+- 用 Certbot webroot 方式签发 `www` + `admin` 证书；
+- 安装续期后 reload Nginx 的 deploy hook；
+- 启用 `certbot.timer`。
+
+检查：
+
+```bash
+sudo certbot renew --dry-run
+systemctl status certbot.timer
+```
 
 生产 Dockerfile 目前未实际构建验证；正式上线前需先在服务器执行一次完整构建并检查后台/静态站。
 

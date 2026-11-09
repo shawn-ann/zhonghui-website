@@ -69,9 +69,9 @@ services:
     restart: unless-stopped
     depends_on:
       - cms
+    # 只绑定本机，供宿主机 Nginx 反向代理；宿主机 Nginx 负责 80/443 和证书。
     ports:
-      - "80:80"
-      # - "443:443"
+      - "127.0.0.1:8080:80"
     volumes:
       - site-releases:/srv/site:ro
       - ./nginx/zhonghui.conf:/etc/nginx/conf.d/default.conf:ro
