@@ -222,7 +222,34 @@ NEXT_PUBLIC_SITE_URL=https://www.beijingzhonghui.com
 
 `PAYLOAD_SECRET` 必须与首次初始化时一致，否则后台会话失效。`NEXT_PUBLIC_SITE_URL` 用于后台「查看网站」链接，必须指向前台域名。
 
-### 5.3 初始化数据并启动
+### 5.3 配置宿主机 Nginx 与 HTTPS
+
+宿主机 Nginx 负责 80/443、证书和续期；容器内 Nginx 不挂载证书。先配置 Nginx 和证书：
+
+```bash
+sudo DOMAIN=www.beijingzhonghui.com \
+     ADMIN_DOMAIN=admin.beijingzhonghui.com \
+     EMAIL=ops@example.com \
+     ./setup-host-nginx.sh
+```
+
+脚本会：
+
+- 写入 `deploy/nginx/host-zhonghui.conf` 到宿主机 `/etc/nginx/conf.d/zhonghui.conf`；
+- 用 Certbot webroot 方式签发 `www` + `admin` 证书；
+- 安装续期后 reload Nginx 的 deploy hook；
+- 启用 `certbot.timer`。
+
+检查：
+
+```bash
+sudo certbot renew --dry-run
+systemctl status certbot.timer
+```
+
+> 此时应用容器还没启动，访问域名可能返回 502，这是正常的；完成 5.4 后即可访问。
+
+### 5.4 初始化数据并启动
 
 新环境先导入当前站点配置和媒体，再启动 CMS：
 
@@ -248,31 +275,6 @@ sudo ./install.sh --skip-seed
 1. 打开 `https://admin.beijingzhonghui.com/admin` 创建管理员（种子不包含用户）。
 2. 静态站已由 `seed:init` 生成，确认 `https://www.beijingzhonghui.com/` 可访问。
 3. 后续在后台修改并发布即可。
-
-### 5.4 TLS 与自动续期
-
-宿主机 Nginx 负责 80/443、证书和续期；容器内 Nginx 不挂载证书。
-
-```bash
-sudo DOMAIN=www.beijingzhonghui.com \
-     ADMIN_DOMAIN=admin.beijingzhonghui.com \
-     EMAIL=ops@example.com \
-     ./setup-host-nginx.sh
-```
-
-脚本会：
-
-- 写入 `deploy/nginx/host-zhonghui.conf` 到宿主机 `/etc/nginx/conf.d/zhonghui.conf`；
-- 用 Certbot webroot 方式签发 `www` + `admin` 证书；
-- 安装续期后 reload Nginx 的 deploy hook；
-- 启用 `certbot.timer`。
-
-检查：
-
-```bash
-sudo certbot renew --dry-run
-systemctl status certbot.timer
-```
 
 生产 Dockerfile 目前未实际构建验证；正式上线前需先在服务器执行一次完整构建并检查后台/静态站。
 
