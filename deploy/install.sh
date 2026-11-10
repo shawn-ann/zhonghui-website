@@ -4,7 +4,7 @@
 #
 # 用法（在 deploy/ 目录）：
 #   sudo ./install.sh                 # Docker 已安装
-#   sudo ./install.sh --install-docker
+#   sudo ./install.sh --install-docker   # CentOS/RHEL 使用阿里云镜像
 #   sudo ./install.sh --skip-seed     # 数据库已有数据时
 #
 # 宿主机 Nginx / 证书请另外执行：
@@ -28,18 +28,65 @@ for arg in "$@"; do
   esac
 done
 
-if ! command -v docker >/dev/null 2>&1; then
-  if [[ "$INSTALL_DOCKER" -ne 1 ]]; then
-    echo "未检测到 Docker。请使用 --install-docker，或先按官方文档安装 Docker Engine + Compose 插件。" >&2
-    exit 1
+install_docker_centos() {
+  local pm
+  if command -v dnf >/dev/null 2>&1; then
+    pm=dnf
+    "$pm" install -y dnf-plugins-core
+  else
+    pm=yum
+    "$pm" install -y yum-utils
   fi
+
+  local repo=/etc/yum.repos.d/docker-ce.repo
+  if [[ -f "$repo" ]]; then
+    cp "$repo" "${repo}.bak.$(date +%Y%m%d%H%M%S)"
+  fi
+  rm -f "$repo"
+
+  if [[ "$pm" == dnf ]]; then
+    dnf config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+  else
+    yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+  fi
+  sed -i 's|download.docker.com|mirrors.aliyun.com/docker-ce|g' "$repo"
+
+  rpm --import https://mirrors.aliyun.com/docker-ce/linux/centos/gpg \
+    || rpm --import https://download.docker.com/linux/centos/gpg
+
+  "$pm" clean all
+  "$pm" makecache
+
+  echo "安装 Docker CE / Compose 插件…"
+  if ! "$pm" install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-buildx-plugin; then
+    echo "docker-buildx-plugin 安装失败，改为安装最小集合…" >&2
+    "$pm" install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+  fi
+  systemctl enable --now docker
+}
+
+install_docker() {
+  if command -v yum >/dev/null 2>&1 || command -v dnf >/dev/null 2>&1; then
+    echo "检测到 CentOS/RHEL，使用阿里云 Docker CE 镜像安装…"
+    install_docker_centos
+  else
+    echo "使用 Docker 官方脚本安装…"
+    curl -fsSL https://get.docker.com | sh
+    systemctl enable --now docker
+  fi
+}
+
+if [[ "$INSTALL_DOCKER" -eq 1 ]]; then
   if [[ "${EUID}" -ne 0 ]]; then
     echo "安装 Docker 需要 root，请用 sudo 运行。" >&2
     exit 1
   fi
-  echo "安装 Docker…"
-  curl -fsSL https://get.docker.com | sh
-  systemctl enable --now docker
+  install_docker
+fi
+
+if ! command -v docker >/dev/null 2>&1; then
+  echo "未检测到 Docker。请使用 --install-docker，或先按官方文档安装 Docker Engine + Compose 插件。" >&2
+  exit 1
 fi
 
 if ! docker compose version >/dev/null 2>&1; then
