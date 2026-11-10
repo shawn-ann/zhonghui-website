@@ -4,13 +4,13 @@
 # 仅负责宿主机 Nginx + Certbot；应用容器由 deploy/install.sh 启动。
 #
 # 用法：
-#   sudo DOMAIN=www.zhonghui.com ADMIN_DOMAIN=admin.zhonghui.com EMAIL=ops@example.com \
+#   sudo DOMAIN=www.beijingzhonghui.com ADMIN_DOMAIN=admin.beijingzhonghui.com EMAIL=ops@example.com \
 #     ./setup-host-nginx.sh
 #
 # 可选：
 #   NGINX_CONF=/etc/nginx/conf.d/zhonghui.conf
 #   WEBROOT=/var/www/certbot
-#   CERT_NAME=www.zhonghui.com
+#   CERT_NAME=www.beijingzhonghui.com
 
 set -euo pipefail
 
@@ -19,8 +19,8 @@ if [[ "${EUID}" -ne 0 ]]; then
   exit 1
 fi
 
-DOMAIN="${DOMAIN:-www.zhonghui.com}"
-ADMIN_DOMAIN="${ADMIN_DOMAIN:-admin.zhonghui.com}"
+DOMAIN="${DOMAIN:-www.beijingzhonghui.com}"
+ADMIN_DOMAIN="${ADMIN_DOMAIN:-admin.beijingzhonghui.com}"
 BARE_DOMAIN="${BARE_DOMAIN:-${DOMAIN#www.}}"
 EMAIL="${EMAIL:-}"
 NGINX_CONF="${NGINX_CONF:-/etc/nginx/conf.d/zhonghui.conf}"
@@ -85,9 +85,9 @@ fi
 
 # 2. 安装最终 HTTPS + 反向代理配置。
 sed \
-  -e "s#www\.zhonghui\.com#${DOMAIN}#g" \
-  -e "s#admin\.zhonghui\.com#${ADMIN_DOMAIN}#g" \
-  -e "s#zhonghui\.com#${BARE_DOMAIN}#g" \
+  -e "s#www\.beijingzhonghui\.com#${DOMAIN}#g" \
+  -e "s#admin\.beijingzhonghui\.com#${ADMIN_DOMAIN}#g" \
+  -e "s#server_name beijingzhonghui\.com;#server_name ${BARE_DOMAIN};#g" \
   "$TEMPLATE" > "$NGINX_CONF"
 
 # 如果证书名不是域名，修正证书路径。

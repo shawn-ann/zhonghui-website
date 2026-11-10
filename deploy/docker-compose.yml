@@ -20,7 +20,7 @@ services:
     build:
       context: ../cms
       args:
-        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.zhonghui.com}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.beijingzhonghui.com}
     image: zhonghui-cms
     restart: unless-stopped
     command: node generator/builder.mjs
@@ -42,7 +42,7 @@ services:
     build:
       context: ../cms
       args:
-        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.zhonghui.com}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.beijingzhonghui.com}
     image: zhonghui-cms
     restart: unless-stopped
     depends_on:
@@ -56,7 +56,7 @@ services:
       SITE_RELEASES_DIR: /app/releases
       SITE_KEEP_RELEASES: "5"
       BUILDER_URL: http://builder:4000
-      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.zhonghui.com}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.beijingzhonghui.com}
       TZ: Asia/Shanghai
     volumes:
       - cms-media:/app/media

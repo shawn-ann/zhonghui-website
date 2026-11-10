@@ -10,8 +10,8 @@
 宿主机 Nginx
   ↓ proxy_pass 127.0.0.1:8080
 Docker 内 Nginx
-  ├─ www.zhonghui.com  → 静态站 /srv/site/current
-  └─ admin.zhonghui.com → cms:3000
+  ├─ www.beijingzhonghui.com  → 静态站 /srv/site/current
+  └─ admin.beijingzhonghui.com → cms:3000
 
 Docker Compose：
   postgres / builder / cms / nginx
@@ -20,7 +20,7 @@ Docker Compose：
 - 宿主机 Nginx 配置：`deploy/nginx/host-zhonghui.conf`
 - 容器内 Nginx 配置：`deploy/nginx/zhonghui.conf`
 - 宿主机 Nginx 只转发到 `127.0.0.1:8080`，不直接接触 Docker 网络。
-- 后台地址仍为 `https://admin.zhonghui.com/admin`。
+- 后台地址仍为 `https://admin.beijingzhonghui.com/admin`。
 
 ## 首次部署
 
@@ -28,8 +28,8 @@ Docker Compose：
 cd deploy
 
 # 1. 安装/更新宿主机 Nginx + 申请证书 + 配置自动续期（需要 root）
-sudo DOMAIN=www.zhonghui.com \
-     ADMIN_DOMAIN=admin.zhonghui.com \
+sudo DOMAIN=www.beijingzhonghui.com \
+     ADMIN_DOMAIN=admin.beijingzhonghui.com \
      EMAIL=ops@example.com \
      ./setup-host-nginx.sh
 
@@ -46,7 +46,7 @@ sudo ./install.sh --install-docker
 - 执行 `seed:init` 导入页面、文章、媒体、菜单和站点设置；
 - 启动 CMS / builder / 容器内 Nginx。
 
-首次打开 `https://admin.zhonghui.com/admin` 创建管理员账号。
+首次打开 `https://admin.beijingzhonghui.com/admin` 创建管理员账号。
 
 已有数据库时不要重复导入：
 

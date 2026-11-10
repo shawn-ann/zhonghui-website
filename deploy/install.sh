@@ -8,7 +8,7 @@
 #   sudo ./install.sh --skip-seed     # 数据库已有数据时
 #
 # 宿主机 Nginx / 证书请另外执行：
-#   sudo DOMAIN=www.zhonghui.com ADMIN_DOMAIN=admin.zhonghui.com EMAIL=ops@example.com \
+#   sudo DOMAIN=www.beijingzhonghui.com ADMIN_DOMAIN=admin.beijingzhonghui.com EMAIL=ops@example.com \
 #     ./setup-host-nginx.sh
 
 set -euo pipefail
@@ -56,7 +56,7 @@ PAYLOAD_SECRET=${PAYLOAD_SECRET}
 POSTGRES_USER=zhonghui
 POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 POSTGRES_DB=zhonghui_cms
-NEXT_PUBLIC_SITE_URL=https://www.zhonghui.com
+NEXT_PUBLIC_SITE_URL=https://www.beijingzhonghui.com
 EOF
   chmod 600 .env
   echo "已生成 deploy/.env（请妥善保存）。"
@@ -100,10 +100,10 @@ docker compose up -d
 echo
 echo "容器已启动："
 echo "  宿主机 Nginx 应代理到：http://127.0.0.1:8080"
-echo "  后台默认地址：https://admin.zhonghui.com/admin"
+echo "  后台默认地址：https://admin.beijingzhonghui.com/admin"
 echo
 echo "如果还没有配置宿主机 Nginx / HTTPS，请执行："
-echo "  sudo DOMAIN=www.zhonghui.com ADMIN_DOMAIN=admin.zhonghui.com EMAIL=你的邮箱 \\"
+echo "  sudo DOMAIN=www.beijingzhonghui.com ADMIN_DOMAIN=admin.beijingzhonghui.com EMAIL=你的邮箱 \\"
 echo "    ./setup-host-nginx.sh"
 echo
-echo "首次打开后台时创建管理员账号。站点地址：${SITE_URL:-https://www.zhonghui.com}"
+echo "首次打开后台时创建管理员账号。站点地址：${SITE_URL:-https://www.beijingzhonghui.com}"

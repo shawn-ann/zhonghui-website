@@ -15,14 +15,14 @@
 前后端使用独立子域名，静态站与 CMS 解耦：
 
 ```
-www.zhonghui.com / admin.zhonghui.com
+www.beijingzhonghui.com / admin.beijingzhonghui.com
   ↓ 80 / 443（宿主机 Nginx，负责证书和自动续期）
 宿主机 Nginx
   ↓ proxy_pass 127.0.0.1:8080
 Docker 内 Nginx
-  ├─ www.zhonghui.com   → 静态目录 /srv/site/current
-  └─ admin.zhonghui.com → cms:3000（Next/Payload）
-zhonghui.com → 301 到 www
+  ├─ www.beijingzhonghui.com   → 静态目录 /srv/site/current
+  └─ admin.beijingzhonghui.com → cms:3000（Next/Payload）
+beijingzhonghui.com → 301 到 www
 
 Docker Compose（同一台服务器）:
   postgres   持久化数据库
@@ -198,9 +198,9 @@ docker compose -f docker-compose.local.yml up -d
 
 - 安装 Docker / Docker Compose。
 - DNS 指向同一台服务器：
-  - `www.zhonghui.com`
-  - `admin.zhonghui.com`
-  - `zhonghui.com`（裸域 301）
+  - `www.beijingzhonghui.com`
+  - `admin.beijingzhonghui.com`
+  - `beijingzhonghui.com`（裸域 301）
 - 开放 80/443。
 
 ### 5.2 配置环境变量
@@ -217,7 +217,7 @@ PAYLOAD_SECRET=请替换为随机长字符串
 POSTGRES_USER=zhonghui
 POSTGRES_PASSWORD=请替换
 POSTGRES_DB=zhonghui_cms
-NEXT_PUBLIC_SITE_URL=https://www.zhonghui.com
+NEXT_PUBLIC_SITE_URL=https://www.beijingzhonghui.com
 ```
 
 `PAYLOAD_SECRET` 必须与首次初始化时一致，否则后台会话失效。`NEXT_PUBLIC_SITE_URL` 用于后台「查看网站」链接，必须指向前台域名。
@@ -245,8 +245,8 @@ sudo ./install.sh --skip-seed
 
 首次启动后：
 
-1. 打开 `https://admin.zhonghui.com/admin` 创建管理员（种子不包含用户）。
-2. 静态站已由 `seed:init` 生成，确认 `https://www.zhonghui.com/` 可访问。
+1. 打开 `https://admin.beijingzhonghui.com/admin` 创建管理员（种子不包含用户）。
+2. 静态站已由 `seed:init` 生成，确认 `https://www.beijingzhonghui.com/` 可访问。
 3. 后续在后台修改并发布即可。
 
 ### 5.4 TLS 与自动续期
@@ -254,8 +254,8 @@ sudo ./install.sh --skip-seed
 宿主机 Nginx 负责 80/443、证书和续期；容器内 Nginx 不挂载证书。
 
 ```bash
-sudo DOMAIN=www.zhonghui.com \
-     ADMIN_DOMAIN=admin.zhonghui.com \
+sudo DOMAIN=www.beijingzhonghui.com \
+     ADMIN_DOMAIN=admin.beijingzhonghui.com \
      EMAIL=ops@example.com \
      ./setup-host-nginx.sh
 ```
@@ -326,7 +326,7 @@ docker run --rm -v zhonghui_cms-media:/data -v "$PWD":/backup alpine \
 
 ## 8. 安全建议
 
-- `admin.zhonghui.com` 建议增加 IP 白名单或 VPN：
+- `admin.beijingzhonghui.com` 建议增加 IP 白名单或 VPN：
 
 ```nginx
 location / {
@@ -363,7 +363,7 @@ location / {
 - 验证：`docker pull nginx:1.27-alpine`。
 
 **后台跳到登录页**
-- 不同域名（127.0.0.1 / admin.localhost / admin.zhonghui.com）Cookie 不共享，需在当前域名重新登录。
+- 不同域名（127.0.0.1 / admin.localhost / admin.beijingzhonghui.com）Cookie 不共享，需在当前域名重新登录。
 
 **8080 / 3001 端口被占用**
 - 修改 `deploy/docker-compose.local.yml` 的端口映射。
