@@ -15,23 +15,20 @@
 前后端使用独立子域名，静态站与 CMS 解耦：
 
 ```
-www.beijingzhonghui.com / admin.beijingzhonghui.com
-  ↓ 80 / 443（宿主机 Nginx，负责证书和自动续期）
+new.chinaaupairs.com / admin.chinaaupairs.com
+  ↓ 80 / 443（宿主机 Nginx，负责域名、证书和自动续期）
 宿主机 Nginx
-  ↓ proxy_pass 127.0.0.1:8080
-Docker 内 Nginx
-  ├─ www.beijingzhonghui.com   → 静态目录 /srv/site/current
-  └─ admin.beijingzhonghui.com → cms:3000（Next/Payload）
-beijingzhonghui.com → 301 到 www
+  ├─ new.chinaaupairs.com   → 127.0.0.1:8080（容器内静态站）
+  └─ admin.chinaaupairs.com → 127.0.0.1:3010（CMS）
 
 Docker Compose（同一台服务器）:
   postgres   持久化数据库
   cms        Next/Payload，提供 /admin /api /preview
   builder    常驻静态构建服务
-  nginx      容器内静态站 + 反向代理，仅绑定 127.0.0.1:8080
+  nginx      容器内静态站，不包含域名，仅绑定 127.0.0.1:8080
 ```
 
-宿主机 Nginx 负责 TLS；容器内 Nginx 只处理 HTTP。静态站 `/assets`、`/assets/media` 都来自 release，不依赖 CMS 运行时。
+容器内 Nginx 不再依赖域名；域名、TLS 和证书全部由宿主机 Nginx 负责。静态站 `/assets`、`/assets/media` 都来自 release，不依赖 CMS 运行时。
 
 ---
 
@@ -198,9 +195,8 @@ docker compose -f docker-compose.local.yml up -d
 
 - 安装 Docker / Docker Compose。
 - DNS 指向同一台服务器：
-  - `www.beijingzhonghui.com`
-  - `admin.beijingzhonghui.com`
-  - `beijingzhonghui.com`（裸域 301）
+  - `new.chinaaupairs.com`
+  - `admin.chinaaupairs.com`
 - 开放 80/443。
 
 ### 5.2 配置环境变量
@@ -217,34 +213,34 @@ PAYLOAD_SECRET=请替换为随机长字符串
 POSTGRES_USER=zhonghui
 POSTGRES_PASSWORD=请替换
 POSTGRES_DB=zhonghui_cms
-NEXT_PUBLIC_SITE_URL=https://www.beijingzhonghui.com
+SITE_DOMAIN=new.chinaaupairs.com
+ADMIN_DOMAIN=admin.chinaaupairs.com
+NEXT_PUBLIC_SITE_URL=https://new.chinaaupairs.com
 ```
 
-`PAYLOAD_SECRET` 必须与首次初始化时一致，否则后台会话失效。`NEXT_PUBLIC_SITE_URL` 用于后台「查看网站」链接，必须指向前台域名。
+`PAYLOAD_SECRET` 必须与首次初始化时一致，否则后台会话失效。`SITE_DOMAIN` / `ADMIN_DOMAIN` 用于生成宿主机 Nginx 配置和证书，`NEXT_PUBLIC_SITE_URL` 用于后台「查看网站」链接。
 
 ### 5.3 配置宿主机 Nginx 与 HTTPS
 
 宿主机 Nginx 负责 80/443、证书和续期；容器内 Nginx 不挂载证书。先配置 Nginx 和证书：
 
 ```bash
-sudo DOMAIN=www.beijingzhonghui.com \
-     ADMIN_DOMAIN=admin.beijingzhonghui.com \
-     EMAIL=ops@example.com \
-     ./setup-host-nginx.sh
+sudo EMAIL=ops@example.com ./setup-host-nginx.sh
 ```
 
 脚本会：
 
-- 写入 `deploy/nginx/host-zhonghui.conf` 到宿主机 `/etc/nginx/conf.d/zhonghui.conf`；
-- 用 Certbot webroot 方式签发 `www` + `admin` 证书；
+- 读取 `deploy/.env` 中的 `SITE_DOMAIN` / `ADMIN_DOMAIN`；
+- 写入 `deploy/nginx/host-zhonghui.conf` 模板到宿主机 `/etc/nginx/conf.d/zhonghui-cms.conf`；
+- 用 Certbot webroot 方式签发前端 + 后台证书；
 - 安装续期后 reload Nginx 的 deploy hook；
-- 启用 `certbot.timer`。
+- 复用现有 `certbot renew` cron，没有时自动添加 cron。
 
 检查：
 
 ```bash
 sudo certbot renew --dry-run
-systemctl status certbot.timer
+crontab -l | grep certbot
 ```
 
 > 此时应用容器还没启动，访问域名可能返回 502，这是正常的；完成 5.4 后即可访问。
@@ -266,14 +262,14 @@ sudo ./install.sh --skip-seed
 生产 Compose：
 
 - `postgres`：数据卷 `pgdata`
-- `cms`：Dockerfile 构建，`next start`
+- `cms`：Dockerfile 构建，`next start`；绑定 `127.0.0.1:3010`，供宿主机后台域名直接代理
 - `builder`：常驻构建服务
-- `nginx`：仅绑定 `127.0.0.1:8080`；静态目录 `/srv/site/current`；admin 反代 cms
+- `nginx`：仅绑定 `127.0.0.1:8080`；容器内静态站，不包含域名
 
 首次启动后：
 
-1. 打开 `https://admin.beijingzhonghui.com/admin` 创建管理员（种子不包含用户）。
-2. 静态站已由 `seed:init` 生成，确认 `https://www.beijingzhonghui.com/` 可访问。
+1. 打开 `https://admin.chinaaupairs.com/admin` 创建管理员（种子不包含用户）。
+2. 静态站已由 `seed:init` 生成，确认 `https://new.chinaaupairs.com/` 可访问。
 3. 后续在后台修改并发布即可。
 
 生产 Dockerfile 目前未实际构建验证；正式上线前需先在服务器执行一次完整构建并检查后台/静态站。
@@ -328,13 +324,13 @@ docker run --rm -v zhonghui_cms-media:/data -v "$PWD":/backup alpine \
 
 ## 8. 安全建议
 
-- `admin.beijingzhonghui.com` 建议增加 IP 白名单或 VPN：
+- `admin.chinaaupairs.com` 建议增加 IP 白名单或 VPN：
 
 ```nginx
 location / {
     allow 203.0.113.10;
     deny all;
-    proxy_pass http://cms:3000;
+    proxy_pass http://127.0.0.1:3010;
 }
 ```
 
@@ -365,7 +361,7 @@ location / {
 - 验证：`docker pull nginx:1.27-alpine`。
 
 **后台跳到登录页**
-- 不同域名（127.0.0.1 / admin.localhost / admin.beijingzhonghui.com）Cookie 不共享，需在当前域名重新登录。
+- 不同域名（127.0.0.1 / admin.localhost / admin.chinaaupairs.com）Cookie 不共享，需在当前域名重新登录。
 
 **8080 / 3001 端口被占用**
 - 修改 `deploy/docker-compose.local.yml` 的端口映射。

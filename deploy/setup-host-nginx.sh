@@ -3,14 +3,19 @@
 # 安装/更新宿主机 Nginx 配置，签发证书并配置自动续期。
 # 仅负责宿主机 Nginx + Certbot；应用容器由 deploy/install.sh 启动。
 #
+# 域名来自 deploy/.env（也可用环境变量覆盖）：
+#   SITE_DOMAIN=new.chinaaupairs.com
+#   ADMIN_DOMAIN=admin.chinaaupairs.com
+#   EMAIL=ops@example.com
+#
 # 用法：
-#   sudo DOMAIN=www.beijingzhonghui.com ADMIN_DOMAIN=admin.beijingzhonghui.com EMAIL=ops@example.com \
-#     ./setup-host-nginx.sh
+#   sudo ./setup-host-nginx.sh
+#   sudo SITE_DOMAIN=... ADMIN_DOMAIN=... EMAIL=... ./setup-host-nginx.sh
 #
 # 可选：
-#   NGINX_CONF=/etc/nginx/conf.d/zhonghui.conf
-#   WEBROOT=/var/www/certbot
-#   CERT_NAME=www.beijingzhonghui.com
+#   CERT_NAME（默认等于 SITE_DOMAIN）
+#   NGINX_CONF（默认 /etc/nginx/conf.d/zhonghui-cms.conf）
+#   WEBROOT（默认 /var/www/certbot）
 
 set -euo pipefail
 
@@ -19,20 +24,23 @@ if [[ "${EUID}" -ne 0 ]]; then
   exit 1
 fi
 
-DOMAIN="${DOMAIN:-www.beijingzhonghui.com}"
-ADMIN_DOMAIN="${ADMIN_DOMAIN:-admin.beijingzhonghui.com}"
-BARE_DOMAIN="${BARE_DOMAIN:-${DOMAIN#www.}}"
-EMAIL="${EMAIL:-}"
-NGINX_CONF="${NGINX_CONF:-/etc/nginx/conf.d/zhonghui.conf}"
-WEBROOT="${WEBROOT:-/var/www/certbot}"
-CERT_NAME="${CERT_NAME:-$DOMAIN}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TEMPLATE="$SCRIPT_DIR/nginx/host-zhonghui.conf"
-
-if [[ -z "$EMAIL" ]]; then
-  echo "缺少 EMAIL，例如：sudo EMAIL=ops@example.com ./setup-host-nginx.sh" >&2
-  exit 1
+if [[ -f "$SCRIPT_DIR/.env" ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  . "$SCRIPT_DIR/.env"
+  set +a
 fi
+
+SITE_DOMAIN="${SITE_DOMAIN:-${DOMAIN:-new.chinaaupairs.com}}"
+ADMIN_DOMAIN="${ADMIN_DOMAIN:-admin.chinaaupairs.com}"
+EMAIL="${EMAIL:-${ACME_EMAIL:-}}"
+CERT_NAME="${CERT_NAME:-$SITE_DOMAIN}"
+NGINX_CONF="${NGINX_CONF:-/etc/nginx/conf.d/zhonghui-cms.conf}"
+WEBROOT="${WEBROOT:-/var/www/certbot}"
+TEMPLATE="$SCRIPT_DIR/nginx/host-zhonghui.conf"
+CERT_FILE="/etc/letsencrypt/live/${CERT_NAME}/fullchain.pem"
+
 if ! command -v nginx >/dev/null 2>&1; then
   echo "未检测到 nginx，请先安装宿主机 Nginx。" >&2
   exit 1
@@ -41,10 +49,25 @@ if [[ ! -f "$TEMPLATE" ]]; then
   echo "缺少模板：$TEMPLATE" >&2
   exit 1
 fi
+
 if ! command -v certbot >/dev/null 2>&1; then
   echo "安装 certbot…"
-  apt-get update
-  apt-get install -y certbot
+  if command -v apt-get >/dev/null 2>&1; then
+    apt-get update
+    apt-get install -y certbot
+  elif command -v dnf >/dev/null 2>&1; then
+    dnf install -y epel-release certbot
+  elif command -v yum >/dev/null 2>&1; then
+    yum install -y epel-release certbot
+  else
+    echo "无法自动安装 certbot，请手动安装后重试。" >&2
+    exit 1
+  fi
+fi
+
+if [[ ! -f "$CERT_FILE" && -z "$EMAIL" ]]; then
+  echo "首次申请证书需要 EMAIL，例如：sudo EMAIL=ops@example.com ./setup-host-nginx.sh" >&2
+  exit 1
 fi
 
 mkdir -p "$WEBROOT" "$(dirname "$NGINX_CONF")"
@@ -58,12 +81,12 @@ reload_nginx() {
 }
 
 # 1. 首次签发前先放一个仅 HTTP 的临时配置，让 ACME challenge 可访问。
-if [[ ! -f "/etc/letsencrypt/live/${CERT_NAME}/fullchain.pem" ]]; then
+if [[ ! -f "$CERT_FILE" ]]; then
   cat > "$NGINX_CONF" <<EOF
 server {
     listen 80;
     listen [::]:80;
-    server_name ${DOMAIN} ${ADMIN_DOMAIN};
+    server_name ${SITE_DOMAIN} ${ADMIN_DOMAIN};
 
     location ^~ /.well-known/acme-challenge/ {
         root ${WEBROOT};
@@ -76,24 +99,19 @@ server {
 }
 EOF
   reload_nginx
-  echo "申请证书：${DOMAIN} / ${ADMIN_DOMAIN}"
+  echo "申请证书：${SITE_DOMAIN} / ${ADMIN_DOMAIN}"
   certbot certonly --webroot -w "$WEBROOT" \
-    -d "$DOMAIN" -d "$ADMIN_DOMAIN" \
+    -d "$SITE_DOMAIN" -d "$ADMIN_DOMAIN" \
     --cert-name "$CERT_NAME" \
     --email "$EMAIL" --agree-tos --no-eff-email --non-interactive --expand
 fi
 
 # 2. 安装最终 HTTPS + 反向代理配置。
 sed \
-  -e "s#www\.beijingzhonghui\.com#${DOMAIN}#g" \
-  -e "s#admin\.beijingzhonghui\.com#${ADMIN_DOMAIN}#g" \
-  -e "s#server_name beijingzhonghui\.com;#server_name ${BARE_DOMAIN};#g" \
+  -e "s#__SITE_DOMAIN__#${SITE_DOMAIN}#g" \
+  -e "s#__ADMIN_DOMAIN__#${ADMIN_DOMAIN}#g" \
+  -e "s#__CERT_NAME__#${CERT_NAME}#g" \
   "$TEMPLATE" > "$NGINX_CONF"
-
-# 如果证书名不是域名，修正证书路径。
-if [[ "$CERT_NAME" != "$DOMAIN" ]]; then
-  sed -i "s#/etc/letsencrypt/live/${DOMAIN}/#/etc/letsencrypt/live/${CERT_NAME}/#g" "$NGINX_CONF"
-fi
 
 reload_nginx
 
@@ -106,16 +124,20 @@ nginx -t && systemctl reload nginx
 EOF
 chmod +x "${HOOK_DIR}/30-zhonghui-reload-nginx.sh"
 
-# 4. 启用 certbot 定时器（Debian/Ubuntu 安装 certbot 时通常自带）。
-if systemctl list-unit-files | grep -q '^certbot.timer'; then
+# 4. 自动续期：已有 cron 就复用；没有 systemd timer 时补一条 cron。
+if crontab -l 2>/dev/null | grep -q 'certbot renew'; then
+  echo "已有 certbot renew cron，沿用现有自动续期。"
+elif systemctl list-unit-files 2>/dev/null | grep -q '^certbot.timer'; then
   systemctl enable --now certbot.timer
   echo "certbot.timer 已启用（自动续期）。"
 else
-  echo "未发现 certbot.timer，请确认系统已有 certbot 定时任务（cron/systemd）。"
+  { crontab -l 2>/dev/null || true; echo "0 3 * * * /usr/bin/certbot renew --quiet && /usr/sbin/nginx -s reload"; } | crontab -
+  echo "已添加 root cron：每天 03:00 检查证书续期。"
 fi
 
 echo
 echo "宿主机 Nginx 配置完成："
-echo "  https://${DOMAIN}       -> 127.0.0.1:8080"
-echo "  https://${ADMIN_DOMAIN} -> 127.0.0.1:8080"
-echo "证书续期检查：sudo certbot renew --dry-run"
+echo "  前端：https://${SITE_DOMAIN}       -> 127.0.0.1:8080"
+echo "  后台：https://${ADMIN_DOMAIN} -> 127.0.0.1:3010"
+echo "证书：/etc/letsencrypt/live/${CERT_NAME}/"
+echo "检查续期：sudo certbot renew --dry-run"

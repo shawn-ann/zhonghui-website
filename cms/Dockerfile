@@ -15,7 +15,7 @@ RUN npm run build:generator
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PAYLOAD_SECRET=build-only-secret
 ENV DATABASE_URL=postgres://build:build@127.0.0.1:5432/build
-ARG NEXT_PUBLIC_SITE_URL=https://www.beijingzhonghui.com
+ARG NEXT_PUBLIC_SITE_URL=https://new.chinaaupairs.com
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 RUN npm run build
 

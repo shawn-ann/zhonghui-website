@@ -6,32 +6,45 @@
 
 ```text
 用户
-  ↓ 80 / 443（宿主机 Nginx，负责证书）
+  ↓ 80 / 443（宿主机 Nginx，负责域名和证书）
 宿主机 Nginx
-  ↓ proxy_pass 127.0.0.1:8080
-Docker 内 Nginx
-  ├─ www.beijingzhonghui.com  → 静态站 /srv/site/current
-  └─ admin.beijingzhonghui.com → cms:3000
+  ├─ new.chinaaupairs.com   → 127.0.0.1:8080  容器内静态站
+  └─ admin.chinaaupairs.com → 127.0.0.1:3010  CMS 后台
 
 Docker Compose：
   postgres / builder / cms / nginx
 ```
 
-- 宿主机 Nginx 配置：`deploy/nginx/host-zhonghui.conf`
-- 容器内 Nginx 配置：`deploy/nginx/zhonghui.conf`
-- 宿主机 Nginx 只转发到 `127.0.0.1:8080`，不直接接触 Docker 网络。
-- 后台地址仍为 `https://admin.beijingzhonghui.com/admin`。
+- 容器内 Nginx 不再包含任何域名，只做静态站默认 server；
+- 宿主机 Nginx 负责域名、TLS、证书续期；
+- 后台直接代理到 CMS 的 `127.0.0.1:3010`；
+- 域名全部来自 `deploy/.env`，换域名只需改 env 并重新签发证书。
+
+## 域名配置
+
+`deploy/.env`：
+
+```env
+SITE_DOMAIN=new.chinaaupairs.com
+ADMIN_DOMAIN=admin.chinaaupairs.com
+
+NEXT_PUBLIC_SITE_URL=https://new.chinaaupairs.com
+```
+
+- `SITE_DOMAIN`：前端域名
+- `ADMIN_DOMAIN`：后台域名
+- `NEXT_PUBLIC_SITE_URL`：后台「查看网站」链接
 
 ## 首次部署
 
 ```bash
 cd deploy
+cp .env.example .env
+# 修改 .env 中的 SITE_DOMAIN / ADMIN_DOMAIN / NEXT_PUBLIC_SITE_URL
 
-# 1. 安装/更新宿主机 Nginx + 申请证书 + 配置自动续期（需要 root）
-sudo DOMAIN=www.beijingzhonghui.com \
-     ADMIN_DOMAIN=admin.beijingzhonghui.com \
-     EMAIL=ops@example.com \
-     ./setup-host-nginx.sh
+# 1. 配置宿主机 Nginx + 申请证书 + 自动续期
+#    域名从 .env 读取，首次需要 EMAIL
+sudo EMAIL=ops@example.com ./setup-host-nginx.sh
 
 # 2. 启动应用容器、导入初始化数据、生成静态站
 sudo ./install.sh --install-docker
@@ -46,7 +59,7 @@ sudo ./install.sh --install-docker
 - 执行 `seed:init` 导入页面、文章、媒体、菜单和站点设置；
 - 启动 CMS / builder / 容器内 Nginx。
 
-首次打开 `https://admin.beijingzhonghui.com/admin` 创建管理员账号。
+首次打开 `https://admin.chinaaupairs.com/admin` 创建管理员账号。
 
 已有数据库时不要重复导入：
 
@@ -54,20 +67,39 @@ sudo ./install.sh --install-docker
 sudo ./install.sh --skip-seed
 ```
 
+## 更换域名
+
+只修改 `deploy/.env`：
+
+```env
+SITE_DOMAIN=新前端域名
+ADMIN_DOMAIN=新后台域名
+NEXT_PUBLIC_SITE_URL=https://新前端域名
+```
+
+然后：
+
+```bash
+sudo EMAIL=ops@example.com ./setup-host-nginx.sh
+sudo docker compose build cms
+sudo docker compose up -d cms
+```
+
+`setup-host-nginx.sh` 会按新域名重新生成宿主机配置并申请证书；容器 Nginx 不需要改。
+
 ## 证书自动续期
 
-`setup-host-nginx.sh` 会：
+脚本会：
 
-- 安装 Certbot；
-- 用 webroot 方式为 `www` + `admin` 签发证书；
-- 写入续期后 reload Nginx 的 hook；
-- 启用 `certbot.timer`。
+- 用 webroot 方式签发 `SITE_DOMAIN` + `ADMIN_DOMAIN` 证书；
+- 安装续期后 reload Nginx 的 hook；
+- 复用已有 `certbot renew` cron；没有 cron 时自动添加每天 03:00 的任务。
 
-手动检查：
+检查：
 
 ```bash
 sudo certbot renew --dry-run
-systemctl status certbot.timer
+crontab -l | grep certbot
 ```
 
 ## 本地 Compose 模拟（不连生产域名）

@@ -7,9 +7,8 @@
 #   sudo ./install.sh --install-docker   # CentOS/RHEL 使用阿里云镜像
 #   sudo ./install.sh --skip-seed     # 数据库已有数据时
 #
-# 宿主机 Nginx / 证书请另外执行：
-#   sudo DOMAIN=www.beijingzhonghui.com ADMIN_DOMAIN=admin.beijingzhonghui.com EMAIL=ops@example.com \
-#     ./setup-host-nginx.sh
+# 宿主机 Nginx / 证书请另外执行（域名从 deploy/.env 读取）：
+#   sudo ./setup-host-nginx.sh
 
 set -euo pipefail
 
@@ -94,6 +93,8 @@ if ! docker compose version >/dev/null 2>&1; then
   exit 1
 fi
 
+SITE_DOMAIN="${SITE_DOMAIN:-new.chinaaupairs.com}"
+ADMIN_DOMAIN="${ADMIN_DOMAIN:-admin.chinaaupairs.com}"
 if [[ ! -f .env ]]; then
   echo "生成 .env…"
   PAYLOAD_SECRET="$(openssl rand -hex 32)"
@@ -103,7 +104,9 @@ PAYLOAD_SECRET=${PAYLOAD_SECRET}
 POSTGRES_USER=zhonghui
 POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 POSTGRES_DB=zhonghui_cms
-NEXT_PUBLIC_SITE_URL=https://www.beijingzhonghui.com
+SITE_DOMAIN=${SITE_DOMAIN}
+ADMIN_DOMAIN=${ADMIN_DOMAIN}
+NEXT_PUBLIC_SITE_URL=https://${SITE_DOMAIN}
 EOF
   chmod 600 .env
   echo "已生成 deploy/.env（请妥善保存）。"
@@ -115,7 +118,12 @@ POSTGRES_USER="$(grep '^POSTGRES_USER=' .env | cut -d= -f2- || true)"
 POSTGRES_DB="$(grep '^POSTGRES_DB=' .env | cut -d= -f2- || true)"
 POSTGRES_USER="${POSTGRES_USER:-zhonghui}"
 POSTGRES_DB="${POSTGRES_DB:-zhonghui_cms}"
+SITE_DOMAIN="$(grep '^SITE_DOMAIN=' .env | cut -d= -f2- || true)"
+ADMIN_DOMAIN="$(grep '^ADMIN_DOMAIN=' .env | cut -d= -f2- || true)"
+SITE_DOMAIN="${SITE_DOMAIN:-new.chinaaupairs.com}"
+ADMIN_DOMAIN="${ADMIN_DOMAIN:-admin.chinaaupairs.com}"
 SITE_URL="$(grep '^NEXT_PUBLIC_SITE_URL=' .env | cut -d= -f2- || true)"
+SITE_URL="${SITE_URL:-https://${SITE_DOMAIN}}"
 
 echo "构建镜像…"
 docker compose build
@@ -147,10 +155,10 @@ docker compose up -d
 echo
 echo "容器已启动："
 echo "  宿主机 Nginx 应代理到：http://127.0.0.1:8080"
-echo "  后台默认地址：https://admin.beijingzhonghui.com/admin"
+echo "  后台默认地址：https://${ADMIN_DOMAIN}/admin"
 echo
 echo "如果还没有配置宿主机 Nginx / HTTPS，请执行："
-echo "  sudo DOMAIN=www.beijingzhonghui.com ADMIN_DOMAIN=admin.beijingzhonghui.com EMAIL=你的邮箱 \\"
-echo "    ./setup-host-nginx.sh"
+echo "  sudo ./setup-host-nginx.sh"
+echo "  （域名从 deploy/.env 的 SITE_DOMAIN / ADMIN_DOMAIN 读取）"
 echo
-echo "首次打开后台时创建管理员账号。站点地址：${SITE_URL:-https://www.beijingzhonghui.com}"
+echo "首次打开后台时创建管理员账号。站点地址：${SITE_URL}"

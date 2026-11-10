@@ -20,7 +20,7 @@ services:
     build:
       context: ../cms
       args:
-        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.beijingzhonghui.com}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://new.chinaaupairs.com}
     image: zhonghui-cms
     restart: unless-stopped
     command: node generator/builder.mjs
@@ -42,7 +42,7 @@ services:
     build:
       context: ../cms
       args:
-        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.beijingzhonghui.com}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://new.chinaaupairs.com}
     image: zhonghui-cms
     restart: unless-stopped
     depends_on:
@@ -56,13 +56,14 @@ services:
       SITE_RELEASES_DIR: /app/releases
       SITE_KEEP_RELEASES: "5"
       BUILDER_URL: http://builder:4000
-      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.beijingzhonghui.com}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://new.chinaaupairs.com}
       TZ: Asia/Shanghai
     volumes:
       - cms-media:/app/media
       - site-releases:/app/releases
-    expose:
-      - "3000"
+    ports:
+      # 供宿主机 Nginx 的后台域名直接代理，仅绑定本机。
+      - "127.0.0.1:3010:3000"
 
   nginx:
     image: nginx:1.27-alpine
