@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { FieldLabel, useField, useFormFields } from '@payloadcms/ui'
+import { FieldLabel, useField } from '@payloadcms/ui'
 import MediaModal from '../../editor/MediaModal'
 import type { MediaItem } from '../../editor/api'
 
@@ -12,7 +12,6 @@ function relationId(value: unknown): number | string | undefined {
 
 export default function ArticleCoverField({ path, field }: { path: string; field: any }) {
   const { value, setValue } = useField<number | string | null>({ path })
-  const title = useFormFields(([fields]) => String(fields?.title?.value || ''))
   const [open, setOpen] = useState(false)
   const [url, setUrl] = useState('')
   const id = relationId(value)
@@ -39,10 +38,17 @@ export default function ArticleCoverField({ path, field }: { path: string; field
   return (
     <div className="field-type article-cover-field">
       <FieldLabel label={label} path={path} required={Boolean(field?.required)} />
-      <div className={`acf-cover${url ? ' has-image' : ''}`} style={url ? { backgroundImage: `url('${url}')` } : undefined}>
-        {url ? <div className="acf-caption">{title || '未命名文章'}</div> : <span className="acf-placeholder">未选择封面图</span>}
+      <div className="acf-picker">
+        <div
+          className={`acf-cover${url ? ' has-image' : ''}`}
+          style={url ? { backgroundImage: `url('${url}')` } : undefined}
+        >
+          {url ? null : <span className="acf-placeholder">未选择封面图</span>}
+        </div>
         <div className="acf-actions">
-          <button type="button" onClick={() => setOpen(true)}>{url ? '更换' : '选择封面图'}</button>
+          <button type="button" className="zc-btn secondary" onClick={() => setOpen(true)}>
+            {url ? '更换图片' : '选择图片'}
+          </button>
         </div>
       </div>
       <div className="field-description">列表卡片按 1:1 裁切；详情页头图会整幅裁切。</div>

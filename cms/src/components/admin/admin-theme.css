@@ -585,10 +585,185 @@ html.admin-shell .table thead th {
 
 html.admin-shell .table tbody tr:hover { background: #fdf8fa; }
 
-/* 文章编辑页：沿用分类编辑页的原生表单布局，仅保留字段级外观 */
+/* 文章编辑页：完整页面版的「分类编辑抽屉」样式 */
+html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-header {
+  box-sizing: border-box;
+  width: min(960px, calc(100% - 64px));
+  max-width: none;
+  margin: 0 auto;
+  padding: 20px 22px 16px;
+  background: #fff;
+  border: 1px solid var(--zc-border);
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+}
+html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-header .doc-header__header {
+  padding-bottom: 0;
+  gap: 16px;
+}
+html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-header h1 {
+  font-size: 19px;
+  line-height: 1.35;
+  color: #332b2f;
+}
+html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-header .doc-header__after-header {
+  margin-top: 5px;
+}
+html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-header .custom-view-description {
+  font-size: 12px;
+  color: var(--zc-muted);
+}
+html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-header .doc-tabs {
+  margin-left: auto;
+}
+html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-header .doc-tab {
+  height: auto;
+  padding: 0 2px;
+  border: 0;
+  background: transparent;
+  color: var(--zc-muted);
+  font-size: 12px;
+}
+html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-header .doc-tab--active {
+  display: none;
+}
+html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-header .doc-tab:hover {
+  background: transparent;
+  color: var(--zc-primary);
+}
+
+.collection-edit--cases {
+  box-sizing: border-box;
+  width: min(960px, calc(100% - 64px));
+  margin: 0 auto 48px;
+  background: #fff;
+  border: 1px solid var(--zc-border);
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+  box-shadow: var(--zc-shadow-card);
+}
+
+.collection-edit--cases .collection-edit__form {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 0 0 10px 10px;
+}
+.collection-edit--cases .collection-edit__main-wrapper {
+  order: 1;
+  padding: 0;
+}
+.collection-edit--cases .collection-edit__main { padding: 0; }
+
+/* 操作栏固定在底部，对应抽屉的 footer */
+.collection-edit--cases .doc-controls {
+  order: 2;
+  position: sticky;
+  top: auto;
+  bottom: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 12px 22px;
+  background: #fff;
+  border-top: 1px solid var(--zc-border);
+  border-bottom: 0;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 -6px 18px rgba(51, 29, 39, .05);
+}
+.collection-edit--cases .doc-controls__wrapper { align-items: center; }
+.collection-edit--cases .doc-controls__value-wrap { display: none; }
+.collection-edit--cases .doc-controls__status .status__label { display: none; }
+.collection-edit--cases .doc-controls__status .status__value-wrap {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 99px;
+  background: #f2eef0;
+  color: var(--zc-muted);
+  font-size: 11.5px;
+}
+.collection-edit--cases .doc-controls__status .status[title*='已发布'] .status__value-wrap {
+  background: var(--zc-success-bg);
+  color: var(--zc-success);
+}
+.collection-edit--cases .doc-controls__status .status[title*='草稿'] .status__value-wrap {
+  background: var(--zc-warning-bg);
+  color: var(--zc-warning);
+}
+.collection-edit--cases .doc-controls .btn {
+  height: 34px;
+  border-radius: var(--zc-radius-control);
+  font-size: 13px;
+}
+.collection-edit--cases .doc-controls .btn--style-primary {
+  background: var(--zc-primary);
+  border-color: var(--zc-primary);
+  color: #fff;
+}
+.collection-edit--cases .doc-controls .btn--style-primary:hover {
+  background: var(--zc-primary-hover);
+  border-color: var(--zc-primary-hover);
+}
+.collection-edit--cases .doc-controls .btn--style-secondary {
+  background: #fff;
+  border: 1px solid var(--zc-border-strong);
+  color: #5a4a52;
+}
+.collection-edit--cases .doc-controls .btn--style-secondary:hover {
+  border-color: var(--zc-primary);
+  color: var(--zc-primary);
+}
+
+/* 正文区域：与抽屉 body 一致的内边距与字段间距 */
+.collection-edit--cases .document-fields { display: block; }
+.collection-edit--cases .document-fields__main { padding: 20px 22px 24px; }
+.collection-edit--cases .document-fields__edit { max-width: none; padding: 0; }
+.collection-edit--cases .render-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.collection-edit--cases .render-fields > .field-type { margin: 0; }
+.collection-edit--cases .field-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #332b2f;
+}
+.collection-edit--cases .field-label .required {
+  margin-left: 2px;
+  color: var(--zc-primary);
+}
+.collection-edit--cases .field-description {
+  margin-top: 5px;
+  font-size: 11px;
+  color: #8c7a83;
+}
+
+.collection-edit--cases .field-type__wrap input:not([type='checkbox']):not([type='radio']):not([type='range']),
+.collection-edit--cases .field-type__wrap textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid #cbb9c1;
+  border-radius: 4px;
+  background: #fff;
+  color: #332b2f;
+  font: inherit;
+  font-size: 13px;
+  box-shadow: none;
+}
+.collection-edit--cases .field-type__wrap input:not([type='checkbox']):not([type='radio']):not([type='range']):focus,
+.collection-edit--cases .field-type__wrap textarea:focus {
+  border-color: #c2185b;
+  outline: 2px solid rgba(194, 24, 91, .2);
+  box-shadow: none;
+}
+
 .collection-edit--cases .slug-field__row {
   display: flex; align-items: center; gap: 0;
-  border: 1px solid #cbb9c1; border-radius: 6px; background: #fff; overflow: hidden;
+  border: 1px solid #cbb9c1; border-radius: 4px; background: #fff; overflow: hidden;
 }
 .collection-edit--cases .slug-field__prefix {
   padding: 8px 10px; background: #f7f0f4; color: var(--zc-soft);
@@ -601,29 +776,53 @@ html.admin-shell .table tbody tr:hover { background: #fdf8fa; }
 }
 .collection-edit--cases .slug-field__input:focus { outline: none; }
 
-.collection-edit--cases .article-cover-field { max-width: 480px; }
+/* 封面：220×120 预览 + 右侧操作按钮 */
+.collection-edit--cases .article-cover-field .acf-picker {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
 .collection-edit--cases .article-cover-field .acf-cover {
-  position: relative; width: 100%; aspect-ratio: 16 / 9;
-  display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--zc-border); border-radius: 8px; overflow: hidden;
-  background: #f4eef1 center/cover no-repeat;
+  width: 220px;
+  height: 120px;
+  flex: 0 0 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--zc-border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f7f0f4 center/cover no-repeat;
 }
-.collection-edit--cases .acf-placeholder { font-size: 13px; color: var(--zc-muted); }
-.collection-edit--cases .acf-caption {
-  position: absolute; left: 0; right: 0; bottom: 0; padding: 8px 10px;
-  font-size: 12px; font-weight: 600; color: #fff; line-height: 1.4;
-  background: rgba(138, 14, 75, .55); backdrop-filter: blur(2px);
-}
-.collection-edit--cases .acf-actions {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  background: rgba(35, 20, 28, .35); opacity: 0; transition: opacity .15s;
-}
-.collection-edit--cases .acf-cover:hover .acf-actions,
-.collection-edit--cases .acf-cover:not(.has-image) .acf-actions { opacity: 1; }
-.collection-edit--cases .acf-actions button {
-  border: 0; border-radius: 6px; padding: 6px 12px; font-size: 12px;
-  background: rgba(255, 255, 255, .95); color: #5a4a52; cursor: pointer;
+.collection-edit--cases .acf-placeholder { font-size: 12px; color: #8c7a83; }
+.collection-edit--cases .article-cover-field .acf-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.collection-edit--cases .article-body-field .rt-content { min-height: 420px; }
-.collection-edit--cases .article-body-field .rt-shell { margin-top: 6px; }
+.collection-edit--cases .article-body-field .ed-ctl { margin: 0; }
+.collection-edit--cases .article-body-field .ed-ctl > span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #332b2f;
+}
+.collection-edit--cases .article-body-field .rt-shell {
+  margin-top: 0;
+  border-color: #cbb9c1;
+  border-radius: 4px;
+}
+.collection-edit--cases .article-body-field .rt-content {
+  min-height: 420px;
+  max-height: none;
+}
+
+@media (max-width: 900px) {
+  html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-header,
+  .collection-edit--cases {
+    width: calc(100% - 32px);
+  }
+}
+

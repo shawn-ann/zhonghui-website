@@ -14,7 +14,7 @@ export default function ArticleBodyField({ path, field }: { path: string; field:
     <div className="field-type article-body-field">
       <RichTextControl
         inline
-        label={label}
+        label={field?.required ? `${label} *` : label}
         value={value}
         onChange={(next) => setValue(next)}
       />

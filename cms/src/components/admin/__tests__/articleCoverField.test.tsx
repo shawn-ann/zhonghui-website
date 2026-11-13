@@ -6,7 +6,6 @@ import ArticleCoverField from '../ArticleCoverField'
 vi.mock('@payloadcms/ui', () => ({
   FieldLabel: ({ label, required }: any) => <span>{label}{required ? '*' : ''}</span>,
   useField: () => ({ value: null, setValue: () => {} }),
-  useFormFields: (selector: any) => selector([{ title: { value: '小曹同学的赴美之旅' } }, () => {}]),
 }))
 
 describe('ArticleCoverField', () => {
@@ -21,6 +20,6 @@ describe('ArticleCoverField', () => {
   it('does not offer removing a required cover', () => {
     render(<ArticleCoverField path="cover" field={{ label: '封面图', required: true }} />)
     expect(screen.queryByText('移除')).toBeNull()
-    expect(screen.getAllByText('选择封面图').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('选择图片').length).toBeGreaterThan(0)
   })
 })
