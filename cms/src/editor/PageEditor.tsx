@@ -75,7 +75,7 @@ export default function PageEditor({ id }: { id: number | string }) {
   const notify = useCallback((kind: 'success' | 'error', text: string) => {
     setToast({ kind, text })
     clearTimeout(toastTimer.current)
-    toastTimer.current = setTimeout(() => setToast(null), 3500)
+    toastTimer.current = setTimeout(() => setToast(null), kind === 'error' ? 8000 : 3500)
   }, [])
 
   const applyBuild = useCallback((s: BuildStatus) => {

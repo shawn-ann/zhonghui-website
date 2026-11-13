@@ -27,6 +27,18 @@ describe('editor api', () => {
     expect(fetchMock.mock.calls[0][0]).not.toContain('draft=true')
     expect(JSON.parse(fetchMock.mock.calls[0][1].body)._status).toBe('published')
   })
+  it('publishPage surfaces field validation details', async () => {
+    const body = {
+      errors: [{
+        message: 'The following field is invalid',
+        data: { errors: [{ message: 'The following field is invalid', path: 'blocks.2.children.1.steps.2.title' }] },
+      }],
+    }
+    const fetchMock = vi.fn(async (_url: string) => new Response(JSON.stringify(body), { status: 400 }))
+    vi.stubGlobal('fetch', fetchMock)
+    await expect(publishPage(10, { title: 'T', route: '/p/', blocks: [] }))
+      .rejects.toThrow(/blocks\.2\.children\.1\.steps\.2\.title/)
+  })
   it('listMedia fetches docs', async () => {
     const fetchMock = vi.fn(async () => new Response(JSON.stringify({ docs: [{ id: 7, url: '/m/a.jpg' }], hasNextPage: false }), { status: 200 }))
     vi.stubGlobal('fetch', fetchMock)

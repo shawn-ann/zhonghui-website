@@ -4,9 +4,28 @@ import { buildSiteConfig } from '../site/config'
 import type { SiteConfig } from '../render/types'
 
 const json = { 'content-type': 'application/json' }
+
+function payloadErrorMessage(data: any, status: number): string {
+  const first = data?.errors?.[0]
+  const nested = first?.data?.errors
+  if (Array.isArray(nested) && nested.length) {
+    const details = nested
+      .map((item: any) => {
+        const message = String(item?.message || '').trim()
+        const path = String(item?.path || '').trim()
+        if (!message) return ''
+        return path && !message.includes(path) ? `${message}（${path}）` : message
+      })
+      .filter(Boolean)
+    if (details.length) return details.join('；')
+  }
+  return first?.message || data?.message || data?.error || `Request failed: ${status}`
+}
+
 async function j(res: Response) {
-  if (!res.ok) throw new Error(`Request failed: ${res.status}`)
-  return res.json()
+  const data = await res.json().catch(() => null)
+  if (!res.ok) throw new Error(payloadErrorMessage(data, res.status))
+  return data
 }
 export async function getPage(id: number | string): Promise<EditorDoc> {
   const res = await fetch(`/api/pages/${id}?draft=true&depth=1`, { credentials: 'include' })
