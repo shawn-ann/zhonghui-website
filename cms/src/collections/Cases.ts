@@ -21,7 +21,7 @@ export const Cases: CollectionConfig = {
         list: { Component: '/components/admin/CaseListView' },
       },
       edit: {
-        beforeDocumentControls: ['/components/admin/CollectionPreviewLink'],
+        beforeDocumentControls: ['/components/admin/ArticleBackLink', '/components/admin/CollectionPreviewLink'],
       },
     },
   },

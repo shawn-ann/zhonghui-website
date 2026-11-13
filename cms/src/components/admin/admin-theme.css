@@ -596,6 +596,8 @@ html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-hea
   border: 1px solid var(--zc-border);
   border-bottom: 0;
   border-radius: 10px 10px 0 0;
+  display: flex;
+  flex-direction: column;
 }
 html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-header .doc-header__header {
   padding-bottom: 0;
@@ -631,6 +633,19 @@ html.admin-shell .template-default__wrap:has(.collection-edit--cases) > .doc-hea
   background: transparent;
   color: var(--zc-primary);
 }
+.zc-back-link {
+  order: -1;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  color: var(--zc-muted);
+  font-size: 12px;
+  text-decoration: none;
+}
+.zc-back-link:hover { color: var(--zc-primary); }
+.zc-back-link span { font-size: 14px; line-height: 1; }
 
 .collection-edit--cases {
   box-sizing: border-box;
