@@ -585,49 +585,7 @@ html.admin-shell .table thead th {
 
 html.admin-shell .table tbody tr:hover { background: #fdf8fa; }
 
-/* 文章编辑页：左写作 / 右属性 */
-html.admin-shell:has(.collection-edit--cases) .doc-header { display: none !important; }
-
-.collection-edit--cases .collection-edit__form { background: #fff; }
-
-.collection-edit--cases .doc-controls {
-  position: sticky; top: 0; z-index: 30;
-  margin: 0; padding: 10px 28px;
-  background: #fff; border-bottom: 1px solid var(--zc-border);
-}
-.collection-edit--cases .doc-controls__wrapper { align-items: center; }
-.collection-edit--cases .doc-controls__meta { display: none; }
-.collection-edit--cases .zc-doc-meta {
-  display: flex; align-items: center; gap: 14px;
-  margin-right: auto; font-size: 12px; color: var(--zc-muted);
-}
-.collection-edit--cases .zc-doc-status {
-  display: inline-flex; align-items: center; padding: 3px 9px;
-  border-radius: 999px; font-size: 11.5px;
-}
-.collection-edit--cases .zc-doc-status.is-published { background: #eaf6ee; color: #1b7a3a; }
-.collection-edit--cases .zc-doc-status.is-draft { background: #fff6e5; color: #9a5b00; }
-
-.collection-edit--cases .document-fields { align-items: stretch; }
-.collection-edit--cases .document-fields__main { padding: 26px 32px 40px; }
-.collection-edit--cases .document-fields__edit { max-width: 860px; }
-.collection-edit--cases .document-fields__sidebar-wrap {
-  width: 300px; min-width: 300px; max-width: 300px;
-  background: #faf7f9; border-left: 1px solid var(--zc-border);
-}
-.collection-edit--cases .document-fields__sidebar { padding: 22px 20px; }
-.collection-edit--cases .document-fields__sidebar-fields { padding: 0; }
-
-.collection-edit--cases #field-title {
-  font-size: 28px; font-weight: 700; line-height: 1.25;
-  border: 0; border-bottom: 1px solid var(--zc-border); border-radius: 0;
-  padding: 6px 0; background: transparent; box-shadow: none;
-}
-.collection-edit--cases #field-title:focus {
-  border-bottom-color: var(--zc-primary); outline: none; box-shadow: none;
-}
-.collection-edit--cases .field-type:has(#field-title) > .field-label { display: none; }
-
+/* 文章编辑页：沿用分类编辑页的原生表单布局，仅保留字段级外观 */
 .collection-edit--cases .slug-field__row {
   display: flex; align-items: center; gap: 0;
   border: 1px solid #cbb9c1; border-radius: 6px; background: #fff; overflow: hidden;
@@ -643,11 +601,14 @@ html.admin-shell:has(.collection-edit--cases) .doc-header { display: none !impor
 }
 .collection-edit--cases .slug-field__input:focus { outline: none; }
 
+.collection-edit--cases .article-cover-field { max-width: 480px; }
 .collection-edit--cases .article-cover-field .acf-cover {
-  position: relative; width: 100%; aspect-ratio: 1 / 1;
-  border-radius: 8px; overflow: hidden;
-  background: #e7dbe1 center/cover no-repeat;
+  position: relative; width: 100%; aspect-ratio: 16 / 9;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--zc-border); border-radius: 8px; overflow: hidden;
+  background: #f4eef1 center/cover no-repeat;
 }
+.collection-edit--cases .acf-placeholder { font-size: 13px; color: var(--zc-muted); }
 .collection-edit--cases .acf-caption {
   position: absolute; left: 0; right: 0; bottom: 0; padding: 8px 10px;
   font-size: 12px; font-weight: 600; color: #fff; line-height: 1.4;
@@ -655,9 +616,10 @@ html.admin-shell:has(.collection-edit--cases) .doc-header { display: none !impor
 }
 .collection-edit--cases .acf-actions {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  background: rgba(35, 20, 28, .45); opacity: 0; transition: opacity .15s;
+  background: rgba(35, 20, 28, .35); opacity: 0; transition: opacity .15s;
 }
-.collection-edit--cases .acf-cover:hover .acf-actions { opacity: 1; }
+.collection-edit--cases .acf-cover:hover .acf-actions,
+.collection-edit--cases .acf-cover:not(.has-image) .acf-actions { opacity: 1; }
 .collection-edit--cases .acf-actions button {
   border: 0; border-radius: 6px; padding: 6px 12px; font-size: 12px;
   background: rgba(255, 255, 255, .95); color: #5a4a52; cursor: pointer;
@@ -665,11 +627,3 @@ html.admin-shell:has(.collection-edit--cases) .doc-header { display: none !impor
 
 .collection-edit--cases .article-body-field .rt-content { min-height: 420px; }
 .collection-edit--cases .article-body-field .rt-shell { margin-top: 6px; }
-
-@media (max-width: 1100px) {
-  .collection-edit--cases .document-fields { display: block; }
-  .collection-edit--cases .document-fields__sidebar-wrap {
-    width: auto; border-left: 0; border-top: 1px solid var(--zc-border);
-  }
-  .collection-edit--cases .article-cover-field .acf-cover { max-width: 320px; }
-}

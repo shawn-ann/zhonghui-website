@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useField, useFormFields } from '@payloadcms/ui'
+import { FieldLabel, useField, useFormFields } from '@payloadcms/ui'
 
 export function slugPrefix(categorySlug?: string | null): string {
   return categorySlug ? `/blog/${categorySlug}/` : '/blog/'
@@ -33,7 +33,7 @@ export default function SlugField({ path, field }: { path: string; field: any })
 
   return (
     <div className="field-type slug-field">
-      <label className="field-label">{label}</label>
+      <FieldLabel label={label} path={path} required={Boolean(field?.required)} />
       <div className="slug-field__row">
         <span className="slug-field__prefix">{slugPrefix(categorySlug)}</span>
         <input

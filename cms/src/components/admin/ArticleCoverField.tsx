@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useField, useFormFields } from '@payloadcms/ui'
+import { FieldLabel, useField, useFormFields } from '@payloadcms/ui'
 import MediaModal from '../../editor/MediaModal'
 import type { MediaItem } from '../../editor/api'
 
@@ -38,11 +38,11 @@ export default function ArticleCoverField({ path, field }: { path: string; field
 
   return (
     <div className="field-type article-cover-field">
-      <label className="field-label">{label}</label>
-      <div className="acf-cover" style={url ? { backgroundImage: `url('${url}')` } : undefined}>
-        <div className="acf-caption">{title || '未命名文章'}</div>
+      <FieldLabel label={label} path={path} required={Boolean(field?.required)} />
+      <div className={`acf-cover${url ? ' has-image' : ''}`} style={url ? { backgroundImage: `url('${url}')` } : undefined}>
+        {url ? <div className="acf-caption">{title || '未命名文章'}</div> : <span className="acf-placeholder">未选择封面图</span>}
         <div className="acf-actions">
-          <button type="button" onClick={() => setOpen(true)}>更换</button>
+          <button type="button" onClick={() => setOpen(true)}>{url ? '更换' : '选择封面图'}</button>
         </div>
       </div>
       <div className="field-description">列表卡片按 1:1 裁切；详情页头图会整幅裁切。</div>

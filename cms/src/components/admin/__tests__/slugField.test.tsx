@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react'
 import SlugField, { slugPrefix } from '../SlugField'
 
 vi.mock('@payloadcms/ui', () => ({
+  FieldLabel: ({ label, required }: any) => <span>{label}{required ? '*' : ''}</span>,
   useField: () => ({ value: 'xiaocao', setValue: () => {} }),
   useFormFields: (selector: any) =>
     selector([{ category: { value: { id: 1, slug: 'study-case' } } }, () => {}]),
@@ -17,7 +18,8 @@ describe('SlugField', () => {
   })
 
   it('shows the prefix and the editable alias', () => {
-    render(<SlugField path="slug" field={{ label: 'URL 别名' }} />)
+    render(<SlugField path="slug" field={{ label: 'URL 别名', required: true }} />)
+    expect(screen.getByText('URL 别名*')).toBeTruthy()
     expect(screen.getByText('/blog/study-case/')).toBeTruthy()
     expect((screen.getByDisplayValue('xiaocao') as HTMLInputElement).value).toBe('xiaocao')
   })

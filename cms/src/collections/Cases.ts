@@ -21,7 +21,7 @@ export const Cases: CollectionConfig = {
         list: { Component: '/components/admin/CaseListView' },
       },
       edit: {
-        beforeDocumentControls: ['/components/admin/ArticleDocumentMeta', '/components/admin/CollectionPreviewLink'],
+        beforeDocumentControls: ['/components/admin/CollectionPreviewLink'],
       },
     },
   },
@@ -93,7 +93,7 @@ export const Cases: CollectionConfig = {
       relationTo: 'media',
       required: true,
       label: '封面图',
-      admin: { position: 'sidebar', components: { Field: '/components/admin/ArticleCoverField' } },
+      admin: { components: { Field: '/components/admin/ArticleCoverField' } },
     },
     {
       name: 'publishedAt',
