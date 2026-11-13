@@ -32,6 +32,7 @@ import { default as default_cd0c7ef50c25bcae15b622b2990b1de2 } from '../../../co
 import { default as default_f8569887a5851b811857e9677a0f701c } from '../../../components/admin/PublishedAtCell'
 import { default as default_18cd036d77eabff6fb4f3a7b46ae2e06 } from '../../../components/admin/ArticleBodyField'
 import { default as default_fe364de1442a0d862b6d067a13c58c14 } from '../../../components/admin/ArticleDocumentMeta'
+import { default as default_30b5b1a2ceac702926ba965f6c0fe2a1 } from '../../../components/admin/CaseListView'
 import { default as default_fa9b94d5161032b39a373faed6092b50 } from '../../../components/admin/BeijingTimeCell'
 import { default as default_e370300bac7fefe2e17bbf10b0e9c408 } from '../../../components/MenuEditorView'
 import { default as default_078419d98ad8d8f4ad9d5f83c0e09b49 } from '../../../components/SiteSettingsView'
@@ -78,6 +79,7 @@ export const importMap = {
   "/components/admin/PublishedAtCell#default": default_f8569887a5851b811857e9677a0f701c,
   "/components/admin/ArticleBodyField#default": default_18cd036d77eabff6fb4f3a7b46ae2e06,
   "/components/admin/ArticleDocumentMeta#default": default_fe364de1442a0d862b6d067a13c58c14,
+  "/components/admin/CaseListView#default": default_30b5b1a2ceac702926ba965f6c0fe2a1,
   "/components/admin/BeijingTimeCell#default": default_fa9b94d5161032b39a373faed6092b50,
   "/components/MenuEditorView#default": default_e370300bac7fefe2e17bbf10b0e9c408,
   "/components/SiteSettingsView#default": default_078419d98ad8d8f4ad9d5f83c0e09b49,

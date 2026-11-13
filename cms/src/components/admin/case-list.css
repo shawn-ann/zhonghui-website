@@ -1,0 +1,28 @@
+.case-list-status {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 99px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.case-list-status::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  margin-right: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.case-list-status.is-published {
+  background: var(--zc-success-bg, #eaf6ee);
+  color: var(--zc-success, #1b7a3a);
+}
+
+.case-list-status.is-draft {
+  background: #f2eef0;
+  color: var(--zc-muted, #7c6b73);
+}
