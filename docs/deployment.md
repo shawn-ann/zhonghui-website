@@ -5,7 +5,7 @@
 当前状态：
 
 - 本地 Compose 模拟已跑通（构建、原子切换、静态访问、后台发布）。
-- 生产 Dockerfile / Compose / Nginx 配置已准备，**尚未在真实服务器验证**。
+- 生产 Dockerfile / Compose / Nginx 配置已在阿里云服务器验证。
 - 生产环境按「同一台服务器 + Docker Compose」设计。
 
 ---
@@ -86,8 +86,9 @@ deploy/
 
 ### 站点配置生效
 
-菜单、站点设置（Logo/页脚/版权/语言）保存后不会自动上线。
-在「页面」列表点击「重建站点」，或调用 `POST /api/rebuild`，生成新的 release 后生效。
+菜单、站点设置（Logo/页脚/版权/语言）保存后会**自动触发静态站重建**；页面和文章发布后也会自动重建。构建完成后刷新前台即可。
+
+需要手动兜底时，可在「页面」列表点击「重建站点」，或调用 `POST /api/rebuild`。
 
 ### 构建性能
 
@@ -189,15 +190,96 @@ docker compose -f docker-compose.local.yml up -d
 
 ---
 
-## 5. 生产部署（待执行）
+## 5. 生产部署
 
 ### 5.1 服务器准备
 
-- 安装 Docker / Docker Compose。
+- 建议 2 核 4G 及以上；
+- 安全组开放 `22`、`80`、`443`；
 - DNS 指向同一台服务器：
   - `new.chinaaupairs.com`
   - `admin.chinaaupairs.com`
-- 开放 80/443。
+
+#### 安装基础软件（Alibaba Cloud Linux 3）
+
+```bash
+dnf update -y
+dnf install -y git curl wget vim tar unzip openssl chrony firewalld policycoreutils-python-utils
+systemctl enable --now chronyd
+timedatectl set-timezone Asia/Shanghai
+```
+
+Docker CE（Alibaba Cloud Linux 3 的 `$releasever` 是 3，需要固定为 CentOS 8 源）：
+
+```bash
+dnf install -y dnf-plugins-core
+dnf config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+sed -i 's|\$releasever|8|g' /etc/yum.repos.d/docker-ce.repo
+dnf makecache
+dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-buildx-plugin
+
+systemctl enable --now docker
+docker version
+docker compose version
+```
+
+宿主机 Nginx 与 Certbot：
+
+```bash
+dnf install -y nginx
+systemctl enable --now nginx
+
+dnf install -y https://mirrors.aliyun.com/epel/epel-release-latest-8.noarch.rpm
+dnf install -y certbot
+```
+
+防火墙：
+
+```bash
+systemctl enable --now firewalld
+firewall-cmd --permanent --add-service=ssh
+firewall-cmd --permanent --add-service=http
+firewall-cmd --permanent --add-service=https
+firewall-cmd --reload
+```
+
+如果 Docker Hub 拉取镜像失败，需要配置阿里云容器镜像加速器，或先拉取基础镜像并重命名；不要依赖 GitHub/ Docker Hub 的跨境链路。
+
+#### 配置 Git SSH
+
+生产服务器建议使用 SSH 拉取代码，并走 GitHub 的 443 端口，避免 HTTPS 间歇性超时。
+
+```bash
+ssh-keygen -t ed25519 -C "deploy@zhonghui" -f ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519.pub
+```
+
+把公钥添加到 GitHub 仓库的 **Settings → Deploy keys**，只给读权限。
+
+```bash
+cat >> ~/.ssh/config <<'EOF'
+Host github.com
+  HostName ssh.github.com
+  Port 443
+  User git
+  ServerAliveInterval 30
+  ServerAliveCountMax 3
+EOF
+
+chmod 600 ~/.ssh/config
+ssh -T git@github.com
+```
+
+看到 `You've successfully authenticated` 后拉取代码：
+
+```bash
+mkdir -p /opt
+cd /opt
+git clone git@github.com:shawn-ann/zhonghui-website.git
+cd zhonghui-website
+```
+
+如果 GitHub 仍然不稳定，可以把生产仓库改为阿里云 Codeup 或 Gitee 镜像，服务器只从国内源拉取。
 
 ### 5.2 配置环境变量
 
@@ -272,7 +354,81 @@ sudo ./install.sh --skip-seed
 2. 静态站已由 `seed:init` 生成，确认 `https://new.chinaaupairs.com/` 可访问。
 3. 后续在后台修改并发布即可。
 
-生产 Dockerfile 目前未实际构建验证；正式上线前需先在服务器执行一次完整构建并检查后台/静态站。
+生产 Dockerfile 已在阿里云服务器完成构建验证；首次上线后检查后台、静态站和发布流程即可。
+
+### 5.5 更新代码并重新部署
+
+服务器已配置 GitHub SSH 后，日常更新使用 `deploy/update.sh`。
+
+首次从旧代码拉取脚本时：
+
+```bash
+cd /opt/zhonghui-website
+git pull
+
+cd deploy
+chmod +x update.sh
+
+# 代码已经手动 pull 过，因此需要强制重建一次
+sudo ./update.sh --force
+```
+
+之后正常更新只需要：
+
+```bash
+cd /opt/zhonghui-website/deploy
+sudo ./update.sh
+```
+
+`update.sh` 的流程：
+
+1. 检查工作区是否有未提交的已跟踪修改；
+2. `git fetch origin main`；
+3. 比较本地 `HEAD` 和 `origin/main`；
+4. 有新提交时执行 `git merge --ff-only origin/main`；
+5. `docker compose build cms`；
+6. `docker compose up -d cms builder`；
+7. 检查 `http://127.0.0.1:3010/admin` 是否可访问。
+
+没有新提交时脚本直接退出，不重启服务。代码没有变化但需要重建时使用：
+
+```bash
+sudo ./update.sh --force
+```
+
+脚本会拒绝执行以下情况：
+
+- 已跟踪文件有未提交修改；
+- 服务器本地有未推送提交或分支已分叉；
+- 另一个更新任务正在运行（`flock`）。
+
+#### 定时自动更新
+
+```bash
+sudo crontab -e
+```
+
+加入：
+
+```cron
+*/10 * * * * /opt/zhonghui-website/deploy/update.sh >> /var/log/zhonghui-update.log 2>&1
+```
+
+每 10 分钟检查一次，有更新才构建和重启。自动部署会直接重启生产 CMS；如果不希望每次 push 都上线，改为手动执行或降低频率。
+
+查看更新日志：
+
+```bash
+tail -f /var/log/zhonghui-update.log
+```
+
+如果 `git fetch` 偶发失败，先确认 SSH 连接：
+
+```bash
+ssh -T git@github.com
+```
+
+仍不稳定时，建议把生产拉取源改为阿里云 Codeup 或 Gitee，GitHub 保留为主仓库。
 
 ---
 

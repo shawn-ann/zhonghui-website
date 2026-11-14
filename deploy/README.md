@@ -47,7 +47,8 @@ cp .env.example .env
 sudo EMAIL=ops@example.com ./setup-host-nginx.sh
 
 # 2. 启动应用容器、导入初始化数据、生成静态站
-sudo ./install.sh --install-docker
+#    Docker 已按 docs/deployment.md 安装好，不需要 --install-docker
+sudo ./install.sh
 ```
 
 `install.sh` 会：
@@ -104,7 +105,24 @@ crontab -l | grep certbot
 
 ## 自动更新
 
+服务器建议使用 GitHub SSH（443 端口）拉取代码；部署源也可以是阿里云 Codeup / Gitee。
+
 `update.sh` 会先 fetch 远程分支，比较本地和远程提交；只有代码有变化时才构建并重启容器。
+
+首次从旧代码拉取脚本时：
+
+```bash
+cd /opt/zhonghui-website
+git pull
+
+cd deploy
+chmod +x update.sh
+
+# 已经手动 pull 过代码，需要强制重建一次
+sudo ./update.sh --force
+```
+
+之后正常更新：
 
 ```bash
 cd deploy
