@@ -66,6 +66,7 @@ if [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
 fi
 
 echo "拉取 ${REMOTE}/${BRANCH}…"
+export GIT_TERMINAL_PROMPT=0
 git fetch "$REMOTE" "$BRANCH"
 
 LOCAL_SHA="$(git rev-parse HEAD)"
@@ -77,6 +78,12 @@ if [[ "$LOCAL_SHA" == "$REMOTE_SHA" && "$FORCE" -eq 0 ]]; then
 fi
 
 if [[ "$LOCAL_SHA" != "$REMOTE_SHA" ]]; then
+  if ! git merge-base --is-ancestor "$LOCAL_SHA" "$REMOTE_SHA"; then
+    echo "本地分支不是远程的直接祖先，停止更新。" >&2
+    echo "服务器上可能有本地提交或分支已分叉，请先处理：" >&2
+    git log --oneline --decorate -5 >&2
+    exit 1
+  fi
   echo "更新代码：${LOCAL_SHA:0:7} → ${REMOTE_SHA:0:7}"
   git merge --ff-only "${REMOTE}/${BRANCH}"
 else
