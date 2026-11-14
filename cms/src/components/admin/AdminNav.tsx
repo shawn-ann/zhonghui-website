@@ -31,7 +31,10 @@ const GROUPS: NavGroup[] = [
   },
   {
     label: '系统',
-    items: [{ label: '用户', path: '/collections/users', icon: 'users' }],
+    items: [
+      { label: '用户', path: '/collections/users', icon: 'users' },
+      { label: '使用教程', path: '/tutorial', icon: 'help' },
+    ],
   },
 ]
 
