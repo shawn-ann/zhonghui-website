@@ -36,4 +36,10 @@ describe('tutorial content', () => {
     expect(markdown).not.toContain('例如标题、图文卡片、富文本、网格或流程步骤')
     expect(markdown).toContain('图文卡片和图标卡片需要添加到网格或纵向容器')
   })
+
+  it('documents automatic rebuild for menu and site settings', () => {
+    expect(readChapter('01-menu.md')).toContain('菜单修改会自动保存，并触发静态站重建')
+    expect(readChapter('02-site-settings.md')).toContain('保存后会自动触发重建')
+    expect(readChapter('02-site-settings.md')).toContain('/tutorial/settings-qr-contact.png')
+  })
 })
