@@ -80,7 +80,10 @@ export default function CaseListView() {
         ]}
         title="文章列表"
         description="管理案例文章的分类、封面、正文与发布状态。"
-        actions={<a className="zc-btn" href="/admin/collections/cases/create">新建文章</a>}
+        actions={<>
+          <a className="zc-btn secondary" href="/admin/tutorial#articles">查看教程</a>
+          <a className="zc-btn" href="/admin/collections/cases/create">新建文章</a>
+        </>}
       />
 
       {error ? <p className="zc-error" style={{ marginBottom: 12 }}>{error}</p> : null}

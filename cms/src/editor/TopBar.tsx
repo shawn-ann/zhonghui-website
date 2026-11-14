@@ -28,6 +28,7 @@ export default function TopBar({
         <a className="is-active" href={`/admin/collections/pages/${id}`}>编辑</a>
       </nav>
       <div className="ed-actions">
+        <a className="ed-account" href="/admin/tutorial#pages" title="查看页面配置教程">教程</a>
         <a className="ed-account" href="/admin/account" title="账号">账号</a>
         <button onClick={onPreview}>预览</button>
         <button onClick={onSave}>保存</button>

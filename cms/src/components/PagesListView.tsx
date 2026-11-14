@@ -201,6 +201,7 @@ export default function PagesListView() {
         description="管理站点页面、路由与发布状态。修改后需重建站点使静态站生效。"
         actions={
           <>
+            <a className="zc-btn secondary" href="/admin/tutorial#pages">查看教程</a>
             <button type="button" className="zc-btn secondary" disabled={rebuilding} onClick={rebuildSite}>
               {rebuilding ? '构建中…' : '重建站点'}
             </button>
