@@ -372,6 +372,9 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   }
   .nav-lang { border-top: 1px solid #eee; padding-top: 10px; width: 100%; }
   .story-grid, .footer-grid, .proj-grid, .adv-grid { grid-template-columns: 1fr; }
+  /* 网格列宽由渲染层内联输出，移动端必须用 !important 覆盖 */
+  .grid { grid-template-columns: 1fr !important; }
+  .grid[style*="padding"] { padding: 24px !important; }
   .banner--split .banner-grid { flex-direction: column; padding: 40px 24px 60px; }
   .banner--split .banner-text { justify-content: flex-start; padding-top: 0; }
   .banner--split .banner-media { height: auto; min-height: 0; position: relative; }
@@ -381,6 +384,23 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   /* 行内比例以 inline style 输出，移动端必须强制单列（仅按行布局） */
   .grid-rows > .grid { grid-template-columns: 1fr !important; }
   .grid-cell.is-empty { display: none; }
+
+  .section-heading { margin-bottom: 28px; }
+  .section-heading h2 { font-size: 28px; }
+
+  .nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .foot-contact {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
 }
 .image-text .it-subtitle { margin-top: 4px; color: #C07A39; font-size: 12px; font-weight: 600; }
 
@@ -466,6 +486,33 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .zigzag-row.is-right .zigzag-node { left: calc(50% + 12px); }
 .zigzag-glyph { width: 96px; height: 96px; background-color: var(--accent); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; }
 .zigzag-dot { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 20px; height: 20px; border-radius: 50%; background: var(--accent); z-index: 2; }
+
+/* 移动端放在桌面规则之后，避免被后面的 .zigzag-row 覆盖 */
+@media (max-width: 900px) {
+  .zigzag::before { display: none; }
+  .zigzag-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 22px 0;
+  }
+  .zigzag-text,
+  .zigzag-row.is-right .zigzag-text {
+    grid-column: auto;
+    padding: 0;
+    text-align: left;
+  }
+  .zigzag-node {
+    position: static;
+    order: -1;
+    transform: none;
+    width: 64px;
+    height: 64px;
+  }
+  .zigzag-glyph { width: 64px; height: 64px; }
+  .zigzag-dot { display: none; }
+}
 .entries-title { margin: 0 0 20px; color: var(--deep-blue); font-size: 22px; font-weight: 700; line-height: 1.4; }
 .entries-list { display: flex; flex-direction: column; gap: 12px; }
 .entries-item { background: #FFF7FA; border-radius: 10px; padding: 16px 20px; }

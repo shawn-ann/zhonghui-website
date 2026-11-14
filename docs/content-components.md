@@ -82,6 +82,7 @@ heading, image, imageText, iconCard, stack, steps
 - `alignItems`：`stretch`（默认）/ `start` / `center` / `end`。
 - `padding`：内容内边距(px)，用于给带背景的网格（色带）留白；背景覆盖整个 1152 内容宽度。
 - 网格单元格内的视觉卡片由子组件自己负责，网格不设置卡片高度。
+- 移动端（`max-width: 900px`）网格一律强制单列；`columnRatio` 只用于桌面端，不要把移动端列宽写死在内联样式中。
 
 #### 流式（`layout: flow`）
 
