@@ -20,6 +20,14 @@ export interface RenderedChapter extends TutorialChapter {
   html: string
 }
 
+export function tutorialImagePaths(markdown: string): string[] {
+  return Array.from(markdown.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)).map((match) => match[1].trim())
+}
+
+export function isTutorialImagePath(src: string): boolean {
+  return /^\/tutorial\/[\w.-]+\.png$/.test(src)
+}
+
 export function renderTutorialChapter(
   chapter: TutorialChapter,
   markdown: string,

@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { TUTORIAL_CHAPTERS, loadTutorialChapters, renderTutorialChapter } from '../tutorial'
+import {
+  TUTORIAL_CHAPTERS,
+  isTutorialImagePath,
+  loadTutorialChapters,
+  renderTutorialChapter,
+  tutorialImagePaths,
+} from '../tutorial'
 
 describe('tutorial', () => {
   it('defines the five chapters in reading order', () => {
@@ -25,5 +31,22 @@ describe('tutorial', () => {
     expect(() => loadTutorialChapters('/tmp/zhonghui-tutorial-does-not-exist')).toThrow(
       /01-menu\.md/,
     )
+  })
+
+  it('extracts every markdown image path, including typos', () => {
+    const markdown = '![正确](/tutorial/a.png)\n![错误](/tutoral/b.png)\n![相对](tutorial/c.png)'
+    expect(tutorialImagePaths(markdown)).toEqual([
+      '/tutorial/a.png',
+      '/tutoral/b.png',
+      'tutorial/c.png',
+    ])
+  })
+
+  it('only accepts image paths under /tutorial/*.png', () => {
+    expect(isTutorialImagePath('/tutorial/menu-list.png')).toBe(true)
+    expect(isTutorialImagePath('/tutoral/menu-list.png')).toBe(false)
+    expect(isTutorialImagePath('/tutorials/menu-list.png')).toBe(false)
+    expect(isTutorialImagePath('tutorial/menu-list.png')).toBe(false)
+    expect(isTutorialImagePath('/tutorial/menu-list.jpg')).toBe(false)
   })
 })
