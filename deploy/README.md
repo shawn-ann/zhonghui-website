@@ -102,6 +102,45 @@ sudo certbot renew --dry-run
 crontab -l | grep certbot
 ```
 
+## 自动更新
+
+`update.sh` 会先 fetch 远程分支，比较本地和远程提交；只有代码有变化时才构建并重启容器。
+
+```bash
+cd deploy
+sudo ./update.sh
+
+# 代码没变化也强制重建、重启
+sudo ./update.sh --force
+```
+
+脚本流程：
+
+```text
+检查工作区是否干净
+git fetch origin main
+比较本地 HEAD 和 origin/main
+git merge --ff-only
+docker compose build cms
+docker compose up -d cms builder
+检查 127.0.0.1:3010/admin 是否可访问
+```
+
+几点说明：
+
+- 先 `fetch` 是为了判断“有没有新提交”，避免没有变化也重新构建；
+- 使用 `merge --ff-only`，服务器本地不会产生合并提交；
+- 工作区有未提交修改时脚本会停止，防止覆盖服务器上的改动；
+- 使用 `flock` 防止 cron 和手工执行同时更新。
+
+定时检查示例（每 10 分钟检查一次，有更新才部署）：
+
+```cron
+*/10 * * * * /opt/zhonghui-website/deploy/update.sh >> /var/log/zhonghui-update.log 2>&1
+```
+
+> 自动部署会直接重启生产 CMS。如果不希望每次 push 都自动上线，改成手动执行，或使用低频 cron（例如每小时一次）。
+
 ## 本地 Compose 模拟（不连生产域名）
 
 ```bash
