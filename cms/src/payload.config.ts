@@ -41,6 +41,11 @@ export default buildConfig({
       header: ['/components/admin/AdminMobileBar'],
       views: {
         dashboard: { Component: '/components/admin/DashboardRedirect' },
+        tutorial: {
+          Component: '/components/admin/TutorialView',
+          path: '/tutorial',
+          meta: { title: '使用教程' },
+        },
       },
       graphics: {
         Logo: '/components/Logo',
