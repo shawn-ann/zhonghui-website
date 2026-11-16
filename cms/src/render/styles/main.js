@@ -41,6 +41,39 @@
       var down = false
       var startX = 0
       var startScroll = 0
+      var rail = viewport.closest('.hscroll')
+      var arrows = rail && rail.querySelector('[data-hscroll-arrows]')
+      var prev = rail && rail.querySelector('[data-hscroll-prev]')
+      var next = rail && rail.querySelector('[data-hscroll-next]')
+
+      function stepSize() {
+        var item = viewport.querySelector('.hscroll-item')
+        var inner = viewport.querySelector('.hscroll-inner')
+        var gap = inner ? parseFloat(getComputedStyle(inner).gap) : 0
+        if (!isFinite(gap)) gap = 20
+        return (item ? item.getBoundingClientRect().width : 280) + gap
+      }
+
+      function updateArrows() {
+        if (!arrows) return
+        var max = viewport.scrollWidth - viewport.clientWidth
+        var edge = 4
+        arrows.classList.toggle('is-hidden', max <= 1)
+        if (prev) prev.disabled = viewport.scrollLeft <= edge
+        if (next) next.disabled = viewport.scrollLeft >= max - edge
+      }
+
+      function scrollToNext(dir) {
+        viewport.scrollBy({ left: dir * stepSize(), behavior: 'smooth' })
+      }
+
+      if (prev) prev.addEventListener('click', function () { scrollToNext(-1) })
+      if (next) next.addEventListener('click', function () { scrollToNext(1) })
+      viewport.addEventListener('scroll', updateArrows, { passive: true })
+      window.addEventListener('resize', updateArrows)
+      window.addEventListener('load', updateArrows)
+      setTimeout(updateArrows, 300)
+      updateArrows()
 
       viewport.addEventListener('mousedown', function (e) {
         down = true
@@ -63,11 +96,11 @@
 
       viewport.addEventListener('keydown', function (e) {
         if (e.key === 'ArrowRight') {
-          viewport.scrollBy({ left: 280, behavior: 'smooth' })
+          scrollToNext(1)
           e.preventDefault()
         }
         if (e.key === 'ArrowLeft') {
-          viewport.scrollBy({ left: -280, behavior: 'smooth' })
+          scrollToNext(-1)
           e.preventDefault()
         }
       })

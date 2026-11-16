@@ -554,6 +554,30 @@ export function HscrollView({ b, editor = false }: { b: HscrollBlock; editor?: b
         </div>
       ) : (
         <div className={`hscroll${b.timeline ? ' timeline' : ''}`}>
+          <div className="hscroll-toolbar">
+            <div className="hscroll-arrows" data-hscroll-arrows>
+              <button
+                aria-label="上一张"
+                className="hscroll-arrow prev"
+                data-hscroll-prev
+                type="button"
+              >
+                <svg aria-hidden="true" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                aria-label="下一张"
+                className="hscroll-arrow next"
+                data-hscroll-next
+                type="button"
+              >
+                <svg aria-hidden="true" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          </div>
           <div className="hscroll-viewport" tabIndex={0} aria-label="横向滚动，按住拖动查看更多">
             <div className="hscroll-inner">
               {children.map((child, i) => (

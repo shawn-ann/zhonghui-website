@@ -228,6 +228,10 @@ describe('content component extensions', () => {
     const html = render(rail)
     expect(html).toContain('hscroll-inner')
     expect(html).toContain('timeline')
+    expect(html).toContain('data-hscroll-prev')
+    expect(html).toContain('data-hscroll-next')
+    expect(html).toContain('上一张')
+    expect(html).toContain('下一张')
   })
 
   it('renders a vertical stack inside a grid cell', () => {

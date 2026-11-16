@@ -17,6 +17,7 @@ describe('generateSite', () => {
     expect(out.get('about/index.html')).toContain('about')
     expect(out.get('assets/style.css')).toContain('.section')
     expect(out.get('assets/main.js')).toContain('swiper')
+    expect(out.get('assets/main.js')).toContain('hscroll-arrow')
     expect((out.get('assets/swiper-bundle.min.js') as Buffer).toString('utf-8')).toContain('Swiper')
   })
   it('emits redirect pages and redirects.json without overwriting real pages', () => {
