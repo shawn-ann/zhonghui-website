@@ -62,9 +62,10 @@ python3 -m http.server 8321 --bind 127.0.0.1
 
 ## 布局标准（定版）
 
-- **基准宽度 1200px**：全站各页的 `.container` 与 `.footer-grid` 一律 `max-width: 1200px`（`padding: 0 24px`），保证左右边距一致。
+- **基准宽度 `clamp(1280px, 82vw, 1380px)`**：全站 `.container` 与 `.footer-grid` 使用 `max-width: var(--content-max)`（`padding: 0 24px`），随视口平滑增长，保证左右边距一致。大屏实际内容宽度约 1232–1332px。
+- **宽屏区块**：需要铺开的视觉区块使用 `.container--wide`（`max-width: var(--content-wide-max)`，约 `calc(50% + 600px)`，上限 1560px）。
 - **同一页面内** `.container` 与 `.footer-grid` 宽度必须相同。
-- **文章详情页**（case-detail）：外层容器 1200px 使菜单/页脚对齐，正文用内层窄容器（约 820px）约束阅读宽度。
+- **文章详情页**（case-detail）：外层容器使用全站标准 `.container` 使菜单/页脚对齐，正文用内层窄容器（约 820px）约束阅读宽度。
 - 正式站点由 CMS 生成；旧版原型页已归档到 `legacy/`，不再维护。详见 `docs/design-system.md` 第 7 节。
 
 ## 区块背景交替规则（定版）

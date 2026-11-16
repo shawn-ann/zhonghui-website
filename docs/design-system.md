@@ -98,19 +98,21 @@
 
 ## 7. 布局 / 栅格（定版标准）
 
-**基准宽度：`1200px`。** 全站各页的页头、区块、页脚都必须以 1200px 为内容宽度，左右边距才会一致。
+**基准宽度：`clamp(1280px, 82vw, 1380px)`。** 全站各页的页头、区块、页脚统一使用同一个内容容器，随视口平滑增长，左右边距保持一致。
 
 | 区域 | 规则 |
 |---|---|
-| `.container` | `max-width: 1200px; margin: 0 auto; padding: 0 24px;` |
-| `.footer-grid` | `max-width: 1200px; ...` |
-| 响应式 | 视口 ≤ 1200+48 时容器随视口收缩，左右各保留 `24px` 内边距 |
+| `.container` | `max-width: var(--content-max); margin: 0 auto; padding: 0 24px;` |
+| `.footer-grid` | `max-width: var(--content-max); ...` |
+| `.container--wide` | `max-width: var(--content-wide-max);`，用于中惠历程、Banner、图集等视觉区块 |
+| 响应式 | 视口较小时容器随视口收缩，左右各保留 `24px` 内边距 |
 
-- **页面（列表/内容页）**：`.container` 与 `.footer-grid` 一律 **1200px**。
-- **文章详情页**（case-detail）：外层 `.container` 用 **1200px**，使**菜单/页脚与全站对齐**；正文再用一个**内层窄容器**（约 **820px**）约束阅读宽度。
+- **页面（列表/内容页）**：`.container` 与 `.footer-grid` 一律使用 `var(--content-max)`；大屏内容宽度约 1232–1332px。
+- **宽屏区块**：需要铺开的视觉区块使用 `.container--wide`（`calc(50% + 600px)`，上限 1560px），不要用于长正文。
+- **文章详情页**（case-detail）：外层使用全站标准 `.container`，使菜单/页脚与全站对齐；正文再用内层窄容器（约 **820px**）约束阅读宽度。
 - **禁止**同一页面内 `.container` 与 `.footer-grid` 宽度不一致（会造成上下内容左右边距对不齐）。
 
-> 历史遗留：早期各页用了 1000 / 1180 / 1280 / 900 等不同宽度，需统一到 1200。`contact` / `case-detail` 已符合；旧版原型页已归档到 `legacy/`，不再维护。
+> 历史遗留：早期各页用了 1000 / 1180 / 1280 / 900 等不同宽度，现已统一到 `--content-max`。旧版原型页已归档到 `legacy/`，不再维护。
 
 ## 8. 切换主题的机制
 
