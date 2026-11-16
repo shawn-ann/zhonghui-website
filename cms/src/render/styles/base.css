@@ -451,6 +451,11 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
 .hscroll-item .it-body { padding: 15px 18px 18px; }
 .hscroll-item .it-body h3 { font-size: 22px; }
 
+/* 中惠历程：默认方形大图；后台单独设置的比例仍通过内联 aspect-ratio 覆盖 */
+.hscroll.timeline .hscroll-item { flex-basis: 290px; }
+.hscroll.timeline .it-img { height: auto; aspect-ratio: 1 / 1; }
+.hscroll.timeline .hscroll-inner::before { top: 290px; }
+
 @media (max-width: 860px) {
   .icon-list-row, .icon-list-row.is-right { grid-template-columns: 52px 1fr; gap: 14px; padding: 14px 16px; }
   .icon-list-row.is-right .icon-list-node { order: 0; justify-self: start; }
@@ -460,6 +465,9 @@ footer { background: linear-gradient(124deg, rgba(110,11,62,.62) 0%, rgba(161,18
   .hscroll-item { flex-basis: 240px; }
   .hscroll-inner::before { top: 180px; }
   .hscroll-item .it-img { height: 180px; }
+  .hscroll.timeline .hscroll-item { flex-basis: 240px; }
+  .hscroll.timeline .it-img { height: auto; aspect-ratio: 1 / 1; }
+  .hscroll.timeline .hscroll-inner::before { top: 240px; }
   .info-list { padding: 18px; }
   .entries-item { padding: 14px 16px; }
   .info-item { font-size: 14px; }
