@@ -111,15 +111,19 @@ deploy/
 
 生产环境（Linux 本地磁盘 + `next start` + 同网络 Postgres）预计更快。
 
-本地修改了生成器/worker/渲染代码后，需要重新执行：
+本地修改了生成器、worker、区块或渲染代码后，需要重新执行：
 
 ```bash
 cd cms
 npm run build:generator
-docker compose -f deploy/docker-compose.local.yml restart builder
+
+cd ../deploy
+docker compose -f docker-compose.local.yml restart builder
 ```
 
-正式镜像重新构建时会自动执行该步骤。
+**只修改 `cms/src/render/styles/base.css` 时也必须重启 builder**。builder 是常驻进程，启动时会把 CSS 和渲染代码加载进内存；不重启的话，后台预览会变化，但「重建站点」仍然会生成旧样式。
+
+修改完成后，再在后台页面列表点击「重建站点」。正式镜像重新构建时会自动执行 `build:generator` 并通过 `docker compose up -d cms builder` 重启 builder。
 
 ---
 

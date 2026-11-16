@@ -149,7 +149,8 @@ docker compose up -d cms builder
 - 先 `fetch` 是为了判断“有没有新提交”，避免没有变化也重新构建；
 - 使用 `merge --ff-only`，服务器本地不会产生合并提交；
 - 工作区有未提交修改时脚本会停止，防止覆盖服务器上的改动；
-- 使用 `flock` 防止 cron 和手工执行同时更新。
+- 使用 `flock` 防止 cron 和手工执行同时更新；
+- `update.sh` 会重启 `cms` 和 `builder`。如果手工修改了 `cms/src/render/styles/base.css` 或渲染代码，也必须先重启 builder，再到后台点「重建站点」，否则静态站会继续使用旧样式。
 
 定时检查示例（每 10 分钟检查一次，有更新才部署）：
 

@@ -43,6 +43,7 @@ python3 -m http.server 8321 --bind 127.0.0.1
 - 草稿保存不触发重建（静态站只包含已发布内容）。
 - 批量脚本修改数据时设置 `DISABLE_AUTO_REBUILD=1`，避免触发构建。
 - 修改区块/渲染器代码后需 `npm run build:generator` 并重启 builder 容器，构建服务才会加载新代码。
+- 修改 `cms/src/render/styles/base.css` 或其它渲染代码后，即使只是 CSS，也必须重启 builder 再点「重建站点」；否则 builder 会继续使用启动时缓存的旧 CSS/旧渲染代码。
 
 ## 架构约定（务必遵循）
 
