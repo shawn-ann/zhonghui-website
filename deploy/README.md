@@ -171,6 +171,69 @@ docker compose -f docker-compose.local.yml up -d
 
 本地不经过宿主机 Nginx，也不使用证书。
 
+## 备份与恢复
+
+完整备份包含：
+
+```text
+PostgreSQL 数据库
+cms-media 媒体文件
+deploy/.env
+manifest.txt
+```
+
+### 备份
+
+```bash
+cd deploy
+sudo ./backup.sh
+```
+
+默认输出：
+
+```text
+/var/backups/zhonghui/zhonghui-YYYYmmdd-HHMMSS.tar.gz
+```
+
+可自定义目录和保留数量：
+
+```bash
+sudo BACKUP_DIR=/data/backups KEEP=14 ./backup.sh
+```
+
+### 恢复
+
+```bash
+cd deploy
+sudo ./restore.sh --latest
+```
+
+或指定文件：
+
+```bash
+sudo ./restore.sh /var/backups/zhonghui/zhonghui-20261117-193000.tar.gz
+```
+
+选项：
+
+```text
+--latest        使用最新备份
+--yes           跳过确认
+--restore-env   用备份中的 env 覆盖当前 deploy/.env
+--no-rebuild    不自动重新生成静态站
+```
+
+恢复脚本会：
+
+1. 停止 `cms` / `builder`；
+2. 用 `pg_restore` 恢复数据库；
+3. 恢复媒体卷；
+4. 按需恢复 `.env`；
+5. 启动服务；
+6. 重新生成静态站。
+
+> 跨服务器恢复时，`deploy/.env` 中的 `POSTGRES_USER`、`POSTGRES_DB`、`POSTGRES_PASSWORD` 应与备份来源一致。新服务器建议先复制 env 再执行 `install.sh --skip-seed`，否则数据库角色密码可能不匹配。
+
 ## 回滚
 
 ```bash

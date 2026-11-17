@@ -472,13 +472,29 @@ ln -sfn ./20261024-120000 /srv/site/current
 - 数据库使用宿主机现有 Postgres
 - `cms/media`、`cms/releases` 直接绑定宿主机
 
-备份建议：
+备份与恢复：
+
+完整备份包含数据库、媒体文件和 `deploy/.env`，使用脚本：
 
 ```bash
-docker compose exec postgres pg_dump -U zhonghui zhonghui_cms > backup.sql
-docker run --rm -v zhonghui_cms-media:/data -v "$PWD":/backup alpine \
-  tar czf /backup/media.tgz -C /data .
+cd deploy
+sudo ./backup.sh
 ```
+
+默认生成：
+
+```text
+/var/backups/zhonghui/zhonghui-YYYYmmdd-HHMMSS.tar.gz
+```
+
+恢复：
+
+```bash
+cd deploy
+sudo ./restore.sh --latest
+```
+
+恢复时会停止 `cms` / `builder`，还原 PostgreSQL、媒体，并重新生成静态站。详细说明见 `deploy/README.md`。
 
 ---
 
