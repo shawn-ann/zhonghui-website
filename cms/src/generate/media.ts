@@ -65,7 +65,14 @@ export function collectMediaUrls(data: SiteData): Set<string> {
 }
 
 export function mediaFileName(url: string): string {
-  return path.basename(url.slice(MEDIA_URL_PREFIX.length))
+  const raw = url.slice(MEDIA_URL_PREFIX.length)
+  let decoded = raw
+  try {
+    decoded = decodeURIComponent(raw)
+  } catch {
+    // URL 编码异常时保留原值，复制阶段会报告缺失文件
+  }
+  return path.basename(decoded)
 }
 
 export function rewriteMediaUrls(html: string): string {

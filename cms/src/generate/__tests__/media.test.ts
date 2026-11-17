@@ -1,5 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import { collectMediaUrls } from '../media'
+import { existsSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import path from 'node:path'
+import { collectMediaUrls, copyMedia, mediaFileName } from '../media'
 
 describe('collectMediaUrls', () => {
   it('collects media urls from richtext html', () => {
@@ -94,5 +97,27 @@ describe('collectMediaUrls', () => {
     ] }] } as any
     const urls = [...collectMediaUrls(d)]
     expect(urls).toEqual(expect.arrayContaining(['/api/media/file/b.jpg', '/api/media/file/p.svg', '/api/media/file/g.jpg']))
+  })
+
+  it('decodes percent-encoded media file names', () => {
+    expect(mediaFileName('/api/media/file/%E9%92%A2%E9%93%81%E4%BE%A0.jpeg'))
+      .toBe('钢铁侠.jpeg')
+  })
+
+  it('copies a media file whose URL is percent-encoded', () => {
+    const mediaDir = mkdtempSync(path.join(tmpdir(), 'zhonghui-media-'))
+    const outDir = mkdtempSync(path.join(tmpdir(), 'zhonghui-out-'))
+    try {
+      writeFileSync(path.join(mediaDir, '钢铁侠.jpeg'), 'image')
+      copyMedia(
+        new Set(['/api/media/file/%E9%92%A2%E9%93%81%E4%BE%A0.jpeg']),
+        mediaDir,
+        outDir,
+      )
+      expect(existsSync(path.join(outDir, 'assets/media/钢铁侠.jpeg'))).toBe(true)
+    } finally {
+      rmSync(mediaDir, { recursive: true, force: true })
+      rmSync(outDir, { recursive: true, force: true })
+    }
   })
 })
